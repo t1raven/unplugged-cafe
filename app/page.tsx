@@ -8,8 +8,8 @@ export default async function Home() {
     <>
       <Header/>
       <main id="site-body">
-        <section>
-          <div className="container">
+        <section className="sub-page-section">
+          <div className="inner">
             <h1>UNPLUGGED CAFE</h1>
             <p>음악이 시작되는 공간</p>
           </div>

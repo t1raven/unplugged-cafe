@@ -29,7 +29,7 @@ export default function Footer() {
           <div className="sns_link">
             <ul>
               <li>
-                <a href="https://www.instagram.com/memil_danpyeon/" target="_blank"><img src="/assets/img/common/footer_sns_link_insta.png" /></a>
+                <a href="https://www.instagram.com/memil_danpyeon/" target="_blank"><img src="/images/common/footer_sns_link_insta.png" /></a>
               </li>
             </ul>
           </div>
@@ -38,8 +38,8 @@ export default function Footer() {
             <ul className="list" data-lenis-prevent-wheel="">
               <li>
                 <ul className="sub-menu">
-                  <li><a href="#" title="새창열림" target="_blank">교촌치킨</a></li>
-                  <li><a href="#" title="새창열림" target="_blank">교촌 F&amp;B</a></li>
+                  <li><a href="#" title="새창열림" target="_blank">홍대점</a></li>
+                  <li><a href="#" title="새창열림" target="_blank">라운지</a></li>
                 </ul>
               </li>
             </ul>

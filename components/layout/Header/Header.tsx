@@ -23,10 +23,10 @@ export default function Header() {
         </div>
         <div className="menu">
           <ul>
-            <li className={pathname === "/menu" ? "active" : ""}><Link href="/menu" className="char-text">메뉴</Link></li>
-            <li className={pathname === "/performances" ? "active" : ""}><Link href="/performances" className="char-text">공연</Link></li>
-            <li className={pathname === "/rental" ? "active" : ""}><Link href="/rental" className="char-text">대관</Link></li>
-            <li className={pathname === "/gallery" ? "active" : ""}><Link href="/gallery" className="char-text">갤러리</Link></li>
+            <li className={pathname.startsWith('/menu') ? "active" : ""}><Link href="/menu" className="char-text">메뉴</Link></li>
+            <li className={pathname.startsWith('/performances') ? "active" : ""}><Link href="/performances" className="char-text">공연</Link></li>
+            <li className={pathname.startsWith('/rental') ? "active" : ""}><Link href="/rental" className="char-text">대관</Link></li>
+            <li className={pathname.startsWith('/gallery') ? "active" : ""}><Link href="/gallery" className="char-text">갤러리</Link></li>
           </ul>
         </div>
       </div>
