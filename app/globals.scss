@@ -1,0 +1,28 @@
+@use "../styles/reset";
+
+:root {
+  --color-black: #111;
+  --color-white: #fff;
+  --color-gray: #888;
+  --color-light-gray: #f5f5f5;
+
+  --content-width: 1440px;
+}
+
+body {
+  min-width: 320px;
+}
+
+.container {
+  width: min(
+    calc(100% - 80px),
+    var(--content-width)
+  );
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: calc(100% - 40px);
+  }
+}
