@@ -66,8 +66,8 @@ export async function generateMetadata({
 
   return {
     title: performance?.title
-      ? `${performance.title} | UNPLUGGED CAFE`
-      : '공연 | UNPLUGGED CAFE',
+      ? `${performance.title} | UNPLUGGED LOUNGE`
+      : '공연 | UNPLUGGED LOUNGE',
 
     description: `${performance.artist?.name ?? ''} ${genreNames[performance.genre] ?? '라이브 공연'} 공연 정보입니다.`,
   };

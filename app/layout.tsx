@@ -7,7 +7,7 @@ import "../styles/globals.scss";
 
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "UNPLUGGED CAFE",
+  title: "UNPLUGGED LOUNGE",
   description: "Live Music Cafe",
   keywords: ["Unplugged, Live, Music, Cafe"],
   openGraph: {

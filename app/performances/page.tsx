@@ -6,7 +6,7 @@ import Header from '@/components/layout/Header/Header';
 import Footer from '@/components/layout/Footer/Footer';
 
 export const metadata: Metadata = {
-  title: "공연 | UNPLUGGED CAFE",
+  title: "공연 | UNPLUGGED LOUNGE",
 };
 
 const performancesQuery = `
