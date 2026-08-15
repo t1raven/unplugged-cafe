@@ -29,6 +29,15 @@ interface Artist {
   website?: string;
 }
 
+interface Place {
+  _id: string;
+  name: string;
+  address?: string;
+  naverMap?: string;
+  kakaomMap?: string;
+  googleMap?: string;
+}
+
 interface Performance {
   _id: string;
   title: string;
@@ -47,9 +56,22 @@ interface Performance {
   notice?: unknown;
   price1?: string;
   price2?: string;
+  admissionType?: string;
+  viewingType?: string;
   reservationOpen?: boolean;
   reservationUrl?: string;
   artists?: Artist[];
+  place?: Place;
+}
+
+const admissionTypeNames: Record<string, string> = {
+  1: '공연장대기순',
+  2: '번호표순',
+}
+
+const viewingTypeNames: Record<string, string> = {
+  1: '좌석',
+  2: '입석',
 }
 
 const performanceQuery = `
@@ -71,6 +93,8 @@ const performanceQuery = `
     notice,
     price1,
     price2,
+    admissionType,
+    viewingType,
     reservationOpen,
     reservationUrl,
 
@@ -84,6 +108,15 @@ const performanceQuery = `
       instagram,
       youtube,
       website
+    },
+
+    place-> {
+      _id,
+      name,
+      address,
+      naverMap,
+      kakaomMap,
+      googleMap,
     }
   }
 `;
@@ -130,7 +163,9 @@ export async function generateMetadata({
 export default async function PerformanceDetailPage({
   params,
 }: PageProps) {
-  const { slug } = await params;
+  const { slug: encodedSlug } = await params;
+
+  const slug = decodeURIComponent(encodedSlug);
 
   const performance = await getPerformance(slug);
 
@@ -217,20 +252,20 @@ export default async function PerformanceDetailPage({
                   <span>장소</span>
 
                   <strong>
-                    언플러그드 라운지 - 서울 마포구 와우산로29길 15 3층
+                    {performance.place?.name} - {performance.place?.address}
                   </strong>
                 </div>
 
                 {performance.price1 && (
                   <div className="meta-item">
-                    <span>사전 예매가</span>
+                    <span>사전 예매</span>
                     <strong>{performance.price1?.toLocaleString()}원</strong>
                   </div>
                 )}
 
                 {performance.price2 && (
                   <div className="meta-item">
-                    <span>현장 예매가</span>
+                    <span>현장 예매</span>
                     <strong>{performance.price2?.toLocaleString()}원</strong>
                   </div>
                 )}
@@ -238,13 +273,13 @@ export default async function PerformanceDetailPage({
                 <div className="meta-item">
                   <span>입장 방식</span>
 
-                  <strong>공연장대기순</strong>
+                  <strong>{admissionTypeNames[performance.admissionType] ?? performance.admissionType}</strong>
                 </div>
 
                 <div className="meta-item">
                   <span>관람 방식</span>
 
-                  <strong>좌석</strong>
+                  <strong>{viewingTypeNames[performance.viewingType] ?? performance.viewingType}</strong>
                 </div>
 
               </div>
@@ -276,8 +311,8 @@ export default async function PerformanceDetailPage({
               <div className="performance-detail-inner">
 
                 <div className="section-heading">
-                  <p>ARTISTS</p>
-                  <h2>출연 아티스트</h2>
+                  <p>ARTIST LINEUP</p>
+                  <h2>아티스트 라인업</h2>
                 </div>
 
                 <div className="artist-list">

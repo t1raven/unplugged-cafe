@@ -1,9 +1,11 @@
 import {defineField, defineType} from 'sanity'
+import {BottleIcon} from '@sanity/icons/Bottle'
 
 export const menuItem = defineType({
   name: 'menuItem',
   title: '메뉴 아이템',
   type: 'document',
+  icon: BottleIcon,
 
   fields: [
     defineField({
@@ -36,6 +38,15 @@ export const menuItem = defineType({
       name: 'summary',
       title: '요약',
       type: 'string',
+    }),
+
+    defineField({
+      name: 'image',
+      title: '이미지',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
     }),
 
     defineField({

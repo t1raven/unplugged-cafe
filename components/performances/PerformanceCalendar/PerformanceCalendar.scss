@@ -80,6 +80,20 @@
         outline: 2px solid #c9a96e;
         outline-offset: 3px;
       }
+
+      &:disabled {
+        border-color: #292825;
+        background: #151412;
+        color: #45423d;
+        cursor: not-allowed;
+        opacity: 0.5;
+
+        &:hover {
+          border-color: #292825;
+          background: #151412;
+          color: #45423d;
+        }
+      }
     }
 
     .today-button {
@@ -585,20 +599,6 @@
         width: 36px;
         height: 36px;
         font-size: 20px;
-
-        &:disabled {
-          border-color: #292825;
-          background: #151412;
-          color: #45423d;
-          cursor: not-allowed;
-          opacity: 0.5;
-
-          &:hover {
-            border-color: #292825;
-            background: #151412;
-            color: #45423d;
-          }
-        }
       }
 
       .today-button {

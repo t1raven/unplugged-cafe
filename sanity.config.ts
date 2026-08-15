@@ -13,11 +13,13 @@ import {apiVersion, dataset, projectId} from './sanity/env'
 import {schemaTypes} from './sanity/schemaTypes'
 import {structure} from './sanity/structure'
 
+import {koKRLocale} from '@sanity/locale-ko-kr'
+
 
 
 export default defineConfig({
   basePath: '/studio',
-  title: 'Unplugged Cafe CMS',
+  title: 'Unplugged Lounge CMS',
   projectId,
   dataset,
   // Add and edit the content schema in the './sanity/schemaTypes' folder
@@ -29,5 +31,6 @@ export default defineConfig({
     // Vision is for querying with GROQ from inside the Studio
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({defaultApiVersion: apiVersion}),
+    koKRLocale(),
   ],
 })

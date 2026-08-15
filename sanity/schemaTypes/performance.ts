@@ -1,9 +1,11 @@
 import {defineField, defineType} from 'sanity'
+import {CalendarIcon} from '@sanity/icons/Calendar'
 
 export const performance = defineType({
   name: 'performance',
   title: '공연 일정',
   type: 'document',
+  icon: CalendarIcon,
 
   fields: [
     defineField({

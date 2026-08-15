@@ -1,11 +1,23 @@
 import {defineField, defineType} from 'sanity'
+import {ImageIcon} from '@sanity/icons/Image'
 
 export const galleryItem = defineType({
   name: 'galleryItem',
   title: '갤러리 아이템',
   type: 'document',
+  icon: ImageIcon,
 
   fields: [
+
+    defineField({
+      name: 'image',
+      title: '이미지',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
+
     defineField({
       name: 'category',
       title: '카테고리',

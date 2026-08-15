@@ -1,9 +1,11 @@
 import {defineField, defineType} from 'sanity'
+import {SchemaIcon} from '@sanity/icons/Schema'
 
 export const galleryCategory = defineType({
   name: 'galleryCategory',
   title: '갤러리 카테고리',
   type: 'document',
+  icon: SchemaIcon,
 
   fields: [
 

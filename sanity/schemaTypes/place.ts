@@ -1,9 +1,11 @@
 import {defineField, defineType} from 'sanity'
+import {MarkerIcon} from '@sanity/icons/Marker'
 
 export const place = defineType({
   name: 'place',
   title: '공연 장소',
   type: 'document',
+  icon: MarkerIcon,
 
   fields: [
     defineField({
