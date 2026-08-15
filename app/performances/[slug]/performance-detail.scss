@@ -1,0 +1,422 @@
+.performance-detail {
+  min-height: 100vh;
+  background: #11100f;
+  color: #f5f3ee;
+
+  .performance-detail-inner {
+    width: min(1400px, calc(100% - 80px));
+    margin: 0 auto;
+  }
+
+  // ==================================================
+  // Hero
+  // ==================================================
+
+  .performance-detail-hero {
+    padding: 180px 0 120px;
+    background:
+      radial-gradient(
+        circle at 70% 30%,
+        rgba(201, 169, 110, 0.08),
+        transparent 35%
+      ),
+      #11100f;
+  }
+
+  .performance-detail-hero
+    .performance-detail-inner {
+    display: grid;
+    grid-template-columns: 460px 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  // ==================================================
+  // Poster
+  // ==================================================
+
+  .performance-poster {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #1a1917;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .poster-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #55514a;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+  }
+
+  // ==================================================
+  // Content
+  // ==================================================
+
+  .performance-eyebrow {
+    margin: 0 0 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: #9b978f;
+  }
+
+  h1 {
+    max-width: 700px;
+    margin: 0;
+    font-size: clamp(48px, 5vw, 82px);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.06em;
+  }
+
+  // ==================================================
+  // Meta
+  // ==================================================
+
+  .performance-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 60px;
+    border-top: 1px solid #45413b;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 22px 20px;
+    border-bottom: 1px solid #34312d;
+
+    &:nth-child(odd) {
+      padding-left: 0;
+    }
+
+    span {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: #77736c;
+    }
+
+    strong {
+      font-size: 15px;
+      font-weight: 500;
+      color: #eeeae2;
+    }
+  }
+
+  // ==================================================
+  // Button
+  // ==================================================
+
+  .reservation-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    height: 54px;
+    margin-top: 35px;
+    padding: 0 30px;
+    background: #c9a96e;
+    color: #15130f;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition:
+      background-color 0.25s ease,
+      transform 0.25s ease;
+
+    &:hover {
+      background: #e0c48d;
+      transform: translateY(-2px);
+    }
+  }
+
+  // ==================================================
+  // Section Heading
+  // ==================================================
+
+  .section-heading {
+    margin-bottom: 50px;
+
+    p {
+      margin: 0 0 10px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: #8f8b83;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 34px;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+    }
+  }
+
+  // ==================================================
+  // Artists
+  // ==================================================
+
+  .performance-artists {
+    padding: 120px 0;
+    border-top: 1px solid #292825;
+  }
+
+  .artist-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: #34312d;
+  }
+
+  .artist-card {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 35px;
+    padding: 30px;
+    background: #171614;
+  }
+
+  .artist-image {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #22201d;
+    color: #55514a;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+
+  .artist-info {
+    h3 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    span {
+      display: block;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #c9a96e;
+    }
+
+    p {
+      margin: 25px 0 0;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #88847c;
+    }
+  }
+
+  // ==================================================
+  // Description
+  // ==================================================
+
+  .performance-description {
+    padding: 120px 0;
+    border-top: 1px solid #292825;
+  }
+
+  .description-content {
+    max-width: 900px;
+    font-size: 16px;
+    line-height: 2;
+    color: #b2aea5;
+
+    p {
+      margin: 0 0 25px;
+    }
+
+    h2,
+    h3 {
+      margin: 50px 0 20px;
+      color: #f5f3ee;
+    }
+
+    strong {
+      color: #f5f3ee;
+    }
+  }
+
+  // ==================================================
+  // Reservation
+  // ==================================================
+
+  .performance-reservation {
+    padding: 100px 0;
+    background: #171614;
+  }
+
+  .reservation-box {
+    padding: 80px;
+    border: 1px solid #34312d;
+    text-align: center;
+
+    p {
+      margin: 0 0 15px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: #c9a96e;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 36px;
+      font-weight: 500;
+    }
+  }
+
+  // ==================================================
+  // Back
+  // ==================================================
+
+  .performance-back {
+    padding: 50px 0 100px;
+
+    a {
+      color: #88847c;
+      font-size: 13px;
+      text-decoration: none;
+
+      &:hover {
+        color: #c9a96e;
+      }
+    }
+  }
+
+  // ==================================================
+  // Tablet
+  // ==================================================
+
+  @media (max-width: 1024px) {
+    .performance-detail-inner {
+      width: calc(100% - 48px);
+    }
+
+    .performance-detail-hero
+      .performance-detail-inner {
+      grid-template-columns: 360px 1fr;
+      gap: 60px;
+    }
+
+    .artist-card {
+      grid-template-columns: 160px 1fr;
+    }
+  }
+
+  // ==================================================
+  // Mobile
+  // ==================================================
+
+  @media (max-width: 767px) {
+    .performance-detail-inner {
+      width: calc(100% - 32px);
+    }
+
+    .performance-detail-hero {
+      padding: 110px 0 70px;
+    }
+
+    .performance-detail-hero
+      .performance-detail-inner {
+      display: block;
+    }
+
+    .performance-poster {
+      max-width: 500px;
+      margin: 0 auto 50px;
+    }
+
+    h1 {
+      font-size: 42px;
+    }
+
+    .performance-meta {
+      margin-top: 40px;
+    }
+
+    .meta-item {
+      padding: 16px 10px;
+
+      strong {
+        font-size: 13px;
+      }
+    }
+
+    .reservation-button {
+      width: 100%;
+    }
+
+    .performance-artists,
+    .performance-description {
+      padding: 80px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 30px;
+
+      h2 {
+        font-size: 26px;
+      }
+    }
+
+    .artist-list {
+      display: block;
+      background: transparent;
+    }
+
+    .artist-card {
+      grid-template-columns: 100px 1fr;
+      gap: 20px;
+      margin-bottom: 1px;
+      padding: 20px 0;
+      background: transparent;
+      border-bottom: 1px solid #292825;
+    }
+
+    .artist-info {
+      h3 {
+        font-size: 18px;
+      }
+
+      p {
+        margin-top: 15px;
+        font-size: 12px;
+      }
+    }
+
+    .description-content {
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .reservation-box {
+      padding: 50px 20px;
+
+      h2 {
+        font-size: 26px;
+      }
+    }
+
+    .performance-back {
+      padding-bottom: 70px;
+    }
+  }
+}

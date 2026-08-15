@@ -1,0 +1,867 @@
+.performance-calendar {
+  width: 100%;
+  padding-top: 60px;;
+  padding-bottom: 120px;
+  color: #f5f3ee;
+
+  // ==================================================
+  // Calendar Header
+  // ==================================================
+
+  .calendar-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+
+  .calendar-title {
+    p {
+      margin: 0 0 10px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.4;
+      letter-spacing: 0.18em;
+      color: #9b978f;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 34px;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      color: #f5f3ee;
+    }
+  }
+
+  // ==================================================
+  // Calendar Controls
+  // ==================================================
+
+  .calendar-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid #3a3936;
+      border-radius: 50%;
+      background: #1a1917;
+      color: #e8e4dc;
+      font-family: inherit;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+
+      transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+
+      &:hover {
+        border-color: #c9a96e;
+        background: #c9a96e;
+        color: #111;
+      }
+
+      &:active {
+        transform: scale(0.94);
+      }
+
+      &:focus-visible {
+        outline: 2px solid #c9a96e;
+        outline-offset: 3px;
+      }
+    }
+
+    .today-button {
+      width: auto;
+      min-width: 64px;
+      padding: 0 18px;
+      border-radius: 22px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+
+  // ==================================================
+  // Weekdays
+  // ==================================================
+
+  .calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    border-top: 1px solid #55514a;
+    border-bottom: 1px solid #34332f;
+    background: #171614;
+  }
+
+  .calendar-weekday {
+    padding: 15px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+    color: #a8a39a;
+
+    &:first-child {
+      color: #bd7777;
+    }
+
+    &:last-child {
+      color: #8195bd;
+    }
+  }
+
+  // ==================================================
+  // Calendar Grid
+  // ==================================================
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    border-left: 1px solid #34332f;
+    background: #11100f;
+  }
+
+  // ==================================================
+  // Calendar Day
+  // ==================================================
+
+  .calendar-day {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 120px;
+    padding: 14px;
+    border: 0;
+    border-right: 1px solid #34332f;
+    border-bottom: 1px solid #34332f;
+    background: #171614;
+    color: #f5f3ee;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    transition:
+      background-color 0.25s ease,
+      border-color 0.25s ease;
+
+    &:hover {
+      background: #1f1d19;
+    }
+
+    &:focus-visible {
+      z-index: 2;
+      outline: 2px solid #c9a96e;
+      outline-offset: -2px;
+    }
+
+    &.is-empty {
+      background: #121210;
+      cursor: default;
+
+      &:hover {
+        background: #121210;
+      }
+    }
+
+    &.is-today {
+      background: #201e19;
+    }
+
+    &.is-selected {
+      background: #29251e;
+      box-shadow: inset 0 0 0 1px #c9a96e;
+    }
+
+    &.is-past {
+      background: #121210;
+      color: #55524c;
+      cursor: not-allowed;
+      opacity: 0.45;
+
+      &:hover {
+        background: #121210;
+      }
+
+      .calendar-date {
+        span {
+          color: #55524c;
+        }
+      }
+
+      .calendar-performance-indicator {
+        opacity: 0.35;
+      }
+    }
+  }
+
+  // ==================================================
+  // Calendar Date
+  // ==================================================
+
+  .calendar-date {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 8px;
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1;
+      color: #c7c3ba;
+    }
+  }
+
+  .calendar-day.is-today {
+    .calendar-date {
+      span {
+        border-radius: 50%;
+        background: #c9a96e;
+        color: #15130f;
+        font-weight: 700;
+      }
+    }
+  }
+
+  // ==================================================
+  // Performance Indicator
+  // ==================================================
+
+  .calendar-performance-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+
+    span {
+      display: block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #c9a96e;
+    }
+
+    small {
+      font-size: 12px;
+      line-height: 1;
+      color: #9b978f;
+    }
+  }
+
+  // ==================================================
+  // Selected Date Performance
+  // ==================================================
+
+  .selected-date-performance {
+    margin-top: 50px;
+  }
+
+  .selected-date-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #55514a;
+
+    p {
+      margin: 0 0 8px;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1.4;
+      letter-spacing: 0.16em;
+      color: #8f8b83;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: #f5f3ee;
+
+      span {
+        margin-left: 4px;
+        font-size: 15px;
+        color: #88847c;
+      }
+    }
+  }
+
+  .selected-performance-count {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #88847c;
+  }
+
+  // ==================================================
+  // Selected Performance List
+  // ==================================================
+
+  .selected-performance-list {
+    border-bottom: 1px solid #34332f;
+  }
+
+  .selected-performance-item {
+    display: grid;
+    grid-template-columns: 100px 1fr 40px;
+    align-items: center;
+    min-height: 110px;
+    padding: 20px 10px;
+    border-bottom: 1px solid #34332f;
+    background: transparent;
+    color: #eeeae2;
+    text-decoration: none;
+
+    transition:
+      background-color 0.25s ease,
+      padding 0.25s ease;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    &:hover {
+      padding-left: 20px;
+      background: #1b1a17;
+    }
+  }
+
+  .selected-performance-time {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: #c9a96e;
+  }
+
+  .selected-performance-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    strong {
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: #f5f3ee;
+    }
+
+    span {
+      font-size: 12px;
+      line-height: 1.4;
+      color: #8f8b83;
+    }
+
+    p {
+      margin: 3px 0 0;
+      overflow: hidden;
+      max-width: 700px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #77736c;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .selected-performance-arrow {
+    font-size: 20px;
+    line-height: 1;
+    color: #77736c;
+    text-align: right;
+
+    transition:
+      color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .selected-performance-item:hover {
+    .selected-performance-arrow {
+      color: #c9a96e;
+      transform: translateX(5px);
+    }
+  }
+
+  // ==================================================
+  // No Performance
+  // ==================================================
+
+  .no-performance {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    border-bottom: 1px solid #34332f;
+
+    p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #77736c;
+    }
+  }
+
+  // ==================================================
+  // Upcoming Performances
+  // ==================================================
+
+  .upcoming-performances {
+    margin-top: 100px;
+  }
+
+  .upcoming-header {
+    margin-bottom: 30px;
+
+    p {
+      margin: 0 0 8px;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.4;
+      letter-spacing: 0.16em;
+      color: #8f8b83;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -0.03em;
+      color: #f5f3ee;
+    }
+  }
+
+  .upcoming-list {
+    border-top: 1px solid #55514a;
+  }
+
+  .upcoming-item {
+    display: grid;
+    grid-template-columns: 140px 1fr 40px;
+    align-items: center;
+    min-height: 100px;
+    padding: 20px 10px;
+    border-bottom: 1px solid #34332f;
+    background: transparent;
+    color: #eeeae2;
+    text-decoration: none;
+
+    transition:
+      padding 0.25s ease,
+      background-color 0.25s ease;
+
+    &:hover {
+      padding-left: 20px;
+      background: #1b1a17;
+    }
+  }
+
+  .upcoming-date {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+
+    strong {
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: #f1ede5;
+    }
+
+    span {
+      font-size: 12px;
+      color: #77736c;
+    }
+  }
+
+  .upcoming-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    strong {
+      min-width: 220px;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: #eeeae2;
+    }
+
+    span {
+      font-size: 13px;
+      color: #88847c;
+    }
+  }
+
+  .upcoming-arrow {
+    font-size: 20px;
+    line-height: 1;
+    color: #8d897f;
+    text-align: right;
+
+    transition:
+      color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .upcoming-item:hover {
+    .upcoming-arrow {
+      color: #c9a96e;
+      transform: translateX(5px);
+    }
+  }
+
+  // ==================================================
+  // Tablet
+  // ==================================================
+
+  @media (max-width: 1024px) {
+    .calendar-day {
+      min-height: 150px;
+      padding: 10px;
+    }
+
+    .selected-performance-item {
+      grid-template-columns: 80px 1fr 30px;
+    }
+
+    .upcoming-item {
+      grid-template-columns: 110px 1fr 30px;
+    }
+
+    .upcoming-info {
+      strong {
+        min-width: 180px;
+      }
+    }
+  }
+
+  // ==================================================
+  // Mobile
+  // ==================================================
+
+  @media (max-width: 767px) {
+    padding-bottom: 80px;
+
+    // ----------------------------------------------
+    // Header
+    // ----------------------------------------------
+
+    .calendar-header {
+      align-items: flex-end;
+      margin-bottom: 25px;
+    }
+
+    .calendar-title {
+      p {
+        margin-bottom: 7px;
+        font-size: 10px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+    }
+
+    .calendar-controls {
+      gap: 5px;
+
+      button {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+
+        &:disabled {
+          border-color: #292825;
+          background: #151412;
+          color: #45423d;
+          cursor: not-allowed;
+          opacity: 0.5;
+
+          &:hover {
+            border-color: #292825;
+            background: #151412;
+            color: #45423d;
+          }
+        }
+      }
+
+      .today-button {
+        min-width: 48px;
+        padding: 0 12px;
+        font-size: 11px;
+      }
+    }
+
+    // ----------------------------------------------
+    // Weekdays
+    // ----------------------------------------------
+
+    .calendar-weekday {
+      padding: 10px 2px;
+      text-align: center;
+      font-size: 10px;
+    }
+
+    // ----------------------------------------------
+    // Calendar
+    // ----------------------------------------------
+
+    .calendar-day {
+      min-height: 72px;
+      padding: 7px 4px;
+    }
+
+    .calendar-date {
+      justify-content: center;
+      margin-bottom: 0;
+
+      span {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+      }
+    }
+
+    .calendar-performance-indicator {
+      justify-content: center;
+      margin-top: 7px;
+
+      span {
+        width: 5px;
+        height: 5px;
+      }
+
+      small {
+        font-size: 8px;
+      }
+    }
+
+    // ----------------------------------------------
+    // Selected Date
+    // ----------------------------------------------
+
+    .selected-date-performance {
+      margin-top: 35px;
+    }
+
+    .selected-date-header {
+      padding-bottom: 15px;
+
+      p {
+        margin-bottom: 6px;
+        font-size: 9px;
+      }
+
+      h3 {
+        font-size: 23px;
+
+        span {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .selected-performance-count {
+      font-size: 10px;
+    }
+
+    // ----------------------------------------------
+    // Selected Performance
+    // ----------------------------------------------
+
+    .selected-performance-item {
+      grid-template-columns: 60px 1fr 20px;
+      min-height: 90px;
+      padding: 15px 4px;
+
+      &:hover {
+        padding-left: 8px;
+      }
+    }
+
+    .selected-performance-time {
+      font-size: 14px;
+    }
+
+    .selected-performance-info {
+      gap: 3px;
+
+      strong {
+        overflow: hidden;
+        font-size: 13px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      span {
+        font-size: 10px;
+      }
+
+      p {
+        display: none;
+      }
+    }
+
+    .selected-performance-arrow {
+      font-size: 16px;
+    }
+
+    .no-performance {
+      min-height: 90px;
+
+      p {
+        font-size: 11px;
+        text-align: center;
+      }
+    }
+
+    // ----------------------------------------------
+    // Upcoming
+    // ----------------------------------------------
+
+    .upcoming-performances {
+      margin-top: 70px;
+    }
+
+    .upcoming-header {
+      margin-bottom: 20px;
+
+      p {
+        font-size: 10px;
+      }
+
+      h3 {
+        font-size: 22px;
+      }
+    }
+
+    .upcoming-item {
+      grid-template-columns: 70px 1fr 20px;
+      min-height: 80px;
+      padding: 15px 5px;
+
+      &:hover {
+        padding-left: 10px;
+      }
+    }
+
+    .upcoming-date {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+
+      strong {
+        font-size: 16px;
+      }
+
+      span {
+        font-size: 10px;
+      }
+    }
+
+    .upcoming-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+
+      strong {
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+        font-size: 13px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      span {
+        font-size: 10px;
+      }
+    }
+
+    .upcoming-arrow {
+      font-size: 16px;
+    }
+  }
+
+  // ==================================================
+  // Small Mobile
+  // ==================================================
+
+  @media (max-width: 390px) {
+    .calendar-header {
+      align-items: center;
+    }
+
+    .calendar-title {
+      h2 {
+        font-size: 21px;
+      }
+    }
+
+    .calendar-controls {
+      .today-button {
+        display: none;
+      }
+    }
+
+    .calendar-day {
+      min-height: 68px;
+      padding: 5px 2px;
+    }
+
+    .calendar-date {
+      span {
+        width: 22px;
+        height: 22px;
+        font-size: 10px;
+      }
+    }
+
+    .calendar-performance-indicator {
+      margin-top: 5px;
+    }
+
+    .selected-date-header {
+      h3 {
+        font-size: 21px;
+      }
+    }
+
+    .selected-performance-item {
+      grid-template-columns: 55px 1fr 16px;
+      padding: 14px 2px;
+    }
+
+    .selected-performance-time {
+      font-size: 13px;
+    }
+
+    .selected-performance-info {
+      strong {
+        font-size: 12px;
+      }
+    }
+
+    .upcoming-item {
+      grid-template-columns: 60px 1fr 16px;
+    }
+  }
+}
