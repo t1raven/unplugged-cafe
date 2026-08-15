@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -5,6 +6,7 @@ import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react';
+import type { PortableTextBlock } from '@portabletext/types';
 
 import Header from '@/components/layout/Header/Header';
 import Footer from '@/components/layout/Footer/Footer';
@@ -23,7 +25,7 @@ interface Artist {
     };
   };
   genre?: string;
-  bio?: unknown;
+  bio?: PortableTextBlock[];
   instagram?: string;
   youtube?: string;
   website?: string;
@@ -52,10 +54,10 @@ interface Performance {
       _id?: string;
     };
   };
-  description?: unknown;
-  notice?: unknown;
-  price1?: string;
-  price2?: string;
+  description?: PortableTextBlock[];
+  notice?: PortableTextBlock[];
+  price1?: number;
+  price2?: number;
   admissionType?: string;
   viewingType?: string;
   reservationOpen?: boolean;
@@ -273,20 +275,22 @@ export default async function PerformanceDetailPage({
                 <div className="meta-item">
                   <span>입장 방식</span>
 
-                  <strong>{admissionTypeNames[performance.admissionType] ?? performance.admissionType}</strong>
+                  <strong>{performance.admissionType ? admissionTypeNames[performance.admissionType] ?? performance.admissionType : '-'}</strong>
                 </div>
 
                 <div className="meta-item">
                   <span>관람 방식</span>
 
-                  <strong>{viewingTypeNames[performance.viewingType] ?? performance.viewingType}</strong>
+                  <strong>{performance.viewingType ? viewingTypeNames[performance.viewingType] ?? performance.viewingType : '-'}</strong>
                 </div>
 
               </div>
 
-              {performance.reservationOpen && (
+              {performance.reservationOpen && performance.reservationUrl && (
                 <Link
-                  href={performance.reservationUrl} target="_blank"
+                  href={performance.reservationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="reservation-button"
                 >
                   공연 예약
@@ -343,7 +347,7 @@ export default async function PerformanceDetailPage({
                           {artist.bio && (
                             <div className="artist-bio">
                               <PortableText
-                                value={artist.bio as any}
+                                value={artist.bio}
                               />
                             </div>
                           )}
@@ -377,7 +381,7 @@ export default async function PerformanceDetailPage({
             <div className="description-content">
               {performance.description ? (
                 <PortableText
-                  value={performance.description as any}
+                  value={performance.description}
                 />
               ) : (
                 <p>
@@ -406,7 +410,7 @@ export default async function PerformanceDetailPage({
             <div className="description-content">
               {performance.notice ? (
                 <PortableText
-                  value={performance.notice as any}
+                  value={performance.notice}
                 />
               ) : (
                 <p>
@@ -423,7 +427,7 @@ export default async function PerformanceDetailPage({
             Reservation
         ================================================== */}
 
-        {performance.reservationOpen && (
+        {performance.reservationOpen && performance.reservationUrl && (
           <section
             id="reservation"
             className="performance-reservation"
@@ -439,7 +443,9 @@ export default async function PerformanceDetailPage({
                 </h2>
 
                 <Link
-                  href={performance.reservationUrl} target="_blank"
+                  href={performance.reservationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="reservation-button"
                 >
                   예약하기

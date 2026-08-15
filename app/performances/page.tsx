@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link'
 import { client } from '@/sanity/lib/client'
 //import { performancesQuery } from '@/sanity/lib/queries'

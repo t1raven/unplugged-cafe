@@ -1,13 +1,15 @@
 "use client";
 
+import type { MouseEvent } from 'react';
+
 import './Footer.scss'
 
 export default function Footer() {
 
-  const handleClick = (e) => {
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    e.target.parentElement.classList.toggle('on');
-  }
+    e.currentTarget.parentElement?.classList.toggle('on');
+  };
 
   return (
     <footer id="site-footer">
