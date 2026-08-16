@@ -227,352 +227,352 @@ export default function PerformanceCalendar({
     `${currentDate.getMonth() + 1}월`;
 
   return (
-    <div className="performance-calendar">
+    <div className="sub-page-section performance-calendar">
+      <div className="inner">
+        {/* ==================================================
+            Calendar Header
+        ================================================== */}
 
-      {/* ==================================================
-          Calendar Header
-      ================================================== */}
+        <div className="calendar-header">
 
-      <div className="calendar-header">
-
-        <div className="calendar-title">
-          <h2>{monthTitle}</h2>
-        </div>
-
-        <div className="calendar-controls">
-
-          <button
-            type="button"
-            onClick={handlePreviousMonth}
-            disabled={
-              currentDate.getFullYear() === today.getFullYear() &&
-              currentDate.getMonth() === today.getMonth()
-            }
-            aria-label="이전 달"
-          >
-            ‹
-          </button>
-
-          <button
-            type="button"
-            className="today-button"
-            onClick={handleToday}
-          >
-            오늘
-          </button>
-
-          <button
-            type="button"
-            onClick={handleNextMonth}
-            aria-label="다음 달"
-          >
-            ›
-          </button>
-
-        </div>
-
-      </div>
-
-      {/* ==================================================
-          Weekdays
-      ================================================== */}
-
-      <div className="calendar-weekdays">
-        {WEEKDAYS.map((weekday) => (
-          <div
-            key={weekday}
-            className="calendar-weekday"
-          >
-            {weekday}
+          <div className="calendar-title">
+            <h2>{monthTitle}</h2>
           </div>
-        ))}
-      </div>
 
-      {/* ==================================================
-          Calendar
-      ================================================== */}
+          <div className="calendar-controls">
 
-      <div className="calendar-grid">
-
-        {calendarDays.map((date, index) => {
-
-          if (!date) {
-            return (
-              <div
-                key={`empty-${index}`}
-                className="calendar-day is-empty"
-              />
-            );
-          }
-
-          const dateKey = formatDateKey(date);
-
-          const dayPerformances =
-            performancesByDate[dateKey] ?? [];
-
-          const isToday =
-            dateKey === todayKey;
-
-          const isSelected =
-            dateKey === selectedDate;
-
-          const isPast =
-            dateKey < todayKey;
-
-          return (
             <button
-              key={dateKey}
               type="button"
-              disabled={isPast}
-              className={[
-                'calendar-day',
-                isToday ? 'is-today' : '',
-                isSelected ? 'is-selected' : '',
-                isPast ? 'is-past' : '',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-              onClick={() => handleSelectDate(date)}
+              onClick={handlePreviousMonth}
+              disabled={
+                currentDate.getFullYear() === today.getFullYear() &&
+                currentDate.getMonth() === today.getMonth()
+              }
+              aria-label="이전 달"
             >
-              <div className="calendar-date">
-                <span>
-                  {date.getDate()}
-                </span>
-              </div>
-
-              {!isPast && dayPerformances.length > 0 && (
-                <div className="calendar-performance-indicator">
-                  <span />
-
-                  {dayPerformances.length > 1 && (
-                    <small>
-                      {dayPerformances.length}
-                    </small>
-                  )}
-                </div>
-              )}
+              ‹
             </button>
-          );
-                  })}
 
+            <button
+              type="button"
+              className="today-button"
+              onClick={handleToday}
+            >
+              오늘
+            </button>
+
+            <button
+              type="button"
+              onClick={handleNextMonth}
+              aria-label="다음 달"
+            >
+              ›
+            </button>
+
+          </div>
+
+        </div>
+
+        {/* ==================================================
+            Weekdays
+        ================================================== */}
+
+        <div className="calendar-weekdays">
+          {WEEKDAYS.map((weekday) => (
+            <div
+              key={weekday}
+              className="calendar-weekday"
+            >
+              {weekday}
+            </div>
+          ))}
+        </div>
+
+        {/* ==================================================
+            Calendar
+        ================================================== */}
+
+        <div className="calendar-grid">
+
+          {calendarDays.map((date, index) => {
+
+            if (!date) {
+              return (
+                <div
+                  key={`empty-${index}`}
+                  className="calendar-day is-empty"
+                />
+              );
+            }
+
+            const dateKey = formatDateKey(date);
+
+            const dayPerformances =
+              performancesByDate[dateKey] ?? [];
+
+            const isToday =
+              dateKey === todayKey;
+
+            const isSelected =
+              dateKey === selectedDate;
+
+            const isPast =
+              dateKey < todayKey;
+
+            return (
+              <button
+                key={dateKey}
+                type="button"
+                disabled={isPast}
+                className={[
+                  'calendar-day',
+                  isToday ? 'is-today' : '',
+                  isSelected ? 'is-selected' : '',
+                  isPast ? 'is-past' : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                onClick={() => handleSelectDate(date)}
+              >
+                <div className="calendar-date">
+                  <span>
+                    {date.getDate()}
+                  </span>
                 </div>
 
-                {/* ==================================================
-                    Selected Date
-                ================================================== */}
+                {!isPast && dayPerformances.length > 0 && (
+                  <div className="calendar-performance-indicator">
+                    <span />
 
-                <section className="selected-date-performance">
-
-                  <div className="selected-date-header">
-
-                    <div>
-                      <p>SELECTED DATE</p>
-
-                      <h3>
-                        {selectedDateInfo.month}.
-                        {String(selectedDateInfo.day).padStart(2, '0')}
-                        {' '}
-                        <span>
-                          {selectedDateInfo.weekday}
-                        </span>
-                      </h3>
-                    </div>
-
-                    <span className="selected-performance-count">
-                      {selectedPerformances.length} 공연
-                    </span>
-
+                    {dayPerformances.length > 1 && (
+                      <small>
+                        {dayPerformances.length}
+                      </small>
+                    )}
                   </div>
-
-                  {selectedPerformances.length > 0 ? (
-
-                    <div className="selected-performance-list">
-
-                      {selectedPerformances.map(
-                        (performance) => {
-
-                          const slug =
-                            performance.slug?.current;
-
-                          const content = (
-                            <>
-                              <div className="selected-performance-time">
-                                {performance.startTime || '--:--'}
-                              </div>
-
-                              <div className="selected-performance-info">
-
-                                <strong>
-                                  {performance.title}
-                                </strong>
-
-                                {performance.artists &&
-                                  performance.artists.length > 0 && (
-                                    <span>
-                                      {performance.artists
-                                        .map((artist) => artist.name)
-                                        .join(' · ')}
-                                    </span>
-                                )}
-
-                              </div>
-
-                              <span className="selected-performance-arrow">
-                                →
-                              </span>
-                            </>
-                          );
-
-                          if (!slug) {
-                            return (
-                              <div
-                                key={performance._id}
-                                className="selected-performance-item"
-                              >
-                                {content}
-                              </div>
-                            );
-                          }
-
-                          return (
-                            <Link
-                              key={performance._id}
-                              href={`/performances/${slug}`}
-                              className="selected-performance-item"
-                            >
-                              {content}
-                            </Link>
-                          );
-                        }
-                      )}
-
-                    </div>
-
-                  ) : (
-
-                    <div className="no-performance">
-                      <p>
-                        선택한 날짜에는 예정된 공연이 없습니다.
-                      </p>
-                    </div>
-
-                  )}
-
-                </section>
-
-                {/* ==================================================
-                    Upcoming
-                ================================================== */}
-
-                <div className="upcoming-performances">
-
-                  <div className="upcoming-header">
-                    <p>UPCOMING PERFORMANCE</p>
-                    <h3>다가오는 공연</h3>
-                  </div>
-
-                  <div className="upcoming-list">
-
-                    {performances
-                      .filter((performance) => {
-                        if (!performance.date) {
-                          return false;
-                        }
-
-                        return (
-                          performance.date.slice(0, 10) >=
-                          todayKey
-                        );
-                      })
-                      .slice(0, 5)
-                      .map((performance) => {
-
-                        const slug =
-                          performance.slug?.current;
-
-                        const date = new Date(
-                          performance.date
-                        );
-
-                        const month =
-                          date.getMonth() + 1;
-
-                        const day =
-                          date.getDate();
-
-                        const weekday =
-                          WEEKDAYS[date.getDay()];
-
-                        const content = (
-                          <>
-                            <div className="upcoming-date">
-
-                              <strong>
-                                {month}.
-                                {String(day).padStart(2, '0')}
-                              </strong>
-
-                              <span>
-                                {weekday}
-                              </span>
-
-                            </div>
-
-                            <div className="upcoming-info">
-
-                              <strong>
-                                {performance.title}
-                              </strong>
-
-                              {performance.startTime && (
-                                <span>
-                                  {performance.startTime}
-                                </span>
-                              )}
-
-                              {performance.artists &&
-                                performance.artists.length > 0 && (
-                                  <span>
-                                    {performance.artists
-                                      .map((artist) => artist.name)
-                                      .join(' · ')}
-                                  </span>
-                              )}
-
-                            </div>
-
-                            <span className="upcoming-arrow">
-                              →
-                            </span>
-                          </>
-                        );
-
-                        if (!slug) {
-                          return (
-                            <div
-                              key={performance._id}
-                              className="upcoming-item"
-                            >
-                              {content}
-                            </div>
-                          );
-                        }
-
-                        return (
-                          <Link
-                            key={performance._id}
-                            href={`/performances/${slug}`}
-                            className="upcoming-item"
-                          >
-                            {content}
-                          </Link>
-                        );
-                      })}
-
-                  </div>
-
-                </div>
-
-              </div>
+                )}
+              </button>
             );
+                    })}
+
+        </div>
+
+        {/* ==================================================
+            Selected Date
+        ================================================== */}
+
+        <div className="selected-date-performance">
+
+          <div className="selected-date-header">
+
+            <div>
+              <p>SELECTED DATE</p>
+
+              <h3>
+                {selectedDateInfo.month}.
+                {String(selectedDateInfo.day).padStart(2, '0')}
+                {' '}
+                <span>
+                  {selectedDateInfo.weekday}
+                </span>
+              </h3>
+            </div>
+
+            <span className="selected-performance-count">
+              {selectedPerformances.length} 공연
+            </span>
+
+          </div>
+
+          {selectedPerformances.length > 0 ? (
+
+            <div className="selected-performance-list">
+
+              {selectedPerformances.map(
+                (performance) => {
+
+                  const slug =
+                    performance.slug?.current;
+
+                  const content = (
+                    <>
+                      <div className="selected-performance-time">
+                        {performance.startTime || '--:--'}
+                      </div>
+
+                      <div className="selected-performance-info">
+
+                        <strong>
+                          {performance.title}
+                        </strong>
+
+                        {performance.artists &&
+                          performance.artists.length > 0 && (
+                            <span>
+                              {performance.artists
+                                .map((artist) => artist.name)
+                                .join(' · ')}
+                            </span>
+                        )}
+
+                      </div>
+
+                      <span className="selected-performance-arrow">
+                        →
+                      </span>
+                    </>
+                  );
+
+                  if (!slug) {
+                    return (
+                      <div
+                        key={performance._id}
+                        className="selected-performance-item"
+                      >
+                        {content}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <Link
+                      key={performance._id}
+                      href={`/performances/${slug}`}
+                      className="selected-performance-item"
+                    >
+                      {content}
+                    </Link>
+                  );
+                }
+              )}
+
+            </div>
+
+          ) : (
+
+            <div className="no-performance">
+              <p>
+                선택한 날짜에는 예정된 공연이 없습니다.
+              </p>
+            </div>
+
+          )}
+
+        </div>
+
+        {/* ==================================================
+              Upcoming
+          ================================================== */}
+
+          <div className="upcoming-performances">
+
+            <div className="upcoming-header">
+              <p>UPCOMING PERFORMANCE</p>
+              <h3>다가오는 공연</h3>
+            </div>
+
+            <div className="upcoming-list">
+
+              {performances
+                .filter((performance) => {
+                  if (!performance.date) {
+                    return false;
+                  }
+
+                  return (
+                    performance.date.slice(0, 10) >=
+                    todayKey
+                  );
+                })
+                .slice(0, 5)
+                .map((performance) => {
+
+                  const slug =
+                    performance.slug?.current;
+
+                  const date = new Date(
+                    performance.date
+                  );
+
+                  const month =
+                    date.getMonth() + 1;
+
+                  const day =
+                    date.getDate();
+
+                  const weekday =
+                    WEEKDAYS[date.getDay()];
+
+                  const content = (
+                    <>
+                      <div className="upcoming-date">
+
+                        <strong>
+                          {month}.
+                          {String(day).padStart(2, '0')}
+                        </strong>
+
+                        <span>
+                          {weekday}
+                        </span>
+
+                      </div>
+
+                      <div className="upcoming-info">
+
+                        <strong>
+                          {performance.title}
+                        </strong>
+
+                        {performance.startTime && (
+                          <span>
+                            {performance.startTime}
+                          </span>
+                        )}
+
+                        {performance.artists &&
+                          performance.artists.length > 0 && (
+                            <span>
+                              {performance.artists
+                                .map((artist) => artist.name)
+                                .join(' · ')}
+                            </span>
+                        )}
+
+                      </div>
+
+                      <span className="upcoming-arrow">
+                        →
+                      </span>
+                    </>
+                  );
+
+                  if (!slug) {
+                    return (
+                      <div
+                        key={performance._id}
+                        className="upcoming-item"
+                      >
+                        {content}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <Link
+                      key={performance._id}
+                      href={`/performances/${slug}`}
+                      className="upcoming-item"
+                    >
+                      {content}
+                    </Link>
+                  );
+                })}
+
+            </div>
+
+          </div>
+      </div>
+    </div>
+  );
 }

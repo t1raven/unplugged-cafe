@@ -1,13 +1,29 @@
 import {defineField, defineType} from 'sanity'
-import {BottleIcon} from '@sanity/icons/Bottle'
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
+
 
 export const menuItem = defineType({
   name: 'menuItem',
   title: '메뉴 아이템',
   type: 'document',
-  icon: BottleIcon,
+
+  orderings: [
+    orderRankOrdering,
+  ],
 
   fields: [
+
+    orderRankField({
+      type: 'menuCategory',
+    }),
+    
+    defineField({
+      name: 'name',
+      title: '메뉴명',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+
     defineField({
       name: 'category',
       title: '카테고리',
@@ -21,17 +37,18 @@ export const menuItem = defineType({
     }),
 
     defineField({
-      name: 'name',
-      title: '메뉴명',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-
-    defineField({
       name: 'price',
       title: '가격',
       type: 'number',
-      validation: (Rule) => Rule.min(0),
+      validation: (Rule) => Rule.required().min(0),
+    }),
+    defineField({
+      name: 'image',
+      title: '메뉴 이미지',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
     }),
 
     defineField({
@@ -41,23 +58,10 @@ export const menuItem = defineType({
     }),
 
     defineField({
-      name: 'image',
-      title: '이미지',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    }),
-
-    defineField({
       name: 'description',
-      title: '소개',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-        },
-      ],
+      title: '설명',
+      type: 'text',
+      rows: 4,
     }),
 
     defineField({
@@ -73,12 +77,19 @@ export const menuItem = defineType({
       type: 'boolean',
       initialValue: false,
     }),
+
+    defineField({
+      name: 'isAvailable',
+      title: '판매중',
+      type: 'boolean',
+      initialValue: true,
+    }),
   ],
 
   preview: {
     select: {
       title: 'name',
-      category: 'category.name',
+      category: 'category.title',
       price: 'price',
     },
 

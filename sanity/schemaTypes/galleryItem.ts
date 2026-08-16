@@ -1,11 +1,9 @@
 import {defineField, defineType} from 'sanity'
-import {ImageIcon} from '@sanity/icons/Image'
 
 export const galleryItem = defineType({
   name: 'galleryItem',
-  title: '갤러리 아이템',
+  title: '갤러리 이미지',
   type: 'document',
-  icon: ImageIcon,
 
   fields: [
 
@@ -16,6 +14,13 @@ export const galleryItem = defineType({
       options: {
         hotspot: true,
       },
+    }),
+
+    defineField({
+      name: 'title',
+      title: '제목',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
@@ -31,25 +36,14 @@ export const galleryItem = defineType({
     }),
 
     defineField({
-      name: 'title',
-      title: '제목',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-
-    defineField({
       name: 'description',
       title: '설명',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-        },
-      ],
+      type: 'text',
+      rows: 4,
     }),
 
     defineField({
-      name: 'view',
+      name: 'display',
       title: '공개',
       type: 'boolean',
       initialValue: false,
@@ -59,7 +53,16 @@ export const galleryItem = defineType({
   preview: {
     select: {
       title: 'title',
-      subtitle: 'category.name',
+      category: 'category.title',
+      media: 'image',
+    },
+
+    prepare({ title, category, media }) {
+      return {
+        title,
+        subtitle: category,
+        media,
+      };
     },
   },
 })

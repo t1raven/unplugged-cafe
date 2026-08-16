@@ -1,25 +1,49 @@
 import {defineField, defineType} from 'sanity'
-import {SchemaIcon} from '@sanity/icons/Schema'
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 
 export const menuCategory = defineType({
   name: 'menuCategory',
   title: '메뉴 카테고리',
   type: 'document',
-  icon: SchemaIcon,
+
+  orderings: [
+    orderRankOrdering,
+  ],
 
   fields: [
 
+    orderRankField({
+      type: 'menuCategory',
+    }),
+
     defineField({
-      name: 'name',
+      name: 'title',
       title: '카테고리명',
       type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 96,
+        slugify: (input) =>
+          input
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w\-가-힣]+/g, '')
+            .slice(0, 96),
+      },
       validation: (Rule) => Rule.required(),
     }),
   ],
 
   preview: {
     select: {
-      title: 'name',
+      title: 'title',
     },
   },
 })

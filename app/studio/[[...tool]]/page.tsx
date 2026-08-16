@@ -6,16 +6,21 @@
  * You can learn more about the next-sanity package here:
  * https://github.com/sanity-io/next-sanity
  */
-
+'use client';
+import { useEffect, useState } from 'react'
 import { NextStudio } from 'next-sanity/studio'
-import config from '../../../sanity.config'
-
-export const dynamic = 'force-static'
-
-export { metadata, viewport } from 'next-sanity/studio'
+import config from '@/sanity.config'
 
 export default function StudioPage() {
-  if(typeof window !== 'undefined'){
-      return <NextStudio config={config} />
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) {
+    return null 
   }
+
+  return <NextStudio config={config} />
 }

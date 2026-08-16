@@ -1,11 +1,9 @@
 import {defineField, defineType} from 'sanity'
-import {CalendarIcon} from '@sanity/icons/Calendar'
 
 export const performance = defineType({
   name: 'performance',
   title: '공연 일정',
   type: 'document',
-  icon: CalendarIcon,
 
   fields: [
     defineField({
@@ -64,6 +62,15 @@ export const performance = defineType({
     }),
 
     defineField({
+      name: 'poster',
+      title: '공연 포스터',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
+
+    defineField({
       name: 'artists',
       title: '라인업',
       type: 'array',
@@ -92,15 +99,6 @@ export const performance = defineType({
       title: '현장 예매 가격',
       type: 'number',
       validation: (Rule) => Rule.min(0),
-    }),
-
-    defineField({
-      name: 'poster',
-      title: '공연 포스터',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
     }),
 
     defineField({
@@ -185,4 +183,17 @@ export const performance = defineType({
       }
     },
   },
+
+  orderings: [
+    {
+      title: '공연 날짜 순',
+      name: 'orderAsc',
+      by: [
+        {
+          field: 'date', 
+          direction: 'asc'
+        },
+      ],
+    },
+  ],
 })
