@@ -2,7 +2,7 @@
 @use "./normalize";
 
 :root { 
-  --font-size: 19px;
+  --font-size: 16px;
   --inner-width: 90%;
   --inner-max-width: 1200px;
   --header-height: 80px;
@@ -391,6 +391,12 @@ textarea.ipt { resize: none; padding: 15px; min-height: 100px; height: auto; }
 
 
 @media screen and (max-width: 768px){
+    :root { 
+        --font-size: 13px;
+        --header-height: 60px;
+    }
+
+
     .sub-page-section {
         &:first-child {
             padding-top: 40px;

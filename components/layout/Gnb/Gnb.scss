@@ -32,7 +32,7 @@
 			    transition: all .4s ease-in-out;
 			}
 			&.active > a {
-				color: #000;
+				color: #fff;
 			}
 		}
 	}
@@ -42,7 +42,7 @@
 	    left: 0;
 	    height: 50px;
 	    border-radius: 999px;
-	    background: rgba(238, 238, 238, .6);
+	    background: rgba(255, 255, 255, .3);
 	    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 	    z-index: 0;
 	    pointer-events: none;
