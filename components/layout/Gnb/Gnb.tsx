@@ -60,10 +60,24 @@ export default function Gnb() {
     });
   }, [pathname]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const handleResize = () => { moveBackground(false); };
     window.addEventListener('resize', handleResize);
     return () => { window.removeEventListener('resize', handleResize); };
+  }, []);*/
+  
+  useEffect(() => {
+    if (!gnbRef.current) return;
+
+    const observer = new ResizeObserver(() => {
+      moveBackground(false);
+    });
+
+    observer.observe(gnbRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
