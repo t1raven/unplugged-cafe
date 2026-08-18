@@ -1,3 +1,6 @@
+
+import { Analytics } from "@vercel/analytics/next"
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -10,6 +13,7 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        <Analytics />
       </body>
     </html>
   );
