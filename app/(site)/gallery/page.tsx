@@ -22,7 +22,7 @@ const categoryQuery = `
   }
 `;
 
-const galleryQuery = `
+const listQuery = `
   *[
     _type == "galleryItem"
   ]
@@ -42,12 +42,12 @@ const galleryQuery = `
 `;
 
 export default async function GalleryPage() {
-  const [categoryData, galleryData] = await Promise.all([
+  const [categoryData, listData] = await Promise.all([
     client.fetch(categoryQuery),
-    client.fetch(galleryQuery),
+    client.fetch(listQuery),
   ]);
 
-  const galleryItems = galleryData
+  const list = listData
     .filter((item: any) => item.image?.asset)
     .map((item: any) => ({
       _id: item._id,
@@ -69,13 +69,13 @@ export default async function GalleryPage() {
     }));
 
   return (
-    <main className="gallery-page">
+    <main id="site-body" className="gallery-page">
       {/*<section className="gallery-page__header">
         <h1>Gallery</h1>
         <p>UNPLUGGED CAFE</p>
       </section>*/}
 
-      <GalleryList categories={categoryData} items={galleryItems} />
+      <GalleryList category={categoryData} list={list} />
     </main>
   );
 }

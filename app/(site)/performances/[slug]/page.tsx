@@ -245,10 +245,11 @@ export default async function PerformanceDetailPage({
               </div>
 
               <div className="meta-item">
-                <span>장소</span>
+                <span>공연 장소</span>
 
                 <strong>
-                  {performance.place?.name} - {performance.place?.address}
+                  {performance.place?.name}<br/>
+                  <small>{performance.place?.address}</small>
                 </strong>
               </div>
 

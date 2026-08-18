@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
-import { client } from '@/sanity/lib/client'
+import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 
 import MenuList from '@/components/menu/MenuList';
 
-import './menu.scss'
+import './menu.scss';
 
 export const metadata: Metadata = {
   title: "메뉴 | UNPLUGGED LOUNGE",
@@ -20,7 +20,7 @@ const categoryQuery = `
   }
 `;
 
-const menuQuery = `
+const listQuery = `
   *[
     _type == "menuItem"
     && isAvailable == true
@@ -44,12 +44,12 @@ const menuQuery = `
 `;
 
 export default async function MenuPage() {
-  const [categoryData, menuData] = await Promise.all([
+  const [categoryData, listData] = await Promise.all([
     client.fetch(categoryQuery),
-    client.fetch(menuQuery),
+    client.fetch(listQuery),
   ])
 
-  const menuItems = menuData.map((item: any) => ({
+  const list = listData.map((item: any) => ({
     _id: item._id,
     name: item.name,
     description: item.description,
@@ -81,7 +81,7 @@ export default async function MenuPage() {
         </div>
       </section>*/}
 
-      <MenuList categories={categoryData} items={menuItems}/>
+      <MenuList category={categoryData} list={list} />
 
     </main>
   )

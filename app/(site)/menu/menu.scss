@@ -36,110 +36,13 @@
   }
 }
 
-
-/* --------------------------------
-   CATEGORY NAV
--------------------------------- */
-
-.menu-category-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-
-  background: rgba(17, 17, 17, 0.92);
-
-  backdrop-filter: blur(15px);
-}
-
-
-.menu-category-nav__inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  max-width: 1400px;
-  height: 70px;
-
-  margin: 0 auto;
-  padding: 0 30px;
-
-  gap: 45px;
-
-  overflow-x: auto;
-
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  button {
-    position: relative;
-
-    flex-shrink: 0;
-
-    padding: 0;
-
-    border: 0;
-
-    background: transparent;
-
-    color: #777;
-
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 500;
-
-    letter-spacing: 0.12em;
-
-    cursor: pointer;
-
-    transition:
-      color 0.3s ease;
-
-    &::after {
-      content: '';
-
-      position: absolute;
-      left: 0;
-      bottom: -10px;
-
-      width: 0;
-      height: 1px;
-
-      background: #fff;
-
-      transition: width 0.3s ease;
-    }
-
-    &:hover {
-      color: #ddd;
-    }
-
-    &.active {
-      color: #fff;
-    }
-
-    &.active::after {
-      width: 100%;
-    }
-  }
-}
-
-
 /* --------------------------------
    MENU LIST
 -------------------------------- */
 
 .menu-list {
   max-width: 1400px;
-
   margin: 0 auto;
-
-  padding: 80px 0 160px;
 }
 
 
@@ -296,22 +199,6 @@
 
   .menu-intro {
     padding: 110px 20px 70px;
-  }
-
-
-  .menu-category-nav__inner {
-    justify-content: flex-start;
-
-    height: 60px;
-
-    padding: 0 20px;
-
-    gap: 28px;
-  }
-
-
-  .menu-list {
-    padding: 50px 20px 100px;
   }
 
 

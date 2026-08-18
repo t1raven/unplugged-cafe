@@ -1,56 +1,60 @@
 'use client'
 
-import {useEffect, useLayoutEffect, useRef, useState} from 'react'
-import Image from 'next/image';
+import { useLayoutEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import gsap from 'gsap'
 
-interface MenuCategory {
+import CategoryNav from '@/components/common/CategoryNav/CategoryNav'
+
+interface Category {
   _id: string
   title: string
   slug: string
 }
 
-interface MenuItem {
+interface Item {
   _id: string
   name: string
   description?: string
   price: number
-
-  category: MenuCategory | null;
-
-  imageUrl: string;
+  category: Category | null
+  imageUrl: string
 }
 
 interface Props {
-  categories: MenuCategory[];
-  items: MenuItem[];
+  category: Category[]
+  list: Item[]
 }
 
-export default function MenuList({ categories, items }: Props) {
+export default function MenuList({ category, list }: Props) {
+
+  const UseRef = useRef<HTMLDivElement>(null);
+
   const [activeCategory, setActiveCategory] = useState(
-    categories[0]?.slug ?? ''
-  );
+    category[0]?.slug ?? ''
+  )
 
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  const filteredItems = items.filter(
+  const filteredItems = list.filter(
     (item) => item.category?.slug === activeCategory
   );
 
+  /*
+   * 카테고리 변경 시
+   * 기존 이미지 제거 → 새 이미지 stagger 등장
+   */
   useLayoutEffect(() => {
-    const container = menuRef.current;
 
-    if (!container) return;
+    const container = UseRef.current
 
-    const thumbnails = container.querySelectorAll('.menu-card');
+    if (!container) return
 
-    if (!thumbnails.length) return;
+    const listItems = container.querySelectorAll('.menu-card')
+
+    if (!listItems.length) return
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        thumbnails,
+        listItems,
         {
           opacity: 0,
           scale: 0.94,
@@ -65,115 +69,86 @@ export default function MenuList({ categories, items }: Props) {
           ease: 'power3.out',
           clearProps: 'all',
         }
-      );
-    }, container);
+      )
+    }, container)
 
-    return () => ctx.revert();
-  }, [activeCategory]);
+    return () => ctx.revert()
 
-  const handleCategory = (category: string) => {
-    if (category === activeCategory) return;
-
-    setSelectedIndex(null);
-    setActiveCategory(category);
-  };
+  }, [activeCategory])
 
   return (
     <section className="sub-page-section menu-content">
 
       <div className="inner">
-        
-        {/* CATEGORY */}
-        <nav className="menu-category-nav">
 
-          <div className="menu-category-nav__inner">
-            {categories.map((category) => (
-              <button
-                key={category._id}
-                type="button"
-                className={
-                  activeCategory === category.slug
-                    ? 'active'
-                    : ''
-                }
-                onClick={() => {
-                  setSelectedIndex(null);
-                  setActiveCategory(category.slug);
-                }}
-              >
-                {category.title}
-              </button>
-            ))}
-          </div>
+        <CategoryNav
+          category={category}
+          activeCategory={activeCategory}
+          onChange={setActiveCategory}
+        />
 
-        </nav>
+        <div className="menu-list" ref={UseRef}>
 
+          {filteredItems.length > 0 ? (
 
-        {/* MENU */}
-        <div className="menu-list">
+            <div className="menu-grid">
 
-          {items.length === 0 ? (
-            <div className="menu-empty">
-              등록된 메뉴가 없습니다.
+              {filteredItems.map((item) => (
+
+                <article
+                  className="menu-card"
+                  key={item._id}
+                >
+
+                  <div className="menu-card__image">
+
+                    {item.imageUrl && (
+                      <Image
+                        src={item.imageUrl}
+                        alt={item.name}
+                        width={384}
+                        height={480}
+                      />
+                    )}
+
+                  </div>
+
+                  <div className="menu-card__info">
+
+                    <div className="menu-card__title">
+
+                      <h2>{item.name}</h2>
+
+                      <strong>
+                        {item.price.toLocaleString()}원
+                      </strong>
+
+                    </div>
+
+                    {item.description && (
+                      <p>{item.description}</p>
+                    )}
+
+                  </div>
+
+                </article>
+
+              ))}
+
             </div>
+
           ) : (
 
-            <div
-              className="menu-grid"
-              ref={menuRef}
-            >
-              {filteredItems.map((item, index) => (
-
-                  <article
-                    className="menu-card"
-                    key={item._id}
-                  >
-                    <div className="menu-card__image">
-                      {item.imageUrl && (
-                        <Image
-                          src={item.imageUrl}
-                          alt={item.name}
-                          width={384}
-                          height={480}
-                        />
-                      )}
-                    </div>
-
-                    <div className="menu-card__info">
-
-                      <div className="menu-card__title">
-
-                        <h2>
-                          {item.name}
-                        </h2>
-
-                        <strong>
-                          {item.price.toLocaleString()}원
-                        </strong>
-
-                      </div>
-
-
-                      {item.description && (
-                        <p>
-                          {item.description}
-                        </p>
-                      )}
-
-                    </div>
-
-                  </article>
-
-                )
-              )}
-
+            <div className="menu-empty">
+              등록된 메뉴가 없습니다.
             </div>
 
           )}
 
         </div>
+
       </div>
-        
+
     </section>
   )
 }

@@ -1,42 +1,43 @@
 'use client';
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 
+import CategoryNav from '@/components/common/CategoryNav/CategoryNav'
 import GalleryModal from './GalleryModal';
 
 import './GalleryList.scss';
 
-interface GalleryCategory {
+interface Category {
   _id: string;
   title: string;
   slug: string;}
 
-interface GalleryItem {
+interface Item {
   _id: string;
   title: string;
   description?: string;
 
-  category: GalleryCategory | null;
+  category: Category | null;
 
   imageUrl: string;
 }
 
-interface GalleryListProps {
-  categories: GalleryCategory[];
-  items: GalleryItem[];
+interface Props {
+  category: Category[];
+  list: Item[];
 }
 
-export default function GalleryList({ items, categories }: GalleryListProps) {
+export default function GalleryList({ category, list }: Props) {
+
+  const UseRef = useRef<HTMLDivElement>(null);
+
   const [activeCategory, setActiveCategory] = useState(
-    categories[0]?.slug ?? ''
+    category[0]?.slug ?? ''
   );
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  const galleryRef = useRef<HTMLDivElement>(null);
-
-  const filteredItems = items.filter(
+  const filteredItems = list.filter(
     (item) => item.category?.slug === activeCategory
   );
 
@@ -45,17 +46,18 @@ export default function GalleryList({ items, categories }: GalleryListProps) {
    * 기존 이미지 제거 → 새 이미지 stagger 등장
    */
   useLayoutEffect(() => {
-    const container = galleryRef.current;
+
+    const container = UseRef.current;
 
     if (!container) return;
 
-    const thumbnails = container.querySelectorAll('.gallery__item');
+    const listItems = container.querySelectorAll('.gallery__item');
 
-    if (!thumbnails.length) return;
+    if (!listItems.length) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        thumbnails,
+        listItems,
         {
           opacity: 0,
           scale: 0.94,
@@ -74,29 +76,16 @@ export default function GalleryList({ items, categories }: GalleryListProps) {
     }, container);
 
     return () => ctx.revert();
+
   }, [activeCategory]);
 
+
+
+  
   /*
-   * Modal 열렸을 때 body scroll 방지
+   * Modal
    */
-  useEffect(() => {
-    if (selectedIndex !== null) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [selectedIndex]);
-
-  const handleCategory = (category: string) => {
-    if (category === activeCategory) return;
-
-    setSelectedIndex(null);
-    setActiveCategory(category);
-  };
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const handleOpenModal = (index: number) => {
     setSelectedIndex(index);
@@ -126,34 +115,33 @@ export default function GalleryList({ items, categories }: GalleryListProps) {
     );
   }, [selectedIndex, filteredItems.length]);
 
+  /*
+   * Modal 열렸을 때 body scroll 방지
+   */
+  useEffect(() => {
+    if (selectedIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedIndex]);
+
   return (
     <>
       <section className="sub-page-section gallery">
         <div className="inner">
-          <nav className="gallery__category">
-            {categories.map((category) => (
-              <button
-                key={category._id}
-                type="button"
-                className={
-                  activeCategory === category.slug
-                    ? 'is-active'
-                    : ''
-                }
-                onClick={() => {
-                  setSelectedIndex(null);
-                  setActiveCategory(category.slug);
-                }}
-              >
-                {category.title}
-              </button>
-            ))}
-          </nav>
 
-          <div
-            ref={galleryRef}
-            className="gallery__grid"
-          >
+          <CategoryNav
+            category={category}
+            activeCategory={activeCategory}
+            onChange={setActiveCategory}
+          />
+
+          <div className="gallery__grid" ref={UseRef}>
             {filteredItems.length > 0 ? (
               filteredItems.map((item, index) => (
                 <button

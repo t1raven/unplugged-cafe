@@ -172,13 +172,14 @@ export const performance = defineType({
     select: {
       title: 'title',
       date: 'date',
+      time: 'startTime',
       media: 'poster',
     },
 
-    prepare({title, date, media}) {
+    prepare({title, date, time, media}) {
       return {
         title,
-        subtitle: `${date ?? ''}`,
+        subtitle: `${date ?? ''} ${time ?? ''}`,
         media,
       }
     },
@@ -191,6 +192,10 @@ export const performance = defineType({
       by: [
         {
           field: 'date', 
+          direction: 'asc'
+        },
+        {
+          field: 'startTime', 
           direction: 'asc'
         },
       ],

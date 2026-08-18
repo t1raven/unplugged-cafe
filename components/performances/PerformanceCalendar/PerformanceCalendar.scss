@@ -4,13 +4,17 @@
   padding-bottom: 120px;
   color: #f5f3ee;
 
+  > .inner {
+    max-width: 750px;
+  }
+
   // ==================================================
   // Calendar Header
   // ==================================================
 
   .calendar-header {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     margin-bottom: 40px;
   }
@@ -27,7 +31,7 @@
 
     h2 {
       margin: 0;
-      font-size: 34px;
+      font-size: 28px;
       font-weight: 500;
       line-height: 1.2;
       letter-spacing: -0.03em;
@@ -120,11 +124,12 @@
 
   .calendar-weekday {
     padding: 15px 12px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     line-height: 1.4;
     letter-spacing: 0.04em;
     color: #a8a39a;
+    text-align: center;
 
     &:first-child {
       color: #bd7777;
@@ -154,7 +159,7 @@
     position: relative;
     display: block;
     width: 100%;
-    min-height: 120px;
+    min-height: 80px;
     padding: 14px;
     border: 0;
     border-right: 1px solid #34332f;
@@ -226,7 +231,7 @@
   .calendar-date {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     margin-bottom: 8px;
 
     span {
@@ -260,6 +265,7 @@
   .calendar-performance-indicator {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 5px;
     margin-top: 10px;
 
@@ -268,7 +274,7 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: #c9a96e;
+      background: var(--success-color);
     }
 
     small {
@@ -311,14 +317,14 @@
 
       span {
         margin-left: 4px;
-        font-size: 15px;
+        font-size: 16px;
         color: #88847c;
       }
     }
   }
 
   .selected-performance-count {
-    font-size: 12px;
+    font-size: 16px;
     line-height: 1.4;
     color: #88847c;
   }
@@ -588,7 +594,7 @@
       }
 
       h2 {
-        font-size: 24px;
+        font-size: 21px;
       }
     }
 
@@ -602,9 +608,7 @@
       }
 
       .today-button {
-        min-width: 48px;
-        padding: 0 12px;
-        font-size: 11px;
+        display: none;
       }
     }
 
@@ -614,7 +618,6 @@
 
     .calendar-weekday {
       padding: 10px 2px;
-      text-align: center;
       font-size: 10px;
     }
 
@@ -623,8 +626,8 @@
     // ----------------------------------------------
 
     .calendar-day {
-      min-height: 62px;
-      padding: 7px 4px;
+      min-height: 50px;
+      padding: 5px 2px;
     }
 
     .calendar-date {
@@ -632,15 +635,15 @@
       margin-bottom: 0;
 
       span {
-        width: 24px;
-        height: 24px;
-        font-size: 11px;
+        width: 22px;
+        height: 22px;
+        font-size: 10px;
       }
     }
 
     .calendar-performance-indicator {
       justify-content: center;
-      margin-top: 7px;
+      margin-top: 5px;
 
       span {
         width: 5px;
@@ -669,7 +672,7 @@
       }
 
       h3 {
-        font-size: 23px;
+        font-size: 21px;
 
         span {
           font-size: 12px;
@@ -686,9 +689,9 @@
     // ----------------------------------------------
 
     .selected-performance-item {
-      grid-template-columns: 60px 1fr 20px;
+      grid-template-columns: 55px 1fr 16px;
+      padding: 14px 2px;
       min-height: 90px;
-      padding: 15px 4px;
 
       &:hover {
         padding-left: 8px;
@@ -696,7 +699,7 @@
     }
 
     .selected-performance-time {
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .selected-performance-info {
@@ -704,7 +707,7 @@
 
       strong {
         overflow: hidden;
-        font-size: 13px;
+        font-size: 12px;
         white-space: nowrap;
         text-overflow: ellipsis;
       }
@@ -752,7 +755,7 @@
     }
 
     .upcoming-item {
-      grid-template-columns: 70px 1fr 20px;
+      grid-template-columns: 60px 1fr 16px;
       min-height: 80px;
       padding: 15px 5px;
 
@@ -798,70 +801,6 @@
 
     .upcoming-arrow {
       font-size: 16px;
-    }
-  }
-
-  // ==================================================
-  // Small Mobile
-  // ==================================================
-
-  @media (max-width: 390px) {
-    .calendar-header {
-      align-items: center;
-    }
-
-    .calendar-title {
-      h2 {
-        font-size: 21px;
-      }
-    }
-
-    .calendar-controls {
-      .today-button {
-        display: none;
-      }
-    }
-
-    .calendar-day {
-      min-height: 50px;
-      padding: 5px 2px;
-    }
-
-    .calendar-date {
-      span {
-        width: 22px;
-        height: 22px;
-        font-size: 10px;
-      }
-    }
-
-    .calendar-performance-indicator {
-      margin-top: 5px;
-    }
-
-    .selected-date-header {
-      h3 {
-        font-size: 21px;
-      }
-    }
-
-    .selected-performance-item {
-      grid-template-columns: 55px 1fr 16px;
-      padding: 14px 2px;
-    }
-
-    .selected-performance-time {
-      font-size: 13px;
-    }
-
-    .selected-performance-info {
-      strong {
-        font-size: 12px;
-      }
-    }
-
-    .upcoming-item {
-      grid-template-columns: 60px 1fr 16px;
     }
   }
 }
