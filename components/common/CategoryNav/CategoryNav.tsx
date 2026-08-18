@@ -1,12 +1,8 @@
 'use client'
 
-import './CategoryNav.scss'
+import type { Category } from '@/types/category';
 
-interface Category {
-  _id: string
-  title: string
-  slug: string
-}
+import './CategoryNav.scss'
 
 interface Props {
   category: Category[]

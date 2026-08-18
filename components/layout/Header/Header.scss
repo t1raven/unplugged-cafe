@@ -54,6 +54,16 @@
 			transition: all 0.25s;
 		}
 	}
+	.gnb-btn > a {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		color: #fff;
+	}
+
+
 	.gnb {
 		position: absolute;
 	    top: 50%;
@@ -90,6 +100,7 @@
 				}
 			}
 		}
+
 		.move-bg {
 			position: absolute;
 		    top: 50%;
@@ -121,6 +132,11 @@ html.scrollUp #site-header {
 			> a {
 				font-size: 20px;
 			}
+		}
+
+		.gnb-btn > a {
+			width: 30px;
+			height: 30px;
 		}
 	}
 }

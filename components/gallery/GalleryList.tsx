@@ -7,26 +7,15 @@ import gsap from 'gsap';
 import CategoryNav from '@/components/common/CategoryNav/CategoryNav'
 import GalleryModal from './GalleryModal';
 
+import type { Category } from '@/types/category';
+import type { Gallery } from '@/types/gallery';
+
 import './GalleryList.scss';
 
-interface Category {
-  _id: string;
-  title: string;
-  slug: string;}
-
-interface Item {
-  _id: string;
-  title: string;
-  description?: string;
-
-  category: Category | null;
-
-  imageUrl: string;
-}
 
 interface Props {
   category: Category[];
-  list: Item[];
+  list: Gallery[];
 }
 
 export default function GalleryList({ category, list }: Props) {

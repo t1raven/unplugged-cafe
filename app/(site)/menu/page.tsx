@@ -80,6 +80,16 @@ export default async function MenuPage() {
           <h1>MENU</h1>
         </div>
       </section>*/}
+      <section className="sub-page-hero">
+        <div className="sub-page-hero__inner">
+          <p className="sub-page-hero-label">CAFE MENU</p>
+          <h1>서교음악다방</h1>
+          <p className="sub-page-hero__description">
+            음악과 사람이 머무는 카페<br/>
+            자유롭고 아름다운 추억이 가득한 청춘 쉼터
+          </p>
+        </div>
+      </section>
 
       <MenuList category={categoryData} list={list} />
 

@@ -3,26 +3,13 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
+import type { Category } from '@/types/category';
+import type { Gallery } from '@/types/gallery';
+
 import './GalleryModal.scss';
 
-interface GalleryCategory {
-  _id: string;
-  title: string;
-  slug: string;
-}
-
-interface GalleryItem {
-  _id: string;
-  title: string;
-  description?: string;
-
-  category: GalleryCategory | null;
-
-  imageUrl: string;
-}
-
 interface GalleryModalProps {
-  items: GalleryItem[];
+  items: Gallery[];
   currentIndex: number;
   onClose: () => void;
   onPrev: () => void;

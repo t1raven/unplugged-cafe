@@ -4,26 +4,14 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import gsap from 'gsap'
 
-import CategoryNav from '@/components/common/CategoryNav/CategoryNav'
+import CategoryNav from '@/components/common/CategoryNav/CategoryNav';
 
-interface Category {
-  _id: string
-  title: string
-  slug: string
-}
-
-interface Item {
-  _id: string
-  name: string
-  description?: string
-  price: number
-  category: Category | null
-  imageUrl: string
-}
+import type { Category } from '@/types/category';
+import type { Menu } from '@/types/menu';
 
 interface Props {
   category: Category[]
-  list: Item[]
+  list: Menu[]
 }
 
 export default function MenuList({ category, list }: Props) {

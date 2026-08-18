@@ -6,62 +6,12 @@ import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react';
-import type { PortableTextBlock } from '@portabletext/types';
+
+import type { Performance } from '@/types/performance';
+import type { Artist } from '@/types/artist';
+import type { Place } from '@/types/place';
 
 import './performance-detail.scss';
-
-interface Artist {
-  _id: string;
-  name: string;
-  slug?: {
-    current?: string;
-  };
-  profileImage?: {
-    asset?: {
-      _ref?: string;
-    };
-  };
-  genre?: string;
-  bio?: PortableTextBlock[];
-  instagram?: string;
-  youtube?: string;
-  website?: string;
-}
-
-interface Place {
-  _id: string;
-  name: string;
-  address?: string;
-  naverMap?: string;
-  kakaomMap?: string;
-  googleMap?: string;
-}
-
-interface Performance {
-  _id: string;
-  title: string;
-  slug?: {
-    current?: string;
-  };
-  date: string;
-  startTime?: string;
-  poster?: {
-    asset?: {
-      _ref?: string;
-      _id?: string;
-    };
-  };
-  description?: PortableTextBlock[];
-  notice?: PortableTextBlock[];
-  price1?: number;
-  price2?: number;
-  admissionType?: string;
-  viewingType?: string;
-  reservationOpen?: boolean;
-  reservationUrl?: string;
-  artists?: Artist[];
-  place?: Place;
-}
 
 const admissionTypeNames: Record<string, string> = {
   1: '공연장대기순',
@@ -248,7 +198,7 @@ export default async function PerformanceDetailPage({
                 <span>공연 장소</span>
 
                 <strong>
-                  {performance.place?.name}<br/>
+                  {performance.place?.name} ↗<br/>
                   <small>{performance.place?.address}</small>
                 </strong>
               </div>

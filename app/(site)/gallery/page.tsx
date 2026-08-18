@@ -75,6 +75,16 @@ export default async function GalleryPage() {
         <p>UNPLUGGED CAFE</p>
       </section>*/}
 
+      <section className="sub-page-hero">
+        <div className="sub-page-hero__inner">
+          <p className="sub-page-hero-label">Gallery</p>
+          <h1>언플러그드 갤러리</h1>
+          <p className="sub-page-hero__description">
+            우리의 음악이 함께 하는 순간들
+          </p>
+        </div>
+      </section>
+
       <GalleryList category={categoryData} list={list} />
     </main>
   );

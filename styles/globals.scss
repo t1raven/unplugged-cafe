@@ -387,12 +387,73 @@ textarea.ipt { resize: none; padding: 15px; min-height: 100px; height: auto; }
 
 
 
-.sub-page-section { position: relative; padding: 40px 0; }
-.sub-page-section:first-child { padding-top: 100px; }
-.sub-page-section:last-child { padding-bottom: 200px; }
-.sub-page-section > .inner { width: var(--inner-width); max-width: var(--inner-max-width); margin: 0 auto; position: relative; }
-.sub-page-section > .bg { position: absolute; top: 0; left: 0; z-index: -1; width: 100%; height: 100%; background-size: cover; background-repeat: no-repeat; background-position: center; background-color: #333; }
 
+.sub-page-hero {
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    padding-top: calc(var(--header-height) + 40px);
+    padding-bottom: 100px;
+    background-color: var(--background-sec-color);
+
+    &__inner {
+        width: var(--inner-width); 
+        max-width: var(--inner-max-width); 
+        margin: 0 auto;
+    }
+
+    &-label {
+        color: var(--secondary-color);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 24px 0;
+      font-size: clamp(52px, 8vw, 100px);
+      line-height: 1.15;
+      font-weight: 500;
+      letter-spacing: -0.06em;
+    }
+
+    &__description {
+      color: #999;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+}
+
+
+.sub-page-section { 
+    position: relative; 
+    padding: 40px 0; 
+    &:first-child { 
+        padding-top: 120px; 
+    }
+    &:last-child { 
+        padding-bottom: 200px; 
+    }
+    > .inner { 
+        position: relative; 
+        width: var(--inner-width); 
+        max-width: var(--inner-max-width); 
+        margin: 0 auto; 
+    }
+    > .bg { 
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        z-index: -1; 
+        width: 100%; 
+        height: 100%; 
+        background-size: cover; 
+        background-repeat: no-repeat; 
+        background-position: center; 
+        background-color: #333; 
+    }
+}
 
 @media screen and (max-width: 768px){
     :root { 
@@ -400,10 +461,22 @@ textarea.ipt { resize: none; padding: 15px; min-height: 100px; height: auto; }
         --header-height: 60px;
     }
 
+    .sub-page-hero {
+        padding-top: calc(var(--header-height) + 20px);
+        padding-bottom: 20px;
+
+        h1 {
+            font-size: clamp(38px, 14vw, 42px);
+        }
+
+        &__description {
+            font-size: 13px;
+        }
+    }
 
     .sub-page-section {
         &:first-child {
-            padding-top: var(--header-height);
+            padding-top: calc(var(--header-height) + 20px);
         }
         &:first-child {
             padding-bottom: 120px;

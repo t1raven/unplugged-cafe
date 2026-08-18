@@ -18,15 +18,6 @@ export default function Footer() {
           </div>
           <div className="footer-copy">Unplugged Lounge © 2026</div>
         </div>
-        <div className="footer-link">
-          <div className="sns_link">
-            <ul>
-              <li>
-                <a href="https://www.instagram.com/unplugged.lounge/" target="_blank"><img src="/images/common/footer_sns_link_insta.png" /></a>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
     </footer>
   );

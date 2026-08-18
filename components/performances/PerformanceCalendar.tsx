@@ -3,29 +3,10 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 
+import type { Performance } from '@/types/performance';
+import type { Artist } from '@/types/artist';
+
 import './PerformanceCalendar.scss';
-
-interface Artist {
-  _id: string;
-  name: string;
-  slug?: {
-    current?: string;
-  };
-}
-
-interface Performance {
-  _id: string;
-  title: string;
-  slug?: {
-    current?: string;
-  };
-  date: string;
-  startTime?: string;
-  price1?: string;
-  price2?: string;
-  artists?: Artist[];
-  thumbnail?: unknown;
-}
 
 interface PerformanceCalendarProps {
   performances: Performance[];
@@ -250,7 +231,7 @@ export default function PerformanceCalendar({
               }
               aria-label="이전 달"
             >
-              ‹
+              <span className="material-symbols-rounded">keyboard_arrow_left</span>
             </button>
 
             <button
@@ -266,7 +247,7 @@ export default function PerformanceCalendar({
               onClick={handleNextMonth}
               aria-label="다음 달"
             >
-              ›
+              <span className="material-symbols-rounded">keyboard_arrow_right</span>
             </button>
 
           </div>

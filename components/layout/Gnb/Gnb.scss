@@ -2,11 +2,12 @@
 	position: sticky;
     bottom: 0;
     left: 0;
+    z-index: 100;
     display: flex;
    	justify-content: center;
     > nav {
     	position: absolute;
-    	bottom: 40px;
+    	bottom: 20px;
     	display: inline-flex;
 	    align-items: center;
 	    border-radius: 999px;
@@ -84,7 +85,7 @@ html.scrollUp #site-gnb > nav {
 	#site-gnb {
 		> nav {
 			width: 90%;
-			bottom: 20px;
+			bottom: 10px;
 			> ul {
 				padding: 5px;
 				> li {

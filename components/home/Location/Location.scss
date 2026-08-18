@@ -1,0 +1,102 @@
+.location {
+  position: relative;
+
+  min-height: 800px;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  color: #fff;
+
+  &__image {
+    position: absolute;
+    inset: 0;
+
+    background:
+      url('/images/home/location.jpg')
+      center / cover no-repeat;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+
+    width: var(--inner-width); 
+    max-width: var(--inner-max-width); 
+    margin: 0 auto;
+    padding: 150px 0;
+  }
+
+  &__label {
+    margin: 0 0 40px;
+
+    font-size: 16px;
+    color: var(--primary-color);
+    letter-spacing: 0.2em;
+  }
+
+  h2 {
+    margin: 0;
+
+    font-size: clamp(60px, 10vw, 120px);
+    line-height: 1;
+    letter-spacing: -0.06em;
+  }
+
+  &__info {
+    display: flex;
+    gap: 100px;
+
+    margin-top: 70px;
+
+    p {
+      margin: 0;
+
+      font-size: 16px;
+      line-height: 1.8;
+    }
+  }
+
+  a {
+    display: inline-block;
+
+    margin-top: 50px;
+
+    color: #fff;
+
+    font-size: 13px;
+    letter-spacing: 0.15em;
+
+    text-decoration: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .location {
+    min-height: 700px;
+
+    &__content {
+      padding: 100px 0;
+    }
+
+    h2 {
+      font-size: 13vw;
+    }
+
+    &__info {
+      flex-direction: column;
+      gap: 30px;
+
+      margin-top: 50px;
+    }
+  }
+}

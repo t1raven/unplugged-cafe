@@ -1,14 +1,49 @@
+import { client } from '@/sanity/lib/client';
+
+import Hero from '@/components/home/Hero/Hero';
+import Upcoming from '@/components/home/Upcoming/Upcoming';
+import About from '@/components/home/About/About';
+import Location from '@/components/home/Location/Location';
+
+import type { Performance } from '@/types/performance';
+
+import './home.scss';
+
+const upcomingQuery = `
+  *[
+    _type == "performance"
+    && date >= $today
+  ]
+  | order(date asc, startTime asc)[0...6] {
+    _id,
+    title,
+    slug,
+    date,
+    startTime,
+    poster,
+    artists[]->{
+      _id,
+      name,
+      slug
+    },
+    thumbnail,
+  }
+`;
+
 export default async function Home() {
+  const today = new Date().toISOString().split('T')[0];
+
+  const performances: Performance[] =
+    await client.fetch(upcomingQuery, {
+      today,
+    });
+
   return (
-    <main id="site-body">
-      <section className="sub-page-section">
-        <div className="inner">
-          <h1>UNPLUGGED LOUNGE</h1>
-          <p>음악과 사람이 머무는 카페 & 한국 인디뮤지션의 출발지</p>
-          <p>자유롭고 아름다운 추억이 가득한 청춘 쉼터</p>
-          <p>다양한 공연을 즐길 수 있는 힙한 라이브 카페</p>
-        </div>
-      </section>
+    <main id="site-body" className="home">
+      <Hero />
+      <Upcoming performances={performances} />
+      <About />
+      <Location />
     </main>
   );
 }

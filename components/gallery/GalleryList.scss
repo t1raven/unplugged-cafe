@@ -1,6 +1,5 @@
 .gallery {
   width: 100%;
-  padding: 120px 5vw 160px;
   background: #111;
   color: #fff;
 
@@ -44,7 +43,7 @@
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
   }
 
@@ -115,8 +114,6 @@
 
 @media (max-width: 640px) {
   .gallery {
-    padding: 90px 20px 120px;
-
     &__category {
       justify-content: flex-start;
       gap: 24px;
