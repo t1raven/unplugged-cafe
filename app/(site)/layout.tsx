@@ -15,6 +15,11 @@ export const metadata: Metadata = {
     url: 'https://www.unplugged-lounge.com',
     images: [{ url: "/og-image.png" }],
   },
+  formatDetection: {
+    telephone: false,
+    address: false,
+    email: false,
+  },
 };
 
 //Layout

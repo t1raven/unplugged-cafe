@@ -65,6 +65,30 @@ export default function Gnb() {
     window.addEventListener('resize', handleResize);
     return () => { window.removeEventListener('resize', handleResize); };
   }, []);*/
+
+  const lastWidth = useRef(0);
+
+  useEffect(() => { 
+    requestAnimationFrame(() => { 
+      lastWidth.current = window.innerWidth;
+
+      const handleResize = () => {
+        if (window.innerWidth === lastWidth.current) {
+          return;
+        }
+
+        lastWidth.current = window.innerWidth;
+
+        moveBackground(false);
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      };
+    }); 
+  }, []);
   
   useEffect(() => {
     if (!gnbRef.current) return;

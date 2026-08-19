@@ -50,7 +50,9 @@ export default function Header() {
           {/*<span className="material-symbols-rounded">keyboard_backspace</span>*/}
         </div>
         <div className="logo">
-          <Link href="/">UNPLUGGED LOUNGE</Link>
+          <Link href="/">
+            UNPLUGGED LOUNGE
+          </Link>
         </div>
         <div className="gnb-btn">
           <Link href="https://www.instagram.com/unplugged.lounge/" target="_blank">
