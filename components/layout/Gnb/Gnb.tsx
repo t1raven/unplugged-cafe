@@ -111,9 +111,9 @@ export default function Gnb() {
           <li className={pathname === '/' ? "active" : ""}><Link href="/" title="홈"><span className="material-symbols-rounded" translate="no">home</span></Link></li>
           <li className={pathname.startsWith('/performances') ? "active" : ""}><Link href="/performances" title="공연일정"><span className="material-symbols-rounded" translate="no">confirmation_number</span></Link></li>
           <li className={pathname.startsWith('/menu') ? "active" : ""}><Link href="/menu" title="카페메뉴"><span className="material-symbols-rounded" translate="no">local_cafe</span></Link></li>
-          <li className={pathname.startsWith('/gallery') ? "active" : ""}><Link href="/gallery" title="갤러리"><span className="material-symbols-rounded" translate="no">imagesmode</span></Link></li>
-          <li className={pathname.startsWith('/rental') ? "active" : ""}><Link href="/rental" title="대관신청"><span className="material-symbols-rounded" translate="no">app_registration</span></Link></li>
-          {/*<li className={pathname.startsWith('/news') ? "active" : ""}><Link href="/news" className="char-text">소식</Link></li>*/}
+          <li className={pathname.startsWith('/gallery') ? "active" : ""}><Link href="/gallery" title="갤러리"><span className="material-symbols-rounded" translate="no">photo</span></Link></li>
+          <li className={pathname.startsWith('/rental') ? "active" : ""}><Link href="/rental" title="대관신청"><span className="material-symbols-rounded" translate="no">music_note_add</span></Link></li>
+          {/*<li className={pathname.startsWith('/news') ? "active" : ""}><Link href="/news" title="소식"><span className="material-symbols-rounded" translate="no">brand_awareness</span></Link></li>*/}
         </ul>
         <div className="move-bg" ref={moveBgRef}></div>
       </nav>

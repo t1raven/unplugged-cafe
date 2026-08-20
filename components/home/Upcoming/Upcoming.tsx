@@ -130,7 +130,7 @@ export default function Upcoming({
             ))
           ) : (
             <p className="upcoming__empty">
-              UPCOMING PERFORMANCE
+              예정된 공연이 없습니다.
             </p>
           )}
         </div>

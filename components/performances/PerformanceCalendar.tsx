@@ -354,13 +354,13 @@ export default function PerformanceCalendar({
                 {String(selectedDateInfo.day).padStart(2, '0')}
                 {' '}
                 <span>
-                  {selectedDateInfo.weekday}
+                  {selectedDateInfo.weekday}요일
                 </span>
               </h3>
             </div>
 
             <span className="selected-performance-count">
-              {selectedPerformances.length} 공연
+              공연 {selectedPerformances.length}
             </span>
 
           </div>
