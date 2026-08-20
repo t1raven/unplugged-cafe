@@ -4,6 +4,10 @@ import RentalPage from '@/components/rental/RentalPage';
 
 import './rental.scss';
 
+export const metadata: Metadata = {
+  title: "대관 | UNPLUGGED LOUNGE",
+};
+
 export default function Rental() {
   return (
     <main id="site-body" className="rental">
