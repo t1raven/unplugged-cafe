@@ -394,9 +394,6 @@ textarea.ipt { resize: none; padding: 15px; min-height: 100px; height: auto; }
     padding-bottom: 100px;
     background-color: var(--background-sec-color);
 
-    position: sticky;
-    top: 0;
-
     &__inner {
         width: var(--inner-width); 
         max-width: var(--inner-max-width); 

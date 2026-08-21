@@ -76,7 +76,7 @@ async function getPerformance(slug: string) {
     { slug },
     {
       next: {
-        revalidate: 60,
+        //revalidate: 60,
       },
     }
   );

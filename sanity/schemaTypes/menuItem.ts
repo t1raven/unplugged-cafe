@@ -52,16 +52,9 @@ export const menuItem = defineType({
     }),
 
     defineField({
-      name: 'summary',
-      title: '요약',
-      type: 'string',
-    }),
-
-    defineField({
       name: 'description',
       title: '설명',
-      type: 'text',
-      rows: 4,
+      type: 'string',
     }),
 
     defineField({

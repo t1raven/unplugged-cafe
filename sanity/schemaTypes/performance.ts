@@ -188,11 +188,11 @@ export const performance = defineType({
   orderings: [
     {
       title: '공연 날짜 순',
-      name: 'orderAsc',
+      name: 'orderDesc',
       by: [
         {
           field: 'date', 
-          direction: 'asc'
+          direction: 'desc'
         },
         {
           field: 'startTime', 

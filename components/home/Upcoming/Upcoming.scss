@@ -27,7 +27,7 @@
     a {
       color: #fff;
 
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 0.15em;
 
       text-decoration: none;
@@ -103,7 +103,7 @@
     }
 
     span {
-      font-size: 10px;
+      font-size: 13px;
       letter-spacing: 0.15em;
       opacity: 0.5;
     }
@@ -161,6 +161,10 @@
 
     &__header {
       margin-bottom: 40px;
+
+      a {
+        font-size: 10px;
+      }
     }
 
     &__item {

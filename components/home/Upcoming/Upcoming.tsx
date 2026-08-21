@@ -73,7 +73,7 @@ export default function Upcoming({
       <div className="upcoming__inner">
 
         <div className="upcoming__header">
-          <p>UPCOMING</p>
+          <p>UPCOMING PERFORMANCE</p>
 
           <Link href="/performances">
             VIEW ALL

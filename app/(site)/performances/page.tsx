@@ -38,7 +38,7 @@ async function getPerformances() {
     {},
     {
       next: {
-        revalidate: 60,
+        //revalidate: 60,
       },
     }
   );

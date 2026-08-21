@@ -305,7 +305,7 @@
       font-weight: 600;
       line-height: 1.4;
       letter-spacing: 0.16em;
-      color: #8f8b83;
+      color: var(--secondary-color);
     }
 
     h3 {
@@ -453,7 +453,7 @@
       font-weight: 600;
       line-height: 1.4;
       letter-spacing: 0.16em;
-      color: #8f8b83;
+      color: var(--secondary-color);
     }
 
     h3 {
@@ -504,7 +504,7 @@
     }
 
     span {
-      font-size: 12px;
+      font-size: 13px;
       color: #77736c;
     }
   }
