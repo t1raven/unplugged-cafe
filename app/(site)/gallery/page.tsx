@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 
 import { client } from '@/sanity/lib/client';
-import { urlFor } from '@/sanity/lib/image';
 
 import GalleryList from '@/components/gallery/GalleryList';
+
+import type { Category } from '@/types/category'
+import type { Gallery } from '@/types/gallery'
 
 import './gallery.scss';
 
@@ -13,7 +15,8 @@ export const metadata: Metadata = {
 
 const categoryQuery = `
   *[
-    _type == "galleryCategory" && visible == true
+    _type == "galleryCategory" && 
+    visible == true
   ]
   | order(orderRank) {
     _id,
@@ -34,46 +37,21 @@ const listQuery = `
     "category": category->{
       _id,
       title,
-      slug
+      "slug": slug.current
     },
 
-    image
+    "imageUrl": image.asset->url
   }
 `;
 
 export default async function GalleryPage() {
-  const [categoryData, listData] = await Promise.all([
-    client.fetch(categoryQuery),
-    client.fetch(listQuery),
-  ]);
-
-  const list = listData
-    .filter((item: any) => item.image?.asset)
-    .map((item: any) => ({
-      _id: item._id,
-      title: item.title,
-      description: item.description,
-
-      category: item.category
-        ? {
-            _id: item.category._id,
-            title: item.category.title,
-            slug: item.category.slug?.current,
-          }
-        : null,
-
-      imageUrl: urlFor(item.image)
-        .width(1600)
-        .quality(90)
-        .url(),
-    }));
+  const [categories, items] = await Promise.all([
+    client.fetch<Category[]>(categoryQuery),
+    client.fetch<Gallery[]>(listQuery),
+  ])
 
   return (
     <main id="site-body" className="gallery-page">
-      {/*<section className="gallery-page__header">
-        <h1>Gallery</h1>
-        <p>UNPLUGGED CAFE</p>
-      </section>*/}
 
       <section className="sub-page-hero">
         <div className="sub-page-hero__inner">
@@ -85,7 +63,7 @@ export default async function GalleryPage() {
         </div>
       </section>
 
-      <GalleryList category={categoryData} list={list} />
+      <GalleryList categories={categories} items={items} />
     </main>
   );
 }

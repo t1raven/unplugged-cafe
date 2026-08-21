@@ -12,65 +12,52 @@ import type { Gallery } from '@/types/gallery';
 
 import './GalleryList.scss';
 
-
 interface Props {
-  category: Category[];
-  list: Gallery[];
+  categories: Category[];
+  items: Gallery[];
 }
 
-export default function GalleryList({ category, list }: Props) {
-
-  const UseRef = useRef<HTMLDivElement>(null);
+export default function GalleryList({
+  categories,
+  items,
+}: Props) {
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const [activeCategory, setActiveCategory] = useState(
-    category[0]?.slug ?? ''
-  );
+    categories[0]?.slug ?? ''
+  )
 
-  const filteredItems = list.filter(
+  const filteredItems = items.filter(
     (item) => item.category?.slug === activeCategory
-  );
+  )
 
-  /*
-   * 카테고리 변경 시
-   * 기존 이미지 제거 → 새 이미지 stagger 등장
-   */
   useLayoutEffect(() => {
+    const container = containerRef.current
 
-    const container = UseRef.current;
+    if (!container) return
 
-    if (!container) return;
+    const gridItems = gsap.utils.toArray<HTMLElement>(
+      '.gallery__item',
+      container
+    )
 
-    const listItems = container.querySelectorAll('.gallery__item');
-
-    if (!listItems.length) return;
+    if (!gridItems.length) return
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        listItems,
-        {
-          opacity: 0,
-          scale: 0.94,
-          y: 20,
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 0.65,
-          stagger: 0.08,
-          ease: 'power3.out',
-          clearProps: 'all',
-        }
-      );
-    }, container);
+      gsap.from(gridItems, {
+        opacity: 0,
+        scale: 0.94,
+        y: 20,
+        duration: 0.65,
+        stagger: 0.08,
+        ease: 'power3.out',
+        clearProps: 'all',
+      })
+    }, container)
 
-    return () => ctx.revert();
+    return () => ctx.revert()
+  }, [activeCategory])
 
-  }, [activeCategory]);
-
-
-
-  
   /*
    * Modal
    */
@@ -125,12 +112,12 @@ export default function GalleryList({ category, list }: Props) {
         <div className="inner">
 
           <CategoryNav
-            category={category}
+            category={categories}
             activeCategory={activeCategory}
             onChange={setActiveCategory}
           />
 
-          <div className="gallery__grid" ref={UseRef}>
+          <div className="gallery__grid" ref={containerRef}>
             {filteredItems.length > 0 ? (
               filteredItems.map((item, index) => (
                 <button
