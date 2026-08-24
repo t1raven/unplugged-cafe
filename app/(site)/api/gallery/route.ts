@@ -2,20 +2,23 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { client } from '@/sanity/lib/client'
 
-const PAGE_SIZE = 12
+const PAGE_SIZE = 12;
 
-const menuQuery = `
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url)
+
+  const category = searchParams.get('category') || ''
+
+  const listQuery = `
   *[
-    _type == "menuItem" &&
-    isAvailable == true &&
-    category->slug.current == $category
+    _type == "galleryItem"
+    ${category ? `&& category->slug.current == $category` : ''}
   ]
-  | order(orderRank asc)
+  | order(_createdAt desc)
   [$start...$end] {
     _id,
-    name,
+    title,
     description,
-    price,
 
     "category": category->{
       _id,
@@ -27,10 +30,6 @@ const menuQuery = `
   }
 `
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url)
-
-  const category = searchParams.get('category') ?? ''
   const page = Math.max(
     Number(searchParams.get('page')) || 1,
     1
@@ -38,7 +37,7 @@ export async function GET(request: NextRequest) {
 
   const start = (page - 1) * PAGE_SIZE
   const end = start + PAGE_SIZE
-
+  
   if (!category) {
     return NextResponse.json({
       items: [],
@@ -46,8 +45,8 @@ export async function GET(request: NextRequest) {
     })
   }
 
-  const data = await client.fetch(
-    menuQuery,
+  const items = await client.fetch(
+    listQuery,
     {
       category,
       start,
@@ -56,7 +55,8 @@ export async function GET(request: NextRequest) {
   )
 
   return NextResponse.json({
-    data,
-    hasMore: data.length === PAGE_SIZE,
+    items,
+    hasMore: items.length === PAGE_SIZE,
+    page,
   })
 }

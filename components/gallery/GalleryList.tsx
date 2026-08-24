@@ -12,6 +12,8 @@ import type { Gallery } from '@/types/gallery';
 
 import './GalleryList.scss';
 
+const PAGE_SIZE = 12;
+
 interface Props {
   categories: Category[];
   items: Gallery[];
@@ -19,44 +21,197 @@ interface Props {
 
 export default function GalleryList({
   categories,
-  items,
+  items: initialItems,
 }: Props) {
-  const containerRef = useRef<HTMLDivElement>(null)
 
   const [activeCategory, setActiveCategory] = useState(
     categories[0]?.slug ?? ''
   )
 
-  const filteredItems = items.filter(
-    (item) => item.category?.slug === activeCategory
+  const [items, setItems] = useState<Gallery[]>(
+    initialItems
   )
 
-  useLayoutEffect(() => {
-    const container = containerRef.current
+  const [page, setPage] = useState(1)
 
-    if (!container) return
+  const [loading, setLoading] = useState(false)
+  const [hasMore, setHasMore] = useState(
+    initialItems.length === PAGE_SIZE
+  )
 
-    const gridItems = gsap.utils.toArray<HTMLElement>(
-      '.gallery__item',
-      container
+  const pageRef = useRef(1)
+  const gridRef = useRef<HTMLDivElement>(null)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+
+  const animationContextRef = useRef<gsap.Context | null>(null)
+  const previousLengthRef = useRef(0)
+
+  /*
+   * 다음 페이지 로드
+   */
+  const loadMore = useCallback(async () => {
+    if (loading || !hasMore) return
+
+    setLoading(true)
+
+    try {
+      const nextPage = page + 1
+
+      const params = new URLSearchParams({
+        category: activeCategory,
+        page: String(nextPage),
+      })
+
+      const response = await fetch(
+        `/api/gallery?${params.toString()}`
+      )
+
+      if (!response.ok) {
+        throw new Error('데이터를 불러오지 못했습니다.')
+      }
+
+      const data = await response.json()
+
+      previousLengthRef.current = items.length;
+
+      setItems((prev) => [
+        ...prev,
+        ...data.items,
+      ])
+
+      setPage(nextPage)
+      setHasMore(data.hasMore)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }, [
+    page,
+    activeCategory,
+    loading,
+    hasMore,
+  ])
+
+  /*
+   * IntersectionObserver
+   */
+  useEffect(() => {
+    const sentinel = sentinelRef.current
+
+    if (!sentinel || !hasMore) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          loadMore()
+        }
+      },
+      {
+        rootMargin: `${window.innerHeight * 0.5}px 0px`,
+      }
     )
 
-    if (!gridItems.length) return
+    observer.observe(sentinel)
+
+    return () => observer.disconnect()
+  }, [
+    loadMore,
+    hasMore,
+  ])
+
+  /*
+   * 카테고리 변경
+   */
+  const handleCategoryChange = useCallback(
+    async (category: string) => {
+      if (category === activeCategory) return
+
+      setActiveCategory(category)
+      setPage(1)
+      setHasMore(true)
+      setLoading(true)
+
+      try {
+        const params = new URLSearchParams({
+          category,
+          page: '1',
+        })
+
+        const response = await fetch(
+          `/api/gallery?${params.toString()}`
+        )
+
+        if (!response.ok) {
+          throw new Error(
+            '데이터를 불러오지 못했습니다.'
+          )
+        }
+
+        const data = await response.json()
+
+        animationContextRef.current?.revert();
+        animationContextRef.current = null;
+        previousLengthRef.current = 0;
+
+        setItems(data.items)
+        setHasMore(data.hasMore)
+      } catch (error) {
+        console.error(error)
+        setItems([])
+        setHasMore(false)
+      } finally {
+        setLoading(false)
+      }
+    },
+    [activeCategory]
+  )
+
+  /*
+   *  등장 애니메이션
+   */
+  useLayoutEffect(() => {
+    const grid = gridRef.current
+
+    if (!grid || items.length === 0) return
+
+    const previousLength = previousLengthRef.current;
+
+    const allItems = grid.querySelectorAll('.gallery__item');
+
+    const newItems = Array.from(allItems).slice(
+      previousLength
+    );
+
+    if (!newItems.length) return;
+
+    animationContextRef.current?.revert();
 
     const ctx = gsap.context(() => {
-      gsap.from(gridItems, {
-        opacity: 0,
-        scale: 0.94,
-        y: 20,
-        duration: 0.65,
-        stagger: 0.08,
-        ease: 'power3.out',
-        clearProps: 'all',
-      })
-    }, container)
+      gsap.fromTo(
+        newItems,
+        {
+          opacity: 0,
+          y: 30,
+          scale: 0.96,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.65,
+          stagger: 0.08,
+          ease: 'power3.out',
+          clearProps: 'all',
+        }
+      );
+    }, grid)
 
-    return () => ctx.revert()
-  }, [activeCategory])
+    animationContextRef.current = ctx;
+
+    previousLengthRef.current = items.length;
+
+  }, [items])
 
   /*
    * Modal
@@ -72,34 +227,38 @@ export default function GalleryList({
   };
 
   const handlePrev = useCallback(() => {
-    if (selectedIndex === null || filteredItems.length === 0) return;
+    setSelectedIndex((current) => {
+      if (current === null || items.length === 0) {
+        return current;
+      }
 
-    setSelectedIndex(
-      selectedIndex === 0
-        ? filteredItems.length - 1
-        : selectedIndex - 1
-    );
-  }, [selectedIndex, filteredItems.length]);
+      return current === 0
+        ? items.length - 1
+        : current - 1;
+    });
+  }, [items.length]);
 
   const handleNext = useCallback(() => {
-    if (selectedIndex === null || filteredItems.length === 0) return;
+    setSelectedIndex((current) => {
+      if (current === null || items.length === 0) {
+        return current;
+      }
 
-    setSelectedIndex(
-      selectedIndex === filteredItems.length - 1
+      return current === items.length - 1
         ? 0
-        : selectedIndex + 1
-    );
-  }, [selectedIndex, filteredItems.length]);
+        : current + 1;
+    });
+  }, [items.length]);
+
 
   /*
    * Modal 열렸을 때 body scroll 방지
    */
   useEffect(() => {
-    if (selectedIndex !== null) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow =
+      selectedIndex !== null
+        ? 'hidden'
+        : '';
 
     return () => {
       document.body.style.overflow = '';
@@ -114,44 +273,61 @@ export default function GalleryList({
           <CategoryNav
             category={categories}
             activeCategory={activeCategory}
-            onChange={setActiveCategory}
+            onChange={handleCategoryChange}
           />
 
-          <div className="gallery__grid" ref={containerRef}>
-            {filteredItems.length > 0 ? (
-              filteredItems.map((item, index) => (
-                <button
-                  key={item._id}
-                  type="button"
-                  className="gallery__item"
-                  onClick={() => handleOpenModal(index)}
-                >
-                  <div className="gallery__image">
-                    <Image
-                      src={item.imageUrl}
-                      alt={item.title}
-                      width={384}
-                      height={480}
-                    />
-                  </div>
+          <div className="gallery__list" ref={gridRef}>
+            {items.length > 0 ? (
+              <div className="gallery__grid">
+                {items.map((item, index) => (
+                  <button
+                    key={item._id}
+                    type="button"
+                    className="gallery__item"
+                    onClick={() => handleOpenModal(index)}
+                  >
+                    <div className="gallery__image">
+                      <Image
+                        src={item.imageUrl}
+                        alt={item.title}
+                        width={384}
+                        height={480}
+                      />
+                    </div>
 
-                  <div className="gallery__info">
-                    <h3>{item.title}</h3>
-                  </div>
-                </button>
-              ))
-            ) : (
+                    <div className="gallery__info">
+                      <h3>{item.title}</h3>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            ) : !loading ? (
               <div className="gallery__empty">
                 등록된 이미지가 없습니다.
               </div>
+            ) : null}
+
+            {/* 무한스크롤 감지 영역 */}
+            {hasMore && (
+              <div
+                ref={sentinelRef}
+                className="gallery__sentinel"
+                aria-hidden="true"
+              />
             )}
+
+            {/*{loading && (
+              <div className="gallery__loading">
+                Loading...
+              </div>
+            )}*/}
           </div>
         </div>
       </section>
 
       {selectedIndex !== null && (
         <GalleryModal
-          items={filteredItems}
+          items={items}
           currentIndex={selectedIndex}
           onClose={handleCloseModal}
           onPrev={handlePrev}

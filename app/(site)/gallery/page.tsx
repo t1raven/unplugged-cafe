@@ -15,8 +15,8 @@ export const metadata: Metadata = {
 
 const categoryQuery = `
   *[
-    _type == "galleryCategory" && 
-    visible == true
+    _type == "galleryCategory" 
+    && visible == true
   ]
   | order(orderRank) {
     _id,
@@ -27,9 +27,11 @@ const categoryQuery = `
 
 const listQuery = `
   *[
-    _type == "galleryItem"
+    _type == "galleryItem" 
+    && category->slug.current == $category
   ]
-  | order(orderRank) {
+  | order(_createdAt desc) 
+  [0...12] {
     _id,
     title,
     description,
@@ -45,10 +47,19 @@ const listQuery = `
 `;
 
 export default async function GalleryPage() {
-  const [categories, items] = await Promise.all([
-    client.fetch<Category[]>(categoryQuery),
-    client.fetch<Gallery[]>(listQuery),
-  ])
+  const categories = await client.fetch<Category[]>(categoryQuery)
+
+  const activeCategory = categories[0]?.slug ?? ''
+
+  const items =
+    activeCategory
+      ? await client.fetch<Gallery[]>(
+          listQuery,
+          {
+            category: activeCategory,
+          }
+        )
+      : []
 
   return (
     <main id="site-body" className="gallery-page">
