@@ -27,7 +27,9 @@ const performancesQuery = `
       name,
       slug
     },
-    thumbnail,
+    poster {
+      asset
+    },
     description
   }
 `;

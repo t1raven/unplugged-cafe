@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { urlFor } from '@/sanity/lib/image';
 import Link from 'next/link';
 
 import type { Performance } from '@/types/performance';
@@ -381,6 +382,19 @@ export default function PerformanceCalendar({
                         {performance.startTime || '--:--'}
                       </div>
 
+                      <div className="selected-performance-poster">
+                        {performance.poster?.asset && (
+                          <img
+                            src={urlFor(performance.poster)
+                              .width(300)
+                              .height(400)
+                              .fit('crop')
+                              .url()}
+                            alt={performance.title}
+                          />
+                        )}
+                      </div>
+
                       <div className="selected-performance-info">
 
                         <strong>
@@ -494,22 +508,30 @@ export default function PerformanceCalendar({
                         </strong>
 
                         <span>
-                          {weekday}
+                          {weekday} {performance.startTime}
                         </span>
 
                       </div>
+
+                      <div className="upcoming-poster">
+                        {performance.poster?.asset && (
+                          <img
+                            src={urlFor(performance.poster)
+                              .width(300)
+                              .height(400)
+                              .fit('crop')
+                              .url()}
+                            alt={performance.title}
+                          />
+                        )}
+                      </div>
+
 
                       <div className="upcoming-info">
 
                         <strong>
                           {performance.title}
                         </strong>
-
-                        {performance.startTime && (
-                          <span>
-                            {performance.startTime}
-                          </span>
-                        )}
 
                         {performance.artists &&
                           performance.artists.length > 0 && (
