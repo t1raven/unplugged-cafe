@@ -9,10 +9,10 @@
 
   margin-bottom: 80px;;
 
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 
-  background: rgba(17, 17, 17, 0.92);
+  background-color: transparent;
 
   backdrop-filter: blur(5px);
 
@@ -52,7 +52,7 @@
 
     background: transparent;
 
-    color: #777;
+    color: rgba(255, 255, 255, .7);
 
     font-family: inherit;
     font-size: 12px;
@@ -75,17 +75,17 @@
       width: 0;
       height: 1px;
 
-      background: #fff;
+      background: var(--primary-color);
 
       transition: width 0.3s ease;
     }
 
     &:hover {
-      color: #ddd;
+      color: var(--primary-color);
     }
 
     &.active {
-      color: #fff;
+      color: var(--primary-color);
     }
 
     &.active::after {

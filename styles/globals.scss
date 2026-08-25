@@ -455,11 +455,20 @@ textarea.ipt { resize: none; padding: 15px; min-height: 100px; height: auto; }
     }
 }
 
+.pc-view { display: block !important; }
+.mo-view { display: none !important; }
+
 @media screen and (max-width: 768px){
     :root { 
         --font-size: 13px;
         --header-height: 60px;
     }
+
+    input, textarea, button {-webkit-appearance:none; -moz-appearance:none; appearance:none;}
+    input, textarea, button, select {-webkit-border-radius:0; -moz-border-radius:0; -o-border-radius:0; border-radius:0;}
+
+    .pc-view { display: none !important; }
+    .mo-view { display: block !important; }
 
     .sub-page-hero {
         padding-top: calc(var(--header-height) + 20px);
