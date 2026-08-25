@@ -88,6 +88,13 @@ interface PageProps {
   }>;
 }
 
+function extractInstagramIdWithRegex(urlStr: string): string | null {
+  const regex = /(?:https?:\/\/)?(?:www\.)?instagram\.com\/([a-zA-Z0-9_.]+)/;
+  const match = urlStr.match(regex);
+
+  return match ? match[1] : null;
+}
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -198,7 +205,9 @@ export default async function PerformanceDetailPage({
                 <span>공연 장소</span>
 
                 <strong>
-                  {performance.place?.name} ↗<br/>
+                  <Link href={performance.place?.naverMap!} target="_blank">
+                    <i className="material-symbols-rounded icon" translate="no">location_on</i> {performance.place?.name} ↗
+                  </Link><br/>
                   <small>{performance.place?.address}</small>
                 </strong>
               </div>
@@ -283,6 +292,12 @@ export default async function PerformanceDetailPage({
                           {artist.name}
                         </h3>
 
+                        {artist.instagram && (
+                          <Link href={artist.instagram!} target="_blank">
+                            @{extractInstagramIdWithRegex(artist.instagram)} ↗
+                          </Link>
+                        )}
+
                         {artist.genre && (
                           <span>
                             {artist.genre}
@@ -340,33 +355,28 @@ export default async function PerformanceDetailPage({
       </section>
 
       {/* ==================================================
-          Description
+          Notice
       ================================================== */}
+      {performance.notice && (
+        <section className="performance-description">
 
-      <section className="performance-description">
+          <div className="performance-detail-inner">
 
-        <div className="performance-detail-inner">
+            <div className="section-heading">
+              <p>NOTICE</p>
+              <h2>공지 사항</h2>
+            </div>
 
-          <div className="section-heading">
-            <p>NOTICE</p>
-            <h2>공지 사항</h2>
-          </div>
-
-          <div className="description-content">
-            {performance.notice ? (
+            <div className="description-content">
               <PortableText
                 value={performance.notice}
               />
-            ) : (
-              <p>
-                등록된 공지사항이 없습니다.
-              </p>
-            )}
+            </div>
+
           </div>
 
-        </div>
-
-      </section>
+        </section>
+      )}
 
       {/* ==================================================
           Reservation

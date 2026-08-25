@@ -117,6 +117,14 @@ export default function Upcoming({
 
                 <div className="upcoming__info">
                   <h2>{performance.title}</h2>
+                  {performance.artists &&
+                    performance.artists.length > 0 && (
+                      <p>
+                        {performance.artists
+                          .map((artist) => artist.name)
+                          .join(' · ')}
+                      </p>
+                  )}
                 </div>
 
                 {/*<div className="upcoming__time">
@@ -124,7 +132,7 @@ export default function Upcoming({
                 </div>*/}
 
                 <span className="upcoming__arrow">
-                  ↗
+                  →
                 </span>
               </Link>
             ))
