@@ -13,6 +13,7 @@ export default function Gnb() {
 
   const gnbRef = useRef<HTMLElement>(null);
   const moveBgRef = useRef<HTMLDivElement>(null);
+  const lastWidth = useRef(0);
 
   const moveBackground = (animate = true) => {
     if (!gnbRef.current || !moveBgRef.current) return;
@@ -23,11 +24,14 @@ export default function Gnb() {
 
     if (!activeMenu) return;
 
+    const html = document.documentElement;
+    const scale = html.classList.contains('scrollDown') ? 0.85 : 1;
+
     const navRect = gnbRef.current.getBoundingClientRect();
     const menuRect = activeMenu.getBoundingClientRect();
 
-    const x = menuRect.left - navRect.left;
-    const width = menuRect.width;
+    const x = (menuRect.left - navRect.left) / scale;
+    const width = menuRect.width / scale;
 
     if (animate) { 
       gsap.to(moveBgRef.current, { 
@@ -50,26 +54,7 @@ export default function Gnb() {
   useEffect(() => { 
     requestAnimationFrame(() => { 
       moveBackground(false);
-    }); 
-  }, []);
 
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      moveBackground(true);
-      setTimeout(() => { moveBackground(true); }, 250);
-    });
-  }, [pathname]);
-
-  /*useEffect(() => {
-    const handleResize = () => { moveBackground(false); };
-    window.addEventListener('resize', handleResize);
-    return () => { window.removeEventListener('resize', handleResize); };
-  }, []);*/
-
-  const lastWidth = useRef(0);
-
-  useEffect(() => { 
-    requestAnimationFrame(() => { 
       lastWidth.current = window.innerWidth;
 
       const handleResize = () => {
@@ -88,9 +73,7 @@ export default function Gnb() {
         };
       };
     }); 
-  }, []);
-  
-  useEffect(() => {
+
     if (!gnbRef.current) return;
 
     const observer = new ResizeObserver(() => {
@@ -103,6 +86,19 @@ export default function Gnb() {
       observer.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      moveBackground(true);
+      setTimeout(() => { moveBackground(true); }, 250);
+    });
+  }, [pathname]);
+
+  /*useEffect(() => {
+    const handleResize = () => { moveBackground(false); };
+    window.addEventListener('resize', handleResize);
+    return () => { window.removeEventListener('resize', handleResize); };
+  }, []);*/
 
   return (
     <div id="site-gnb">

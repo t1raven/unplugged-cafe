@@ -33,6 +33,21 @@ export default function Upcoming({
     if (!rootRef.current) return;
 
     const ctx = gsap.context(() => {
+
+      gsap.from('.upcoming__header', {
+        opacity: 0,
+        y: 80,
+        duration: 1,
+
+        ease: 'power3.out',
+
+        scrollTrigger: {
+          trigger: '.upcoming__header',
+          start: 'top 100%',
+          once: true,
+        },
+      });
+
       const items = gsap.utils.toArray<HTMLElement>(
         '.swiper-slide'
       );

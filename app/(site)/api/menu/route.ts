@@ -7,7 +7,7 @@ const PAGE_SIZE = 12;
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
 
-  const category = searchParams.get('category') ?? ''
+  const category = searchParams.get('category') || ''
 
   const listQuery = `
   *[

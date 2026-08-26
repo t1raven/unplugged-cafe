@@ -243,8 +243,6 @@ export default function About() {
 
           <div className="about__equipment-header">
 
-            <p>EQUIPMENT</p>
-
             <h3>
               SOUND
               <br />

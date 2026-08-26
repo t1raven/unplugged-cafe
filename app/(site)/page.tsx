@@ -31,7 +31,9 @@ const upcomingQuery = `
 `;
 
 export default async function Home() {
-  const today = new Date().toISOString().split('T')[0];
+  const now = new Date();
+  const offset = now.getTimezoneOffset() * 60000;
+  const today = new Date(now.getTime() - offset).toISOString().split('T')[0];
 
   const performances: Performance[] =
     await client.fetch(upcomingQuery, {

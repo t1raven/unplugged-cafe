@@ -40,6 +40,20 @@ export default function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    const html = document.documentElement;
+    
+    const handlePopState = (event: PopStateEvent) => {
+      html.classList.remove('scrollUp', 'scrollDown');
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
   return (
     <header id="site-header">
       <div className="inner">
