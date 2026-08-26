@@ -3,7 +3,7 @@
 import { useEffect} from 'react';
 import Link from 'next/link';
 
-import './Header.scss'
+import './style.scss'
 
 export default function Header() {
   useEffect(() => {

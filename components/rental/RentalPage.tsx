@@ -73,6 +73,13 @@ export default function RentalPage() {
             <p>타입당 선택 가능합니다.</p>
           </article>
         </div>
+
+        <div className="rental-summary__buttons">
+          <a href="#rental-application" className="rental-button apply-button">
+            대관 신청 바로가기
+            <span>↗</span>
+          </a>
+        </div>
       </section>
 
       {/* NOTICE */}
@@ -248,7 +255,7 @@ export default function RentalPage() {
               rel="noopener noreferrer"
               className="rental-button apply-button"
             >
-              대관 신청하기
+              대관 신청하기(구글폼)
               <span>↗</span>
             </a>
           </div>

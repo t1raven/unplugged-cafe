@@ -2,7 +2,7 @@
 
 import type { Category } from '@/types/category';
 
-import './CategoryNav.scss'
+import './style.scss'
 
 interface Props {
   category: Category[]

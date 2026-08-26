@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 
-import './Hero.scss';
+import './style.scss';
 
 export default function Hero() {
   const rootRef = useRef<HTMLElement>(null);

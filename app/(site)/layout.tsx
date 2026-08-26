@@ -23,9 +23,9 @@ export const metadata: Metadata = {
 };
 
 //Layout
-import Header from '@/components/layout/Header/Header';
-import Footer from '@/components/layout/Footer/Footer';
-import Gnb from '@/components/layout/Gnb/Gnb';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import Gnb from '@/components/layout/Gnb';
 
 export default function SiteLayout({
   children,

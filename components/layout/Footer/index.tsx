@@ -2,7 +2,7 @@
 
 import type { MouseEvent } from 'react';
 
-import './Footer.scss'
+import './style.scss'
 
 export default function Footer() {
   return (

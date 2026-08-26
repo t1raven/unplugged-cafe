@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import { client } from '@/sanity/lib/client';
 
+import SubPageHero from '@/components/common/SubPageHero';
 import GalleryList from '@/components/gallery/GalleryList';
 
 import type { Category } from '@/types/category'
@@ -63,17 +64,7 @@ export default async function GalleryPage() {
 
   return (
     <main id="site-body" className="gallery-page">
-
-      <section className="sub-page-hero">
-        <div className="sub-page-hero__inner">
-          <p className="sub-page-hero-label">Gallery</p>
-          <h1>언플러그드 <br/>Moments</h1>
-          <p className="sub-page-hero__description">
-            우리의 음악이 함께 하는 순간들
-          </p>
-        </div>
-      </section>
-
+      <SubPageHero label="Gallery" title="언플러그드 <br/>Moments" description="우리의 음악이 함께 하는 순간들" />
       <GalleryList categories={categories} items={items} />
     </main>
   );

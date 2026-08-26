@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import gsap from 'gsap'
 
-import CategoryNav from '@/components/common/CategoryNav/CategoryNav'
+import CategoryNav from '@/components/common/CategoryNav'
 
 import type { Category } from '@/types/category'
 import type { Menu } from '@/types/menu'

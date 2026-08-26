@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { client } from '@/sanity/lib/client'
 
+import SubPageHero from '@/components/common/SubPageHero';
 import MenuList from '@/components/menu/MenuList'
 
 import type { Category } from '@/types/category'
@@ -53,21 +54,9 @@ export default async function MenuPage() {
 
   return (
     <main id="site-body" className="menu-page">
-      <section className="sub-page-hero">
-        <div className="sub-page-hero__inner">
-          <p className="sub-page-hero-label">CAFE MENU</p>
-          <h1>서교음악다방</h1>
-          <p className="sub-page-hero__description">
-            음악과 사람이 머무는 카페<br/>
-            자유롭고 아름다운 추억이 가득한 청춘 쉼터
-          </p>
-        </div>
-      </section>
-      
-      <MenuList
-        categories={categories}
-        items={items}
-      />
+
+      <SubPageHero label="CAFE MENU" title="서교음악다방" description="음악과 사람이 머무는 카페<br/> 자유롭고 아름다운 추억이 가득한 청춘 쉼터" />
+      <MenuList categories={categories} items={items} />
     </main>
   )
 }

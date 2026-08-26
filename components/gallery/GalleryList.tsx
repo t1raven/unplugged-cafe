@@ -4,7 +4,7 @@ import { useEffect, useCallback, useLayoutEffect, useRef, useState } from 'react
 import Image from 'next/image';
 import gsap from 'gsap';
 
-import CategoryNav from '@/components/common/CategoryNav/CategoryNav'
+import CategoryNav from '@/components/common/CategoryNav'
 import GalleryModal from './GalleryModal';
 
 import type { Category } from '@/types/category';

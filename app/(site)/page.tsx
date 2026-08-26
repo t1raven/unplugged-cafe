@@ -1,13 +1,11 @@
 import { client } from '@/sanity/lib/client';
 
-import Hero from '@/components/home/Hero/Hero';
-import Upcoming from '@/components/home/Upcoming/Upcoming';
-import About from '@/components/home/About/About';
-import Location from '@/components/home/Location/Location';
+import Hero from '@/components/home/Hero';
+import Upcoming from '@/components/home/Upcoming';
+import About from '@/components/home/About';
+import Location from '@/components/home/Location';
 
 import type { Performance } from '@/types/performance';
-
-import './home.scss';
 
 const upcomingQuery = `
   *[

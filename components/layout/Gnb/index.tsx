@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from 'next/link';
 import gsap from 'gsap';
 
-import './Gnb.scss'
+import './style.scss'
 
 export default function Gnb() {
 

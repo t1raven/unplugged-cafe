@@ -15,7 +15,7 @@ import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
 
-import './Upcoming.scss';
+import './style.scss';
 
 
 gsap.registerPlugin(ScrollTrigger);
