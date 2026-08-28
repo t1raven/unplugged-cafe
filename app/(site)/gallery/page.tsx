@@ -64,7 +64,7 @@ export default async function GalleryPage() {
 
   return (
     <main id="site-body" className="gallery-page">
-      <SubPageHero label="Gallery" title="언플러그드 <br/>Moments" description="우리의 음악이 함께 하는 순간들" />
+      <SubPageHero label="Archives" title="언플러그드 <br/>Moments" description="우리의 음악이 함께 하는 순간들" />
       <GalleryList categories={categories} items={items} />
     </main>
   );

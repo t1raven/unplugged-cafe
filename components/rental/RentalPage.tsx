@@ -233,9 +233,9 @@ export default function RentalPage() {
           </h2>
 
           <p>
-            아래 신청 내용을 확인한 후
+            아래 신청 내용을 확인한 후 대관 신청을 진행해 주세요.
             <br />
-            대관 신청을 진행해 주세요.
+            모든 대관은 날짜 확인 후 대관됩니다.
           </p>
 
           <div className="rental-application__buttons">
@@ -261,14 +261,6 @@ export default function RentalPage() {
           </div>
 
           <div className="rental-application__buttons">
-            <a
-              href="mailto:unpluggedkorea@gmail.com"
-              className="rental-button"
-            >
-              이메일 문의
-              <span>↗</span>
-            </a>
-
             <a href="tel:010-9035-6289" className="rental-button">
               전화 문의
               <span>↗</span>
@@ -279,7 +271,7 @@ export default function RentalPage() {
             <p>UNPLUGGED LOUNGE / 서교음악다방</p>
 
             <span>
-              DM @unplugged_seogyo
+              DM @unplugged.lounge
               <br />
               unpluggedkorea@gmail.com
             </span>
