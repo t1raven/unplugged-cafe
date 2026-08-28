@@ -9,3 +9,4 @@ export async function POST(request: Request) {
   } catch (err) {
     return NextResponse.json({ message: 'Error revalidating' }, { status: 500 })
   }
+}
