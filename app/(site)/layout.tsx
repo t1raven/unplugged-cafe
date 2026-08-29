@@ -1,9 +1,11 @@
 import { Noto_Sans_KR } from "next/font/google";
+import "@/styles/globals.scss";
 const notoSansKR = Noto_Sans_KR({
+  subsets: ['latin'],
   weight: ['400', '500', '700'],
+  display: 'swap',
   variable: '--font-noto',
 });
-import "@/styles/globals.scss";
 
 import type { Metadata } from "next";
 export const metadata: Metadata = {
@@ -13,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: 'https://www.unplugged-lounge.com',
-    images: [{ url: "/og-image.png" }],
+    images: [{ url: "/images/common/og-image.png" }],
   },
   formatDetection: {
     telephone: false,

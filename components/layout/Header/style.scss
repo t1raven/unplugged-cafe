@@ -5,7 +5,7 @@
 	top: 0;
 	left: 0;
 	z-index: 100;
-	transition: all 0.25s ease-in-out;
+	transition: transform 0.25s ease-in-out;
 	&:after {
 		content: '';
 		width: 100%;
@@ -13,7 +13,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		background-color: rgba(234, 231, 224, .5);
+		background-color: rgba(234, 231, 224, .8);
 		backdrop-filter: blur(5px);
 	}
 	> .inner {
@@ -54,20 +54,28 @@
 			height: auto;
 		}
 	}
-	.gnb-btn > a {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 40px;
-		height: 40px;
-		color: var(--font-color);
-		> svg {
-			width: 100%;
-			height: 100%;
-			fill: var(--font-color);
+	.gnb-btn {
+		gap: 20px;
+
+		> a {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 36px;
+			height: 36px;
+			color: var(--font-color);
+
+			> svg {
+				width: 100%;
+				height: 100%;
+				fill: var(--font-color);
+			}
+
+			> span {
+				font-size: 2em;
+			}
 		}
 	}
-
 
 	.gnb {
 		position: absolute;
@@ -142,9 +150,13 @@ html.scrollUp #site-header {
 			}
 		}
 
-		.gnb-btn > a {
-			width: 30px;
-			height: 30px;
+		.gnb-btn {
+			gap: 10px;
+
+			> a {
+				width: 30px;
+				height: 30px;
+			}
 		}
 	}
 }

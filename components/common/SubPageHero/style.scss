@@ -11,10 +11,13 @@
         width: var(--inner-width); 
         max-width: var(--inner-max-width); 
         margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
 
     &-label {
-        color: var(--secondary-color);
+        color: var(--primary-color);
         font-size: 13px;
         font-weight: 600;
         letter-spacing: 0.2em;
@@ -22,9 +25,9 @@
     }
 
     &-title {
-      margin: 24px 0;
+      margin: 0;
       color: var(--font-color);
-      font-size: clamp(38px, 10vw, 80px);
+      font-size: clamp(36px, 10vw, 76px);
       line-height: 1.15;
       font-weight: 500;
       letter-spacing: -0.06em;

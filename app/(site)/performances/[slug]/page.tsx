@@ -51,12 +51,7 @@ const performanceQuery = `
       _id,
       name,
       slug,
-      profileImage,
-      genre,
-      bio,
       instagram,
-      youtube,
-      website
     },
 
     place-> {
@@ -277,10 +272,6 @@ export default async function PerformanceDetailPage({
                       className="artist-card"
                     >
 
-                      <div className="artist-image">
-                        PROFILE
-                      </div>
-
                       <div className="artist-info">
 
                         <h3>
@@ -291,20 +282,6 @@ export default async function PerformanceDetailPage({
                           <Link href={artist.instagram!} target="_blank">
                             @{extractInstagramIdWithRegex(artist.instagram)} ↗
                           </Link>
-                        )}
-
-                        {artist.genre && (
-                          <span>
-                            {artist.genre}
-                          </span>
-                        )}
-
-                        {artist.bio && (
-                          <div className="artist-bio">
-                            <PortableText
-                              value={artist.bio}
-                            />
-                          </div>
                         )}
 
                       </div>
@@ -406,23 +383,6 @@ export default async function PerformanceDetailPage({
           </div>
         </section>
       )}
-
-      {/* ==================================================
-          Back
-      ================================================== */}
-
-      <div className="performance-back">
-
-        <div className="performance-detail-inner">
-
-          <Link href="/performances">
-            ← 공연 일정으로 돌아가기
-          </Link>
-
-        </div>
-
-      </div>
-
     </main>
   );
 }

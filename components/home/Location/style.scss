@@ -39,7 +39,8 @@
   &__label {
     margin: 0 0 40px;
 
-    font-size: 16px;
+    font-size: 22px;
+    font-weight: 500;;
     color: var(--primary-color);
     letter-spacing: 0.2em;
   }
@@ -71,9 +72,9 @@
 
     margin-top: 50px;
 
-    color: #fff;
+    color: var(--secondary-color);
 
-    font-size: 13px;
+    font-size: 16px;
     letter-spacing: 0.15em;
 
     text-decoration: none;

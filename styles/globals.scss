@@ -1,18 +1,16 @@
 @use "./reset";
 @use "./normalize";
 
-//@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block");
-
 :root { 
   --font-size: 16px;
   --inner-width: 90%;
   --inner-max-width: 1200px;
   --header-height: 80px;
-  --font-family: var(--font-noto), Arial, sans-serif;
-  --title-font-family: var(--font-noto), Arial, sans-serif;
+  --font-family: var(--font-noto), Arial, sans-serif !important;
+  --title-font-family: var(--font-noto), Arial, sans-serif !important;
 
   --primary-color: rgba(252,132,7,1);
-  --secondary-color: #9A7B42;
+  --secondary-color: #089fff;
   --success-color: #4cd964;
   --danger-color: #ff3b30;
   --warning-color: #ffcd3f;
@@ -23,16 +21,17 @@
 
   --font-color: #191919;
   --font-sec-color: #66635D;
-  --background-color: #F5F3EE;
+  --background-color: #F1EDE4;
   --background-sec-color: #EAE7E0;
   --border-color: #D8D4CC;
+}
 
-
-  /*--font-color: #F2EEE7;
+.dark {
+  --font-color: #F2EEE7;
   --font-sec-color: #A7A098;
   --background-color: #11100f;
   --background-sec-color: #191714;
-  --border-color: rgba(255,255,255,.15);*/
+  --border-color: rgba(255,255,255,.15);
 }
 
 

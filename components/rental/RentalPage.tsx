@@ -249,6 +249,11 @@ export default function RentalPage() {
               <span>↗</span>
             </a>
 
+            <a href="tel:010-9035-6289" className="rental-button">
+              전화 문의
+              <span>↗</span>
+            </a>
+
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLSdWVBYKnyheSAefJHerrcdjftW9KodEqzz2IjfTQCm0ysvlgA/viewform"
               target="_blank"
@@ -256,13 +261,6 @@ export default function RentalPage() {
               className="rental-button apply-button"
             >
               대관 신청하기(구글폼)
-              <span>↗</span>
-            </a>
-          </div>
-
-          <div className="rental-application__buttons">
-            <a href="tel:010-9035-6289" className="rental-button">
-              전화 문의
               <span>↗</span>
             </a>
           </div>
