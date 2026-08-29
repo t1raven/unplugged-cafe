@@ -74,11 +74,6 @@ async function getPerformance(slug: string) {
   return client.fetch<Performance | null>(
     performanceQuery,
     { slug },
-    {
-      next: {
-        //revalidate: 60,
-      },
-    }
   );
 }
 

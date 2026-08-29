@@ -37,16 +37,11 @@ const performancesQuery = `
 
 async function getPerformances() {
   return await client.fetch(
-    performancesQuery,
-    {},
-    {
-      next: {
-        //revalidate: 60,
-      },
-    }
+    performancesQuery
   );
 }
 
+export const revalidate = 0;
 
 export default async function PerformancesPage() {
   const performances = await getPerformances();
