@@ -28,6 +28,8 @@ const upcomingQuery = `
   }
 `;
 
+export const revalidate = 0;
+
 export default async function Home() {
   const now = new Date();
   const offset = now.getTimezoneOffset() * 60000;

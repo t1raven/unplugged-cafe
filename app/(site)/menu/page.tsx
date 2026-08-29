@@ -46,6 +46,8 @@ const listQuery = `
   }
 `
 
+export const revalidate = 0;
+
 export default async function MenuPage() {
   const [categories, items] = await Promise.all([
     client.fetch<Category[]>(categoryQuery),

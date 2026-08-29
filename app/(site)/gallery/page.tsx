@@ -47,6 +47,8 @@ const listQuery = `
   }
 `;
 
+export const revalidate = 0;
+
 export default async function GalleryPage() {
   const categories = await client.fetch<Category[]>(categoryQuery)
 
