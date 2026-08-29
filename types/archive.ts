@@ -1,6 +1,6 @@
 import type { Category } from './category';
 
-export interface Gallery {
+export interface Archive {
   _id: string;
   title: string;
   description?: string;

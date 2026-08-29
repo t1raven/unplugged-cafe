@@ -55,7 +55,7 @@ export default defineConfig({
 
             orderableDocumentListDeskItem({
               type: 'menuCategory',
-              title: '메뉴 카테고리',
+              title: '카페 카테고리',
               icon: SchemaIcon,
               S,
               context,
@@ -63,7 +63,7 @@ export default defineConfig({
 
             orderableDocumentListDeskItem({
               type: 'menuItem',
-              title: '메뉴 아이템',
+              title: '카페 메뉴',
               icon: BottleIcon,
               S,
               context,
@@ -71,17 +71,19 @@ export default defineConfig({
 
             orderableDocumentListDeskItem({
               type: 'galleryCategory',
-              title: '갤러리 카테고리',
+              title: '기록 카테고리',
               icon: SchemaIcon,
               S,
               context,
             }),
 
-            S.documentTypeListItem('galleryItem')
-              .id('galleryItem')
-              .title('갤러리 이미지')
-              .icon(ImageIcon),
-
+            orderableDocumentListDeskItem({
+              type: 'galleryItem',
+              title: '기록 이미지',
+              icon: ImageIcon,
+              S,
+              context,
+            }),
 
             ...S.documentTypeListItems().filter(
               (item) =>

@@ -11,7 +11,7 @@ import type { Performance } from '@/types/performance';
 import type { Artist } from '@/types/artist';
 import type { Place } from '@/types/place';
 
-import './performance-detail.scss';
+import './style.scss';
 
 const admissionTypeNames: Record<string, string> = {
   1: '공연장대기순',

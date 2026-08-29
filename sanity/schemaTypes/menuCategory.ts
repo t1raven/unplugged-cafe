@@ -3,7 +3,7 @@ import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list
 
 export const menuCategory = defineType({
   name: 'menuCategory',
-  title: '메뉴 카테고리',
+  title: '카페 카테고리',
   type: 'document',
 
   orderings: [

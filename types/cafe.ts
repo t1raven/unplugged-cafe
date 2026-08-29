@@ -1,6 +1,6 @@
 import type { Category } from './category';
 
-export interface Menu {
+export interface Cafe {
   _id: string
   name: string
   description?: string

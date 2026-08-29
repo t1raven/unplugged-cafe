@@ -7,11 +7,11 @@ import gsap from 'gsap'
 import CategoryNav from '@/components/common/CategoryNav'
 
 import type { Category } from '@/types/category'
-import type { Menu } from '@/types/menu'
+import type { Cafe } from '@/types/cafe'
 
 interface Props {
   categories: Category[]
-  items: Menu[]
+  items: Cafe[]
 }
 
 export default function MenuList({

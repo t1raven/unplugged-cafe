@@ -6,7 +6,7 @@ import SubPageHero from '@/components/common/SubPageHero';
 import PerformanceCalendar from '@/components/performances/PerformanceCalendar';
 
 export const metadata: Metadata = {
-  title: "공연 | UNPLUGGED LOUNGE",
+  title: "공연 예매 | UNPLUGGED LOUNGE",
 };
 
 const performancesQuery = `
@@ -48,7 +48,7 @@ export default async function PerformancesPage() {
 
   return (
     <main id="site-body">
-      <SubPageHero label="Performances" title="공연 일정" description="언플러그드에서 펼쳐지는 <br/>다양한 라이브 공연을 만나보세요." />
+      <SubPageHero label="Performances" title="공연 예매" description="언플러그드에서 펼쳐지는 <br/>다양한 라이브 공연을 만나보세요." />
       <PerformanceCalendar performances={performances} />
     </main>
   )

@@ -31,15 +31,6 @@ export const artist = defineType({
     }),
 
     defineField({
-      name: 'profileImage',
-      title: '프로필 이미지',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    }),
-
-    defineField({
       name: 'genre',
       title: '장르',
       type: 'string',

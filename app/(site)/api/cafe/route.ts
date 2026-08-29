@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     _type == "menuItem"
     ${category ? `&& category->slug.current == $category` : ''}
   ]
-  | order(orderRank asc, _createdAt desc)
+  | order(orderRank)
   [$start...$end] {
     _id,
     name,

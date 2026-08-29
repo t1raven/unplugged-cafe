@@ -4,25 +4,25 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
 import type { Category } from '@/types/category';
-import type { Gallery } from '@/types/gallery';
+import type { Archive } from '@/types/archive';
 
-import './GalleryModal.scss';
+import './ArchiveModal.scss';
 
-interface GalleryModalProps {
-  items: Gallery[];
+interface Props {
+  items: Archive[];
   currentIndex: number;
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
 }
 
-export default function GalleryModal({
+export default function ArchiveModal({
   items,
   currentIndex,
   onClose,
   onPrev,
   onNext,
-}: GalleryModalProps) {
+}: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const item = items[currentIndex];

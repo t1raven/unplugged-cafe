@@ -3,15 +3,15 @@ import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 
 import SubPageHero from '@/components/common/SubPageHero';
-import MenuList from '@/components/menu/MenuList'
+import MenuList from '@/components/cafe/MenuList'
 
 import type { Category } from '@/types/category'
-import type { Menu } from '@/types/menu'
+import type { Cafe } from '@/types/cafe'
 
-import './menu.scss'
+import './style.scss'
 
 export const metadata: Metadata = {
-  title: '메뉴 | UNPLUGGED LOUNGE',
+  title: '카페 | UNPLUGGED LOUNGE',
 }
 
 const categoryQuery = `
@@ -48,10 +48,10 @@ const listQuery = `
 
 export const revalidate = 0;
 
-export default async function MenuPage() {
+export default async function CafePage() {
   const [categories, items] = await Promise.all([
     client.fetch<Category[]>(categoryQuery),
-    client.fetch<Menu[]>(listQuery),
+    client.fetch<Cafe[]>(listQuery),
   ])
 
   return (

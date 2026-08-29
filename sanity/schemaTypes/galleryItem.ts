@@ -1,11 +1,20 @@
 import {defineField, defineType} from 'sanity'
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 
 export const galleryItem = defineType({
   name: 'galleryItem',
-  title: '갤러리 이미지',
+  title: '기록 이미지',
   type: 'document',
 
+  orderings: [
+    orderRankOrdering,
+  ],
+
   fields: [
+
+    orderRankField({
+      type: 'galleryItem',
+    }),
 
     defineField({
       name: 'image',

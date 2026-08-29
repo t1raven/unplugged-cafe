@@ -1,6 +1,5 @@
 .about {
   background-color: var(--background-sec-color);
-  color: #fff;
 
   padding: 200px 0;
 
@@ -139,7 +138,7 @@
     margin-top: 180px;
     padding-top: 80px;
 
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 1px solid var(--border-color);
   }
 
   &__equipment-header {
@@ -175,7 +174,7 @@
   }
 
   &__equipment-item {
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 1px solid var(--border-color);
 
     padding-top: 25px;
 
@@ -206,8 +205,7 @@
 
       padding: 14px 0;
 
-      border-bottom: 1px solid
-        rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid var(--border-color);
 
       font-size: 15px;
       line-height: 1.5;
@@ -227,10 +225,9 @@
 
     padding: 40px;
 
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--background-color);
 
-    border-left: 2px solid
-      rgba(255, 255, 255, 0.4);
+    border-left: 2px solid var(--border-color);
 
     h4 {
       margin: 0 0 30px;

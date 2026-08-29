@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "UNPLUGGED LOUNGE",
   description: "Live Music Cafe",
-  keywords: ["Unplugged, Live, Music, Cafe"],
+  keywords: ["언플러그, 라운지, 라이브, 뮤직, 서교음악다방, Unplugged, Lounge, Live, Music, Cafe"],
   openGraph: {
     type: 'website',
     url: 'https://www.unplugged-lounge.com',

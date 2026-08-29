@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import SubPageHero from '@/components/common/SubPageHero';
 import RentalPage from '@/components/rental/RentalPage';
 
-import './rental.scss';
+import './style.scss';
 
 export const metadata: Metadata = {
   title: "대관 | UNPLUGGED LOUNGE",

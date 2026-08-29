@@ -1,6 +1,4 @@
 .upcoming {
-  color: #fff;
-
   padding: 180px 0;
 
   &__inner {
@@ -25,7 +23,7 @@
     }
 
     a {
-      color: #fff;
+      color: var(--font-color);
 
       font-size: 13px;
       letter-spacing: 0.15em;
@@ -60,9 +58,9 @@
 
     padding: 20px 10px;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid var(--border-color);
 
-    color: #fff;
+    color: var(--font-color);
     text-decoration: none;
 
     position: relative;
@@ -73,7 +71,7 @@
       background-color 0.25s ease;
 
     &:hover {
-      background-color: #1b1a17;
+      background-color: var(--background-sec-color);
       z-index: 2;
     }
   }
@@ -92,7 +90,7 @@
 
     .swiper-slide:nth-child(3n+1) {
       .upcoming__item {
-        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        border-top: 1px solid var(--border-color);
       }
     }
 

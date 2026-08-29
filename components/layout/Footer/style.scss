@@ -20,7 +20,7 @@
 			>li {
 				font-size: 13px;
 				font-weight: 300;
-				color: #fff;
+				color: var(--font-color);
 				display: flex;
 				+li {
 					margin-top: 4px;;
@@ -35,7 +35,7 @@
 	.footer-copy {
 		font-size: 12px;
 		font-weight: 300;
-		color: rgba(255, 255, 255, .5);
+		color: var(--font-sec-color);
 		text-transform: uppercase;
 		margin-top: 20px;
 	}

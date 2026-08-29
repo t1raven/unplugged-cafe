@@ -5,21 +5,21 @@ import Image from 'next/image';
 import gsap from 'gsap';
 
 import CategoryNav from '@/components/common/CategoryNav'
-import GalleryModal from './GalleryModal';
+import ArchiveModal from './ArchiveModal';
 
 import type { Category } from '@/types/category';
-import type { Gallery } from '@/types/gallery';
+import type { Archive } from '@/types/archive';
 
-import './GalleryList.scss';
+import './ArchiveList.scss';
 
 const PAGE_SIZE = 12;
 
 interface Props {
   categories: Category[];
-  items: Gallery[];
+  items: Archive[];
 }
 
-export default function GalleryList({
+export default function ArchiveList({
   categories,
   items: initialItems,
 }: Props) {
@@ -28,7 +28,7 @@ export default function GalleryList({
     categories[0]?.slug ?? ''
   )
 
-  const [items, setItems] = useState<Gallery[]>(
+  const [items, setItems] = useState<Archive[]>(
     initialItems
   )
 
@@ -63,7 +63,7 @@ export default function GalleryList({
       })
 
       const response = await fetch(
-        `/api/gallery?${params.toString()}`
+        `/api/archives?${params.toString()}`
       )
 
       if (!response.ok) {
@@ -139,7 +139,7 @@ export default function GalleryList({
         })
 
         const response = await fetch(
-          `/api/gallery?${params.toString()}`
+          `/api/archives?${params.toString()}`
         )
 
         if (!response.ok) {
@@ -326,7 +326,7 @@ export default function GalleryList({
       </section>
 
       {selectedIndex !== null && (
-        <GalleryModal
+        <ArchiveModal
           items={items}
           currentIndex={selectedIndex}
           onClose={handleCloseModal}

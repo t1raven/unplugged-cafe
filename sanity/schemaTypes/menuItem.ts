@@ -4,7 +4,7 @@ import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list
 
 export const menuItem = defineType({
   name: 'menuItem',
-  title: '메뉴 아이템',
+  title: '카페 메뉴',
   type: 'document',
 
   orderings: [

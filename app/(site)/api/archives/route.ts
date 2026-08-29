@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     _type == "galleryItem"
     ${category ? `&& category->slug.current == $category` : ''}
   ]
-  | order(_createdAt desc)
+  | order(orderRank)
   [$start...$end] {
     _id,
     title,
