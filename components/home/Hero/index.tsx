@@ -79,11 +79,11 @@ export default function Hero() {
         <p className="hero__location">
           HONGDAE · SEOUL
         </p>
-      </div>
 
-      <div className="hero__scroll">
-        <span>SCROLL</span>
-        <i />
+        <div className="hero__scroll">
+          <span>SCROLL</span>
+          <i />
+        </div>
       </div>
     </section>
   );

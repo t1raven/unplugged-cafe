@@ -24,6 +24,8 @@ export const metadata: Metadata = {
   },
 };
 
+import ThemeProvider from '@/components/common/ThemeProvider';
+
 //Layout
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -35,12 +37,14 @@ export default function SiteLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>
       <body>
-        <Header/>
-        {children}
-        <Gnb/>
-        <Footer/>
+        <ThemeProvider>
+          <Header/>
+          {children}
+          <Gnb/>
+          <Footer/>
+        </ThemeProvider>
       </body>
     </html>
   );

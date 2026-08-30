@@ -21,7 +21,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgba(245, 243, 238, .8);
+    background-color: rgba(241, 237, 228, .75);
     backdrop-filter: blur(5px);
   }
 }
@@ -105,9 +105,16 @@
   }
 }
 
-
 html.scrollUp .category-nav {
   top: var(--header-height);
+}
+
+[data-theme="dark"] {
+  .category-nav {
+    &:after {
+      background-color: rgba(17, 16, 15, .75);
+    }
+  }
 }
 
 

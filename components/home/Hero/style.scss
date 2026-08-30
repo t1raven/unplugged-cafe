@@ -78,7 +78,7 @@
     position: absolute;
     z-index: 2;
 
-    left: 12vw;
+    left: 0;
     bottom: 60px;
 
     display: flex;
@@ -108,7 +108,6 @@
     }
 
     &__scroll {
-      left: 5%;
       bottom: 100px;
     }
   }
