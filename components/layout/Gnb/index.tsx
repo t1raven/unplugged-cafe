@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePathname } from "next/navigation";
+import { getDeviceType } from "@/utils/device";
 import Link from 'next/link';
 import gsap from 'gsap';
 
@@ -15,6 +16,8 @@ export default function Gnb() {
   const moveBgRef = useRef<HTMLDivElement>(null);
   const lastWidth = useRef(0);
 
+  const [device, setDevice] = useState("server");
+
   const moveBackground = (animate = true) => {
     if (!gnbRef.current || !moveBgRef.current) return;
 
@@ -25,7 +28,9 @@ export default function Gnb() {
     if (!activeMenu) return;
 
     const html = document.documentElement;
-    const scale = html.classList.contains('scrollDown') ? 0.85 : 1;
+    let scale = html.classList.contains('scrollDown') ? 0.85 : 1;
+
+    if(device === "desktop") scale = 1;
 
     const navRect = gnbRef.current.getBoundingClientRect();
     const menuRect = activeMenu.getBoundingClientRect();
@@ -52,6 +57,8 @@ export default function Gnb() {
   };
 
   useEffect(() => { 
+    setDevice(getDeviceType());
+
     requestAnimationFrame(() => { 
       moveBackground(false);
 
@@ -88,6 +95,7 @@ export default function Gnb() {
   }, []);
 
   useEffect(() => {
+    setDevice(getDeviceType());
     requestAnimationFrame(() => {
       moveBackground(true);
       setTimeout(() => { moveBackground(true); }, 250);
