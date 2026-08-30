@@ -14,6 +14,8 @@
     align-items: center;
     border-radius: 999px;
     background-color: rgba(238, 238, 238, .8);
+    backdrop-filter: blur(5px) brightness(1.1);
+    border: 1px solid rgba(34, 34, 34, 0.1);
     transition: all 0.25s ease-in-out;
   	> ul {
 			display: flex;
@@ -76,7 +78,7 @@
 	    left: 0;
 	    height: 40px;
 	    border-radius: 999px;
-	    background: rgba(34, 34, 34, .15);
+	    background: rgba(34, 34, 34, .1);
 	    z-index: 0;
 	    pointer-events: none;
 		}
@@ -95,13 +97,14 @@ html.scrollUp #site-gnb {
 	#site-gnb {
 		> nav {
 			background-color: rgba(34, 34, 34, .8);
+			border: 1px solid rgba(238, 238, 238, 0.1);
 
 			> ul > li > a {
 				color: #fff;
 			}
 		}
 		.move-bg {
-			background: rgba(238, 238, 238, .15);
+			background: rgba(238, 238, 238, .1);
 		}
 	}
 }
