@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { urlFor } from '@/sanity/lib/image';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import type { Performance } from '@/types/performance';
@@ -384,13 +385,14 @@ export default function PerformanceCalendar({
 
                       <div className="selected-performance-poster">
                         {performance.poster?.asset && (
-                          <img
+                          <Image
                             src={urlFor(performance.poster)
                               .width(300)
                               .height(400)
-                              .fit('crop')
                               .url()}
                             alt={performance.title}
+                            width={300}
+                            height={400}
                           />
                         )}
                       </div>
@@ -515,13 +517,14 @@ export default function PerformanceCalendar({
 
                       <div className="upcoming-poster">
                         {performance.poster?.asset && (
-                          <img
+                          <Image
                             src={urlFor(performance.poster)
                               .width(300)
                               .height(400)
-                              .fit('crop')
                               .url()}
                             alt={performance.title}
+                            width={300}
+                            height={400}
                           />
                         )}
                       </div>

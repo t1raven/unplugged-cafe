@@ -239,7 +239,7 @@ export default function About() {
 
 
         {/* Equipment */}
-        <div className="about__equipment">
+        {/*<div className="about__equipment">
 
           <div className="about__equipment-header">
 
@@ -372,7 +372,7 @@ export default function About() {
 
           </div>
 
-        </div>
+        </div>*/}
 
       </div>
 

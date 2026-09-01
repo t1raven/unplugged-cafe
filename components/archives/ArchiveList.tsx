@@ -108,7 +108,8 @@ export default function ArchiveList({
         }
       },
       {
-        rootMargin: `${window.innerHeight * 0.5}px 0px`,
+        //rootMargin: `${window.innerHeight * 0.2}px 0px`,
+        rootMargin: `0px`,
       }
     )
 
@@ -267,15 +268,13 @@ export default function ArchiveList({
 
   return (
     <>
+      <CategoryNav
+        category={categories}
+        activeCategory={activeCategory}
+        onChange={handleCategoryChange}
+      />
       <section className="sub-page-section gallery">
         <div className="inner">
-
-          <CategoryNav
-            category={categories}
-            activeCategory={activeCategory}
-            onChange={handleCategoryChange}
-          />
-
           <div className="gallery__list" ref={gridRef}>
             {items.length > 0 ? (
               <div className="gallery__grid">

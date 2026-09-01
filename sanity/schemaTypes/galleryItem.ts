@@ -14,6 +14,7 @@ export const galleryItem = defineType({
 
     orderRankField({
       type: 'galleryItem',
+      newItemPosition: 'before',
     }),
 
     defineField({
@@ -55,7 +56,7 @@ export const galleryItem = defineType({
       name: 'display',
       title: '공개',
       type: 'boolean',
-      initialValue: false,
+      initialValue: true,
     }),
   ],
 

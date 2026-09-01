@@ -14,6 +14,7 @@ export const galleryCategory = defineType({
 
     orderRankField({
       type: 'galleryCategory',
+      newItemPosition: 'before',
     }),
 
     defineField({

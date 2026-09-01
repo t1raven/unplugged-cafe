@@ -7,10 +7,10 @@
   top: 0;
   z-index: 100;
 
-  margin-bottom: 80px;;
+  margin-top: 40px;
 
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
+  //border-top: 1px solid var(--border-color);
+  //border-bottom: 1px solid var(--border-color);
 
   transition: top 0.25s ease-in-out;
 
@@ -35,11 +35,11 @@
   position: relative;
   z-index: 1;
 
-  max-width: 1400px;
+  width: var(--inner-width);
+  max-width: var(--inner-max-width);
   height: 70px;
 
   margin: 0 auto;
-  padding: 0 30px;
 
   gap: 45px;
 
@@ -120,15 +120,14 @@ html.scrollUp .category-nav {
 
 @media screen and (max-width: 768px){
   .category-nav {
-    margin-bottom: 40px;
+    margin-top: 20px;
+    margin-bottom: 0;
   }
 
   .category-nav__inner {
     justify-content: flex-start;
 
     height: 60px;
-
-    padding: 0 10px;
 
     gap: 28px;
   }

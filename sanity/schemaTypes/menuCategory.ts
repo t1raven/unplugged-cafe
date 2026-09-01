@@ -14,6 +14,7 @@ export const menuCategory = defineType({
 
     orderRankField({
       type: 'menuCategory',
+      newItemPosition: 'before',
     }),
 
     defineField({

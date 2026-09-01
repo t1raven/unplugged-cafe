@@ -56,64 +56,64 @@ export default function MenuList({
   }, [activeCategory])
 
   return (
-    <section className="sub-page-section menu-content">
-      <div className="inner">
-
-        <CategoryNav
-          category={categories}
-          activeCategory={activeCategory}
-          onChange={setActiveCategory}
-        />
-
-        <div
-          className="menu-list"
-          ref={containerRef}
-        >
-          {filteredItems.length ? (
-            <div className="menu-grid">
-              {filteredItems.map((item) => (
-                <article
-                  className="menu-card"
-                  key={item._id}
-                >
-                  
-                  <div className="menu-card__image">
-                    {item.imageUrl && (
-                      <Image
-                        src={item.imageUrl}
-                        alt={item.name}
-                        width={384}
-                        height={480}
-                        sizes="(max-width: 768px) 50vw, 384px"
-                      />
-                    )}
-                  </div>
-                  
-
-                  <div className="menu-card__info">
-                    <div className="menu-card__title">
-                      <h2>{item.name}</h2>
-
-                      <strong>
-                        {item.price.toLocaleString()}원
-                      </strong>
+    <>
+      <CategoryNav
+        category={categories}
+        activeCategory={activeCategory}
+        onChange={setActiveCategory}
+      />
+      <section className="sub-page-section menu-content">
+        <div className="inner">
+          <div
+            className="menu-list"
+            ref={containerRef}
+          >
+            {filteredItems.length ? (
+              <div className="menu-grid">
+                {filteredItems.map((item) => (
+                  <article
+                    className="menu-card"
+                    key={item._id}
+                  >
+                    
+                    <div className="menu-card__image">
+                      {item.imageUrl && (
+                        <Image
+                          src={item.imageUrl}
+                          alt={item.name}
+                          width={384}
+                          height={480}
+                          sizes="(max-width: 768px) 50vw, 384px"
+                        />
+                      )}
                     </div>
+                    
 
-                    {item.description && (
-                      <p>{item.description}</p>
-                    )}
-                  </div>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <div className="menu-empty">
-              등록된 메뉴가 없습니다.
-            </div>
-          )}
+                    <div className="menu-card__info">
+                      <div className="menu-card__title">
+                        <h2>{item.name}</h2>
+
+                        <strong>
+                          {item.price.toLocaleString()}원
+                        </strong>
+                      </div>
+
+                      {item.description && (
+                        <p>{item.description}</p>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <div className="menu-empty">
+                등록된 메뉴가 없습니다.
+              </div>
+            )}
+          </div>
+
         </div>
-
-      </div>
-    </section>
+      </section>
+    </>
   )
 }

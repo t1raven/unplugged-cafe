@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import type { Performance } from '@/types/performance';
 
+import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -134,13 +135,14 @@ export default function Upcoming({
                 >
                   <div className="upcoming__poster">
                     {performance.poster?.asset && (
-                      <img
+                      <Image
                         src={urlFor(performance.poster)
                           .width(300)
                           .height(400)
-                          .fit('crop')
                           .url()}
                         alt={performance.title}
+                        width={300}
+                        height={400}
                       />
                     )}
                   </div>
