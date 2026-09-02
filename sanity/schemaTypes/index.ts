@@ -4,6 +4,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
   types: [],
 }*/
 
+import {home} from './home'
 import {performance} from './performance'
 import {artist} from './artist'
 import {place} from './place'
@@ -13,6 +14,7 @@ import {galleryCategory} from './galleryCategory'
 import {galleryItem} from './galleryItem'
 
 export const schemaTypes = [
+  home,
   performance,
   place,
   artist,

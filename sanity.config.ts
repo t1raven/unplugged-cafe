@@ -1,17 +1,11 @@
 'use client'
 
-/**
- * This configuration is used to for the Sanity Studio that’s mounted on the `\app\studio\[[...tool]]\page.tsx` route
- */
-
 import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 
-// Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import {apiVersion, dataset, projectId} from './sanity/env'
 import {schemaTypes} from './sanity/schemaTypes'
-import {structure} from './sanity/structure'
 
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 import {koKRLocale} from '@sanity/locale-ko-kr'
@@ -22,37 +16,52 @@ import {MarkerIcon} from '@sanity/icons/Marker'
 import {StarIcon} from '@sanity/icons/Star'
 import {BottleIcon} from '@sanity/icons/Bottle'
 import {ImageIcon} from '@sanity/icons/Image'
-
+import {HomeIcon} from '@sanity/icons/Home'
 
 export default defineConfig({
   basePath: '/studio',
   title: 'Unplugged Lounge CMS',
+
   projectId,
   dataset,
-  // Add and edit the content schema in the './sanity/schemaTypes' folder
+
   plugins: [
-    //structureTool({structure}),
     structureTool({
       structure: (S, context) =>
         S.list()
           .id('root')
           .title('콘텐츠')
           .items([
+            // Home Singleton
+            S.listItem()
+              .id('home')
+              .title('홈')
+              .icon(HomeIcon)
+              .child(
+                S.document()
+                  .schemaType('home')
+                  .documentId('home')
+              ),
+
+            // Performance
             S.documentTypeListItem('performance')
               .id('performance')
               .title('공연 일정')
               .icon(CalendarIcon),
 
+            // Place
             S.documentTypeListItem('place')
               .id('place')
               .title('공연 장소')
               .icon(MarkerIcon),
 
+            // Artist
             S.documentTypeListItem('artist')
               .id('artist')
               .title('아티스트')
               .icon(StarIcon),
 
+            // Menu
             orderableDocumentListDeskItem({
               type: 'menuCategory',
               title: '카페 카테고리',
@@ -69,6 +78,7 @@ export default defineConfig({
               context,
             }),
 
+            // Gallery
             orderableDocumentListDeskItem({
               type: 'galleryCategory',
               title: '기록 카테고리',
@@ -85,9 +95,11 @@ export default defineConfig({
               context,
             }),
 
+            // 기타 document
             ...S.documentTypeListItems().filter(
               (item) =>
                 ![
+                  'home',
                   'performance',
                   'place',
                   'artist',
@@ -99,11 +111,14 @@ export default defineConfig({
             ),
           ]),
     }),
-    // Vision is for querying with GROQ from inside the Studio
-    // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({defaultApiVersion: apiVersion}),
+
+    visionTool({
+      defaultApiVersion: apiVersion,
+    }),
+
     koKRLocale(),
   ],
+
   schema: {
     types: schemaTypes,
   },
