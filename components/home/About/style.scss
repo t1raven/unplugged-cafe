@@ -373,11 +373,15 @@
 
     &__notice {
       margin-top: 80px;
-
       padding: 25px 20px;
+
+      h4 {
+        margin-bottom: 15px;
+      }
 
       li {
         font-size: 12px;
+        padding-left: 15px;
       }
     }
   }

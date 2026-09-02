@@ -14,8 +14,8 @@ import type { Place } from '@/types/place';
 import './style.scss';
 
 const admissionTypeNames: Record<string, string> = {
-  1: '공연장대기순',
-  2: '번호표순',
+  1: '입장번호순',
+  2: '공연장대기순',
 }
 
 const viewingTypeNames: Record<string, string> = {
@@ -210,7 +210,7 @@ export default async function PerformanceDetailPage({
                   <Link href={performance.place?.naverMap!} target="_blank">
                     <i className="material-symbols-rounded icon" translate="no">location_on</i> {performance.place?.name} ↗
                   </Link><br/>
-                  <small>{performance.place?.address}</small>
+                  <p>{performance.place?.address}</p>
                 </strong>
               </div>
 
@@ -306,6 +306,8 @@ export default async function PerformanceDetailPage({
                         )}
 
                       </div>
+
+                      <i className="artist-icon material-symbols-rounded" translate="no">artist</i>
 
                     </article>
                   )
