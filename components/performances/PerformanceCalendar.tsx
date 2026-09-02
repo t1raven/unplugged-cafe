@@ -6,7 +6,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import type { Performance } from '@/types/performance';
-import type { Artist } from '@/types/artist';
 
 import './PerformanceCalendar.scss';
 
@@ -26,13 +25,6 @@ export default function PerformanceCalendar({
     `${String(today.getMonth() + 1).padStart(2, '0')}-` +
     `${String(today.getDate()).padStart(2, '0')}`;
 
-  const [currentDate, setCurrentDate] = useState(
-    new Date(today.getFullYear(), today.getMonth(), 1)
-  );
-
-  // 선택된 날짜
-  const [selectedDate, setSelectedDate] = useState(todayKey);
-
   // ==================================================
   // Date Helpers
   // ==================================================
@@ -45,12 +37,55 @@ export default function PerformanceCalendar({
     return `${year}-${month}-${day}`;
   };
 
+  /**
+   * Sanity datetime → 브라우저 로컬 날짜
+   */
+  const getPerformanceDate = (performance: Performance) => {
+    return new Date(performance.date);
+  };
+
+  /**
+   * 공연의 날짜 Key
+   */
+  const getPerformanceDateKey = (
+    performance: Performance
+  ) => {
+    return formatDateKey(
+      getPerformanceDate(performance)
+    );
+  };
+
+  /**
+   * 공연 시간 표시
+   *
+   * Sanity datetime:
+   * 2026-09-02T19:00:00+09:00
+   *
+   * → 19:00
+   */
+  const formatPerformanceTime = (
+    performance: Performance
+  ) => {
+    const date = getPerformanceDate(performance);
+
+    return `${String(date.getHours()).padStart(2, '0')}:${String(
+      date.getMinutes()
+    ).padStart(2, '0')}`;
+  };
+
+  /**
+   * 선택 날짜 표시
+   */
   const formatSelectedDate = (dateKey: string) => {
     const [year, month, day] = dateKey
       .split('-')
       .map(Number);
 
-    const date = new Date(year, month - 1, day);
+    const date = new Date(
+      year,
+      month - 1,
+      day
+    );
 
     return {
       year,
@@ -59,6 +94,89 @@ export default function PerformanceCalendar({
       weekday: WEEKDAYS[date.getDay()],
     };
   };
+
+
+  const getDDay = (date: string) => {
+    const performanceDate = new Date(date);
+
+    const todayDate = new Date();
+
+    // 시간을 제거하고 날짜만 비교
+    const today = new Date(
+      todayDate.getFullYear(),
+      todayDate.getMonth(),
+      todayDate.getDate()
+    );
+
+    const target = new Date(
+      performanceDate.getFullYear(),
+      performanceDate.getMonth(),
+      performanceDate.getDate()
+    );
+
+    const diffTime =
+      target.getTime() - today.getTime();
+
+    const diffDays =
+      Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) {
+      return 'D-DAY';
+    }
+
+    return `D-${diffDays}`;
+  }
+
+
+  // ==================================================
+  // Performance Filter
+  // ==================================================
+
+  /**
+   * 해당 날짜에 표시할 공연만 반환
+   *
+   * - 과거 날짜 → 전부 숨김
+   * - 오늘 → 현재 시간 이후 공연만 표시
+   * - 미래 날짜 → 전부 표시
+   */
+  const getAvailablePerformances = (
+    dateKey: string,
+    dayPerformances: Performance[]
+  ) => {
+    // 과거 날짜
+    if (dateKey < todayKey) {
+      return [];
+    }
+
+    // 미래 날짜
+    if (dateKey > todayKey) {
+      return dayPerformances;
+    }
+
+    // 오늘 날짜
+    return dayPerformances.filter((performance) => {
+      const performanceDate =
+        getPerformanceDate(performance);
+
+      return performanceDate > today;
+    });
+  };
+
+  // ==================================================
+  // State
+  // ==================================================
+
+  const [currentDate, setCurrentDate] = useState(
+    new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      1
+    )
+  );
+
+  // 선택된 날짜
+  const [selectedDate, setSelectedDate] =
+    useState(todayKey);
 
   // ==================================================
   // Month
@@ -76,8 +194,11 @@ export default function PerformanceCalendar({
     0
   );
 
-  const firstDayIndex = firstDayOfMonth.getDay();
-  const lastDate = lastDayOfMonth.getDate();
+  const firstDayIndex =
+    firstDayOfMonth.getDay();
+
+  const lastDate =
+    lastDayOfMonth.getDate();
 
   // ==================================================
   // Calendar Days
@@ -86,11 +207,19 @@ export default function PerformanceCalendar({
   const calendarDays = useMemo(() => {
     const days: Array<Date | null> = [];
 
-    for (let i = 0; i < firstDayIndex; i++) {
+    for (
+      let i = 0;
+      i < firstDayIndex;
+      i++
+    ) {
       days.push(null);
     }
 
-    for (let date = 1; date <= lastDate; date++) {
+    for (
+      let date = 1;
+      date <= lastDate;
+      date++
+    ) {
       days.push(
         new Date(
           currentDate.getFullYear(),
@@ -116,12 +245,16 @@ export default function PerformanceCalendar({
   // ==================================================
 
   const performancesByDate = useMemo(() => {
-    const grouped: Record<string, Performance[]> = {};
+    const grouped: Record<
+      string,
+      Performance[]
+    > = {};
 
     performances.forEach((performance) => {
       if (!performance.date) return;
 
-      const dateKey = performance.date.slice(0, 10);
+      const dateKey =
+        getPerformanceDateKey(performance);
 
       if (!grouped[dateKey]) {
         grouped[dateKey] = [];
@@ -138,7 +271,10 @@ export default function PerformanceCalendar({
   // ==================================================
 
   const selectedPerformances =
-    performancesByDate[selectedDate] ?? [];
+    getAvailablePerformances(
+      selectedDate,
+      performancesByDate[selectedDate] ?? []
+    );
 
   const selectedDateInfo =
     formatSelectedDate(selectedDate);
@@ -195,7 +331,8 @@ export default function PerformanceCalendar({
   // ==================================================
 
   const handleSelectDate = (date: Date) => {
-    const dateKey = formatDateKey(date);
+    const dateKey =
+      formatDateKey(date);
 
     // 오늘 이전 날짜 선택 불가
     if (dateKey < todayKey) {
@@ -205,13 +342,45 @@ export default function PerformanceCalendar({
     setSelectedDate(dateKey);
   };
 
+  // ==================================================
+  // Month Title
+  // ==================================================
+
   const monthTitle =
     `${currentDate.getFullYear()}년 ` +
     `${currentDate.getMonth() + 1}월`;
 
+  // ==================================================
+  // Upcoming Performances
+  // ==================================================
+
+  const upcomingPerformances =
+    performances
+      .filter((performance) => {
+        if (!performance.date) {
+          return false;
+        }
+
+        const performanceDate =
+          getPerformanceDate(performance);
+
+        return performanceDate > today;
+      })
+      .sort((a, b) => {
+        const dateA =
+          getPerformanceDate(a).getTime();
+
+        const dateB =
+          getPerformanceDate(b).getTime();
+
+        return dateA - dateB;
+      })
+      .slice(0, 6);
+
   return (
     <div className="sub-page-section performance-calendar">
       <div className="inner">
+
         {/* ==================================================
             Calendar Header
         ================================================== */}
@@ -228,12 +397,16 @@ export default function PerformanceCalendar({
               type="button"
               onClick={handlePreviousMonth}
               disabled={
-                currentDate.getFullYear() === today.getFullYear() &&
-                currentDate.getMonth() === today.getMonth()
+                currentDate.getFullYear() ===
+                  today.getFullYear() &&
+                currentDate.getMonth() ===
+                  today.getMonth()
               }
               aria-label="이전 달"
             >
-              <span className="material-symbols-rounded">keyboard_arrow_left</span>
+              <span className="material-symbols-rounded">
+                keyboard_arrow_left
+              </span>
             </button>
 
             <button
@@ -249,7 +422,9 @@ export default function PerformanceCalendar({
               onClick={handleNextMonth}
               aria-label="다음 달"
             >
-              <span className="material-symbols-rounded">keyboard_arrow_right</span>
+              <span className="material-symbols-rounded">
+                keyboard_arrow_right
+              </span>
             </button>
 
           </div>
@@ -277,66 +452,95 @@ export default function PerformanceCalendar({
 
         <div className="calendar-grid">
 
-          {calendarDays.map((date, index) => {
+          {calendarDays.map(
+            (date, index) => {
 
-            if (!date) {
+              if (!date) {
+                return (
+                  <div
+                    key={`empty-${index}`}
+                    className="calendar-day is-empty"
+                  />
+                );
+              }
+
+              const dateKey =
+                formatDateKey(date);
+
+              const dayPerformances =
+                getAvailablePerformances(
+                  dateKey,
+                  performancesByDate[
+                    dateKey
+                  ] ?? []
+                );
+
+              const isToday =
+                dateKey === todayKey;
+
+              const isSelected =
+                dateKey === selectedDate;
+
+              const isPast =
+                dateKey < todayKey;
+
               return (
-                <div
-                  key={`empty-${index}`}
-                  className="calendar-day is-empty"
-                />
+                <button
+                  key={dateKey}
+                  type="button"
+                  disabled={isPast}
+                  className={[
+                    'calendar-day',
+                    isToday
+                      ? 'is-today'
+                      : '',
+                    isSelected
+                      ? 'is-selected'
+                      : '',
+                    isPast
+                      ? 'is-past'
+                      : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  onClick={() =>
+                    handleSelectDate(date)
+                  }
+                >
+
+                  <div className="calendar-date">
+                    <span>
+                      {date.getDate()}
+                    </span>
+                  </div>
+
+                  {/* 
+                    오늘은 지난 공연을 제외한
+                    실제 예정 공연이 있을 때만 표시
+                  */}
+                  {!isPast &&
+                    dayPerformances.length >
+                      0 && (
+                      <div className="calendar-performance-indicator">
+
+                        <span />
+
+                        {dayPerformances.length >
+                          1 && (
+                          <small>
+                            {
+                              dayPerformances.length
+                            }
+                          </small>
+                        )}
+
+                      </div>
+                    )}
+
+                </button>
               );
             }
-
-            const dateKey = formatDateKey(date);
-
-            const dayPerformances =
-              performancesByDate[dateKey] ?? [];
-
-            const isToday =
-              dateKey === todayKey;
-
-            const isSelected =
-              dateKey === selectedDate;
-
-            const isPast =
-              dateKey < todayKey;
-
-            return (
-              <button
-                key={dateKey}
-                type="button"
-                disabled={isPast}
-                className={[
-                  'calendar-day',
-                  isToday ? 'is-today' : '',
-                  isSelected ? 'is-selected' : '',
-                  isPast ? 'is-past' : '',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-                onClick={() => handleSelectDate(date)}
-              >
-                <div className="calendar-date">
-                  <span>
-                    {date.getDate()}
-                  </span>
-                </div>
-
-                {!isPast && dayPerformances.length > 0 && (
-                  <div className="calendar-performance-indicator">
-                    <span />
-
-                    {dayPerformances.length > 1 && (
-                      <small>
-                        {dayPerformances.length}
-                      </small>
-                    )}
-                  </div>
-                )}
-              </button>
-            );
-                    })}
+          )}
 
         </div>
 
@@ -346,85 +550,116 @@ export default function PerformanceCalendar({
 
         <div className="selected-date-performance">
 
-          <div className="selected-date-header">
+          <div className="performance-list-header">
 
             <div>
               <p>SELECTED DATE</p>
 
               <h3>
                 {selectedDateInfo.month}.
-                {String(selectedDateInfo.day).padStart(2, '0')}
-                {' '}
+                {String(
+                  selectedDateInfo.day
+                ).padStart(2, '0')}{' '}
+
                 <span>
-                  {selectedDateInfo.weekday}요일
+                  {
+                    selectedDateInfo.weekday
+                  }
+                  요일
                 </span>
               </h3>
             </div>
 
-            <span className="selected-performance-count">
+            <span className="performance-list-count">
               공연 {selectedPerformances.length}
             </span>
 
           </div>
 
-          {selectedPerformances.length > 0 ? (
+          {selectedPerformances.length >
+          0 ? (
 
-            <div className="selected-performance-list">
+            <div className="performance-list">
 
               {selectedPerformances.map(
                 (performance) => {
 
                   const slug =
-                    performance.slug?.current;
+                    performance.slug
+                      ?.current;
 
                   const content = (
                     <>
-                      <div className="selected-performance-time">
-                        {performance.startTime || '--:--'}
+
+                      <div className="performance-time">
+                        {formatPerformanceTime(
+                          performance
+                        )}
                       </div>
 
-                      <div className="selected-performance-poster">
-                        {performance.poster?.asset && (
+                      <div className="performance-poster">
+
+                        {performance.poster
+                          ?.asset && (
                           <Image
-                            src={urlFor(performance.poster)
+                            src={urlFor(
+                              performance.poster
+                            )
                               .width(300)
                               .height(400)
                               .url()}
-                            alt={performance.title}
+                            alt={
+                              performance.title
+                            }
                             width={300}
                             height={400}
                           />
                         )}
+
                       </div>
 
-                      <div className="selected-performance-info">
+                      <div className="performance-info">
 
                         <strong>
-                          {performance.title}
+                          {
+                            performance.title
+                          }
                         </strong>
 
                         {performance.artists &&
-                          performance.artists.length > 0 && (
+                          performance.artists
+                            .length >
+                            0 && (
                             <span>
                               {performance.artists
-                                .map((artist) => artist.name)
-                                .join(' · ')}
+                                .map(
+                                  (
+                                    artist
+                                  ) =>
+                                    artist.name
+                                )
+                                .join(
+                                  ' · '
+                                )}
                             </span>
-                        )}
+                          )}
 
                       </div>
 
-                      <span className="selected-performance-arrow">
+                      <span className="performance-arrow">
                         →
                       </span>
+
                     </>
                   );
 
                   if (!slug) {
                     return (
                       <div
-                        key={performance._id}
-                        className="selected-performance-item"
+                        key={
+                          performance._id
+                        }
+                        className="performance-item"
                       >
                         {content}
                       </div>
@@ -433,9 +668,11 @@ export default function PerformanceCalendar({
 
                   return (
                     <Link
-                      key={performance._id}
+                      key={
+                        performance._id
+                      }
                       href={`/performances/${slug}`}
-                      className="selected-performance-item"
+                      className="performance-item"
                     >
                       {content}
                     </Link>
@@ -449,7 +686,8 @@ export default function PerformanceCalendar({
 
             <div className="no-performance">
               <p>
-                선택한 날짜에는 예정된 공연이 없습니다.
+                선택한 날짜에는 예정된
+                공연이 없습니다.
               </p>
             </div>
 
@@ -458,38 +696,41 @@ export default function PerformanceCalendar({
         </div>
 
         {/* ==================================================
-              Upcoming
-          ================================================== */}
+            Upcoming
+        ================================================== */}
 
-          <div className="upcoming-performances">
+        <div className="upcoming-performances">
 
-            <div className="upcoming-header">
-              <p>UPCOMING PERFORMANCE</p>
-              <h3>다가오는 공연</h3>
+          <div className="performance-list-header">
+
+            <div>
+              <p>
+                UPCOMING PERFORMANCE
+              </p>
+
+              <h3>
+                다가오는 공연
+              </h3>
             </div>
 
-            <div className="upcoming-list">
+          </div>
 
-              {performances
-                .filter((performance) => {
-                  if (!performance.date) {
-                    return false;
-                  }
+          {upcomingPerformances.length >
+          0 ? (
 
-                  return (
-                    performance.date.slice(0, 10) >=
-                    todayKey
-                  );
-                })
-                .slice(0, 5)
-                .map((performance) => {
+            <div className="performance-list">
+
+              {upcomingPerformances.map(
+                (performance) => {
 
                   const slug =
-                    performance.slug?.current;
+                    performance.slug
+                      ?.current;
 
-                  const date = new Date(
-                    performance.date
-                  );
+                  const date =
+                    getPerformanceDate(
+                      performance
+                    );
 
                   const month =
                     date.getMonth() + 1;
@@ -498,66 +739,101 @@ export default function PerformanceCalendar({
                     date.getDate();
 
                   const weekday =
-                    WEEKDAYS[date.getDay()];
+                    WEEKDAYS[
+                      date.getDay()
+                    ];
 
                   const content = (
                     <>
-                      <div className="upcoming-date">
+
+                      <div className="performance-date">
 
                         <strong>
                           {month}.
-                          {String(day).padStart(2, '0')}
+                          {String(day).padStart(
+                            2,
+                            '0'
+                          )}
                         </strong>
 
                         <span>
-                          {weekday} {performance.startTime}
+                          {weekday}{' '}
+                          {formatPerformanceTime(
+                            performance
+                          )}
                         </span>
 
                       </div>
 
-                      <div className="upcoming-poster">
-                        {performance.poster?.asset && (
+                      <div className="performance-poster">
+
+                        {performance.poster
+                          ?.asset && (
                           <Image
-                            src={urlFor(performance.poster)
+                            src={urlFor(
+                              performance.poster
+                            )
                               .width(300)
                               .height(400)
                               .url()}
-                            alt={performance.title}
+                            alt={
+                              performance.title
+                            }
                             width={300}
                             height={400}
                           />
                         )}
+
                       </div>
 
+                      <div className="performance-info">
 
-                      <div className="upcoming-info">
+                        <div>
+                          <em>
+                            {getDDay(performance.date)}
+                          </em>
+                        </div>
 
                         <strong>
-                          {performance.title}
+                          {
+                            performance.title
+                          }
                         </strong>
 
                         {performance.artists &&
-                          performance.artists.length > 0 && (
+                          performance.artists
+                            .length >
+                            0 && (
                             <span>
                               {performance.artists
-                                .map((artist) => artist.name)
-                                .join(' · ')}
+                                .map(
+                                  (
+                                    artist
+                                  ) =>
+                                    artist.name
+                                )
+                                .join(
+                                  ' · '
+                                )}
                             </span>
-                        )}
+                          )}
 
                       </div>
 
-                      <span className="upcoming-arrow">
+                      <span className="performance-arrow">
                         →
                       </span>
+
                     </>
                   );
 
                   if (!slug) {
                     return (
                       <div
-                        key={performance._id}
-                        className="upcoming-item"
+                        key={
+                          performance._id
+                        }
+                        className="performance-item"
                       >
                         {content}
                       </div>
@@ -566,18 +842,32 @@ export default function PerformanceCalendar({
 
                   return (
                     <Link
-                      key={performance._id}
+                      key={
+                        performance._id
+                      }
                       href={`/performances/${slug}`}
-                      className="upcoming-item"
+                      className="performance-item"
                     >
                       {content}
                     </Link>
                   );
-                })}
+                }
+              )}
 
             </div>
 
-          </div>
+          ) : (
+
+            <div className="no-performance">
+              <p>
+                현재 예정된 공연이 없습니다.
+              </p>
+            </div>
+
+          )}
+
+        </div>
+
       </div>
     </div>
   );

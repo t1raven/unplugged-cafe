@@ -75,7 +75,7 @@
   h1 {
     max-width: 700px;
     margin: 0;
-    font-size: clamp(48px, 5vw, 82px);
+    font-size: clamp(36px, 5vw, 56px);
     font-weight: 500;
     line-height: 1.05;
     letter-spacing: -0.06em;
@@ -135,8 +135,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 180px;
-    height: 54px;
+    min-width: 200px;
+    height: 60px;
     margin-top: 35px;
     padding: 0 30px;
     background: var(--secondary-color);
@@ -147,6 +147,7 @@
     text-decoration: none;
     position: relative;
     overflow: hidden;
+    border: 0;
 
     transition:
       background-color 0.25s ease,
@@ -165,12 +166,18 @@
       transition:.2s ease-out;
     }
 
-    &:hover {
+    &:not(:disabled):hover {
       transform: translateY(-2px);
     }
 
-    &:hover:before {
+    &:not(:disabled):hover:before {
       opacity: 1;
+    }
+
+    &:disabled {
+      background-color: #A9A59D; 
+      color: #66635D;
+      cursor: not-allowed;
     }
   }
 
@@ -384,10 +391,6 @@
     .performance-poster {
       max-width: 500px;
       margin: 0 auto 50px;
-    }
-
-    h1 {
-      font-size: 42px;
     }
 
     .performance-meta {

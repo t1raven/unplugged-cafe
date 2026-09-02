@@ -118,6 +118,49 @@ export default function ArchiveModal({
     };
   }, [onClose, onPrev, onNext]);
 
+  useEffect(() => {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    // 최소 스와이프 거리 (픽셀 단위, 너무 민감하게 반응하지 않도록 설정)
+    const minSwipeDistance = 50;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      touchEndX = e.changedTouches[0].clientX;
+      calculateSwipe();
+    };
+
+    const calculateSwipe = () => {
+      const distanceX = touchEndX - touchStartX;
+
+      // 1. 최소 이동 거리 조건을 만족하는지 확인
+      if (Math.abs(distanceX) < minSwipeDistance) return;
+
+      // 2. 방향 판별 (양수면 오른쪽, 음수면 왼쪽 스와이프)
+      if (distanceX > 0) {
+        onPrev();
+        // TODO: 이전 페이지 이동, 캐러셀 이전 슬라이드 등 로직 추가
+      } else {
+        onNext();
+        // TODO: 다음 페이지 이동, 캐러셀 다음 슬라이드 등 로직 추가
+      }
+    };
+
+    // 모바일 터치 이벤트 리스너 등록
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchend", handleTouchEnd);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거 (메모리 누수 방지)
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [onPrev, onNext]);
+
   if (!item) return null;
 
   return (
@@ -142,16 +185,7 @@ export default function ArchiveModal({
           onClick={onClose}
           aria-label="닫기"
         >
-          ×
-        </button>
-
-        <button
-          type="button"
-          className="gallery-modal__prev"
-          onClick={onPrev}
-          aria-label="이전 이미지"
-        >
-          ‹
+          <span className="icon material-symbols-rounded" translate="no">close</span>
         </button>
 
         <div className="gallery-modal__image">
@@ -160,15 +194,6 @@ export default function ArchiveModal({
             alt={item.title}
           />
         </div>
-
-        <button
-          type="button"
-          className="gallery-modal__next"
-          onClick={onNext}
-          aria-label="다음 이미지"
-        >
-          ›
-        </button>
 
         <div className="gallery-modal__info">
           <h2>{item.title}</h2>
@@ -181,6 +206,24 @@ export default function ArchiveModal({
             {currentIndex + 1} / {items.length}
           </span>
         </div>
+
+        <button
+          type="button"
+          className="gallery-modal__prev"
+          onClick={onPrev}
+          aria-label="이전 이미지"
+        >
+          <span className="icon material-symbols-rounded" translate="no">keyboard_arrow_left</span>
+        </button>
+
+        <button
+          type="button"
+          className="gallery-modal__next"
+          onClick={onNext}
+          aria-label="다음 이미지"
+        >
+          <span className="icon material-symbols-rounded" translate="no">keyboard_arrow_right</span>
+        </button>
       </div>
     </div>
   );

@@ -9,7 +9,8 @@ export interface Performance {
     current?: string;
   };
   date: string;
-  startTime?: string;
+  salesOpen?: string;
+  salesClose?: string;
   poster?: {
     asset?: {
       _ref?: string;

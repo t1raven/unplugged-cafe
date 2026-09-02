@@ -10,14 +10,13 @@ import type { Performance } from '@/types/performance';
 const upcomingQuery = `
   *[
     _type == "performance"
-    && date >= $today
+    && date >= $now
   ]
-  | order(date asc, startTime asc)[0...6] {
+  | order(date asc)[0...6] {
     _id,
     title,
     slug,
     date,
-    startTime,
     poster,
     artists[]->{
       _id,
@@ -33,15 +32,15 @@ export const revalidate = 0;
 export default async function Home() {
   const now = new Date();
   const offset = now.getTimezoneOffset() * 60000;
-  const today = new Date(now.getTime() - offset).toISOString().split('T')[0];
+  const localDate = new Date(now.getTime() - offset);
 
   const performances: Performance[] =
     await client.fetch(upcomingQuery, {
-      today,
+      now
     });
 
   return (
-    <main id="site-body" className="home">
+    <main id="site-body" className="home" style={{ paddingTop: 'var(--header-height)' }}>
       <Hero />
       <Upcoming performances={performances} />
       <About />

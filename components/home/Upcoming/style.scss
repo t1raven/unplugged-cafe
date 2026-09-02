@@ -1,5 +1,6 @@
 .upcoming {
   padding: 180px 0;
+  overflow: hidden;
 
   &__inner {
     width: var(--inner-width); 
@@ -114,6 +115,17 @@
       width: 20px;
       opacity: 1;
     }
+
+    .swiper-button-prev, 
+    .swiper-button-next {
+      top: auto;
+      bottom: 0;
+      width: 25px;
+      height: 25px;
+      svg {
+        fill: var(--secondary-color);
+      }
+    }
   }
 
   /* 포스터 */
@@ -187,7 +199,6 @@
 
   /* 공연 정보 */
   &__info {
-    min-width: 0;
 
     h2 {
       margin: 0;
@@ -201,10 +212,21 @@
     p {
       margin: 10px 0 0;
 
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 0.12em;
 
       opacity: 0.5;
+    }
+
+    em {
+      background-color: var(--secondary-color);
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1;
+      color: #fff;
     }
   }
 
@@ -217,6 +239,7 @@
   /* 화살표 */
   &__arrow {
     font-size: 20px;
+    color: var(--font-sec-color);
   }
 
   &__item:hover &__arrow {
@@ -226,8 +249,8 @@
   &__empty {
     padding: 60px 0;
 
-    font-size: 12px;
-    letter-spacing: 0.2em;
+    font-size: 1em;
+    text-align: center;
 
     opacity: 0.5;
   }
@@ -266,12 +289,19 @@
     }
 
     &__swiper {
+      overflow: visible;
+
       .swiper-wrapper {
         height: calc(120px * 3);
       }
 
       .swiper-slide {
         padding: 0 10px;
+      }
+
+      .swiper-button-prev, 
+      .swiper-button-next {
+        display: none;
       }
     }
 
@@ -284,7 +314,7 @@
       grid-row: 2 / 3;
 
       flex-direction: row;
-      align-items: center;
+      align-items: baseline;
 
       strong {
         font-size: 13px;
@@ -301,13 +331,15 @@
 
       h2 {
         font-size: 18px;
-
-        line-height: 1.2;
       }
 
       p {
-        margin-top: 5px;
+        font-size: 10px;
+        margin-top: 0;
+      }
 
+      em {
+        padding: 1px 7px;
         font-size: 9px;
       }
     }

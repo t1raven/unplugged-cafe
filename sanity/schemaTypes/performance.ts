@@ -15,17 +15,21 @@ export const performance = defineType({
 
     defineField({
       name: 'date',
-      title: '공연 날짜',
-      type: 'date',
+      title: '공연 일시',
+      type: 'datetime',
       validation: (Rule) => Rule.required(),
     }),
 
     defineField({
-      name: 'startTime',
-      title: '공연 시간',
-      type: 'string',
-      description: '예: 20:00',
-      validation: (Rule) => Rule.required(),
+      name: 'salesOpen',
+      title: '예매 오픈',
+      type: 'datetime',
+    }),
+
+    defineField({
+      name: 'salesClose',
+      title: '예매 마감',
+      type: 'datetime',
     }),
 
     defineField({
@@ -45,8 +49,10 @@ export const performance = defineType({
       title: '슬러그',
       type: 'slug',
       options: {
-        source: (doc) => {
-          return `${doc.date || ''}-${doc.title || ''}`
+        source: (doc: any) => {
+          const dateStr = typeof doc.date === 'string' ? doc.date.split('T')[0] : ''
+          const titleStr = doc.title || ''
+          return dateStr ? `${dateStr}-${titleStr}` : titleStr
         },
         maxLength: 96,
         slugify: (input) =>
@@ -102,28 +108,6 @@ export const performance = defineType({
     }),
 
     defineField({
-      name: 'description',
-      title: '공연 소개',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-        },
-      ],
-    }),
-
-    defineField({
-      name: 'notice',
-      title: '공지 사항',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-        },
-      ],
-    }),
-
-    defineField({
       name: 'admissionType',
       title: '입장 방식',
       type: 'string',
@@ -148,6 +132,28 @@ export const performance = defineType({
     }),
 
     defineField({
+      name: 'description',
+      title: '공연 소개',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+        },
+      ],
+    }),
+
+    defineField({
+      name: 'notice',
+      title: '공지 사항',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+        },
+      ],
+    }),
+
+    defineField({
       name: 'reservationUrl',
       title: '예매 신청 URL',
       type: 'url',
@@ -159,27 +165,47 @@ export const performance = defineType({
       type: 'boolean',
       initialValue: false,
     }),
-
-    defineField({
-      name: 'featured',
-      title: '메인 노출',
-      type: 'boolean',
-      initialValue: false,
-    }),
   ],
 
   preview: {
     select: {
       title: 'title',
       date: 'date',
-      time: 'startTime',
       media: 'poster',
     },
 
-    prepare({title, date, time, media}) {
+    prepare({title, date, media}) {
+      const getDate = new Date(date);
+
+      const year = getDate.getFullYear();
+      const month = String(
+        getDate.getMonth() + 1
+      ).padStart(2, '0');
+      const day = String(
+        getDate.getDate()
+      ).padStart(2, '0');
+
+      const weekday = [
+        '일',
+        '월',
+        '화',
+        '수',
+        '목',
+        '금',
+        '토',
+      ][getDate.getDay()];
+
+      const hours = String(
+        getDate.getHours()
+      ).padStart(2, '0');
+
+      const minutes = String(
+        getDate.getMinutes()
+      ).padStart(2, '0');
+
       return {
         title,
-        subtitle: `${date ?? ''} ${time ?? ''}`,
+        subtitle: `${year}-${month}-${day} (${weekday}) ${hours}:${minutes}`,
         media,
       }
     },
@@ -193,10 +219,6 @@ export const performance = defineType({
         {
           field: 'date', 
           direction: 'desc'
-        },
-        {
-          field: 'startTime', 
-          direction: 'asc'
         },
       ],
     },

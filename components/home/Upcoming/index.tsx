@@ -11,10 +11,11 @@ import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Grid, Pagination, Autoplay } from 'swiper/modules';
+import { Grid, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 import './style.scss';
 
@@ -119,12 +120,13 @@ export default function Upcoming({
               pagination={{
                 clickable: true,
               }}
+              navigation={true}
               breakpoints={{
                 768: {
                   slidesPerView: 1,
                 },
               }}
-              modules={[Grid, Pagination, Autoplay]}
+              modules={[Grid, Pagination, Navigation]}
               className="upcoming__swiper"
             >
             {performances.map((performance) => (
@@ -157,11 +159,17 @@ export default function Upcoming({
                     </span>
 
                     <span>
-                      {performance.startTime}
+                      {formatTime(performance.date)}
                     </span>
                   </div>
 
                   <div className="upcoming__info">
+                    <div>
+                      <em>
+                        {getDDay(performance.date)}
+                      </em>
+                    </div>
+
                     <h2>{performance.title}</h2>
                     {performance.artists &&
                       performance.artists.length > 0 && (
@@ -200,7 +208,15 @@ export default function Upcoming({
 }
 
 function formatDate(date: string) {
-  const [, month, day] = date.split('-');
+  const performanceDate = new Date(date);
+
+  const month = String(
+    performanceDate.getMonth() + 1
+  ).padStart(2, '0');
+
+  const day = String(
+    performanceDate.getDate()
+  ).padStart(2, '0');
 
   return `${month}.${day}`;
 }
@@ -213,10 +229,55 @@ function getDay(date: string) {
     '수요일',
     '목요일',
     '금요일',
-    '일요일',
+    '토요일',
   ];
 
   return days[
-    new Date(`${date}T00:00:00`).getDay()
+    new Date(date).getDay()
   ];
+}
+
+function formatTime(date: string) {
+  const performanceDate = new Date(date);
+
+  const hours = String(
+    performanceDate.getHours()
+  ).padStart(2, '0');
+
+  const minutes = String(
+    performanceDate.getMinutes()
+  ).padStart(2, '0');
+
+  return `${hours}:${minutes}`;
+}
+
+const getDDay = (date: string) => {
+  const performanceDate = new Date(date);
+
+  const todayDate = new Date();
+
+  // 시간을 제거하고 날짜만 비교
+  const today = new Date(
+    todayDate.getFullYear(),
+    todayDate.getMonth(),
+    todayDate.getDate()
+  );
+
+  const target = new Date(
+    performanceDate.getFullYear(),
+    performanceDate.getMonth(),
+    performanceDate.getDate()
+  );
+
+  const diffTime =
+    target.getTime() - today.getTime();
+
+  const diffDays =
+    Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) {
+    return 'D-DAY';
+  }
+
+  return `D-${diffDays}`;
 }

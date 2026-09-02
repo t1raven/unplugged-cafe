@@ -78,7 +78,7 @@
 	    left: 0;
 	    height: 40px;
 	    border-radius: 999px;
-	    background: rgba(34, 34, 34, .1);
+	    background: rgba(34, 34, 34, .15);
 	    z-index: 0;
 	    pointer-events: none;
 		}
@@ -104,7 +104,7 @@ html.scrollUp #site-gnb {
 			}
 		}
 		.move-bg {
-			background: rgba(238, 238, 238, .1);
+			background: rgba(238, 238, 238, .15);
 		}
 	}
 }

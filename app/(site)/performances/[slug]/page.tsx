@@ -32,8 +32,8 @@ const performanceQuery = `
     title,
     slug,
     date,
-    startTime,
-
+    salesOpen,
+    salesClose,
     poster {
       asset
     },
@@ -119,13 +119,14 @@ export default async function PerformanceDetailPage({
     notFound();
   }
 
+  const now = new Date();
+
   const date = new Date(performance.date);
 
   const year = date.getFullYear();
   const month = String(
     date.getMonth() + 1
   ).padStart(2, '0');
-
   const day = String(
     date.getDate()
   ).padStart(2, '0');
@@ -139,6 +140,17 @@ export default async function PerformanceDetailPage({
     '금요일',
     '토요일',
   ][date.getDay()];
+
+  const hours = String(
+    date.getHours()
+  ).padStart(2, '0');
+
+  const minutes = String(
+    date.getMinutes()
+  ).padStart(2, '0');
+
+  const salesOpen = new Date(performance.salesOpen ?? new Date());
+  const salesClose = new Date(performance.salesClose ?? new Date());
 
   return (
     <main id="site-body" className="performance-detail">
@@ -187,7 +199,7 @@ export default async function PerformanceDetailPage({
                   {' '}
                   {weekday}
                   {' '}
-                  {performance.startTime}
+                  {hours}:{minutes}
                 </strong>
               </div>
 
@@ -231,16 +243,25 @@ export default async function PerformanceDetailPage({
             </div>
 
             {performance.reservationOpen && performance.reservationUrl && (
-              <Link
-                href={performance.reservationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="reservation-button"
-              >
-                공연 예약
-              </Link>
+              now < salesOpen ? (
+                <button disabled className="reservation-button">
+                  사전 예매 오픈전
+                </button>
+              ) : salesClose < now ? (
+                <button disabled className="reservation-button">
+                  <span>사전 예매 마감 <br/><small>(현장 예매만 가능합니다)</small></span>
+                </button>
+              ) : (
+                <Link
+                  href={performance.reservationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="reservation-button"
+                >
+                  공연 예매
+                </Link>
+              )
             )}
-
           </div>
 
         </div>
@@ -365,19 +386,26 @@ export default async function PerformanceDetailPage({
 
               <p>RESERVATION</p>
 
-              <h2>
-                공연을 예약해주세요.
-              </h2>
+              <h2>공연을 예약해주세요.</h2>
 
-              <Link
-                href={performance.reservationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="reservation-button"
-              >
-                예약하기
-              </Link>
-
+              {now < salesOpen ? (
+                <button disabled className="reservation-button">
+                  사전 예매 오픈전
+                </button>
+              ) : salesClose < now ? (
+                <button disabled className="reservation-button">
+                  <span>사전 예매 마감 <br/><small>(현장 예매만 가능합니다)</small></span>
+                </button>
+              ) : (
+                <Link
+                  href={performance.reservationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="reservation-button"
+                >
+                  예매하기
+                </Link>
+              )}
             </div>
 
           </div>

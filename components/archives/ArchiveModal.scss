@@ -97,6 +97,10 @@
     line-height: 1;
 
     cursor: pointer;
+
+    > span {
+      font-size: 1em;;
+    }
   }
 
   &__prev,
@@ -107,8 +111,11 @@
 
     width: 60px;
     height: 100px;
-
     transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     border: 0;
     background: none;
@@ -121,6 +128,10 @@
 
     opacity: 0.5;
     transition: opacity 0.3s ease;
+
+    > span {
+      font-size: 1em;;
+    }
 
     &:hover {
       opacity: 1;
@@ -136,7 +147,7 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 767px) {
   .gallery-modal {
     &__content {
       width: calc(100vw - 30px);
@@ -159,10 +170,6 @@
 
     &__prev,
     &__next {
-      position: absolute;
-      top: auto;
-      bottom: 80px;
-
       width: 40px;
       height: 50px;
 
@@ -178,10 +185,8 @@
     }
 
     &__info {
-      padding: 0 50px;
-
       h2 {
-        font-size: 17px;
+        font-size: 18px;
       }
     }
   }

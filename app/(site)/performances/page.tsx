@@ -14,13 +14,12 @@ const performancesQuery = `
     _type == "performance"
     && defined(date)
   ]
-  | order(date asc, startTime asc)
+  | order(date asc)
   {
     _id,
     title,
     slug,
     date,
-    startTime,
     price1,
     price2,
     artists[]->{
