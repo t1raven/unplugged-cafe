@@ -204,7 +204,7 @@
     h2 {
       margin: 0;
 
-      font-size: clamp(24px, 2.4vw, 36px);
+      font-size: clamp(16px, 3.6vw, 32px);
       font-weight: 400;
 
       letter-spacing: -0.03em;
@@ -329,10 +329,6 @@
     &__info {
       grid-column: 2 / 3;
       grid-row: 1 / 2;
-
-      h2 {
-        font-size: 18px;
-      }
 
       p {
         font-size: 10px;

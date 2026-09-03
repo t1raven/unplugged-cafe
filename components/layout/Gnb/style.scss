@@ -15,14 +15,14 @@
     border-radius: 999px;
     background-color: rgba(238, 238, 238, .8);
     backdrop-filter: blur(5px) brightness(1.1);
-    border: 1px solid rgba(34, 34, 34, 0.1);
+    box-shadow: 0 0 0 1px rgba(34, 34, 34, 0.1);
     transition: all 0.25s ease-in-out;
   	> ul {
 			display: flex;
 			position: relative;
 			z-index: 3;
 			width: 100%;
-			padding: 6px;
+			padding: 5px;
 			> li {
 				display: flex;
 				align-items: center;
@@ -97,7 +97,7 @@ html.scrollUp #site-gnb {
 	#site-gnb {
 		> nav {
 			background-color: rgba(34, 34, 34, .8);
-			border: 1px solid rgba(238, 238, 238, 0.1);
+			box-shadow: 0 0 0 1px rgba(238, 238, 238, 0.1);
 
 			> ul > li > a {
 				color: #fff;
@@ -123,12 +123,10 @@ html.scrollUp #site-gnb {
 			width: 90%;
 			bottom: 10px;
 			> ul {
-				padding: 7px;
 				> li {
 					> a {
 						width: 100%;
 						padding: 6px 15px;
-						min-width: 60px;
 						height: 50px;
 						.icon {
 					  	font-size: 24px;
