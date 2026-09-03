@@ -86,7 +86,7 @@ function extractInstagramIdWithRegex(urlStr: string): string | null {
 }
 
 
-const formatDateTime = (d) => {
+const formatDateTime = (d: Date) => {
   const date = new Date(d);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -121,7 +121,7 @@ export async function generateMetadata({
     },
   );
 
-  const artist = `${performance.artists.map(( artist ) => artist.name ) .join('·')}`;
+  const artist = performance.artists.length > 0 ? `${performance.artists.map(( artist: { name: string }) => artist.name ) .join('·')} | ` : '';
   const dateTime = `${formatDateTime(performance.date)}`;
 
   return {
@@ -129,7 +129,7 @@ export async function generateMetadata({
       ? `${performance.title} | UNPLUGGED LOUNGE`
       : '공연 | UNPLUGGED LOUNGE',
 
-    description: `${artist} | ${dateTime}`,
+    description: `${artist}${dateTime}`,
     openGraph: {
       images: [{ url: `${urlFor(performance.poster) ?? '/images/common/og-image.png'}` }],
     },
@@ -195,7 +195,7 @@ export default async function PerformanceDetailPage({
                 <span>공연 일시</span>
 
                 <strong>
-                  {formatDateTime(performance.date)}
+                    {performance.date ?? formatDateTime(performance.date)}
                 </strong>
               </div>
 
