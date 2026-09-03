@@ -684,8 +684,7 @@ export default function PerformanceCalendar({
 
             <div className="no-performance">
               <p>
-                선택한 날짜에는 예정된
-                공연이 없습니다.
+                선택한 날짜에는 예정된 공연이 없습니다.
               </p>
             </div>
 

@@ -85,6 +85,30 @@ function extractInstagramIdWithRegex(urlStr: string): string | null {
   return match ? match[1] : null;
 }
 
+
+const formatDateTime = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  const weekday = [
+    '일요일',
+    '월요일',
+    '화요일',
+    '수요일',
+    '목요일',
+    '금요일',
+    '토요일',
+  ][date.getDay()];
+
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+
+  return `${year}.${month}.${day} ${weekday} ${hours}:${minutes}`;
+};
+
+
 export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
@@ -97,12 +121,15 @@ export async function generateMetadata({
     },
   );
 
+  const artist = `${performance.artists.map(( artist ) => artist.name ) .join('·')}`;
+  const dateTime = `${formatDateTime(performance.date)}`;
+
   return {
     title: performance?.title
       ? `${performance.title} | UNPLUGGED LOUNGE`
       : '공연 | UNPLUGGED LOUNGE',
 
-    description: `${performance.title?? ''} 공연 정보입니다.`,
+    description: `${artist} | ${dateTime}`,
     openGraph: {
       images: [{ url: `${urlFor(performance.poster) ?? '/images/common/og-image.png'}` }],
     },
@@ -123,34 +150,6 @@ export default async function PerformanceDetailPage({
   }
 
   const now = new Date();
-
-  const date = new Date(performance.date);
-
-  const year = date.getFullYear();
-  const month = String(
-    date.getMonth() + 1
-  ).padStart(2, '0');
-  const day = String(
-    date.getDate()
-  ).padStart(2, '0');
-
-  const weekday = [
-    '일요일',
-    '월요일',
-    '화요일',
-    '수요일',
-    '목요일',
-    '금요일',
-    '토요일',
-  ][date.getDay()];
-
-  const hours = String(
-    date.getHours()
-  ).padStart(2, '0');
-
-  const minutes = String(
-    date.getMinutes()
-  ).padStart(2, '0');
 
   const salesOpen = new Date(performance.salesOpen ?? new Date());
   const salesClose = new Date(performance.salesClose ?? new Date());
@@ -196,11 +195,7 @@ export default async function PerformanceDetailPage({
                 <span>공연 일시</span>
 
                 <strong>
-                  {year}.{month}.{day}
-                  {' '}
-                  {weekday}
-                  {' '}
-                  {hours}:{minutes}
+                  {formatDateTime(performance.date)}
                 </strong>
               </div>
 

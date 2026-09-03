@@ -101,13 +101,13 @@
     border-bottom: 1px solid #77736c;
 
     span {
-      font-size: 13px;
+      font-size: 0.8em;
       letter-spacing: 0.14em;
       color: #77736c;
     }
 
     strong {
-      font-size: 16px;
+      font-size: 1em;
       font-weight: 500;
       color: var(--font-sec-color);
     }
@@ -218,7 +218,7 @@
 
   .artist-card {
     padding: 15px 20px;
-    border: 2px solid var(--primary-color);
+    border: 1px solid var(--primary-color);
     border-radius: 15px;
     position: relative;
   }
@@ -403,7 +403,7 @@
     }
 
     .meta-item {
-      padding: 16px 0;
+      padding: 13px 0;
 
       &:nth-child(-n+2) {
         grid-column: 1 / 3;
