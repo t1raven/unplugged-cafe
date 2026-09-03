@@ -195,7 +195,7 @@ export default async function PerformanceDetailPage({
                 <span>공연 일시</span>
 
                 <strong>
-                    {performance.date ?? formatDateTime(performance.date)}
+                    {performance.date ? formatDateTime(performance.date) : ''}
                 </strong>
               </div>
 
