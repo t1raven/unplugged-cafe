@@ -62,11 +62,9 @@ export default function Location() {
           </p>
 
           <p>
-            OPEN
+            영업시간
             <br />
-            MON — SUN
-            <br />
-            12:00 — 24:00 (23:00 Last Order)
+            12:00 - 24:00 (23:00 라스트 오더)
           </p>
         </div>
 

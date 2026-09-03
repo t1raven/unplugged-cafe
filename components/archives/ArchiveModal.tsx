@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 
 import type { Category } from '@/types/category';
@@ -189,9 +190,10 @@ export default function ArchiveModal({
         </button>
 
         <div className="gallery-modal__image">
-          <img
+          <Image
             src={item.imageUrl}
             alt={item.title}
+            fill
           />
         </div>
 

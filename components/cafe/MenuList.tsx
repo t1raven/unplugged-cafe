@@ -1,8 +1,10 @@
 'use client'
 
 import { useLayoutEffect, useRef, useState } from 'react'
-import Image from 'next/image'
 import gsap from 'gsap'
+
+import Image from 'next/image';
+import { urlFor } from '@/sanity/lib/image';
 
 import CategoryNav from '@/components/common/CategoryNav'
 
@@ -79,11 +81,11 @@ export default function MenuList({
                     <div className="menu-card__image">
                       {item.imageUrl && (
                         <Image
-                          src={item.imageUrl}
+                          src={urlFor(item.imageUrl)
+                            .width(600)
+                            .url()}
                           alt={item.name}
-                          width={384}
-                          height={480}
-                          sizes="(max-width: 768px) 50vw, 384px"
+                          fill
                         />
                       )}
                     </div>

@@ -605,14 +605,12 @@ export default function PerformanceCalendar({
                             src={urlFor(
                               performance.poster
                             )
-                              .width(300)
-                              .height(400)
+                              .width(100)
                               .url()}
                             alt={
                               performance.title
                             }
-                            width={300}
-                            height={400}
+                            fill
                           />
                         )}
 
@@ -773,14 +771,12 @@ export default function PerformanceCalendar({
                             src={urlFor(
                               performance.poster
                             )
-                              .width(300)
-                              .height(400)
+                              .width(100)
                               .url()}
                             alt={
                               performance.title
                             }
-                            width={300}
-                            height={400}
+                            fill
                           />
                         )}
 

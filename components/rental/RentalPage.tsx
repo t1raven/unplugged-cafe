@@ -260,7 +260,7 @@ export default function RentalPage() {
               rel="noopener noreferrer"
               className="rental-button apply-button"
             >
-              대관 신청하기(구글폼)
+              대관 신청하기 (구글폼)
               <span>↗</span>
             </a>
           </div>

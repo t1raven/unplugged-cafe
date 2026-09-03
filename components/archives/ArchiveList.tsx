@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useCallback, useLayoutEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import gsap from 'gsap';
+
+import Image from 'next/image';
+import { urlFor } from '@/sanity/lib/image';
 
 import CategoryNav from '@/components/common/CategoryNav'
 import ArchiveModal from './ArchiveModal';
@@ -287,10 +289,11 @@ export default function ArchiveList({
                   >
                     <div className="gallery__image">
                       <Image
-                        src={item.imageUrl}
+                        src={urlFor(item.imageUrl)
+                          .width(600)
+                          .url()}
                         alt={item.title}
-                        width={384}
-                        height={480}
+                        fill
                       />
                     </div>
 

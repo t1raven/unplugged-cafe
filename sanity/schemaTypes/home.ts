@@ -14,7 +14,7 @@ export const home = defineType({
       fields: [
         defineField({
           name: "title",
-          title: "제목",
+          title: "타이틀",
           type: "text",
           rows: 3,
         }),
@@ -42,19 +42,6 @@ export const home = defineType({
                   title: "대체 텍스트",
                   type: "string",
                 }),
-
-                defineField({
-                  name: "position",
-                  title: "위치",
-                  type: "string",
-                  options: {
-                    list: [
-                      { title: "Left", value: "left" },
-                      { title: "Center", value: "center" },
-                      { title: "Right", value: "right" },
-                    ],
-                  },
-                }),
               ],
 
               preview: {
@@ -65,6 +52,7 @@ export const home = defineType({
               },
             },
           ],
+          validation: Rule => Rule.min(1).max(4).error('이미지는 최소 1개, 최대 4개까지만 등록 가능합니다.')
         }),
 
         defineField({
@@ -91,6 +79,45 @@ export const home = defineType({
                   { title: "Right", value: "right" },
                 ],
               },
+            }),
+          ],
+        }),
+
+        defineField({
+          name: "caution",
+          title: "주의사항",
+          type: "object",
+
+          fields: [
+            defineField({
+              name: "title",
+              title: "타이틀",
+              type: "string",
+            }),
+
+            defineField({
+              name: "texts",
+              title: "텍스트",
+              type: "array",
+              of: [
+                {
+                  type: "object",
+                  fields: [
+                    defineField({
+                      name: "text",
+                      title: "텍스트",
+                      type: "text",
+                      rows: 2,
+                    }),
+                  ],
+
+                  preview: {
+                    select: {
+                      title: "text",
+                    },
+                  },
+                },
+              ],
             }),
           ],
         }),

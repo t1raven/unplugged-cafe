@@ -168,12 +168,10 @@ export default async function PerformanceDetailPage({
             {performance.poster?.asset && (
               <Image
                 src={urlFor(performance.poster)
-                  .width(900)
-                  .height(1200)
+                  .width(600)
                   .url()}
                 alt={performance.title}
-                width={900}
-                height={1200}
+                fill
               />
             )}
 

@@ -4,11 +4,37 @@ import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import Image from 'next/image';
+import { urlFor } from '@/sanity/lib/image';
+
 import './style.scss';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function About() {
+export type TextAlign = 'left' | 'center' | 'right';
+
+interface Props {
+  data: {
+    title?: string;
+    images?: {
+      image: string;
+      alt?: string;
+      position?: string;
+    }[];
+    description?: {
+      text?: string;
+      align?: TextAlign;
+    };
+    caution?: {
+      title?: string;
+      texts?: {
+        text?: string;
+      }[];
+    };
+  };
+}
+
+export default function About({ data }: Props) {
   const rootRef = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
@@ -57,12 +83,13 @@ export default function About() {
       /*
        * 이미지 Parallax
        */
+      const speedDate = [-8, 12, -15, 8];
+
       gsap.utils
         .toArray<HTMLElement>('.about__image')
-        .forEach((image) => {
+        .forEach((image,index) => {
 
-          const speed =
-            Number(image.dataset.speed) || 10;
+          const speed = speedDate[index] || 10;
 
           gsap.to(image, {
             yPercent: speed,
@@ -136,110 +163,58 @@ export default function About() {
 
           <p>ABOUT</p>
 
-          <h2>
-            MUSIC
-            <br />
-            PEOPLE
-            <br />
-            MOMENTS
-          </h2>
+          <h2>{data.title}</h2>
 
         </div>
 
 
         {/* 이미지 갤러리 */}
         <div className="about__gallery">
-
-          <div
-            className="about__image about__image--01"
-            data-speed="-8"
-          >
-            <img
-              src="/images/home/about-01.jpg"
-              alt="UNPLUGGED LOUNGE"
-            />
-          </div>
-
-
-          <div
-            className="about__image about__image--02"
-            data-speed="12"
-          >
-            <img
-              src="/images/home/about-02.jpg"
-              alt="UNPLUGGED LOUNGE"
-            />
-          </div>
-
-
-          <div
-            className="about__image about__image--03"
-            data-speed="-15"
-          >
-            <img
-              src="/images/home/about-03.jpg"
-              alt="UNPLUGGED LOUNGE"
-            />
-          </div>
-
-
-          <div
-            className="about__image about__image--04"
-            data-speed="8"
-          >
-            <img
-              src="/images/home/about-04.jpg"
-              alt="UNPLUGGED LOUNGE"
-            />
-          </div>
-
+          {(data.images ?? []).map((item, index) => (
+            <div
+              key={index}
+              className={`about__image about__image--${index+1}`}
+            >
+              <Image
+                src={urlFor(item.image).width(800).url()}
+                alt={item.alt || ""}
+                fill
+              />
+            </div>
+          ))}
         </div>
 
 
         {/* 소개 */}
-        <div className="about__text">
+        {data.description?.text && (
+          <div className="about__text">
+            <p style={{ textAlign: data.description.align || 'right' }}>
+              {data.description.text}
+            </p>
+          </div>
+        )}
 
-          <p>
-            음악과 사람이 머무는 카페 & 한국 인디뮤지션의 출발지
-            <br />
-            자유롭고 아름다운 추억이 가득한 청춘 쉼터
-            <br />
-            다양한 공연을 즐길 수 있는 힙한 라이브 카페
-          </p>
+        {data.caution?.title && (
+          <div className="about__notice">
 
-        </div>
+            <h4>
+              {data.caution.title || 'ETIQUETTE'}
+            </h4>
 
-        <div className="about__notice">
+            <ul>
+              {data.caution.texts?.map((item, index) => (
+                <li key={index}>
+                  {item.text}
+                </li>
+              ))}
+            </ul>
 
-          <h4>ETIQUETTE</h4>
-
-          <ul>
-            <li>
-              카페 내에 있는 기타는 조심히 다줘주세요.<br/>
-              (자유롭게 사용하시고 원래 있던 자리에 놓아주세요.)
-            </li>
-
-            <li>
-              언플러그드 라운지는 자유로운 소통의 공간입니다.<br/>
-              (즐겁고 편하게 대화하세요.)
-            </li>
-
-            <li>
-              공연 예매자분들은 카페공간 카운터에서 예매여부 확인 후 공연장으로 입장해주세요.<br/>
-              (공연 시작 후 입장은 멘트때만 가능합니다.)
-            </li>
-
-            <li>
-              공연관람 중 카페음료 취식 가능합니다.<br/>
-              (공연 예매자분들은 20% 할인 가격으로 음료구매 가능합니다.)
-            </li>
-          </ul>
-
-        </div>
-
+          </div>
+        )}
+          
 
         {/* Equipment */}
-        {/*<div className="about__equipment">
+        <div className="about__equipment">
 
           <div className="about__equipment-header">
 
@@ -336,7 +311,7 @@ export default function About() {
                 <li>
                   보면대
                   <span>
-                    일반 ×3 / 핸드폰·태블릿 ×2
+                    일반 ×3 / 핸드폰·태블릿 거치대 ×2
                   </span>
                 </li>
 
@@ -372,7 +347,7 @@ export default function About() {
 
           </div>
 
-        </div>*/}
+        </div>
 
       </div>
 

@@ -40,6 +40,13 @@ export const menuCategory = defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
+
+    defineField({
+      name: 'visible',
+      title: '노출',
+      type: 'boolean',
+      initialValue: true,
+    }),
   ],
 
   preview: {

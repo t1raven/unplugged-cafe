@@ -139,12 +139,10 @@ export default function Upcoming({
                     {performance.poster?.asset && (
                       <Image
                         src={urlFor(performance.poster)
-                          .width(300)
-                          .height(400)
+                          .width(200)
                           .url()}
                         alt={performance.title}
-                        width={300}
-                        height={400}
+                        fill
                       />
                     )}
                   </div>

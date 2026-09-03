@@ -6,11 +6,6 @@ export interface Artist {
   slug?: {
     current?: string;
   };
-  profileImage?: {
-    asset?: {
-      _ref?: string;
-    };
-  };
   genre?: string;
   bio?: PortableTextBlock[];
   instagram?: string;

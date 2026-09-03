@@ -15,12 +15,9 @@ const equipment = [
     category: 'INSTRUMENT',
     title: '악기',
     items: [
-      'Pearl Export 시리즈 (4기통)',
-      '탐 : 12 / 16',
-      '심벌 : 하이햇 14',
-      '크래시 16 / 18',
-      '라이드 20',
       '건반 (Yamaha MX88)',
+      '전자드럼 (EFnote 3B)',
+      '카혼',
     ],
   },
   {
@@ -28,11 +25,8 @@ const equipment = [
     title: '앰프',
     items: [
       '어쿠스틱 기타는 DI 연결',
-      '일렉기타 앰프 x2',
-      'Fender Blues Jr',
-      'Vox AC10C1',
-      '베이스 앰프 x1',
-      'Fender Rumble 25',
+      '일렉기타 앰프 x2 (Fender Blues Jr, VOX mv50)',
+      '베이스 앰프 x1 (Fender Rumble 25)',
     ],
   },
   {
@@ -40,8 +34,7 @@ const equipment = [
     title: '악세사리',
     items: [
       '케이블 (5.5잭, XLR잭 등)',
-      '보면대 일반 x3',
-      '핸드폰 / 태블릿 거치 x2',
+      '보면대 (일반 x3, 핸드폰/태블릿 거치 x2)',
       'DI (액티브 DI)',
     ],
   },

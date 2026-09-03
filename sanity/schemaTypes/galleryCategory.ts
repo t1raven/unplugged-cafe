@@ -52,14 +52,6 @@ export const galleryCategory = defineType({
   preview: {
     select: {
       title: 'title',
-      visible: 'visible',
-    },
-
-    prepare({ title, visible }) {
-      return {
-        title,
-        subtitle: `${visible ? '노출' : '숨김'}`,
-      };
     },
   },
 })

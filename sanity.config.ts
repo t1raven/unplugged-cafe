@@ -42,6 +42,10 @@ export default defineConfig({
                   .schemaType('home')
                   .documentId('home')
               ),
+             /*S.documentTypeListItem('home')
+              .id('home')
+              .title('홈')
+              .icon(HomeIcon),*/
 
             // Performance
             S.documentTypeListItem('performance')
@@ -61,7 +65,7 @@ export default defineConfig({
               .title('아티스트')
               .icon(StarIcon),
 
-            // Menu
+            // Cafe
             orderableDocumentListDeskItem({
               type: 'menuCategory',
               title: '카페 카테고리',
@@ -78,7 +82,7 @@ export default defineConfig({
               context,
             }),
 
-            // Gallery
+            // Archives
             orderableDocumentListDeskItem({
               type: 'galleryCategory',
               title: '기록 카테고리',

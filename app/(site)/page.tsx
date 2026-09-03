@@ -27,6 +27,28 @@ const upcomingQuery = `
   }
 `;
 
+export const homeQuery = `
+  *[_type == "home" && _id == "home"][0]{
+    about{
+      title,
+      images[]{
+        image,
+        alt,
+      },
+      description{
+        text,
+        align
+      },
+      caution{
+        title,
+        texts[]{
+          text
+        }
+      }
+    }
+  }
+`;
+
 export const revalidate = 0;
 
 export default async function Home() {
@@ -39,11 +61,13 @@ export default async function Home() {
       now
     });
 
+  const home = await client.fetch(homeQuery);
+
   return (
     <main id="site-body" className="home" style={{ paddingTop: 'var(--header-height)' }}>
       <Hero />
       <Upcoming performances={performances} />
-      <About />
+      <About data={home.about} />
       <Location />
     </main>
   );
