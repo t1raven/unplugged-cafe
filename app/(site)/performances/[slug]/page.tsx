@@ -13,16 +13,6 @@ import type { Place } from '@/types/place';
 
 import './style.scss';
 
-const admissionTypeNames: Record<string, string> = {
-  1: '입장번호순',
-  2: '공연장대기순',
-}
-
-const viewingTypeNames: Record<string, string> = {
-  1: '좌석',
-  2: '입석',
-}
-
 const performanceQuery = `
   *[
     _type == "performance"
@@ -65,6 +55,16 @@ const performanceQuery = `
   }
 `;
 
+const admissionTypeNames: Record<string, string> = {
+  1: '입장번호순',
+  2: '공연장대기순',
+}
+
+const viewingTypeNames: Record<string, string> = {
+  1: '좌석',
+  2: '입석',
+}
+
 async function getPerformance(slug: string) {
   return client.fetch<Performance | null>(
     performanceQuery,
@@ -87,23 +87,36 @@ function extractInstagramIdWithRegex(urlStr: string): string | null {
 
 
 const formatDateTime = (d: Date | string) => {
-  const date = new Date(d);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    weekday: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }).formatToParts(new Date(d));
 
-  const weekday = [
-    '일요일',
-    '월요일',
-    '화요일',
-    '수요일',
-    '목요일',
-    '금요일',
-    '토요일',
-  ][date.getDay()];
+  const get = (type: string) =>
+    parts.find((part) => part.type === type)?.value ?? '';
 
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const year = get('year');
+  const month = get('month');
+  const day = get('day');
+  const weekdayMap: Record<string, string> = {
+    Sun: '일요일',
+    Mon: '월요일',
+    Tue: '화요일',
+    Wed: '수요일',
+    Thu: '목요일',
+    Fri: '금요일',
+    Sat: '토요일',
+  };
+
+  const weekday = weekdayMap[get('weekday')];
+  const hours = get('hour');
+  const minutes = get('minute');
 
   return `${year}.${month}.${day} ${weekday} ${hours}:${minutes}`;
 };
