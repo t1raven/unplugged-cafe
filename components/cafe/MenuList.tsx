@@ -86,6 +86,8 @@ export default function MenuList({
                             .url()}
                           alt={item.name}
                           fill
+                          priority
+                          sizes="(max-width: 768px) 100vw, 600px"
                         />
                       )}
                     </div>

@@ -194,6 +194,8 @@ export default function ArchiveModal({
             src={item.imageUrl}
             alt={item.title}
             fill
+            priority
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
 

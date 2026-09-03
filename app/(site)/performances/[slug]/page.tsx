@@ -187,6 +187,8 @@ export default async function PerformanceDetailPage({
                   .url()}
                 alt={performance.title}
                 fill
+                priority
+                sizes="(max-width: 768px) 100vw, 600px"
               />
             )}
 

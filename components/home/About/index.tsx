@@ -179,6 +179,8 @@ export default function About({ data }: Props) {
                 src={urlFor(item.image).width(800).url()}
                 alt={item.alt || ""}
                 fill
+                priority
+                sizes="(max-width: 768px) 100vw, 800px"
               />
             </div>
           ))}

@@ -611,6 +611,8 @@ export default function PerformanceCalendar({
                               performance.title
                             }
                             fill
+                            priority
+                            sizes="(max-width: 768px) 100vw, 100px"
                           />
                         )}
 
@@ -776,6 +778,8 @@ export default function PerformanceCalendar({
                               performance.title
                             }
                             fill
+                            priority
+                            sizes="(max-width: 768px) 100vw, 100px"
                           />
                         )}
 

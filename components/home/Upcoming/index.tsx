@@ -139,10 +139,12 @@ export default function Upcoming({
                     {performance.poster?.asset && (
                       <Image
                         src={urlFor(performance.poster)
-                          .width(200)
+                          .width(120)
                           .url()}
                         alt={performance.title}
                         fill
+                        priority
+                        sizes="(max-width: 768px) 100vw, 120px"
                       />
                     )}
                   </div>

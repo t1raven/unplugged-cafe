@@ -110,13 +110,14 @@
       font-size: 1em;
       font-weight: 500;
       color: var(--font-sec-color);
-    }
 
-    a {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      color: var(--primary-color);
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.9em;
+        color: var(--primary-color);
+      }
     }
 
     .icon {

@@ -75,7 +75,7 @@ export default function Header() {
       <div className="inner">
         <div className="logo">
           <Link href="/">
-            <Image src={theme === 'dark' ? loageImageWh : loageImageBk} alt="UNPLUGGED LOUNGE" />
+            <Image src={theme === 'dark' ? loageImageWh : loageImageBk} priority alt="UNPLUGGED LOUNGE" />
           </Link>
         </div>
         <div className="gnb-btn">
