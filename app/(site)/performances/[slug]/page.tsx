@@ -86,7 +86,7 @@ function extractInstagramIdWithRegex(urlStr: string): string | null {
 }
 
 
-const formatDateTime = (d: Date) => {
+const formatDateTime = (d: Date | string) => {
   const date = new Date(d);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -195,7 +195,7 @@ export default async function PerformanceDetailPage({
                 <span>공연 일시</span>
 
                 <strong>
-                    {performance.date ? formatDateTime(performance.date) : ''}
+                  {formatDateTime(performance.date)}
                 </strong>
               </div>
 

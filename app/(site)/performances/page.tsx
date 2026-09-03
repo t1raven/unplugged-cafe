@@ -20,8 +20,6 @@ const performancesQuery = `
     title,
     slug,
     date,
-    price1,
-    price2,
     artists[]->{
       _id,
       name,
@@ -30,7 +28,6 @@ const performancesQuery = `
     poster {
       asset
     },
-    description
   }
 `;
 
