@@ -386,7 +386,7 @@ export default async function PerformanceDetailPage({
           Reservation
       ================================================== */}
 
-      {performance.reservationOpen && performance.reservationUrl && (
+      {/*{performance.reservationOpen && performance.reservationUrl && (
         <section
           id="reservation"
           className="performance-reservation"
@@ -421,7 +421,7 @@ export default async function PerformanceDetailPage({
 
           </div>
         </section>
-      )}
+      )}*/}
     </main>
   );
 }

@@ -75,7 +75,7 @@
 			}
 
 			> span {
-				font-size: 1.85em;
+				font-size: 30px;
 			}
 
 			&:hover {
@@ -166,12 +166,7 @@ html.scrollUp #site-header {
 		}
 
 		.gnb-btn {
-			gap: 10px;
-
-			> a, button {
-				width: 30px;
-				height: 30px;
-			}
+			gap: 5px;
 		}
 	}
 }
