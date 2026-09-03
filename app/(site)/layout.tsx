@@ -10,8 +10,8 @@ const notoSansKR = Noto_Sans_KR({
 import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "UNPLUGGED LOUNGE",
-  description: "Live Music Cafe",
-  keywords: ["언플러그, 라운지, 라이브, 뮤직, 서교음악다방, Unplugged, Lounge, Live, Music, Cafe"],
+  description: "음악과 사람이 머무는 공간 & 한국 인디뮤지션의 출발지 Live & Indie Cafe",
+  keywords: ["언플러그드, 라운지, 라이브, 인디, 뮤직, 카페, 서교음악다방, 홍대, 서울, Unplugged, Lounge, Live, Indie, Music, Cafe, Hongdae, Seoul"],
   openGraph: {
     type: 'website',
     url: 'https://www.unplugged-lounge.com',

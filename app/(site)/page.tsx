@@ -29,6 +29,11 @@ const upcomingQuery = `
 
 export const homeQuery = `
   *[_type == "home" && _id == "home"][0]{
+    hero{
+      label,
+      title,
+      location,
+    },
     about{
       title,
       images[]{
@@ -65,7 +70,7 @@ export default async function Home() {
 
   return (
     <main id="site-body" className="home" style={{ paddingTop: 'var(--header-height)' }}>
-      <Hero />
+      <Hero data={home.hero} />
       <Upcoming performances={performances} />
       <About data={home.about} />
       <Location />

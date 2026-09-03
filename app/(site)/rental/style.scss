@@ -66,6 +66,10 @@
     padding: 120px 0;
     border-top: 1px solid var(--border-color);
 
+    &:first-child {
+      border-top: 0;
+    }
+
     &__heading {
       align-items: start;
 

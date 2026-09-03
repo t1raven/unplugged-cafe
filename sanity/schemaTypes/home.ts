@@ -6,6 +6,34 @@ export const home = defineType({
   type: "document",
 
   fields: [
+
+    defineField({
+      name: "hero",
+      title: "Hero",
+      type: "object",
+
+      fields: [
+        defineField({
+          name: "label",
+          title: "라벨",
+          type: "string",
+        }),
+
+        defineField({
+          name: "title",
+          title: "타이틀",
+          type: "text",
+          rows: 2,
+        }),
+
+        defineField({
+          name: "location",
+          title: "위치",
+          type: "string",
+        }),
+      ]
+    }),
+
     defineField({
       name: "about",
       title: "About",

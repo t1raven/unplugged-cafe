@@ -36,10 +36,10 @@
     z-index: 2;
 
     height: 100%;
+    padding: 20vh 0;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
 
     width: var(--inner-width); 
     max-width: var(--inner-max-width); 
@@ -59,11 +59,12 @@
   &__title {
     margin: 0;
 
-    font-size: clamp(60px, 10vw, 120px);
+    font-size: clamp(30px, 7vw, 60px);
     font-weight: 600;
 
-    line-height: 1;
+    line-height: 1.35;
     letter-spacing: -0.06em;
+    white-space: pre-line;
   }
 
   &__location {
@@ -103,12 +104,8 @@
   .hero {
     min-height: 600px;
 
-    &__title {
-      font-size: clamp(54px, 13vw, 100px);
-    }
-
     &__scroll {
-      bottom: 100px;
+      bottom: 150px;
     }
   }
 }

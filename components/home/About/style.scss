@@ -24,7 +24,7 @@
     h2 {
       margin: 0;
 
-      font-size: clamp(60px, 11vw, 120px);
+      font-size: clamp(60px, 7vw, 100px);
       font-weight: 500;
       line-height: 1;
       letter-spacing: -0.06em;
@@ -280,10 +280,6 @@
 
     &__heading {
       margin-bottom: 60px;
-
-      h2 {
-        font-size: 17vw;
-      }
     }
 
     &__gallery {
@@ -347,10 +343,6 @@
       display: block;
 
       margin-bottom: 60px;
-
-      h3 {
-        font-size: 13vw;
-      }
     }
 
     &__equipment-list {

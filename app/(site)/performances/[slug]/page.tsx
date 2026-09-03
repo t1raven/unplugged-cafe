@@ -72,7 +72,7 @@ async function getPerformance(slug: string) {
   );
 }
 
-interface PageProps {
+interface Props {
   params: Promise<{
     slug: string;
   }>;
@@ -87,7 +87,7 @@ function extractInstagramIdWithRegex(urlStr: string): string | null {
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: Props): Promise<Metadata> {
   const { slug } = await params;
 
   const performance = await client.fetch(
@@ -103,12 +103,15 @@ export async function generateMetadata({
       : '공연 | UNPLUGGED LOUNGE',
 
     description: `${performance.title?? ''} 공연 정보입니다.`,
+    openGraph: {
+      images: [{ url: `${urlFor(performance.poster) ?? '/images/common/og-image.png'}` }],
+    },
   };
 }
 
 export default async function PerformanceDetailPage({
   params,
-}: PageProps) {
+}: Props) {
   const { slug: encodedSlug } = await params;
 
   const slug = decodeURIComponent(encodedSlug);

@@ -5,7 +5,15 @@ import gsap from 'gsap';
 
 import './style.scss';
 
-export default function Hero() {
+interface Props {
+  data: {
+    label?: string;
+    title?: string;
+    location?: string;
+  };
+}
+
+export default function Hero({ data }: Props) {
   const rootRef = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
@@ -67,17 +75,15 @@ export default function Hero() {
 
       <div className="hero__content">
         <p className="hero__eyebrow">
-          LIVE CAFE
+          {data.label}
         </p>
 
         <h1 className="hero__title">
-          UNPLUGGED
-          <br />
-          LOUNGE
+          {data.title}
         </h1>
 
         <p className="hero__location">
-          HONGDAE · SEOUL
+          {data.location}
         </p>
 
         <div className="hero__scroll">
