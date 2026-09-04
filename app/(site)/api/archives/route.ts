@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
   *[
     _type == "galleryItem"
     ${category ? `&& category->slug.current == $category` : ''}
+    && display == true
   ]
   | order(orderRank)
   [$start...$end] {

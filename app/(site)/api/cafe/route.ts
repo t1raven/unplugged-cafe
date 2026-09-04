@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
   *[
     _type == "menuItem"
     ${category ? `&& category->slug.current == $category` : ''}
+    && isAvailable == true
   ]
   | order(orderRank)
   [$start...$end] {

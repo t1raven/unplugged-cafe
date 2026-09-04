@@ -144,7 +144,7 @@ export default function Upcoming({
                         alt={performance.title}
                         fill
                         priority
-                        sizes="(max-width: 768px) 100vw, 120px"
+                        sizes="(max-width: 768px) 25vw, 120px"
                       />
                     )}
                   </div>

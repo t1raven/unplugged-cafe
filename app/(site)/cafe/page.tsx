@@ -8,8 +8,6 @@ import MenuList from '@/components/cafe/MenuList'
 import type { Category } from '@/types/category'
 import type { Cafe } from '@/types/cafe'
 
-import './style.scss'
-
 export const metadata: Metadata = {
   title: '카페 | UNPLUGGED LOUNGE',
 }
@@ -17,6 +15,7 @@ export const metadata: Metadata = {
 const categoryQuery = `
   *[
     _type == "menuCategory"
+    && visible == true
   ]
   | order(orderRank) {
     _id,
@@ -27,8 +26,8 @@ const categoryQuery = `
 
 const listQuery = `
   *[
-    _type == "menuItem" &&
-    isAvailable == true
+    _type == "menuItem"
+    && isAvailable == true
   ]
   | order(orderRank) {
     _id,

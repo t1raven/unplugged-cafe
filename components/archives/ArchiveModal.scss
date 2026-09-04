@@ -140,11 +140,11 @@
   }
 
   &__prev {
-    left: 30px;
+    left: 0;
   }
 
   &__next {
-    right: 30px;
+    right: 0;
   }
 }
 
@@ -164,8 +164,6 @@
     }
 
     &__close {
-      top: -45px;
-      right: 0;
       font-size: 32px;
     }
 
@@ -175,14 +173,6 @@
       height: 50px;
 
       font-size: 40px;
-    }
-
-    &__prev {
-      left: 0;
-    }
-
-    &__next {
-      right: 0;
     }
 
     &__info {

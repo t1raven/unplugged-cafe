@@ -295,7 +295,7 @@ export default function ArchiveList({
                         alt={item.title}
                         fill
                         priority
-                        sizes="(max-width: 768px) 100vw, 600px"
+                        sizes="(max-width: 768px) 50vw, 600px"
                       />
                     </div>
 

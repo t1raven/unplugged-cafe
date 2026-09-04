@@ -7,6 +7,11 @@ import {structureTool} from 'sanity/structure'
 import {apiVersion, dataset, projectId} from './sanity/env'
 import {schemaTypes} from './sanity/schemaTypes'
 
+import {
+  DeletePerformanceAndGalleryAction,
+  PublishPerformanceAndSyncGalleryAction,
+} from './sanity/actions/performanceGallerySync'
+
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 import {koKRLocale} from '@sanity/locale-ko-kr'
 
@@ -122,6 +127,18 @@ export default defineConfig({
 
     koKRLocale(),
   ],
+
+  document: {
+    actions: (previousActions, context) => {
+      if (context.schemaType !== 'performance') return previousActions
+
+      return previousActions.map((action) => {
+        if (action.action === 'publish') return PublishPerformanceAndSyncGalleryAction
+        if (action.action === 'delete') return DeletePerformanceAndGalleryAction
+        return action
+      })
+    },
+  },
 
   schema: {
     types: schemaTypes,

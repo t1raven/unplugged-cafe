@@ -612,7 +612,7 @@ export default function PerformanceCalendar({
                             }
                             fill
                             priority
-                            sizes="(max-width: 768px) 100vw, 100px"
+                            sizes="(max-width: 768px) 25vw, 100px"
                           />
                         )}
 
@@ -779,7 +779,7 @@ export default function PerformanceCalendar({
                             }
                             fill
                             priority
-                            sizes="(max-width: 768px) 100vw, 100px"
+                            sizes="(max-width: 768px) 25vw, 100px"
                           />
                         )}
 

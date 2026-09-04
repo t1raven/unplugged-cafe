@@ -11,6 +11,8 @@ import CategoryNav from '@/components/common/CategoryNav'
 import type { Category } from '@/types/category'
 import type { Cafe } from '@/types/cafe'
 
+import './MenuList.scss';
+
 interface Props {
   categories: Category[]
   items: Cafe[]
@@ -87,7 +89,7 @@ export default function MenuList({
                           alt={item.name}
                           fill
                           priority
-                          sizes="(max-width: 768px) 100vw, 600px"
+                          sizes="(max-width: 768px) 50vw, 400px"
                         />
                       )}
                     </div>

@@ -8,10 +8,8 @@ import ArchiveList from '@/components/archives/ArchiveList';
 import type { Category } from '@/types/category'
 import type { Archive } from '@/types/archive'
 
-import './style.scss';
-
 export const metadata: Metadata = {
-  title: '기록 | UNPLUGGED CAFE',
+  title: '기록 | UNPLUGGED LOUNGE',
 };
 
 const categoryQuery = `
@@ -30,6 +28,7 @@ const listQuery = `
   *[
     _type == "galleryItem" 
     && category->slug.current == $category
+    && display == true
   ]
   | order(orderRank) 
   [0...12] {

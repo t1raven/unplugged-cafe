@@ -58,6 +58,15 @@ export const galleryItem = defineType({
       type: 'boolean',
       initialValue: true,
     }),
+
+    defineField({
+      name: 'performance',
+      title: '연결된 공연',
+      type: 'reference',
+      to: [{type: 'performance'}],
+      readOnly: true,
+      hidden: ({ value }) => !value, 
+    }),
   ],
 
   preview: {
