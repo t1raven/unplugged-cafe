@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState  } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,17 +13,22 @@ import loageImageBk from '@/public/images/common/site-logo-bk.png';
 
 export default function Header() {
 
-  const params = useParams();
+  const pathname = usePathname();
   const router = useRouter();
+  const params = useParams();
   const isSlugPage = !!params.slug;
+
+  let savedScrollY = 0;
 
   useEffect(() => {
     const html = document.documentElement;
 
     let lastScrollY = window.scrollY;
+    const threshold = 5;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      const diff = currentScrollY - lastScrollY;
 
       if (currentScrollY <= 0) {
         html.classList.remove('scrollUp', 'scrollDown');
@@ -31,10 +36,14 @@ export default function Header() {
         return;
       }
 
-      if (currentScrollY > lastScrollY) {
+      if (Math.abs(diff) < threshold) {
+        return;
+      }
+
+      if (diff > 0) {
         html.classList.add('scrollDown');
         html.classList.remove('scrollUp');
-      } else if (currentScrollY < lastScrollY) {
+      } else {
         html.classList.add('scrollUp');
         html.classList.remove('scrollDown');
       }
@@ -42,28 +51,33 @@ export default function Header() {
       lastScrollY = currentScrollY;
     };
 
+    const handlePopState = () => {
+      html.classList.remove('scrollUp', 'scrollDown');
+      lastScrollY = savedScrollY + 100;
+    };
+
     window.addEventListener('scroll', handleScroll, {
       passive: true,
     });
 
+    window.addEventListener('popstate', handlePopState);
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('popstate', handlePopState);
+      html.classList.remove('scrollUp', 'scrollDown');
     };
   }, []);
 
   useEffect(() => {
-    const html = document.documentElement;
-    
-    const handlePopState = (event: PopStateEvent) => {
-      html.classList.remove('scrollUp', 'scrollDown');
-    };
+    // 1. 페이지 진입 시 저장된 스크롤 위치 복원
+    savedScrollY = parseInt(sessionStorage.getItem(`scroll_${pathname}`) ?? "") || 0;
 
-    window.addEventListener('popstate', handlePopState);
-
+    // 2. 페이지를 떠날 때 현재 스크롤 위치 저장 (Cleanup 함수 활용)
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      sessionStorage.setItem(`scroll_${pathname}`, window.scrollY.toString());
     };
-  }, []);
+  }, [pathname]);
 
   //ThemeToggle
   const { theme, setTheme } = useTheme();

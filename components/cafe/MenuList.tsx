@@ -1,6 +1,6 @@
 'use client'
 
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 
 import Image from 'next/image';
@@ -23,6 +23,7 @@ export default function MenuList({
   items,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const categoryRef = useRef<HTMLElement>(null);
 
   const [activeCategory, setActiveCategory] = useState(
     categories[0]?.slug ?? ''
@@ -31,6 +32,40 @@ export default function MenuList({
   const filteredItems = items.filter(
     (item) => item.category?.slug === activeCategory
   )
+
+  /*
+   * 카테고리 변경
+   */
+  const handleCategoryChange = useCallback(
+    async (category: string) => {
+
+      setActiveCategory(category);
+
+      requestAnimationFrame(() => {
+        scrollToCategory();
+      });
+    },
+    [activeCategory]
+  )
+
+  const scrollToCategory = () => {
+    const element = categoryRef.current;
+
+    if (!element) return;
+
+    const elementPrev = element.previousElementSibling;
+
+    if(elementPrev!.scrollHeight >= window.scrollY) return;
+
+    const header = document.getElementById('site-header');
+
+    const top = elementPrev!.scrollHeight - header!.getBoundingClientRect().height
+
+    window.scrollTo({
+      top,
+      behavior: 'smooth',
+    });
+  };
 
   useLayoutEffect(() => {
     const container = containerRef.current
@@ -63,8 +98,9 @@ export default function MenuList({
     <>
       <CategoryNav
         category={categories}
+        categoryNavRef={categoryRef}
         activeCategory={activeCategory}
-        onChange={setActiveCategory}
+        onChange={handleCategoryChange}
       />
       <section className="sub-page-section menu-content">
         <div className="inner">

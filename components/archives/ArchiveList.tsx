@@ -44,6 +44,7 @@ export default function ArchiveList({
   const pageRef = useRef(1)
   const gridRef = useRef<HTMLDivElement>(null)
   const sentinelRef = useRef<HTMLDivElement>(null)
+  const categoryRef = useRef<HTMLElement>(null);
 
   const animationContextRef = useRef<gsap.Context | null>(null)
   const previousLengthRef = useRef(0)
@@ -159,6 +160,10 @@ export default function ArchiveList({
 
         setItems(data.items)
         setHasMore(data.hasMore)
+
+        requestAnimationFrame(() => {
+          scrollToCategory();
+        });
       } catch (error) {
         console.error(error)
         setItems([])
@@ -169,6 +174,25 @@ export default function ArchiveList({
     },
     [activeCategory]
   )
+
+  const scrollToCategory = () => {
+    const element = categoryRef.current;
+
+    if (!element) return;
+
+    const elementPrev = element.previousElementSibling;
+
+    if(elementPrev!.scrollHeight >= window.scrollY) return;
+
+    const header = document.getElementById('site-header');
+
+    const top = elementPrev!.scrollHeight - header!.getBoundingClientRect().height
+
+    window.scrollTo({
+      top,
+      behavior: 'smooth',
+    });
+  };
 
   /*
    *  등장 애니메이션
@@ -272,6 +296,7 @@ export default function ArchiveList({
     <>
       <CategoryNav
         category={categories}
+        categoryNavRef={categoryRef}
         activeCategory={activeCategory}
         onChange={handleCategoryChange}
       />
