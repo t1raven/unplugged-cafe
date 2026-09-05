@@ -7,9 +7,9 @@ import Link from 'next/link';
 
 import type { Performance } from '@/types/performance';
 
-import './PerformanceCalendar.scss';
+import './PerformanceList.scss';
 
-interface PerformanceCalendarProps {
+interface Props {
   performances: Performance[];
 }
 
@@ -17,7 +17,7 @@ const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function PerformanceCalendar({
   performances,
-}: PerformanceCalendarProps) {
+}: Props) {
   const today = new Date();
 
   const todayKey =

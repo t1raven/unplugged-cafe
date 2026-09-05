@@ -187,7 +187,9 @@
       background: var(--background-color);
       color: #55524c;
       cursor: not-allowed;
-      opacity: 0.35;
+      > * {
+        opacity: 0.35;
+      }
     }
   }
 

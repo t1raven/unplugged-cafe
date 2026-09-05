@@ -1,17 +1,11 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
-
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
-import { PortableText } from '@portabletext/react';
 
-import type { Performance } from '@/types/performance';
-import type { Artist } from '@/types/artist';
-import type { Place } from '@/types/place';
+import { formatDateTime } from "@/utils/formatDateTime";
 
-import './style.scss';
+import PerformanceView from '@/components/performances/PerformanceView';
 
 const performanceQuery = `
   *[
@@ -55,72 +49,13 @@ const performanceQuery = `
   }
 `;
 
-const admissionTypeNames: Record<string, string> = {
-  1: '입장번호순',
-  2: '공연장대기순',
-}
-
-const viewingTypeNames: Record<string, string> = {
-  1: '좌석',
-  2: '입석',
-}
-
-async function getPerformance(slug: string) {
-  return client.fetch<Performance | null>(
-    performanceQuery,
-    { slug },
-  );
-}
-
 interface Props {
   params: Promise<{
     slug: string;
   }>;
 }
 
-function extractInstagramIdWithRegex(urlStr: string): string | null {
-  const regex = /(?:https?:\/\/)?(?:www\.)?instagram\.com\/([a-zA-Z0-9_.]+)/;
-  const match = urlStr.match(regex);
-
-  return match ? match[1] : null;
-}
-
-
-const formatDateTime = (d: Date | string) => {
-  const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Asia/Seoul',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    weekday: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  }).formatToParts(new Date(d));
-
-  const get = (type: string) =>
-    parts.find((part) => part.type === type)?.value ?? '';
-
-  const year = get('year');
-  const month = get('month');
-  const day = get('day');
-  const weekdayMap: Record<string, string> = {
-    Sun: '일요일',
-    Mon: '월요일',
-    Tue: '화요일',
-    Wed: '수요일',
-    Thu: '목요일',
-    Fri: '금요일',
-    Sat: '토요일',
-  };
-
-  const weekday = weekdayMap[get('weekday')];
-  const hours = get('hour');
-  const minutes = get('minute');
-
-  return `${year}.${month}.${day} ${weekday} ${hours}:${minutes}`;
-};
-
+export const revalidate = 0;
 
 export async function generateMetadata({
   params,
@@ -149,281 +84,24 @@ export async function generateMetadata({
   };
 }
 
-export default async function PerformanceDetailPage({
+export default async function PerformanceViewPage({
   params,
 }: Props) {
-  const { slug: encodedSlug } = await params;
-
-  const slug = decodeURIComponent(encodedSlug);
-
-  const performance = await getPerformance(slug);
+  const { slug } = await params;
+  const performance = await client.fetch(
+    performanceQuery,
+    {
+      slug: decodeURIComponent(slug),
+    },
+  );
 
   if (!performance) {
     notFound();
   }
 
-  const now = new Date();
-
-  const salesOpen = new Date(performance.salesOpen ?? new Date());
-  const salesClose = new Date(performance.salesClose ?? new Date());
-
   return (
     <main id="site-body" className="performance-detail">
-
-      {/* ==================================================
-          Hero
-      ================================================== */}
-
-      <section className="performance-detail-hero">
-
-        <div className="performance-detail-inner">
-
-          <div className="performance-poster">
-
-            {performance.poster?.asset && (
-              <Image
-                src={urlFor(performance.poster)
-                  .width(600)
-                  .url()}
-                alt={performance.title}
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 600px"
-              />
-            )}
-
-          </div>
-
-          <div className="performance-detail-content">
-
-            <p className="performance-eyebrow">
-              LIVE PERFORMANCE
-            </p>
-
-            <h1>
-              {performance.title}
-            </h1>
-
-            <div className="performance-meta">
-
-              <div className="meta-item">
-                <span>공연 일시</span>
-
-                <strong>
-                  {formatDateTime(performance.date)}
-                </strong>
-              </div>
-
-              <div className="meta-item">
-                <span>공연 장소</span>
-
-                <strong>
-                  <Link href={performance.place?.naverMap!} target="_blank">
-                    <i className="material-symbols-rounded icon" translate="no">location_on</i> {performance.place?.name} ↗
-                  </Link><br/>
-                  <p>{performance.place?.address}</p>
-                </strong>
-              </div>
-
-              {performance.price1 && (
-                <div className="meta-item">
-                  <span>사전 예매</span>
-                  <strong>{performance.price1?.toLocaleString()}원</strong>
-                </div>
-              )}
-
-              {performance.price2 && (
-                <div className="meta-item">
-                  <span>현장 예매</span>
-                  <strong>{performance.price2?.toLocaleString()}원</strong>
-                </div>
-              )}
-
-              <div className="meta-item">
-                <span>입장 방식</span>
-
-                <strong>{performance.admissionType ? admissionTypeNames[performance.admissionType] ?? performance.admissionType : '-'}</strong>
-              </div>
-
-              <div className="meta-item">
-                <span>관람 방식</span>
-
-                <strong>{performance.viewingType ? viewingTypeNames[performance.viewingType] ?? performance.viewingType : '-'}</strong>
-              </div>
-
-            </div>
-
-            {performance.reservationOpen && performance.reservationUrl && (
-              now < salesOpen ? (
-                <button disabled className="reservation-button">
-                  사전 예매 오픈전
-                </button>
-              ) : salesClose < now ? (
-                <button disabled className="reservation-button">
-                  <span>사전 예매 마감 <br/><small>(현장 예매만 가능합니다)</small></span>
-                </button>
-              ) : (
-                <Link
-                  href={performance.reservationUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="reservation-button"
-                >
-                  공연 예매
-                </Link>
-              )
-            )}
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* ==================================================
-          Artists
-      ================================================== */}
-
-      {performance.artists &&
-        performance.artists.length > 0 && (
-
-          <section className="performance-artists">
-
-            <div className="performance-detail-inner">
-
-              <div className="section-heading">
-                <p>ARTIST LINEUP</p>
-                <h2>아티스트 라인업</h2>
-              </div>
-
-              <div className="artist-list">
-
-                {performance.artists.map(
-                  (artist) => (
-                    <article
-                      key={artist._id}
-                      className="artist-card"
-                    >
-
-                      <div className="artist-info">
-
-                        <h3>
-                          {artist.name}
-                        </h3>
-
-                        {artist.instagram && (
-                          <Link href={artist.instagram!} target="_blank">
-                            @{extractInstagramIdWithRegex(artist.instagram)} ↗
-                          </Link>
-                        )}
-
-                      </div>
-
-                      <i className="artist-icon material-symbols-rounded" translate="no">artist</i>
-
-                    </article>
-                  )
-                )}
-
-              </div>
-
-            </div>
-
-          </section>
-        )}
-
-      {/* ==================================================
-          Description
-      ================================================== */}
-
-      <section className="performance-description">
-
-        <div className="performance-detail-inner">
-
-          <div className="section-heading">
-            <p>ABOUT PERFORMANCE</p>
-            <h2>공연 소개</h2>
-          </div>
-
-          <div className="description-content">
-            {performance.description ? (
-              <PortableText
-                value={performance.description}
-              />
-            ) : (
-              <p>
-                등록된 공연 소개가 없습니다.
-              </p>
-            )}
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* ==================================================
-          Notice
-      ================================================== */}
-      {performance.notice && (
-        <section className="performance-description">
-
-          <div className="performance-detail-inner">
-
-            <div className="section-heading">
-              <p>NOTICE</p>
-              <h2>공지 사항</h2>
-            </div>
-
-            <div className="description-content">
-              <PortableText
-                value={performance.notice}
-              />
-            </div>
-
-          </div>
-
-        </section>
-      )}
-
-      {/* ==================================================
-          Reservation
-      ================================================== */}
-
-      {/*{performance.reservationOpen && performance.reservationUrl && (
-        <section
-          id="reservation"
-          className="performance-reservation"
-        >
-          <div className="performance-detail-inner">
-
-            <div className="reservation-box">
-
-              <p>RESERVATION</p>
-
-              <h2>공연을 예약해주세요.</h2>
-
-              {now < salesOpen ? (
-                <button disabled className="reservation-button">
-                  사전 예매 오픈전
-                </button>
-              ) : salesClose < now ? (
-                <button disabled className="reservation-button">
-                  <span>사전 예매 마감 <br/><small>(현장 예매만 가능합니다)</small></span>
-                </button>
-              ) : (
-                <Link
-                  href={performance.reservationUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="reservation-button"
-                >
-                  예매하기
-                </Link>
-              )}
-            </div>
-
-          </div>
-        </section>
-      )}*/}
+      <PerformanceView performance={performance} />
     </main>
   );
 }

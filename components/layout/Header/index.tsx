@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState  } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -11,6 +12,11 @@ import loageImageWh from '@/public/images/common/site-logo-wh.png';
 import loageImageBk from '@/public/images/common/site-logo-bk.png';
 
 export default function Header() {
+
+  const params = useParams();
+  const router = useRouter();
+  const isSlugPage = !!params.slug;
+
   useEffect(() => {
     const html = document.documentElement;
 
@@ -59,10 +65,9 @@ export default function Header() {
     };
   }, []);
 
-
   //ThemeToggle
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const [ mounted, setMounted ] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -73,6 +78,13 @@ export default function Header() {
   return (
     <header id="site-header">
       <div className="inner">
+        {isSlugPage && (
+          <div className="gnb-btn btn-back">
+            <button type="button" onClick={() => router.back()}>
+              <span className="material-symbols-rounded">arrow_back_ios</span>
+            </button>
+          </div>
+        )}
         <div className="logo">
           <Link href="/">
             <Image src={theme === 'dark' ? loageImageWh : loageImageBk} priority alt="UNPLUGGED LOUNGE" />

@@ -8,15 +8,15 @@
   align-items: center;
  	justify-content: center;
  	height: var(--header-height);
- 	transition: all 0.25s ease-in-out;
+ 	transition: transform 0.25s ease-in-out;
   > nav {
   	display: inline-flex;
     align-items: center;
     border-radius: 999px;
     background-color: rgba(238, 238, 238, .8);
-    backdrop-filter: blur(5px) brightness(1.1);
-    box-shadow: 0 0 0 1px rgba(34, 34, 34, 0.1);
-    transition: all 0.25s ease-in-out;
+    backdrop-filter: blur(3px) brightness(1.1);
+    box-shadow: 0 0 0 1px var(--border-color);
+    transition: transform 0.25s ease-in-out;
   	> ul {
 			display: flex;
 			position: relative;
@@ -98,7 +98,6 @@ html.scrollUp #site-gnb {
 	#site-gnb {
 		> nav {
 			background-color: rgba(34, 34, 34, .8);
-			box-shadow: 0 0 0 1px rgba(238, 238, 238, 0.1);
 
 			> ul > li > a {
 				color: #fff;
@@ -110,7 +109,7 @@ html.scrollUp #site-gnb {
 	}
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 1024px){
 	#site-gnb {
 		position: sticky;
 		top: auto;
@@ -120,7 +119,6 @@ html.scrollUp #site-gnb {
 	  height: 0;
 		> nav {
 			position: absolute;
-  		bottom: 20px;
 			width: 90%;
 			bottom: 10px;
 			> ul {

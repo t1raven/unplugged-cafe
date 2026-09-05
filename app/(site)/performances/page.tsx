@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
-import Link from 'next/link'
 import { client } from '@/sanity/lib/client'
 
 import SubPageHero from '@/components/common/SubPageHero';
-import PerformanceCalendar from '@/components/performances/PerformanceCalendar';
+import PerformanceList from '@/components/performances/PerformanceList';
 
 export const metadata: Metadata = {
   title: "공연 예매 | UNPLUGGED LOUNGE",
@@ -39,13 +38,13 @@ async function getPerformances() {
 
 export const revalidate = 0;
 
-export default async function PerformancesPage() {
+export default async function PerformancesListPage() {
   const performances = await getPerformances();
 
   return (
     <main id="site-body">
       <SubPageHero label="Performances" title="공연 예매" description="언플러그드에서 펼쳐지는 <br/>다양한 라이브 공연을 만나보세요." />
-      <PerformanceCalendar performances={performances} />
+      <PerformanceList performances={performances} />
     </main>
   )
 }

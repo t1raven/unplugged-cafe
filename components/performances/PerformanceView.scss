@@ -2,7 +2,8 @@
   min-height: 100vh;
 
   .performance-detail-inner {
-    width: var(--inner-max-width);
+    width: var(--inner-width);
+    max-width: var(--inner-max-width);
     margin: 0 auto;
   }
 
@@ -11,7 +12,8 @@
   // ==================================================
 
   .performance-detail-hero {
-    padding: 120px 0;
+    padding-top: calc(80px + var(--header-height));
+    padding-bottom: 120px;
     background:
       /*radial-gradient(
         circle at 70% 30%,
@@ -24,7 +26,7 @@
   .performance-detail-hero
     .performance-detail-inner {
     display: grid;
-    grid-template-columns: 460px 1fr;
+    grid-template-columns: 360px 1fr;
     gap: 100px;
     align-items: center;
   }
@@ -114,7 +116,7 @@
       a {
         display: inline-flex;
         align-items: center;
-        gap: 5px;
+        gap: 3px;
         font-size: 0.9em;
         color: var(--primary-color);
       }
@@ -338,6 +340,108 @@
     }
   }
 
+  .reservation_gnb_btn {
+    position: sticky;
+    bottom: 0;
+    z-index: 110;
+    height: 0;
+
+    > nav {
+      position: absolute;
+      left: 50%;
+      bottom: 30px;
+
+      transform: translateX(-50%);
+
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .gnb_btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 60px;
+      width: 60px;
+      height: 60px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 16px;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      border: 0;
+      backdrop-filter: blur(3px) brightness(1.1);
+      box-shadow: 0 0 0 1px var(--border-color);
+
+      transition:
+        background-color 0.25s ease,
+        transform 0.25s ease;
+
+      > * {
+        z-index: 2;
+      }
+
+      .icon {
+        font-size: 28px;
+      }
+
+      &:after {
+        content: ''; 
+        position: absolute; 
+        left: 0; 
+        top: 0; 
+        z-index: 1;
+        width: 100%; 
+        height: 100%;
+        border-radius: 999px;
+        background-color: var(--secondary-color);
+        opacity: 0.8;
+      }
+
+      &:before { 
+        content: ''; 
+        position: absolute; 
+        left: 0; 
+        top: 0; 
+        z-index: 3;
+        width: 100%; 
+        height: 100%; 
+        background-color: rgba(255,255,255,0.2); 
+        opacity: 0;
+        -webkit-transition: .2s ease-out; 
+        transition:.2s ease-out;
+      }
+
+      &:not(:disabled):hover {
+        transform: translateY(-2px);
+      }
+
+      &:not(:disabled):hover:before {
+        opacity: 1;
+      }
+
+      &:disabled {
+        color: #66635D;
+        cursor: not-allowed;
+        &:after {
+          background-color: #A9A59D; 
+        }
+      }
+    }
+
+    .reservation_btn {
+      width: 400px;
+
+      &:after {
+        background-color: var(--primary-color);
+      }
+    }
+  }
+
+
   // ==================================================
   // Back
   // ==================================================
@@ -360,19 +464,10 @@
   // Tablet
   // ==================================================
 
-  @media (max-width: 1024px) {
-    .performance-detail-inner {
-      width: calc(100% - 48px);
-    }
-
+  @media (max-width: 1023px) {
     .performance-detail-hero
       .performance-detail-inner {
-      grid-template-columns: 360px 1fr;
       gap: 60px;
-    }
-
-    .artist-card {
-      grid-template-columns: 160px 1fr;
     }
   }
 
@@ -381,12 +476,9 @@
   // ==================================================
 
   @media (max-width: 767px) {
-    .performance-detail-inner {
-      width: calc(100% - 32px);
-    }
-
     .performance-detail-hero {
-      padding: 70px 0;
+      padding-top: calc(30px + var(--header-height));
+      padding-bottom: 70px;
     }
 
     .performance-detail-hero
@@ -464,6 +556,27 @@
     .description-content {
       font-size: 14px;
       line-height: 1.9;
+    }
+
+
+    .reservation_gnb_btn {
+      > nav {
+        width: 90%;
+        bottom: 10px;
+        gap: 5px;
+      }
+
+      .gnb_btn {
+
+        &:not(:disabled):hover {
+          transform: translateY(0);
+        }
+      }
+
+      .reservation_btn {
+        width: 100%;
+      }
+
     }
 
     .reservation-box {

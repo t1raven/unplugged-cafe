@@ -14,7 +14,7 @@
 		top: 0;
 		left: 0;
 		background-color: rgba(234, 231, 224, .75);
-		backdrop-filter: blur(5px);
+		backdrop-filter: blur(3px);
 	}
 	> .inner {
 		position: relative;
@@ -33,8 +33,8 @@
 		}
 	}
 	.logo {
+		width: 100%;
 		display: flex;
-		justify-content: center;
 		align-items: center;
 		> a {
 			display: flex;
@@ -82,6 +82,10 @@
 	    	opacity: 0.6;
 	    }
 		}
+	}
+
+	.btn-back { 
+		display: none;
 	}
 
 	.gnb {
@@ -151,11 +155,6 @@ html.scrollUp #site-header {
 
 @media screen and (max-width: 768px){
 	#site-header {
-		> .inner {
-			> * {
-				width: auto;
-			}
-		}
 		.logo {
 			> a {
 				font-size: 20px;
@@ -167,6 +166,10 @@ html.scrollUp #site-header {
 
 		.gnb-btn {
 			gap: 5px;
+		}
+
+		.btn-back { 
+			display: block;
 		}
 	}
 }

@@ -23,7 +23,7 @@
   --font-sec-color: #66635D;
   --background-color: #F1EDE4;
   --background-sec-color: #EAE7E0;
-  --border-color: #D8D4CC;
+  --border-color: rgba(34, 34, 34, 0.1);
 }
 
 [data-theme="dark"] {
@@ -31,7 +31,7 @@
   --font-sec-color: #A7A098;
   --background-color: #11100f;
   --background-sec-color: #191714;
-  --border-color: rgba(255,255,255,.15);
+  --border-color: rgba(238, 238, 238, 0.1);
 }
 
 
