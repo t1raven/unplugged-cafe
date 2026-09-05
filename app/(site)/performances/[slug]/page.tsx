@@ -4,6 +4,7 @@ import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 
 import { formatDateTime } from "@/utils/formatDateTime";
+import type { Performance } from '@/types/performance';
 
 import PerformanceView from '@/components/performances/PerformanceView';
 
@@ -57,29 +58,40 @@ interface Props {
 
 export const revalidate = 0;
 
-export async function generateMetadata({
-  params,
-}: Props): Promise<Metadata> {
-  const { slug } = await params;
-
-  const performance = await client.fetch(
+async function getPerformance(slug: string): Promise<Performance | null> {
+  return client.fetch<Performance | null>(
     performanceQuery,
     {
       slug: decodeURIComponent(slug),
     },
   );
+}
 
-  const artist = performance.artists.length > 0 ? `${performance.artists.map(( artist: { name: string }) => artist.name ) .join('·')} | ` : '';
-  const dateTime = `${formatDateTime(performance.date)}`;
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata> {
+  const { slug } = await params;
+
+  const performance = await getPerformance(slug);
+
+  if (!performance) {
+    return {
+      title: '공연 | UNPLUGGED LOUNGE',
+      description: 'UNPLUGGED LOUNGE 공연 안내',
+    };
+  }
+
+  const artist = performance.artists?.map((artist) => artist.name).filter(Boolean).join('·') ?? '';
+  const dateTime = performance.date ? formatDateTime(performance.date) : '';
+  const description = [artist, dateTime].filter(Boolean).join(' | ');
+  const imageUrl = performance.poster ? urlFor(performance.poster).width(600).height(800).fit('crop').url() : '/images/common/og-image.png';
 
   return {
-    title: performance?.title
-      ? `${performance.title} | UNPLUGGED LOUNGE`
-      : '공연 | UNPLUGGED LOUNGE',
-
-    description: `${artist}${dateTime}`,
+    title: `${performance.title} | UNPLUGGED LOUNGE`,
+    description: description,
     openGraph: {
-      images: [{ url: `${urlFor(performance.poster) ?? '/images/common/og-image.png'}` }],
+      type: 'website',
+      images: [{ url: imageUrl }],
     },
   };
 }
@@ -88,12 +100,8 @@ export default async function PerformanceViewPage({
   params,
 }: Props) {
   const { slug } = await params;
-  const performance = await client.fetch(
-    performanceQuery,
-    {
-      slug: decodeURIComponent(slug),
-    },
-  );
+
+  const performance = await getPerformance(slug);
 
   if (!performance) {
     notFound();

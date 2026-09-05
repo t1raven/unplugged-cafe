@@ -312,7 +312,7 @@ textarea.ipt { resize: none; padding: 15px; min-height: 100px; height: auto; }
         padding-top: 120px; 
     }
     &:last-child { 
-        padding-bottom: 200px; 
+        padding-bottom: 120px; 
     }
     > .inner { 
         position: relative; 
@@ -350,13 +350,4 @@ textarea.ipt { resize: none; padding: 15px; min-height: 100px; height: auto; }
 
     .pc-view { display: none !important; }
     .mo-view { display: block !important; }
-
-    .sub-page-section {
-        &:first-child {
-            padding-top: calc(var(--header-height) + 20px);
-        }
-        &:first-child {
-            padding-bottom: 120px;
-        }
-    }
 }

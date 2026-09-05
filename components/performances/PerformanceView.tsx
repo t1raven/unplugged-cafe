@@ -34,11 +34,8 @@ const extractInstagramIdWithRegex = (urlStr: string): string | null => {
 }
 
 const handleShare = async () => {
-  const metaDescription = document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
-  
   const shareData = {
     title: document.title,
-    text: metaDescription,
     url: window.location.href,
   };
 

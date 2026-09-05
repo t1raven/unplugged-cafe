@@ -14,7 +14,6 @@ export const metadata: Metadata = {
   keywords: ["언플러그드, 라운지, 라이브, 인디, 뮤직, 카페, 서교음악다방, 홍대, 서울, Unplugged, Lounge, Live, Indie, Music, Cafe, Hongdae, Seoul"],
   openGraph: {
     type: 'website',
-    url: 'https://www.unplugged-lounge.com',
     images: [{ url: "/images/common/og-image.png" }],
   },
   formatDetection: {
