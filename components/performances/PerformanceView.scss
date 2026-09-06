@@ -38,7 +38,7 @@
   .performance-poster {
     width: 100%;
     aspect-ratio: 3 / 4;
-    border-radius: 20px;
+    border-radius: 15px;
     position: relative;
     overflow: hidden;
     background: var(--background-sec-color);
@@ -118,6 +118,18 @@
         gap: 3px;
         font-size: 0.9em;
         color: var(--primary-color);
+
+        transition: 
+          opacity 0.25s ease,
+          transform 0.35s ease;
+
+        &:hover {
+          opacity: 0.7;
+        }
+
+        &:active {
+          transform: scale(1.05);
+        }
       }
     }
 
@@ -255,6 +267,18 @@
       display: inline-block;
       font-size: 13px;
       color: var(--info-color);
+
+      transition: 
+        opacity 0.25s ease,
+        transform 0.35s ease;
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      &:active {
+        transform: scale(1.05);
+      }
     }
 
     p {
@@ -410,12 +434,12 @@
         height: 100%; 
         background-color: rgba(255,255,255,0.2); 
         opacity: 0;
-        -webkit-transition: .2s ease-out; 
-        transition:.2s ease-out;
+        -webkit-transition: .25s ease; 
+        transition: .25s ease;
       }
 
-      &:not(:disabled):hover {
-        transform: translateY(-2px);
+      &:not(:disabled):active {
+        transform: scale(1.03);
       }
 
       &:not(:disabled):hover:before {

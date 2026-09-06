@@ -24,36 +24,47 @@ export default function Header() {
     const html = document.documentElement;
 
     let lastScrollY = window.scrollY;
-    const threshold = 5;
+    let ticking = false;
 
-    const handleScroll = () => {
+    const THRESHOLD = 5;
+
+    const updateScrollDirection = () => {
       const currentScrollY = window.scrollY;
       const diff = currentScrollY - lastScrollY;
 
       if (currentScrollY <= 0) {
         html.classList.remove('scrollUp', 'scrollDown');
         lastScrollY = 0;
+        ticking = false;
         return;
       }
 
-      if (Math.abs(diff) < threshold) {
-        return;
+      if (Math.abs(diff) >= THRESHOLD) {
+        if (diff > 0) {
+          html.classList.add('scrollDown');
+          html.classList.remove('scrollUp');
+        } else {
+          html.classList.add('scrollUp');
+          html.classList.remove('scrollDown');
+        }
+
+        lastScrollY = currentScrollY;
       }
 
-      if (diff > 0) {
-        html.classList.add('scrollDown');
-        html.classList.remove('scrollUp');
-      } else {
-        html.classList.add('scrollUp');
-        html.classList.remove('scrollDown');
-      }
+      ticking = false;
+    };
 
-      lastScrollY = currentScrollY;
+    const handleScroll = () => {
+      if (ticking) return;
+
+      ticking = true;
+      requestAnimationFrame(updateScrollDirection);
     };
 
     const handlePopState = () => {
       html.classList.remove('scrollUp', 'scrollDown');
-      lastScrollY = savedScrollY + 100;
+      lastScrollY = savedScrollY;
+      ticking = false;
     };
 
     window.addEventListener('scroll', handleScroll, {
@@ -75,7 +86,7 @@ export default function Header() {
 
     // 2. 페이지를 떠날 때 현재 스크롤 위치 저장 (Cleanup 함수 활용)
     return () => {
-      sessionStorage.setItem(`scroll_${pathname}`, window.scrollY.toString());
+      sessionStorage.setItem(`scroll_${pathname}`, window.scrollY+100);
     };
   }, [pathname]);
 

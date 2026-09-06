@@ -30,7 +30,7 @@ export default function Gnb() {
     if (!activeMenu) return;
 
     const html = document.documentElement;
-    let scale = html.classList.contains('scrollDown') ? 0.85 : 1;
+    let scale = html.classList.contains('scrollDown') ? 0.9 : 1;
 
     if(device === "desktop") scale = 1;
 
@@ -42,16 +42,14 @@ export default function Gnb() {
 
     if (animate) { 
       gsap.to(moveBgRef.current, { 
-        x, 
-        y: "-50%",
+        x,
         width, 
-        duration: 0.45, 
+        duration: 0.35, 
         ease: 'power3.out', 
       }); 
     } else { 
       gsap.set(moveBgRef.current, { 
-        x, 
-        y: "-50%",
+        x,
         width, 
       }); 
     }
@@ -100,7 +98,7 @@ export default function Gnb() {
     setDevice(getDeviceType());
     requestAnimationFrame(() => {
       moveBackground(true);
-      setTimeout(() => { moveBackground(true); }, 250);
+      setTimeout(() => { moveBackground(true); }, 350);
     });
   }, [pathname]);
 

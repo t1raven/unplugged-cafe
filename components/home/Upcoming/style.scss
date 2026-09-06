@@ -31,6 +31,12 @@
       letter-spacing: 0.15em;
 
       text-decoration: none;
+
+      transition: transform 0.35s ease;
+
+      &:active {
+        transform: scale(1.05);
+      }
     }
   }
 
@@ -261,7 +267,7 @@
 
 @media (max-width: 767px) {
   .upcoming {
-    padding: 100px 0;
+    padding: 80px 0;
 
     &__header {
       margin-bottom: 40px;

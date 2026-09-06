@@ -339,7 +339,7 @@ textarea.ipt { resize: none; padding: 15px; min-height: 100px; height: auto; }
 .pc-view { display: block !important; }
 .mo-view { display: none !important; }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 767px){
     :root { 
         --font-size: 13px;
         --header-height: 60px;
@@ -350,4 +350,8 @@ textarea.ipt { resize: none; padding: 15px; min-height: 100px; height: auto; }
 
     .pc-view { display: none !important; }
     .mo-view { display: block !important; }
+
+    .sub-page-section {
+      padding: 20px 0;
+    }
 }

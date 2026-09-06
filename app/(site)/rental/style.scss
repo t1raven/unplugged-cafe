@@ -45,8 +45,8 @@
       transition:.2s ease-out;
     }
 
-    &:hover {
-      transform: translateY(-2px);
+    &:active {
+      transform: scale(1.05);
     }
 
     &:hover:before {
@@ -363,14 +363,14 @@
 
   .equipment-warning {
     margin-top: 60px;
-    padding: 35px;
+    padding: 30px;
     border: 1px solid var(--primary-color);
     border-radius: 15px;
     overflow: hidden;
 
     strong {
       display: block;
-      margin-bottom: 25px;
+      margin-bottom: 15px;
       color: var(--primary-color);
       font-size: 13px;
     }
@@ -401,13 +401,13 @@
     padding: 180px 0;
 
     &__inner {
-      width: min(1200px, 100%);
+      width: min(1200px, 90%);
       margin: 0 auto;
     }
 
     h2 {
       margin: 25px 0;
-      font-size: clamp(48px, 7vw, 80px);
+      font-size: clamp(38px, 7vw, 80px);
       line-height: 1;
       font-weight: 400;
     }
@@ -457,6 +457,11 @@
   .rental {
     &-section {
       padding: 40px 0;
+      border-top: 0;
+
+      &:first-child {
+        padding-top: 60px;
+      }
 
       &__heading {
         grid-template-columns: 45px 1fr;
@@ -511,6 +516,10 @@
             font-size: 14px;
           }
         }
+      }
+      &__warning {
+        margin-top: 50px;
+        padding: 20px;
       }
     }
 
@@ -569,14 +578,14 @@
           }
         }
       }
+      .equipment-warning {
+        padding: 20px;
+      }
     }
 
     &-application {
-      padding: 120px 6vw;
-
-      h2 {
-        font-size: 52px;
-      }
+      padding-top: 40px;
+      padding-bottom: 120px;
 
       &__buttons {
         flex-direction: column;

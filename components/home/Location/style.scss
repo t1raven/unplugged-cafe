@@ -83,10 +83,11 @@
 
 @media (max-width: 767px) {
   .location {
-    min-height: 700px;
+    min-height: 600px;
 
     &__content {
-      padding: 100px 0;
+      padding-top: 80px;
+      padding-bottom: 120px;
     }
 
     h2 {

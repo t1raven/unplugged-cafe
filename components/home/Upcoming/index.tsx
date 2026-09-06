@@ -100,7 +100,7 @@ export default function Upcoming({
           <p>UPCOMING <br className="mo-view" />PERFORMANCE</p>
 
           <Link href="/performances">
-            VIEW ALL
+            VIEW MORE →
           </Link>
         </div>
 

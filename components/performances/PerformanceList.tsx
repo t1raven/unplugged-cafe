@@ -523,16 +523,18 @@ export default function PerformanceCalendar({
                       0 && (
                       <div className="calendar-performance-indicator">
 
-                        <span />
+                        {dayPerformances.map((item,index) => (
+                          <span key={index} />
+                        ))}
 
-                        {dayPerformances.length >
+                        {/*{dayPerformances.length >
                           1 && (
                           <small>
                             {
                               dayPerformances.length
                             }
                           </small>
-                        )}
+                        )}*/}
 
                       </div>
                     )}
