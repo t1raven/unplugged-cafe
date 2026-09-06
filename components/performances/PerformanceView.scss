@@ -128,7 +128,7 @@
         }
 
         &:active {
-          transform: scale(1.05);
+          transform: scale(1.06);
         }
       }
     }
@@ -277,7 +277,7 @@
       }
 
       &:active {
-        transform: scale(1.05);
+        transform: scale(1.06);
       }
     }
 
@@ -439,7 +439,7 @@
       }
 
       &:not(:disabled):active {
-        transform: scale(1.03);
+        transform: scale(1.06);
       }
 
       &:not(:disabled):hover:before {

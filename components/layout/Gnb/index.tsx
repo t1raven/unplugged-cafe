@@ -98,7 +98,7 @@ export default function Gnb() {
     setDevice(getDeviceType());
     requestAnimationFrame(() => {
       moveBackground(true);
-      setTimeout(() => { moveBackground(true); }, 350);
+      setTimeout(() => { moveBackground(true); }, 400);
     });
   }, [pathname]);
 
