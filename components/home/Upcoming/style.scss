@@ -42,7 +42,7 @@
         transform 0.35s ease;
 
       & .icon {
-        font-size: 13px;;
+        font-size: 1em;
       }
 
       &:hover {
@@ -292,7 +292,8 @@
       margin-bottom: 40px;
 
       a {
-        font-size: 10px;
+        font-size: 11px;
+        gap: 7px;
       }
     }
 
