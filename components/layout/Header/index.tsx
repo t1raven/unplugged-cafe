@@ -82,11 +82,11 @@ export default function Header() {
 
   useEffect(() => {
     // 1. 페이지 진입 시 저장된 스크롤 위치 복원
-    savedScrollY = parseInt(sessionStorage.getItem(`scroll_${pathname}`) ?? "") || 0;
+    savedScrollY = parseInt(sessionStorage.getItem(`scroll_${pathname}`) ?? "") - 100 || 0;
 
     // 2. 페이지를 떠날 때 현재 스크롤 위치 저장 (Cleanup 함수 활용)
     return () => {
-      sessionStorage.setItem(`scroll_${pathname}`, window.scrollY+100);
+      sessionStorage.setItem(`scroll_${pathname}`, window.scrollY.toString());
     };
   }, [pathname]);
 
