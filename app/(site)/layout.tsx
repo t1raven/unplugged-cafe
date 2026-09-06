@@ -37,7 +37,7 @@ export default function SiteLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body>
+      <body suppressHydrationWarning>
         <ThemeProvider>
           <Header/>
           {children}

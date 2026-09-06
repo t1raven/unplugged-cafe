@@ -7,4 +7,6 @@ export interface Cafe {
   price: number
   category: Category | null
   imageUrl: string
+  newItem: boolean
+  bestItem: boolean
 }

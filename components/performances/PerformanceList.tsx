@@ -649,7 +649,7 @@ export default function PerformanceCalendar({
                       </div>
 
                       <span className="performance-arrow">
-                        →
+                        <span className="material-symbols-rounded">arrow_forward_ios</span>
                       </span>
 
                     </>
@@ -822,7 +822,7 @@ export default function PerformanceCalendar({
                       </div>
 
                       <span className="performance-arrow">
-                        →
+                        <span className="material-symbols-rounded">arrow_forward_ios</span>
                       </span>
 
                     </>

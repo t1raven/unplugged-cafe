@@ -59,14 +59,14 @@ export const menuItem = defineType({
     }),
 
     defineField({
-      name: 'new',
+      name: 'newItem',
       title: 'NEW',
       type: 'boolean',
       initialValue: true,
     }),
 
     defineField({
-      name: 'best',
+      name: 'bestItem',
       title: 'BEST',
       type: 'boolean',
       initialValue: false,

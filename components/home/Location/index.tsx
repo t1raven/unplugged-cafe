@@ -73,7 +73,8 @@ export default function Location() {
           target="_blank"
           rel="noreferrer"
         >
-          GET DIRECTIONS ↗
+          GET DIRECTIONS
+          <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
         </a>
       </div>
     </section>

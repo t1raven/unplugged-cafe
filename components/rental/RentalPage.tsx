@@ -77,7 +77,7 @@ export default function RentalPage() {
         <div className="rental-summary__buttons">
           <a href="#rental-application" className="rental-button apply-button">
             대관 신청 바로가기
-            <span>↗</span>
+            <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
           </a>
         </div>
       </section>
@@ -246,12 +246,12 @@ export default function RentalPage() {
               className="rental-button"
             >
               대관 신청 전 상세 안내 확인
-              <span>↗</span>
+              <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
             </a>
 
             <a href="tel:010-9035-6289" className="rental-button">
               전화 문의
-              <span>↗</span>
+              <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
             </a>
 
             <a
@@ -261,7 +261,7 @@ export default function RentalPage() {
               className="rental-button apply-button"
             >
               대관 신청하기 (구글폼)
-              <span>↗</span>
+              <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
             </a>
           </div>
 

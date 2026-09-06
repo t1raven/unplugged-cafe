@@ -427,6 +427,10 @@
     transition:
       color 0.25s ease,
       transform 0.25s ease;
+
+    > span {
+      font-size: 1em;
+    }
   }
 
   .performance-item:hover {

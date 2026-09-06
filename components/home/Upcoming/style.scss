@@ -25,6 +25,11 @@
     }
 
     a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
       color: var(--font-color);
 
       font-size: 13px;
@@ -32,7 +37,17 @@
 
       text-decoration: none;
 
-      transition: transform 0.35s ease;
+      transition: 
+        opacity 0.35s ease,
+        transform 0.35s ease;
+
+      & .icon {
+        font-size: 13px;;
+      }
+
+      &:hover {
+        opacity: 0.6;;
+      }
 
       &:active {
         transform: scale(1.06);
@@ -247,6 +262,10 @@
   &__arrow {
     font-size: 20px;
     color: var(--font-sec-color);
+
+    > span {
+      font-size: 1em;;
+    }
   }
 
   &__item:hover &__arrow {

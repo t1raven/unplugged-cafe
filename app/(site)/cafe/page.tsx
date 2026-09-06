@@ -34,6 +34,8 @@ const listQuery = `
     name,
     description,
     price,
+    newItem,
+    bestItem,
 
     "category": category->{
       _id,

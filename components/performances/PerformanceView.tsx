@@ -34,24 +34,31 @@ const extractInstagramIdWithRegex = (urlStr: string): string | null => {
 }
 
 const handleShare = async () => {
-  const shareData = {
-    title: document.title,
-    url: window.location.href,
-  };
+  const url = window.location.href;
 
+  // 네이티브 공유 지원
   if (navigator.share) {
     try {
-      await navigator.share(shareData);
+      await navigator.share({
+        title: document.title,
+        url,
+      });
     } catch (error) {
       // 사용자가 공유창을 닫은 경우
-      if ((error as DOMException).name !== "AbortError") {
-        console.error("공유 실패:", error);
+      if ((error as DOMException).name !== 'AbortError') {
+        console.error('공유 실패:', error);
       }
     }
-  } else {
-    // Web Share API를 지원하지 않는 브라우저
-    await navigator.clipboard.writeText(window.location.href);
-    alert("URL이 복사되었습니다.");
+
+    return;
+  }
+
+  // fallback: URL 복사
+  try {
+    await navigator.clipboard.writeText(url);
+    alert('URL이 복사되었습니다.');
+  } catch (error) {
+    console.error('URL 복사 실패:', error);
   }
 };
 
@@ -126,7 +133,9 @@ export default function PerformanceViewPage({
 
                 <strong>
                   <Link href={performance.place?.naverMap!} target="_blank">
-                    <i className="material-symbols-rounded icon" translate="no">location_on</i> {performance.place?.name} ↗
+                    <i className="material-symbols-rounded icon" translate="no">location_on</i>
+                    {performance.place?.name}
+                    <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
                   </Link><br/>
                   <p>{performance.place?.address}</p>
                 </strong>
@@ -219,7 +228,8 @@ export default function PerformanceViewPage({
 
                         {artist.instagram && (
                           <Link href={artist.instagram!} target="_blank">
-                            @{extractInstagramIdWithRegex(artist.instagram)} ↗
+                            @{extractInstagramIdWithRegex(artist.instagram)}
+                            <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
                           </Link>
                         )}
 

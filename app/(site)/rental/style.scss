@@ -15,12 +15,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
     min-width: 200px;
     height: 60px;
     padding: 0 30px;
     background: var(--secondary-color);
-    border-radius: 10px;
+    border-radius: 999px;
     color: #fff;
     font-size: 13px;
     font-weight: 500;
@@ -31,6 +31,10 @@
     transition:
       background-color 0.25s ease,
       transform 0.25s ease;
+
+    > .icon {
+      font-size: 1em;
+    }
 
     &:before { 
       content: ''; 
@@ -473,6 +477,10 @@
       }
     }
 
+    &-button {
+      width: 100%;
+    }
+
     &-summary {
       &__grid {
         grid-template-columns: 1fr 1fr;
@@ -589,10 +597,6 @@
 
       &__buttons {
         flex-direction: column;
-
-        .rental-button {
-          width: 100%;
-        }
       }
     }
 

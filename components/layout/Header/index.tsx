@@ -13,6 +13,14 @@ import loageImageBk from '@/public/images/common/site-logo-bk.png';
 
 export default function Header() {
 
+  useEffect(() => {
+    console.log('useEffect 실행');
+
+    return () => {
+      console.log('cleanup');
+    };
+  }, []);
+
   const pathname = usePathname();
   const router = useRouter();
   const params = useParams();

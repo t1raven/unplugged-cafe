@@ -100,7 +100,8 @@ export default function Upcoming({
           <p>UPCOMING <br className="mo-view" />PERFORMANCE</p>
 
           <Link href="/performances">
-            VIEW MORE →
+            VIEW MORE
+            <span className="material-symbols-rounded icon">arrow_forward_ios</span>
           </Link>
         </div>
 
@@ -182,7 +183,7 @@ export default function Upcoming({
                   </div>
 
                   <span className="upcoming__arrow">
-                    →
+                    <span className="material-symbols-rounded">arrow_forward_ios</span>
                   </span>
 
                   {/*<div className="upcoming__posterBig">

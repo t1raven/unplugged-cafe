@@ -30,18 +30,18 @@
 .category-nav__inner {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
   position: relative;
   z-index: 1;
 
-  width: var(--inner-width);
+  width: 100%;
   max-width: var(--inner-max-width);
   height: 70px;
 
   margin: 0 auto;
 
-  gap: 45px;
+  gap: 10px;
 
   overflow-x: auto;
 
@@ -56,11 +56,15 @@
 
     flex-shrink: 0;
 
-    padding: 0;
+    min-width: 60px;
+    height: 30px;
 
-    border: 0;
+    padding: 0 15px;
 
-    background: transparent;
+    border: 2px solid var(--border-color);
+    border-radius: 999px;;
+
+    background-color: transparent;
 
     color: var(--font-sec-color);
 
@@ -74,29 +78,21 @@
     cursor: pointer;
 
     transition:
-      color 0.3s ease;
-
-    &::after {
-      content: '';
-
-      position: absolute;
-      left: 0;
-      bottom: -10px;
-
-      width: 0;
-      height: 1px;
-
-      background: var(--primary-color);
-
-      transition: width 0.3s ease;
-    }
+      color 0.3s ease,
+      transform 0.3s ease;
 
     &:hover {
       color: var(--primary-color);
     }
 
+    &:active {
+      transform: scale(1.15);
+    }
+
     &.active {
-      color: var(--primary-color);
+      color: #fff;
+      border-color:  var(--primary-color);
+      background-color: var(--primary-color);
     }
 
     &.active::after {
@@ -128,7 +124,8 @@ html.scrollUp .category-nav {
     justify-content: flex-start;
 
     height: 60px;
+    padding: 0 5%;
 
-    gap: 28px;
+    gap: 5px;
   }
 }

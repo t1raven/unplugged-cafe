@@ -118,6 +118,7 @@
         gap: 3px;
         font-size: 0.9em;
         color: var(--primary-color);
+        line-height: 1;
 
         transition: 
           opacity 0.25s ease,
@@ -264,13 +265,19 @@
     }
 
     a {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
       font-size: 13px;
       color: var(--info-color);
 
       transition: 
         opacity 0.25s ease,
         transform 0.35s ease;
+
+      > .icon {
+        font-size: 1em;
+      }
 
       &:hover {
         opacity: 0.7;

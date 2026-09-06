@@ -117,6 +117,17 @@ export default function MenuList({
                   >
                     
                     <div className="menu-card__image">
+                      {(item.newItem || item.bestItem) && (
+                        <div className="menu-card__label">
+                          {item.newItem && (
+                            <div className="menu-card__label_item new">NEW</div>
+                          )}
+                          {item.bestItem && (
+                            <div className="menu-card__label_item best">BEST</div>
+                          )}
+                        </div>
+                      )}
+                        
                       {item.imageUrl && (
                         <Image
                           src={urlFor(item.imageUrl)
@@ -130,7 +141,6 @@ export default function MenuList({
                       )}
                     </div>
                     
-
                     <div className="menu-card__info">
                       <div className="menu-card__title">
                         <h2>{item.name}</h2>
