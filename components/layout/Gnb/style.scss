@@ -115,7 +115,7 @@ html.scrollUp #site-gnb {
 	}
 }
 
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1023px){
 	#site-gnb {
 		position: sticky;
 		top: auto;
@@ -125,19 +125,14 @@ html.scrollUp #site-gnb {
 	  height: 0;
 		> nav {
 			position: absolute;
-			width: 90%;
 			bottom: 10px;
 			> ul {
 				> li {
 					> a {
-						width: 100%;
 						padding: 6px 15px;
 						.icon {
 					  	font-size: 24px;
 					  }
-					  .text {
-					  	display: none;
-				    }
 					}
 				}
 			}
@@ -150,5 +145,23 @@ html.scrollUp #site-gnb {
 
 	html.scrollUp #site-gnb > nav {
 	  transform: scale(1);
+	}
+}
+
+@media screen and (max-width: 767px){
+	#site-gnb {
+		> nav {
+			width: 90%;
+			> ul {
+				> li {
+					> a {
+						width: 100%;
+					  .text {
+					  	display: none;
+				    }
+					}
+				}
+			}
+		}
 	}
 }

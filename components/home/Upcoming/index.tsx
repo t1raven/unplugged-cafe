@@ -100,7 +100,7 @@ export default function Upcoming({
           <p>UPCOMING <br className="mo-view" />PERFORMANCE</p>
 
           <Link href="/performances">
-            VIEW MORE
+            전체보기
             <span className="material-symbols-rounded icon">arrow_forward_ios</span>
           </Link>
         </div>
@@ -110,7 +110,8 @@ export default function Upcoming({
             <Swiper
               slidesPerView={1.1}
               grid={{
-                rows: 3,
+                fill: 'column',
+                rows: 4,
               }}
               spaceBetween={0}
               speed={700}
@@ -121,10 +122,13 @@ export default function Upcoming({
               pagination={{
                 clickable: true,
               }}
-              navigation={true}
+              //navigation={true}
               breakpoints={{
-                768: {
-                  slidesPerView: 1,
+                1023: {
+                  slidesPerView: 2,
+                  grid: {
+                    fill: 'row',
+                  },
                 },
               }}
               modules={[Grid, Pagination, Navigation]}

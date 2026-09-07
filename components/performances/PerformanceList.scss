@@ -272,7 +272,7 @@
 
     p {
       margin: 0 0 8px;
-      font-size: 10px;
+      font-size: 13px;
       font-weight: 600;
       line-height: 1.4;
       letter-spacing: 0.16em;
@@ -473,7 +473,7 @@
 
   @media (max-width: 1024px) {
     .calendar-day {
-      min-height: 150px;
+      min-height: 80px;
       padding: 10px;
     }
   }

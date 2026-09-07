@@ -133,7 +133,6 @@ export default function PerformanceViewPage({
 
                 <strong>
                   <Link href={performance.place?.naverMap!} target="_blank">
-                    <i className="material-symbols-rounded icon" translate="no">location_on</i>
                     {performance.place?.name}
                     <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
                   </Link><br/>

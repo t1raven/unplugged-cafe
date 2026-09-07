@@ -35,7 +35,7 @@
   position: relative;
   z-index: 1;
 
-  width: 100%;
+  width: var(--inner-width);
   max-width: var(--inner-max-width);
   height: 70px;
 
@@ -112,19 +112,22 @@ html.scrollUp .category-nav {
   }
 }
 
+@media screen and (max-width: 1023px){
+  .category-nav__inner {
+    width: 100%;
+    padding: 0 5%;
+  }
+}
 
-@media screen and (max-width: 768px){
+
+@media screen and (max-width: 767px){
   .category-nav {
     margin-top: 20px;
     margin-bottom: 0;
   }
 
   .category-nav__inner {
-    justify-content: flex-start;
-
     height: 60px;
-    padding: 0 5%;
-
     gap: 5px;
   }
 }

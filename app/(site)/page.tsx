@@ -12,7 +12,7 @@ const upcomingQuery = `
     _type == "performance"
     && date >= $now
   ]
-  | order(date asc)[0...6] {
+  | order(date asc)[0...12] {
     _id,
     title,
     slug,

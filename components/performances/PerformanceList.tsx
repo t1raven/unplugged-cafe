@@ -375,7 +375,7 @@ export default function PerformanceCalendar({
 
         return dateA - dateB;
       })
-      .slice(0, 6);
+      .slice(0, 12);
 
   return (
     <div className="sub-page-section performance-calendar">
