@@ -331,7 +331,7 @@
       .swiper-slide:nth-child(8n+1),
       .swiper-slide:nth-child(8n+2) {
         .upcoming__item {
-          border-top: 0;
+          border-top: initial;
         }
       }
 
