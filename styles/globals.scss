@@ -40,6 +40,8 @@
   --background-color: #F1EDE4;
   --background-sec-color: #EAE7E0;
   --border-color: rgba(34, 34, 34, 0.1);
+
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 [data-theme="dark"] {
@@ -60,7 +62,7 @@ select::-ms-expand { display: none; }*/
 *, *:before, *:after { -webkit-box-sizing: inherit; box-sizing: inherit; box-sizing: border-box; }
 a { color: initial; text-decoration: none; }
 html { min-height: 100%; background-color: var(--background-color); }
-body { font-family: var(--font-family); color: var(--font-color); font-size: var(--font-size); line-height: 1.6; font-weight: 400; letter-spacing: 0; font-weight: normal; min-width: 320px; min-height: 100dvh; background-color: var(--background-color); word-break: keep-all; word-wrap: break-word; }
+body { font-family: var(--font-family); color: var(--font-color); font-size: var(--font-size); line-height: 1.6; font-weight: 400; letter-spacing: 0; font-weight: normal; min-width: 320px; min-height: 100dvh; padding-bottom: var(--safe-area-bottom); background-color: var(--background-color); word-break: keep-all; word-wrap: break-word; }
 button { padding: 0; cursor: pointer; }
 img { max-width: 100%; vertical-align: top; }
 map area { cursor: pointer; }
@@ -318,6 +320,17 @@ textarea.ipt { resize: none; padding: 15px; min-height: 100px; height: auto; }
 /* Common */
 #site-body { display: block; width: 100%; min-height: 100dvh; }
 #site-body.secBg { background-color: var(--background-sec-color); }
+
+.bottom_bar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--safe-area-bottom);
+  padding-bottom: var(--safe-area-bottom);
+  background-color: #000;
+  z-index: 100;
+}
 
 
 /* Sub Page */
