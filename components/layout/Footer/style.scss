@@ -2,6 +2,18 @@
 	position: relative;
 	z-index: 2;
 	background-color: var(--background-sec-color);
+	padding-bottom: calc(0px + env(safe-area-inset-bottom));
+
+	&:after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: calc(-1 * env(safe-area-inset-bottom));
+		height: env(safe-area-inset-bottom);
+		background: var(--background-sec-color);
+	}
+
 	>.inner {
 		max-width: var(--inner-max-width);
 		width: var(--inner-width);

@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   height: -webkit-fill-available; 
-  height: calc(100lvh - var(--header-height));
+  height: calc(100dvh - var(--header-height));
   overflow: hidden;
 
   &__image {

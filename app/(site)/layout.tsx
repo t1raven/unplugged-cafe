@@ -8,7 +8,7 @@ const notoSansKR = Noto_Sans_KR({
   variable: '--font-noto',
 });
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 export const metadata: Metadata = {
   title: "UNPLUGGED LOUNGE",
   description: "음악과 사람이 머무는 공간 & 한국 인디뮤지션의 출발지 Live & Indie Cafe",
@@ -22,6 +22,12 @@ export const metadata: Metadata = {
     address: false,
     email: false,
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 };
 
 import ThemeProvider from '@/components/common/ThemeProvider';
