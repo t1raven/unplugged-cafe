@@ -90,7 +90,7 @@ export default defineConfig({
             // Archives
             orderableDocumentListDeskItem({
               type: 'galleryCategory',
-              title: '기록 카테고리',
+              title: '아카이브 카테고리',
               icon: SchemaIcon,
               S,
               context,
@@ -98,7 +98,7 @@ export default defineConfig({
 
             orderableDocumentListDeskItem({
               type: 'galleryItem',
-              title: '기록 이미지',
+              title: '아카이브 이미지',
               icon: ImageIcon,
               S,
               context,

@@ -116,7 +116,7 @@ export default function Gnb() {
             <li className={pathname === '/' ? "active" : ""}><Link href="/" title="홈"><span className="icon material-symbols-rounded" translate="no">home</span><span className="text">홈</span></Link></li>
             <li className={pathname.startsWith('/performances') ? "active" : ""}><Link href="/performances" title="공연예매"><span className="icon material-symbols-rounded" translate="no">confirmation_number</span><span className="text">공연예매</span></Link></li>
             <li className={pathname.startsWith('/cafe') ? "active" : ""}><Link href="/cafe" title="카페"><span className="icon material-symbols-rounded" translate="no">local_cafe</span><span className="text">카페</span></Link></li>
-            <li className={pathname.startsWith('/archives') ? "active" : ""}><Link href="/archives" title="기록"><span className="icon material-symbols-rounded" translate="no">photo</span><span className="text">기록</span></Link></li>
+            <li className={pathname.startsWith('/archives') ? "active" : ""}><Link href="/archives" title="아카이브"><span className="icon material-symbols-rounded" translate="no">photo</span><span className="text">아카이브</span></Link></li>
             <li className={pathname.startsWith('/rental') ? "active" : ""}><Link href="/rental" title="대관안내"><span className="icon material-symbols-rounded" translate="no">developer_guide</span><span className="text">대관안내</span></Link></li>
           </ul>
           <div className="move-bg" ref={moveBgRef}></div>
