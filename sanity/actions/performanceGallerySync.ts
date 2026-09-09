@@ -7,6 +7,7 @@ import {
   useClient,
   useDocumentOperation,
 } from 'sanity'
+import { formatDateTime } from "@/utils/formatDateTime";
 
 import {apiVersion} from '../env'
 
@@ -30,6 +31,11 @@ function publishedId(id: string) {
 
 function galleryIdFor(performanceId: string) {
   return `performance-poster-${performanceId}`
+}
+
+function galleryDescription(date: string, artistNames: string[]) {
+  const artists = artistNames.filter(Boolean).join(' · ') || '미정'
+  return [`아티스트: ${artists}`, `공연 일시: ${formatDateTime(date)}`].join('\n')
 }
 
 async function getPublishedPerformance(client: SanityClient, id: string) {
@@ -73,14 +79,18 @@ async function getNewOrderRank(client: SanityClient, type: string) {
 
 async function syncGalleryItem(client: SanityClient, performance: PerformanceDocument) {
   const performanceId = publishedId(performance._id)
-  if (!performance.title || !performance.poster?.asset?._ref) {
-    throw new Error('공연명, 공연 포스터를 모두 입력한 후 게시해주세요.')
+  if (!performance.title || !performance.date || !performance.poster?.asset?._ref) {
+    throw new Error('공연명, 공연 일시, 공연 포스터를 모두 입력한 후 게시해주세요.')
   }
 
-  const [categoryId, existingId] = await Promise.all([
+  const [categoryId, existingId, artistNames] = await Promise.all([
     getPosterCategoryId(client),
     client.fetch<string | null>(
       '*[_type == "galleryItem" && performance._ref == $performanceId][0]._id',
+      {performanceId},
+    ),
+     client.fetch<string[]>(
+      '*[_id == $performanceId][0].artists[]->name',
       {performanceId},
     ),
   ])
@@ -88,6 +98,7 @@ async function syncGalleryItem(client: SanityClient, performance: PerformanceDoc
   const fields = {
     title: performance.title,
     image: performance.poster,
+    description: galleryDescription(performance.date, artistNames ?? []),
     category: {_type: 'reference' as const, _ref: categoryId},
     performance: {_type: 'reference' as const, _ref: performanceId},
   }

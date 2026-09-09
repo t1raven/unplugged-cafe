@@ -3,7 +3,7 @@ import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list
 
 export const galleryItem = defineType({
   name: 'galleryItem',
-  title: '기록 이미지',
+  title: '아카이브 이미지',
   type: 'document',
 
   orderings: [

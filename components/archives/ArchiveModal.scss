@@ -27,6 +27,7 @@
 
     width: min(90vw, 1200px);
     max-height: 90vh;
+    padding-top: 50px;
 
     display: flex;
     flex-direction: column;
@@ -80,7 +81,7 @@
 
   &__close {
     position: absolute;
-    top: -50px;
+    top: 0;
     right: 0;
 
     z-index: 2;
@@ -153,7 +154,6 @@
   .gallery-modal {
     &__content {
       width: calc(100vw - 30px);
-      max-height: 85vh;
     }
 
     &__image {

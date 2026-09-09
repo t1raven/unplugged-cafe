@@ -15,13 +15,13 @@ import {
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 import {koKRLocale} from '@sanity/locale-ko-kr'
 
-import {SchemaIcon} from '@sanity/icons/Schema'
 import {CalendarIcon} from '@sanity/icons/Calendar'
 import {MarkerIcon} from '@sanity/icons/Marker'
 import {StarIcon} from '@sanity/icons/Star'
 import {BottleIcon} from '@sanity/icons/Bottle'
 import {ImageIcon} from '@sanity/icons/Image'
 import {HomeIcon} from '@sanity/icons/Home'
+import {TiersIcon} from '@sanity/icons/Tiers'
 
 export default defineConfig({
   basePath: '/studio',
@@ -74,7 +74,7 @@ export default defineConfig({
             orderableDocumentListDeskItem({
               type: 'menuCategory',
               title: '카페 카테고리',
-              icon: SchemaIcon,
+              icon: TiersIcon,
               S,
               context,
             }),
@@ -91,7 +91,7 @@ export default defineConfig({
             orderableDocumentListDeskItem({
               type: 'galleryCategory',
               title: '아카이브 카테고리',
-              icon: SchemaIcon,
+              icon: TiersIcon,
               S,
               context,
             }),
