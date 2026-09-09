@@ -98,6 +98,86 @@
 	.btn-back { 
 		display: none;
 	}
+
+	.sns_btns {
+		display: flex;
+		position: relative;
+
+		.subMenu {
+			position: absolute;
+			top: 0;
+			right: 0;
+			background-color: rgba(238, 238, 238, .8);
+	    backdrop-filter: blur(5px) brightness(1.1);
+	    box-shadow: 0 0 0 1px var(--border-color);
+	    overflow: hidden;
+
+	    opacity: 0;
+	    border-radius: 20px;
+	    transform: scale(0) translateX(100%) translateY(-50%);
+			pointer-events: none;
+
+	    transition: 
+	    	opacity 0.25s ease,
+	    	transform 0.25s ease;
+
+			ul {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+		    padding: 25px 30px;
+
+		    opacity: 0;
+
+				a {
+					display: inline-flex;
+					align-items: center;
+
+					font-size: 1em;
+					line-height: 1;
+					color: var(--font-color);
+					white-space: nowrap;
+
+					transition: opacity 0.35s ease;
+
+					&:hover {
+						opacity: 0.7;
+					}
+
+					.icon {
+						font-size: 1.35em;
+						color: var(--primary-color);
+						margin-right: 10px;
+					}
+
+					.outlink {
+						font-size: 1em;
+						color: var(--primary-color);
+						margin-left: 5px;
+					}
+				}
+			}
+		}
+
+		&.active {
+			button {
+				opacity: 0;
+			}
+
+			.subMenu {
+				opacity: 1;
+				transform: scale(1) translateX(0%) translateY(0%);
+				pointer-events: auto;
+
+				ul {
+					opacity: 1;
+
+					transition: opacity 0.25s ease;
+		    	transition-delay: 0.3s;
+				}
+			}
+		}
+	}
 }
 
 html.scrollDown #site-header {
@@ -112,6 +192,12 @@ html.scrollUp #site-header {
 	#site-header {
 		&:after {
 			background-color: rgba(25, 23, 20, .75);
+		}
+
+		.sns_btns {
+			.subMenu {
+				background-color: rgba(25, 23, 20, .75);
+			}
 		}
 	}
 }
