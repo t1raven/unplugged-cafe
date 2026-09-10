@@ -96,12 +96,17 @@ export default function MenuList({
 
   return (
     <>
-      <CategoryNav
-        category={categories}
-        categoryNavRef={categoryRef}
-        activeCategory={activeCategory}
-        onChange={handleCategoryChange}
-      />
+      <div className="category_search_nav">
+        <div className="category_search_nav__inner">
+          <CategoryNav
+            category={categories}
+            categoryNavRef={categoryRef}
+            activeCategory={activeCategory}
+            onChange={handleCategoryChange}
+          />
+        </div>
+      </div>
+          
       <section className="sub-page-section menu-content">
         <div className="inner">
           <div

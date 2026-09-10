@@ -1,63 +1,71 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
 
-import { client } from '@/sanity/lib/client'
+import { client } from '@/sanity/lib/client';
 
 const PAGE_SIZE = 12;
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url)
+  const { searchParams } = new URL(request.url);
 
-  const category = searchParams.get('category') || ''
-
-  const listQuery = `
-  *[
-    _type == "galleryItem"
-    ${category ? `&& category->slug.current == $category` : ''}
-    && display == true
-  ]
-  | order(orderRank)
-  [$start...$end] {
-    _id,
-    title,
-    description,
-
-    "category": category->{
-      _id,
-      title,
-      "slug": slug.current
-    },
-
-    "imageUrl": image.asset->url
-  }
-`
+  const category = searchParams.get('category') || '';
+  const search = searchParams.get('search')?.trim() || '';
 
   const page = Math.max(
     Number(searchParams.get('page')) || 1,
     1
-  )
+  );
 
-  const start = (page - 1) * PAGE_SIZE
-  const end = start + PAGE_SIZE
-  
+  const start = (page - 1) * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
+
   if (!category) {
     return NextResponse.json({
       items: [],
       hasMore: false,
-    })
+      page,
+    });
   }
+
+  const listQuery = `
+    *[
+      _type == "galleryItem"
+      && category->slug.current == $category
+      && display == true
+      && (
+        $search == ""
+        || title match $search
+        || description match $search
+      )
+    ]
+    | order(orderRank)
+    [$start...$end] {
+      _id,
+      title,
+      description,
+
+      "category": category->{
+        _id,
+        title,
+        "slug": slug.current
+      },
+
+      "imageUrl": image.asset->url
+    }
+  `;
 
   const items = await client.fetch(
     listQuery,
     {
       category,
+      search,
       start,
       end,
     }
-  )
+  );
 
   return NextResponse.json({
     items,
     hasMore: items.length === PAGE_SIZE,
     page,
-  })
+  });
 }

@@ -15,18 +15,16 @@ interface Props {
 export default function CategoryNav({ category, activeCategory, onChange, categoryNavRef}: Props) {
   return (
     <nav className={`category-nav`} ref={categoryNavRef}>
-      <div className="category-nav__inner">
-        {category.map((category) => (
-          <button
-            key={category._id}
-            type="button"
-            className={ activeCategory === category.slug ? 'active' : '' }
-            onClick={() => onChange(category.slug)}
-          >
-            {category.title}
-          </button>
-        ))}
-      </div>
+      {category.map((category) => (
+        <button
+          key={category._id}
+          type="button"
+          className={ activeCategory === category.slug ? 'active' : '' }
+          onClick={() => onChange(category.slug)}
+        >
+          {category.title}
+        </button>
+      ))}
     </nav>
   )
 }

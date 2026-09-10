@@ -49,6 +49,9 @@ export default function ArchiveList({
   const animationContextRef = useRef<gsap.Context | null>(null)
   const previousLengthRef = useRef(0)
 
+  const [search, setSearch] = useState('')
+  const [searchInput, setSearchInput] = useState('')
+
   /*
    * 다음 페이지 로드
    */
@@ -58,11 +61,12 @@ export default function ArchiveList({
     setLoading(true)
 
     try {
-      const nextPage = page + 1
+      const nextPage = pageRef.current + 1;
 
       const params = new URLSearchParams({
         category: activeCategory,
         page: String(nextPage),
+        search,
       })
 
       const response = await fetch(
@@ -140,6 +144,7 @@ export default function ArchiveList({
         const params = new URLSearchParams({
           category,
           page: '1',
+          search,
         })
 
         const response = await fetch(
@@ -292,14 +297,141 @@ export default function ArchiveList({
     };
   }, [selectedIndex]);
 
+
+
+
+  const [searchActive, setSearchActive] = useState<boolean>(false);
+
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  const toggleSearch = () => {
+    setSearchActive((prev) => {
+      const state = !prev;
+      
+      // 활성화되는 시점(true)에 내부 input에 포커스
+      if (state) {
+        setTimeout(() => {
+          searchRef.current?.querySelector('input')?.focus();
+        }, 0);
+      }else{
+        setTimeout(() => {
+          searchRef.current?.querySelector('input')?.focusout();
+        }, 0);
+      }
+      
+      return state;
+    });
+  };
+
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setSearchActive(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setSearchActive(false);
+      }
+    };
+
+    const handleScroll = () => {
+      setSearchActive(false);
+    };
+
+    if(searchActive) {
+      document.addEventListener('mousedown', handleOutsideClick);
+      document.addEventListener('keydown', handleKeyDown);
+      //window.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('keydown', handleKeyDown);
+      //window.removeEventListener('scroll', handleScroll);
+    };
+  }, [searchActive]);
+
+
+  const handleSearch = useCallback(async () => {
+    const keyword = searchInput.trim();
+
+    setSearch(keyword);
+    setPage(1);
+    setLoading(true);
+    setSelectedIndex(null);
+
+    try {
+      const params = new URLSearchParams({
+        category: activeCategory,
+        page: '1',
+        search: keyword,
+      });
+
+      const response = await fetch(
+        `/api/archives?${params.toString()}`
+      );
+
+      if (!response.ok) {
+        throw new Error('데이터를 불러오지 못했습니다.');
+      }
+
+      const data = await response.json();
+
+      animationContextRef.current?.revert();
+      animationContextRef.current = null;
+      previousLengthRef.current = 0;
+
+      setItems(data.items);
+      setHasMore(data.hasMore);
+    } catch (error) {
+      console.error(error);
+      setItems([]);
+      setHasMore(false);
+    } finally {
+      setLoading(false);
+    }
+  }, [activeCategory, searchInput]);
+
+
+
   return (
     <>
-      <CategoryNav
-        category={categories}
-        categoryNavRef={categoryRef}
-        activeCategory={activeCategory}
-        onChange={handleCategoryChange}
-      />
+
+      <div className={`category_search_nav ${searchActive ? 'active' : ''}`} ref={searchRef}>
+        <div className="category_search_nav__inner">
+          <CategoryNav
+            category={categories}
+            categoryNavRef={categoryRef}
+            activeCategory={activeCategory}
+            onChange={handleCategoryChange}
+          />
+
+          <div className="search-nav">
+            <div className="input">
+              <span class="material-symbols-rounded icon">search</span>
+              <input
+                type="search"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSearch();
+                  }
+                }}
+                placeholder="아카이브 검색"
+              />
+            </div>
+
+            <button type="button" onClick={toggleSearch}>
+              <span class="material-symbols-rounded">search</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <section className="sub-page-section gallery">
         <div className="inner">
           <div className="gallery__list" ref={gridRef}>
