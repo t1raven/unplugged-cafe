@@ -260,6 +260,10 @@ html.scrollUp .category_search_nav {
   .category_search_nav {
     margin-top: 20px;
     margin-bottom: 0;
+
+    &__inner {
+      height: 60px;;
+    }
   }
 
   .category-nav {
