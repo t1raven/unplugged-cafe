@@ -315,7 +315,7 @@ export default function ArchiveList({
         }, 0);
       }else{
         setTimeout(() => {
-          searchRef.current?.querySelector('input')?.focusout();
+          searchRef.current?.querySelector('input')?.blur();
         }, 0);
       }
       
@@ -411,7 +411,7 @@ export default function ArchiveList({
 
           <div className="search-nav">
             <div className="input">
-              <span class="material-symbols-rounded icon">search</span>
+              <span className="material-symbols-rounded icon">search</span>
               <input
                 type="search"
                 value={searchInput}
@@ -426,7 +426,7 @@ export default function ArchiveList({
             </div>
 
             <button type="button" onClick={toggleSearch}>
-              <span class="material-symbols-rounded">search</span>
+              <span className="material-symbols-rounded">search</span>
             </button>
           </div>
         </div>
