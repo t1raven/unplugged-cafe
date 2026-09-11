@@ -49,7 +49,7 @@ export default function MenuList({
   )
 
   const scrollToCategory = () => {
-    const element = categoryRef.current;
+    const element = document.querySelector('.category_search_nav');
 
     if (!element) return;
 

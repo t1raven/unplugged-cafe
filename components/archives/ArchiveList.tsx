@@ -181,7 +181,7 @@ export default function ArchiveList({
   )
 
   const scrollToCategory = () => {
-    const element = categoryRef.current;
+    const element = document.querySelector('.category_search_nav');
 
     if (!element) return;
 
@@ -302,7 +302,7 @@ export default function ArchiveList({
 
   const [searchActive, setSearchActive] = useState<boolean>(false);
 
-  const searchRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   const toggleSearch = () => {
     setSearchActive((prev) => {
@@ -311,12 +311,12 @@ export default function ArchiveList({
       // 활성화되는 시점(true)에 내부 input에 포커스
       if (state) {
         setTimeout(() => {
-          searchRef.current?.querySelector('input')?.focus();
-        }, 0);
+          searchRef.current?.focus();
+        }, 200);
       }else{
         setTimeout(() => {
-          searchRef.current?.querySelector('input')?.blur();
-        }, 0);
+          searchRef.current?.blur();
+        }, 200);
       }
       
       return state;
@@ -400,7 +400,7 @@ export default function ArchiveList({
   return (
     <>
 
-      <div className={`category_search_nav ${searchActive ? 'active' : ''}`} ref={searchRef}>
+      <div className={`category_search_nav ${searchActive ? 'active' : ''}`}>
         <div className="category_search_nav__inner">
           <CategoryNav
             category={categories}
@@ -413,6 +413,7 @@ export default function ArchiveList({
             <div className="input">
               <span className="material-symbols-rounded icon">search</span>
               <input
+                className="mobile:text-[16px]"
                 type="search"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
@@ -422,6 +423,7 @@ export default function ArchiveList({
                   }
                 }}
                 placeholder="아카이브 검색"
+                ref={searchRef}
               />
             </div>
 
@@ -445,6 +447,9 @@ export default function ArchiveList({
                     onClick={() => handleOpenModal(index)}
                   >
                     <div className="gallery__image">
+                      {item.label &&
+                        <div className="label">{item.label}</div>
+                      }
                       <Image
                         src={urlFor(item.imageUrl)
                           .width(600)
@@ -456,9 +461,11 @@ export default function ArchiveList({
                       />
                     </div>
 
-                    <div className="gallery__info">
-                      <h3>{item.title}</h3>
-                    </div>
+                    {item.category?._id != '3eb51abf-f89b-4350-a9fa-2f0eac2514c4' && (
+                      <div className="gallery__info">
+                        <h3>{item.title}</h3>
+                      </div>
+                    )}
                   </button>
                 ))}
               </div>

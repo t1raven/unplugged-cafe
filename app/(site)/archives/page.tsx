@@ -35,11 +35,17 @@ const listQuery = `
     _id,
     title,
     description,
+    label,
 
     "category": category->{
       _id,
       title,
       "slug": slug.current
+    },
+
+    performance-> {
+      _id,
+      slug,
     },
 
     "imageUrl": image.asset->url

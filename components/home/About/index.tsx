@@ -260,12 +260,8 @@ export default function About({ data }: Props) {
                 </li>
 
                 <li>
-                  전자드럼
-                  <span>EFnote 3B</span>
-                </li>
-
-                <li>
-                  카혼
+                  드럼
+                  <span>Pearl export 시리즈 (5기통)</span>
                 </li>
               </ul>
 
@@ -285,7 +281,7 @@ export default function About({ data }: Props) {
                 <li>
                   일렉기타 앰프 ×2
                   <span>
-                    Fender Blues Jr / VOX MV50
+                    Fender Blues Jr / VOX ac10c1
                   </span>
                 </li>
 
@@ -308,6 +304,11 @@ export default function About({ data }: Props) {
                 <li>
                   케이블
                   <span>5.5잭, XLR잭 등</span>
+                </li>
+
+                <li>
+                  마이크스탠드
+                  <span>x6</span>
                 </li>
 
                 <li>
@@ -334,16 +335,19 @@ export default function About({ data }: Props) {
 
             <ul>
               <li>
-                공연공간 여건 상 어쿠스틱기타 마이킹 불가
-              </li>
-
-              <li>
-                일렉기타 2대 사용 시, 1대는 DI를 통하여
-                콘솔 연결
+                공연공간 여건 상 어쿠스틱 기타 마이킹 불가
               </li>
 
               <li>
                 개인 앰프 지참 시, 마이킹 가능
+              </li>
+
+              <li>
+                개인 마이크 지참 시 사용가능 (5개 이상 필요 시 or 본인 장비 사용 시)
+              </li>
+
+              <li>
+                인어어팩 없음 (이어폰+팩 지참시 2개까지 사용가능)
               </li>
             </ul>
 

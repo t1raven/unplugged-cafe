@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
+import Link from 'next/link';
 
 import type { Category } from '@/types/category';
 import type { Archive } from '@/types/archive';
@@ -209,12 +210,26 @@ export default function ArchiveModal({
         </div>
 
         <div className="gallery-modal__info">
-          <h2>{item.title}</h2>
 
-          {item.description && (
-            <p>{item.description}</p>
+          {item.category?._id !== '3eb51abf-f89b-4350-a9fa-2f0eac2514c4' && (
+            <>
+              {item.performance ? (
+                <h2>
+                  <Link href={`/performances/${item.performance.slug?.current ?? ''}`}>
+                    {item.title}
+                    <i className="icon material-symbols-rounded" translate="no">arrow_forward_ios</i>
+                  </Link>
+                </h2>
+              ) : (
+                <h2>{item.title}</h2>
+              )}
+
+              {item.description && 
+                <p>{item.description}</p>
+              }
+            </>   
           )}
-
+      
           <span>
             {currentIndex + 1} / {items.length}
           </span>

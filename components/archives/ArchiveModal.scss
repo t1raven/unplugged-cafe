@@ -63,6 +63,16 @@
       margin: 0 0 8px;
       font-size: 20px;
       font-weight: 400;
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+        i {
+          font-size: 1em;
+        }
+      }
     }
 
     p {

@@ -46,6 +46,12 @@ export const galleryItem = defineType({
     }),
 
     defineField({
+      name: 'label',
+      title: '라벨',
+      type: 'string',
+    }),
+
+    defineField({
       name: 'description',
       title: '설명',
       type: 'text',

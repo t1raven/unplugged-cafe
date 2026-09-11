@@ -16,8 +16,7 @@ const equipment = [
     title: '악기',
     items: [
       '건반 (Yamaha MX88)',
-      '전자드럼 (EFnote 3B)',
-      '카혼',
+      '드럼 Pearl export 시리즈 (5기통)',
     ],
   },
   {
@@ -25,7 +24,7 @@ const equipment = [
     title: '앰프',
     items: [
       '어쿠스틱 기타는 DI 연결',
-      '일렉기타 앰프 x2 (Fender Blues Jr, VOX mv50)',
+      '일렉기타 앰프 x2 (Fender Blues Jr, VOX ac10c1)',
       '베이스 앰프 x1 (Fender Rumble 25)',
     ],
   },
@@ -34,6 +33,7 @@ const equipment = [
     title: '악세사리',
     items: [
       '케이블 (5.5잭, XLR잭 등)',
+      '마이크스탠드 x6',
       '보면대 (일반 x3, 핸드폰/태블릿 거치 x2)',
       'DI (액티브 DI)',
     ],
@@ -107,11 +107,15 @@ export default function RentalEquipment() {
           </li>
 
           <li>
-            일렉기타 2대 사용 시 1대는 DI를 통해 콘솔에 연결합니다.
+            개인 앰프 지참 시, 마이킹 가능 
           </li>
 
           <li>
-            개인 앰프를 지참할 경우 마이킹 가능합니다.
+            개인 마이크 지참 시 사용가능 (5개 이상 필요 시 or 본인 장비 사용 시)
+          </li>
+
+          <li>
+            인어어팩 없음 (이어폰+팩 지참시 2개까지 사용가능)
           </li>
         </ul>
       </div>

@@ -305,7 +305,11 @@ export default function PerformanceViewPage({
           <button type="button" onClick={handleShare} className="gnb_btn">
             <span className="material-symbols-rounded icon" aria-label="공유하기">{ios ? "ios_share" : "share"}</span>
           </button>
-          {now < salesOpen ? (
+          {!performance.reservationOpen ? (
+            <button disabled className="gnb_btn reservation_btn">
+              <span>매진되었습니다</span>
+            </button>
+          ) : now < salesOpen ? (
             <button disabled className="gnb_btn reservation_btn">
               <span>사전 예매 오픈전</span>
             </button>

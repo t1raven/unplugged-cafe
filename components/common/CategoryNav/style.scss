@@ -118,7 +118,9 @@
       background-color: #fff;
       color: var(--font-color);
 
-      outline: none;
+      &:focus {
+        outline-color: var(--primary-color);
+      }
 
       &::placeholder {
         color: var(--font-sec-color);
