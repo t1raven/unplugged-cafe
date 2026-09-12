@@ -216,7 +216,7 @@ export default function About({ data }: Props) {
           
 
         {/* Equipment */}
-        <div className="about__equipment">
+        {/*<div className="about__equipment">
 
           <div className="about__equipment-header">
 
@@ -353,7 +353,7 @@ export default function About({ data }: Props) {
 
           </div>
 
-        </div>
+        </div>*/}
 
       </div>
 
