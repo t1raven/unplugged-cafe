@@ -29,11 +29,11 @@ export default defineConfig({
       structure,
     }),
 
-    visionTool({
-      defaultApiVersion: apiVersion,
-    }),
-
     koKRLocale(),
+
+    /*visionTool({
+      defaultApiVersion: apiVersion,
+    }),*/
 
     // localhost에서만 Vision 표시
     ...(process.env.NODE_ENV === 'development'
