@@ -1,7 +1,5 @@
 import type {StructureResolver} from 'sanity/structure'
 
-import { getStudioRole } from './studioAccess'
-
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 
 import {CalendarIcon} from '@sanity/icons/Calendar'
@@ -11,18 +9,24 @@ import {BottleIcon} from '@sanity/icons/Bottle'
 import {ImageIcon} from '@sanity/icons/Image'
 import {HomeIcon} from '@sanity/icons/Home'
 import {TiersIcon} from '@sanity/icons/Tiers'
+import {UsersIcon} from '@sanity/icons/Users'
 
-// https://www.sanity.io/docs/structure-builder-cheat-sheet
-export const structure: StructureResolver = (S, context) => {
+import {getStudioRole} from './studioAccess'
 
-  const email = context.currentUser?.email
-  const role = getStudioRole(email)
+export const structure: StructureResolver = async (S, context) => {
 
-  /**
-   * ========================================
-   * 최고관리자
-   * ========================================
-   */
+  const client = context.getClient({
+    apiVersion: '2026-01-01',
+  })
+
+  const role = await getStudioRole(
+    client,
+    context.currentUser
+  )
+
+  // ===============================
+  // 최고관리자
+  // ===============================
   if (role === 'superAdmin') {
     return S.list()
       .id('root')
@@ -95,14 +99,18 @@ export const structure: StructureResolver = (S, context) => {
           S,
           context,
         }),
+
+        S.divider(),
+
+        S.documentTypeListItem('studioUser')
+          .title('관리자 계정')
+          .icon(UsersIcon),
       ])
   }
 
-  /**
-   * ========================================
-   * 공연관리자
-   * ========================================
-   */
+  // ===============================
+  // 공연관리자
+  // ===============================
   if (role === 'performanceManager') {
     return S.list()
       .id('performance-root')
@@ -122,11 +130,9 @@ export const structure: StructureResolver = (S, context) => {
       ])
   }
 
-  /**
-   * ========================================
-   * 갤러리관리자
-   * ========================================
-   */
+  // ===============================
+  // 아카이브관리자
+  // ===============================
   if (role === 'galleryManager') {
     return S.list()
       .id('gallery-root')
@@ -150,11 +156,9 @@ export const structure: StructureResolver = (S, context) => {
       ])
   }
 
-  /**
-   * ========================================
-   * 카페관리자
-   * ========================================
-   */
+  // ===============================
+  // 카페관리자
+  // ===============================
   if (role === 'cafeManager') {
     return S.list()
       .id('cafe-root')
@@ -178,20 +182,16 @@ export const structure: StructureResolver = (S, context) => {
       ])
   }
 
-  /**
-   * ========================================
-   * 굿즈관리자
-   * ========================================
-   */
+  // ===============================
+  // 굿즈관리자
+  // ===============================
   if (role === 'goodsManager') {
 
   }
 
-  /**
-   * ========================================
-   * 권한 없는 사용자
-   * ========================================
-   */
+  // ===============================
+  // 권한 없는 사용자
+  // ===============================
   return S.list()
     .id('no-access')
     .title('관리')

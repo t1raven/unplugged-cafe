@@ -1,3 +1,5 @@
+import type {CurrentUser, SanityClient} from 'sanity'
+
 export type StudioRole =
   | 'superAdmin'
   | 'performanceManager'
@@ -6,85 +8,31 @@ export type StudioRole =
   | 'goodsManager'
   | 'none'
 
-// 실제 Sanity 로그인 이메일로 변경
-const SUPER_ADMINS = [
-  'ezizflone@gmail.com',
-  'happy321tree2749@gmail.com',
-]
-
-const PERFORMANCE_MANAGERS = [
-  'ojeongmi035@gmail.com',
-]
-
-const GALLERY_MANAGERS = [
-  'gallery@example.com',
-]
-
-const CAFE_MANAGERS = [
-  'moyacci2mass@gmail.com',
-  'ezizinvent@gmail.com',
-]
-
-const GOODS_MANAGERS = [
-  'goods@example.com',
-]
-
-const normalizeEmail = (email?: string | null) =>
-  email?.trim().toLowerCase() ?? ''
-
-export function getStudioRole(
-  email?: string | null
-): StudioRole {
-  const target = normalizeEmail(email)
-
-  if (!target) return 'none'
-
-  if (
-    SUPER_ADMINS.some(
-      (email) => normalizeEmail(email) === target
-    )
-  ) {
-    return 'superAdmin'
-  }
-
-  if (
-    PERFORMANCE_MANAGERS.some(
-      (email) => normalizeEmail(email) === target
-    )
-  ) {
-    return 'performanceManager'
-  }
-
-  if (
-    GALLERY_MANAGERS.some(
-      (email) => normalizeEmail(email) === target
-    )
-  ) {
-    return 'galleryManager'
-  }
-
-  if (
-    CAFE_MANAGERS.some(
-      (email) => normalizeEmail(email) === target
-    )
-  ) {
-    return 'cafeManager'
-  }
-
-  if (
-    GOODS_MANAGERS.some(
-      (email) => normalizeEmail(email) === target
-    )
-  ) {
-    return 'goodsManager'
-  }
-
-  return 'none'
+export type StudioUser = {
+  _id: string
+  name?: string
+  email?: string
+  role: StudioRole
+  enabled?: boolean
 }
 
+/**
+ * 최초 최고관리자.
+ *
+ * studioUser 데이터가 잘못되거나 모두 삭제되어도
+ * Studio 관리가 가능하도록 1명만 코드에 남겨둡니다.
+ *
+ * 실제 Sanity 로그인 이메일로 변경하세요.
+ */
+const ROOT_ADMIN_EMAIL =
+  process.env.NEXT_PUBLIC_SANITY_ROOT_ADMIN_EMAIL ?? ''
+
+/**
+ * Role별 접근 가능한 document type
+ */
 export const ROLE_DOCUMENT_TYPES: Record<
   Exclude<StudioRole, 'none'>,
-  string[]
+  readonly string[]
 > = {
   superAdmin: [
     'home',
@@ -98,6 +46,8 @@ export const ROLE_DOCUMENT_TYPES: Record<
 
     'galleryCategory',
     'galleryItem',
+
+    'studioUser',
   ],
 
   performanceManager: [
@@ -106,14 +56,14 @@ export const ROLE_DOCUMENT_TYPES: Record<
     'artist',
   ],
 
-  galleryManager: [
-    'galleryCategory',
-    'galleryItem',
-  ],
-
   cafeManager: [
     'menuCategory',
     'menuItem',
+  ],
+
+  galleryManager: [
+    'galleryCategory',
+    'galleryItem',
   ],
 
   goodsManager: [
@@ -122,11 +72,106 @@ export const ROLE_DOCUMENT_TYPES: Record<
   ],
 }
 
-export function getAllowedDocumentTypes(
+/**
+ * 이메일 정규화
+ */
+export function normalizeEmail(
   email?: string | null
-) {
-  const role = getStudioRole(email)
+): string {
+  return email?.trim().toLowerCase() ?? ''
+}
 
+/**
+ * Root Admin 여부
+ */
+export function isRootAdmin(
+  email?: string | null
+): boolean {
+  const currentEmail = normalizeEmail(email)
+  const rootEmail = normalizeEmail(ROOT_ADMIN_EMAIL)
+
+  if (!currentEmail || !rootEmail) {
+    return false
+  }
+
+  return currentEmail === rootEmail
+}
+
+/**
+ * 현재 로그인 사용자에 해당하는
+ * studioUser document 조회
+ */
+export async function getStudioUser(
+  client: SanityClient,
+  currentUser?: CurrentUser | null
+): Promise<StudioUser | null> {
+  const email = normalizeEmail(
+    currentUser?.email
+  )
+
+  if (!email) {
+    return null
+  }
+
+  return client.fetch<StudioUser | null>(
+    `
+      *[
+        _type == "studioUser"
+        && lower(email) == $email
+        && enabled == true
+      ][0] {
+        _id,
+        name,
+        email,
+        role,
+        enabled
+      }
+    `,
+    {
+      email,
+    }
+  )
+}
+
+/**
+ * 현재 로그인 사용자의 Studio Role 반환
+ *
+ * 우선순위
+ *
+ * 1. Root Admin
+ * 2. studioUser 문서
+ * 3. none
+ */
+export async function getStudioRole(
+  client: SanityClient,
+  currentUser?: CurrentUser | null
+): Promise<StudioRole> {
+  const email = currentUser?.email
+
+  // Root Admin은 studioUser 데이터와 관계없이
+  // 항상 최고관리자
+  if (isRootAdmin(email)) {
+    return 'superAdmin'
+  }
+
+  const studioUser = await getStudioUser(
+    client,
+    currentUser
+  )
+
+  if (!studioUser?.role) {
+    return 'none'
+  }
+
+  return studioUser.role
+}
+
+/**
+ * Role별 접근 가능한 document type 목록
+ */
+export function getAllowedDocumentTypes(
+  role: StudioRole
+): readonly string[] {
   if (role === 'none') {
     return []
   }
@@ -134,9 +179,71 @@ export function getAllowedDocumentTypes(
   return ROLE_DOCUMENT_TYPES[role]
 }
 
+/**
+ * 특정 document type 접근 가능 여부
+ */
 export function canAccessDocument(
-  email: string | null | undefined,
+  role: StudioRole,
   schemaType: string
-) {
-  return getAllowedDocumentTypes(email).includes(schemaType)
+): boolean {
+  if (role === 'none') {
+    return false
+  }
+
+  return ROLE_DOCUMENT_TYPES[role].includes(
+    schemaType
+  )
+}
+
+/**
+ * 최고관리자 여부
+ */
+export function isSuperAdmin(
+  role: StudioRole
+): boolean {
+  return role === 'superAdmin'
+}
+
+/**
+ * 공연관리 권한 여부
+ */
+export function canManagePerformance(
+  role: StudioRole
+): boolean {
+  return (
+    role === 'superAdmin' ||
+    role === 'performanceManager'
+  )
+}
+
+/**
+ * 카페 메뉴 관리 권한
+ */
+export function canManageCafe(
+  role: StudioRole
+): boolean {
+  return role === 'superAdmin'
+  return role === 'cafeManager'
+}
+
+/**
+ * 아카이브 관리 권한 여부
+ */
+export function canManageGallery(
+  role: StudioRole
+): boolean {
+  return (
+    role === 'superAdmin' ||
+    role === 'galleryManager'
+  )
+}
+
+/**
+ * 굿즈 관리 권한
+ */
+export function canManageGoods(
+  role: StudioRole
+): boolean {
+  return role === 'superAdmin'
+  return role === 'goodsManager'
 }

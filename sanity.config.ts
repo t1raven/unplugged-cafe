@@ -5,8 +5,6 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {structure} from './sanity/structure'
 
-import {getStudioRole, getAllowedDocumentTypes, canAccessDocument} from './sanity/studioAccess'
-
 import {apiVersion, dataset, projectId} from './sanity/env'
 import {schemaTypes} from './sanity/schemaTypes'
 
@@ -46,26 +44,18 @@ export default defineConfig({
   },
 
   document: {
-    /**
-     * 상단 Create 메뉴 권한
-     */
+
     newDocumentOptions: (
       prev,
-      {currentUser}
+      {creationContext}
     ) => {
-      const email = currentUser?.email
-      const role = getStudioRole(email)
-
-      if (role === 'superAdmin') {
-        return prev
+      if (
+        creationContext.type === 'global'
+      ) {
+        return []
       }
 
-      const allowedTypes =
-        getAllowedDocumentTypes(email)
-
-      return prev.filter(({templateId}) =>
-        allowedTypes.includes(templateId)
-      )
+      return prev
     },
     
     actions: (previousActions, context) => {
