@@ -158,7 +158,7 @@ export const structure: StructureResolver = (S, context) => {
   if (role === 'cafeManager') {
     return S.list()
       .id('cafe-root')
-      .title('아카이브 관리')
+      .title('카페 관리')
       .items([
         orderableDocumentListDeskItem({
           type: 'menuCategory',

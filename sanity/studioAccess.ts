@@ -10,7 +10,6 @@ export type StudioRole =
 const SUPER_ADMINS = [
   'ezizflone@gmail.com',
   'happy321tree2749@gmail.com',
-  'moyacci2mass@gmail.com',
 ]
 
 const PERFORMANCE_MANAGERS = [
@@ -23,6 +22,7 @@ const GALLERY_MANAGERS = [
 
 const CAFE_MANAGERS = [
   'moyacci2mass@gmail.com',
+  'ezizinvent@gmail.com',
 ]
 
 const GOODS_MANAGERS = [
@@ -116,7 +116,7 @@ export const ROLE_DOCUMENT_TYPES: Record<
     'menuItem',
   ],
 
-  cafeManager: [
+  goodsManager: [
     'goodsCategory',
     'goodsItem',
   ],
