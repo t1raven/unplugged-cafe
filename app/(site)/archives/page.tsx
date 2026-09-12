@@ -9,7 +9,7 @@ import type { Category } from '@/types/category'
 import type { Archive } from '@/types/archive'
 
 export const metadata: Metadata = {
-  title: '기록 | UNPLUGGED LOUNGE',
+  title: '아카이브 | UNPLUGGED LOUNGE',
 };
 
 const categoryQuery = `
