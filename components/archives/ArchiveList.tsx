@@ -337,19 +337,29 @@ export default function ArchiveList({
       }
     };
 
+    const handlefocusout = (event: FocusEvent) => {
+      if (!event.target || !(event.target instanceof HTMLElement)) return;
+      if (event.target.tagName === 'INPUT') {
+        setSearchActive(false);
+      }
+    };
+
     const handleScroll = () => {
       setSearchActive(false);
     };
 
+
     if(searchActive) {
       document.addEventListener('mousedown', handleOutsideClick);
       document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('focusout', handlefocusout);
       //window.addEventListener('scroll', handleScroll, { passive: true });
     }
     
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
       document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('focusout', handlefocusout);
       //window.removeEventListener('scroll', handleScroll);
     };
   }, [searchActive]);
@@ -413,7 +423,7 @@ export default function ArchiveList({
             <div className="input">
               <span className="material-symbols-rounded icon">search</span>
               <input
-                className="mobile:text-[16px]"
+                className="mobile:text-[13px]"
                 type="search"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}

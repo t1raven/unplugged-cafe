@@ -128,7 +128,7 @@ export default function About({ data }: Props) {
       /*
        * Equipment
        */
-      gsap.from('.about__equipment', {
+      /*gsap.from('.about__equipment', {
         opacity: 0,
         y: 60,
         duration: 1,
@@ -140,7 +140,7 @@ export default function About({ data }: Props) {
           start: 'top 80%',
           once: true,
         },
-      });
+      });*/
 
     }, rootRef);
 
