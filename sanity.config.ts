@@ -29,10 +29,6 @@ export default defineConfig({
 
     koKRLocale(),
 
-    /*visionTool({
-      defaultApiVersion: apiVersion,
-    }),*/
-
     // localhost에서만 Vision 표시
     ...(process.env.NODE_ENV === 'development'
       ? [visionTool()]
@@ -45,17 +41,9 @@ export default defineConfig({
 
   document: {
 
-    newDocumentOptions: (
-      prev,
-      {creationContext}
-    ) => {
-      if (
-        creationContext.type === 'global'
-      ) {
-        return []
-      }
-
-      return prev
+    newDocumentOptions: (prev, context) => {
+      // 빈 배열을 반환하면 상단 내비게이션 바에서 (+) 추가 버튼이 자동으로 사라집니다.
+      return []
     },
     
     actions: (previousActions, context) => {

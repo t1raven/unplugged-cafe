@@ -141,7 +141,7 @@ export default function Header() {
   return (
     <header id="site-header">
       <div className="inner">
-        {isSlugPage && (
+        {(isSlugPage || pathname.startsWith('/goods')) && (
           <div className="gnb-btn btn-back">
             <button type="button" onClick={() => router.back()}>
               <span className="material-symbols-rounded">arrow_back_ios</span>

@@ -10,6 +10,8 @@ import {ImageIcon} from '@sanity/icons/Image'
 import {HomeIcon} from '@sanity/icons/Home'
 import {TiersIcon} from '@sanity/icons/Tiers'
 import {UsersIcon} from '@sanity/icons/Users'
+import {PackageIcon} from '@sanity/icons/Package'
+import {BillIcon} from '@sanity/icons/Bill'
 
 import {getStudioRole} from './studioAccess'
 
@@ -102,6 +104,31 @@ export const structure: StructureResolver = async (S, context) => {
 
         S.divider(),
 
+        // Goods Category
+        orderableDocumentListDeskItem({
+          type: 'goodsCategory',
+          title: '굿즈 카테고리',
+          icon: TiersIcon,
+          S,
+          context,
+        }),
+
+        // Goods Item
+        orderableDocumentListDeskItem({
+          type: 'goodsItem',
+          title: '굿즈 아이템',
+          icon: PackageIcon,
+          S,
+          context,
+        }),
+
+        // Goods Order
+        S.documentTypeListItem('purchaseOrder')
+          .title('굿즈 구매내역')
+          .icon(BillIcon),
+
+        S.divider(),
+
         S.documentTypeListItem('studioUser')
           .title('관리자 계정')
           .icon(UsersIcon),
@@ -186,7 +213,30 @@ export const structure: StructureResolver = async (S, context) => {
   // 굿즈관리자
   // ===============================
   if (role === 'goodsManager') {
+    return S.list()
+      .id('goods-root')
+      .title('굿즈 관리')
+      .items([
+        orderableDocumentListDeskItem({
+          type: 'goodsCategory',
+          title: '굿즈 카테고리',
+          icon: TiersIcon,
+          S,
+          context,
+        }),
 
+        orderableDocumentListDeskItem({
+          type: 'goodsItem',
+          title: '굿즈 아이템',
+          icon: ImageIcon,
+          S,
+          context,
+        }),
+
+        S.documentTypeListItem('purchaseOrder')
+          .title('굿즈 구매내역')
+          .icon(BillIcon),
+      ])
   }
 
   // ===============================

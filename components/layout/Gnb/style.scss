@@ -9,6 +9,11 @@
  	justify-content: center;
  	height: var(--header-height);
  	transition: top 0.25s ease;
+
+ 	&.hide {
+ 		display: none;
+ 	}
+
   > nav {
   	display: inline-flex;
     align-items: center;

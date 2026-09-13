@@ -19,6 +19,7 @@ export default function Gnb() {
   const lastWidth = useRef(0);
 
   const [device, setDevice] = useState<DeviceType>("desktop");
+  const [hide, setHide] = useState(false);
 
   const moveBackground = (animate = true) => {
     if (!gnbRef.current || !moveBgRef.current) return;
@@ -27,39 +28,33 @@ export default function Gnb() {
       'li.active'
     ) as HTMLElement | null;
 
-    //if (!activeMenu) return;
+    if (!activeMenu) return;
 
-    let x = 0;
-    let width = 0;
+    const html = document.documentElement;
+    let scale = html.classList.contains('scrollDown') ? 0.9 : 1;
+    if(device === "desktop") scale = 1;
 
-    if(!activeMenu) animate = false;
+    const navRect = gnbRef.current.getBoundingClientRect();
+    const menuRect = activeMenu.getBoundingClientRect();
 
-    if(activeMenu != null) {
-      const html = document.documentElement;
-      let scale = html.classList.contains('scrollDown') ? 0.9 : 1;
+    const x = (menuRect.left - navRect.left) / scale;
+    const width = menuRect.width / scale;
 
-      if(device === "desktop") scale = 1;
-
-      const navRect = gnbRef.current.getBoundingClientRect();
-      const menuRect = activeMenu.getBoundingClientRect();
-
-      x = (menuRect.left - navRect.left) / scale;
-      width = menuRect.width / scale;
-    }
-      
-    if (animate) { 
-      gsap.to(moveBgRef.current, { 
-        x,
-        width, 
-        duration: 0.35, 
-        ease: 'power3.out', 
-      }); 
-    } else { 
+    if (!animate) {
       gsap.set(moveBgRef.current, { 
+        scale: 0,
         x,
         width, 
       }); 
-    }
+    } 
+
+    gsap.to(moveBgRef.current, { 
+      x,
+      scale: 1,
+      width, 
+      duration: 0.35, 
+      ease: 'power3.out', 
+    }); 
 
   };
 
@@ -105,7 +100,9 @@ export default function Gnb() {
     setDevice(getDeviceType());
     requestAnimationFrame(() => {
       moveBackground(true);
-      setTimeout(() => { moveBackground(true); }, 400);
+      setTimeout(() => {
+        moveBackground(true); 
+      }, 350);
     });
   }, [pathname]);
 
@@ -116,20 +113,18 @@ export default function Gnb() {
   }, []);*/
 
   return (
-    (!params.slug || device == "desktop") && (
-      <div id="site-gnb">
-        <nav ref={gnbRef}>
-          <ul>
-            {/*<li className={pathname === '/' ? "active" : ""}><Link href="/" title="홈"><span className="icon material-symbols-rounded" translate="no">home</span><span className="text">홈</span></Link></li>*/}
-            <li className={pathname.startsWith('/cafe') ? "active" : ""}><Link href="/cafe" title="카페"><span className="icon material-symbols-rounded" translate="no">local_cafe</span><span className="text">카페</span></Link></li>
-            <li className={pathname.startsWith('/performances') ? "active" : ""}><Link href="/performances" title="공연예매"><span className="icon material-symbols-rounded" translate="no">confirmation_number</span><span className="text">공연예매</span></Link></li>
-            <li className={pathname.startsWith('/rental') ? "active" : ""}><Link href="/rental" title="대관신청"><span className="icon material-symbols-rounded" translate="no">developer_guide</span><span className="text">대관신청</span></Link></li>
-            <li className={pathname.startsWith('/goods') ? "active" : ""}><Link href="/goods" title="앨범 · 굿즈"><span className="icon material-symbols-rounded" translate="no">local_mall</span><span className="text">앨범·굿즈</span></Link></li>
-            <li className={pathname.startsWith('/archives') ? "active" : ""}><Link href="/archives" title="아카이브"><span className="icon material-symbols-rounded" translate="no">photo</span><span className="text">아카이브</span></Link></li>
-          </ul>
-          <div className="move-bg" ref={moveBgRef}></div>
-        </nav>
-      </div>
-    )
+    <div id="site-gnb" className={device !== "desktop" && (!!params.slug || pathname.startsWith('/goods')) ? 'hide' : ''}>
+      <nav ref={gnbRef}>
+        <ul>
+          <li className={pathname === '/' ? "active" : ""}><Link href="/" title="홈"><span className="icon material-symbols-rounded" translate="no">home</span><span className="text">홈</span></Link></li>
+          <li className={pathname.startsWith('/cafe') ? "active" : ""}><Link href="/cafe" title="카페"><span className="icon material-symbols-rounded" translate="no">local_cafe</span><span className="text">카페</span></Link></li>
+          <li className={pathname.startsWith('/performances') ? "active" : ""}><Link href="/performances" title="공연예매"><span className="icon material-symbols-rounded" translate="no">confirmation_number</span><span className="text">공연예매</span></Link></li>
+          <li className={pathname.startsWith('/rental') ? "active" : ""}><Link href="/rental" title="대관신청"><span className="icon material-symbols-rounded" translate="no">developer_guide</span><span className="text">대관신청</span></Link></li>
+          <li className={pathname.startsWith('/goods') ? "active" : ""}><Link href="/goods" title="앨범 · 굿즈"><span className="icon material-symbols-rounded" translate="no">local_mall</span><span className="text">앨범·굿즈</span></Link></li>
+          <li className={pathname.startsWith('/archives') ? "active" : ""}><Link href="/archives" title="아카이브"><span className="icon material-symbols-rounded" translate="no">photo</span><span className="text">아카이브</span></Link></li>
+        </ul>
+        <div className="move-bg" ref={moveBgRef}></div>
+      </nav>
+    </div>
   );
 }

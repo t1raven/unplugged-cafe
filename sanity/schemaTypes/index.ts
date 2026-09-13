@@ -12,6 +12,9 @@ import {menuCategory} from './menuCategory'
 import {menuItem} from './menuItem'
 import {galleryCategory} from './galleryCategory'
 import {galleryItem} from './galleryItem'
+import {goodsCategory} from './goodsCategory'
+import {goodsItem} from './goodsItem'
+import {purchaseOrder} from './purchaseOrder'
 import {studioUser} from './studioUser'
 
 export const schemaTypes = [
@@ -23,5 +26,8 @@ export const schemaTypes = [
   menuItem,
   galleryCategory,
   galleryItem,
+  goodsCategory,
+  goodsItem,
+  purchaseOrder,
   studioUser,
 ]

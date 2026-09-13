@@ -1,7 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 
-
 export const menuItem = defineType({
   name: 'menuItem',
   title: '카페 메뉴',
