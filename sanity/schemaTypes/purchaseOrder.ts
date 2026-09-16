@@ -23,6 +23,30 @@ export const purchaseOrder = defineType({
     }),
 
     defineField({
+      name: 'deliveryMethod',
+      title: '배송방법',
+      type: 'string',
+
+      options: {
+        list: [
+          {
+            title: '배송',
+            value: 'delivery',
+          },
+          {
+            title: '픽업',
+            value: 'pickup',
+          },
+        ],
+
+        layout: 'radio',
+      },
+
+      validation: (Rule) =>
+        Rule.required(),
+    }),
+
+    defineField({
       name: 'customer',
       title: '구매자 정보',
       type: 'object',
@@ -43,9 +67,29 @@ export const purchaseOrder = defineType({
         },
 
         {
-          name: 'email',
-          title: '이메일',
-          type: 'string',
+          name: 'address',
+          title: '배송지',
+          type: 'object',
+
+          fields: [
+            {
+              name: 'postcode',
+              title: '우편번호',
+              type: 'string',
+            },
+
+            {
+              name: 'address',
+              title: '주소',
+              type: 'string',
+            },
+
+            {
+              name: 'detailAddress',
+              title: '상세주소',
+              type: 'string',
+            },
+          ],
         },
       ],
     }),
@@ -195,6 +239,20 @@ export const purchaseOrder = defineType({
       title: '요청사항',
       type: 'text',
       rows: 3,
+    }),
+
+    defineField({
+      name: 'privacyAgreed',
+      title: '개인정보 수집·이용 동의',
+      type: 'boolean',
+      readOnly: true,
+    }),
+
+    defineField({
+      name: 'privacyAgreedAt',
+      title: '개인정보 동의 일시',
+      type: 'datetime',
+      readOnly: true,
     }),
 
     defineField({

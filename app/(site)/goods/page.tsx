@@ -9,7 +9,7 @@ import type { Category } from '@/types/category'
 import type { Goods  } from '@/types/goods'
 
 export const metadata: Metadata = {
-  title: "앨범·굿즈 | UNPLUGGED LOUNGE",
+  title: "굿즈·앨범 | UNPLUGGED LOUNGE",
 };
 
 const categoryQuery = `
@@ -30,8 +30,7 @@ const listQuery = `
     && category->slug.current == $category
     && isAvailable == true
   ]
-  | order(orderRank) 
-  [0...12] {
+  | order(orderRank) {
     _id,
     name,
     "slug": slug.current,
@@ -78,7 +77,7 @@ export default async function goodsPage() {
 
   return (
     <main id="site-body" className="goods-page">
-      <SubPageHero label="ALBUM·GOODS" title="앨범·굿즈" description="언플러그드 라운지에서 판매되는 <br/>뮤지션 앨범과 다양한 굿즈를 만나보세요." />
+      <SubPageHero label="ALBUM·GOODS" title="굿즈·앨범" description="언플러그드 라운지에서 판매되는 <br/>다양한 라운지 상품과 아티스트 상품을 만나보세요." />
       <GoodsList categories={categories} items={items} />
     </main>
   )

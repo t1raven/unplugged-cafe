@@ -29,7 +29,7 @@ export const goodsItem = defineType({
       title: 'Slug',
       type: 'slug',
       options: {
-        source: 'title',
+        source: 'name',
         maxLength: 96,
         slugify: (input) =>
           input

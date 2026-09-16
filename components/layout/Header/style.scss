@@ -103,10 +103,11 @@
 		display: flex;
 		position: relative;
 
-		.subMenu {
+		.sns-list {
 			position: absolute;
 			top: 0;
 			right: 0;
+			z-index: 1;
 			background-color: rgba(238, 238, 238, .8);
 	    backdrop-filter: blur(5px) brightness(1.1);
 	    box-shadow: 0 0 0 1px var(--border-color);
@@ -164,7 +165,7 @@
 				opacity: 0;
 			}
 
-			.subMenu {
+			.sns-list {
 				opacity: 1;
 				transform: scale(1) translateX(0%) translateY(0%);
 				pointer-events: auto;

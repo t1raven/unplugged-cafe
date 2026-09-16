@@ -419,7 +419,7 @@ export default function ArchiveList({
                     handleSearch();
                   }
                 }}
-                placeholder="아카이브 검색"
+                placeholder="공연명, 아티스트 검색"
                 ref={searchRef}
               />
             </div>

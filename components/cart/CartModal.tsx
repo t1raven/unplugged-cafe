@@ -3,13 +3,23 @@
 import {
   useEffect,
   useMemo,
+  useState,
 } from 'react';
 
 import Image from 'next/image';
 
 import { useCartStore } from '@/store/cartStore';
 
+import CartView from './CartView';
+import OrderView from './OrderView';
+import CompleteView from './CompleteView';
+
 import './CartModal.scss';
+
+type CartStep =
+  | 'cart'
+  | 'order'
+  | 'complete';
 
 export default function CartModal() {
   const {
@@ -22,17 +32,28 @@ export default function CartModal() {
     clearCart,
   } = useCartStore();
 
+  const [step, setStep] =
+    useState<CartStep>('cart');
+
+  const [orderNumber, setOrderNumber] =
+    useState<string | null>(null);
+
   const totalPrice = useMemo(() => {
     return items.reduce(
       (total, item) =>
         total +
-        item.price * item.quantity,
+        item.price *
+          item.quantity,
       0
     );
   }, [items]);
 
   useEffect(() => {
     if (!isCartOpen) return;
+
+    // 모달을 새로 열면 장바구니 화면부터
+    setStep('cart');
+    setOrderNumber(null);
 
     const previousOverflow =
       document.body.style.overflow;
@@ -71,188 +92,72 @@ export default function CartModal() {
     return null;
   }
 
+  const handleComplete = (
+    orderNumber: string
+  ) => {
+    setOrderNumber(orderNumber);
+
+    clearCart();
+
+    setStep('complete');
+  };
+
   return (
     <div
       className="cart-modal"
       role="dialog"
       aria-modal="true"
-      aria-labelledby="cart-modal-title"
     >
       <button
         type="button"
         className="cart-backdrop"
         onClick={closeCart}
-        aria-label="장바구니 닫기"
+        aria-label="닫기"
       />
 
       <div className="cart-panel">
-        <div className="cart-header">
-          <h2 id="cart-modal-title">
-            장바구니
-          </h2>
 
-          <button
-            type="button"
-            className="cart-close"
-            onClick={closeCart}
-            aria-label="장바구니 닫기"
-          >
-            <span className="material-symbols-rounded">
-              close
-            </span>
-          </button>
-        </div>
-
-        {items.length === 0 ? (
-          <div className="cart-empty">
-            장바구니가 비어 있습니다.
-          </div>
-        ) : (
-          <>
-            <div className="cart-list">
-              {items.map((item) => (
-                <article
-                  key={item.cartId}
-                  className="cart-item"
-                >
-                  {item.image && (
-                    <div className="cart-image">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        sizes="96px"
-                      />
-                    </div>
-                  )}
-
-                  <div className="cart-info">
-                    <div className="cart-item-head">
-                      <div>
-                        <h3>
-                          {item.name}
-                        </h3>
-
-                        {item.options.length >
-                          0 && (
-                          <div className="cart-options">
-                            {item.options.map(
-                              (option) => (
-                                <span
-                                  key={`${option.name}-${option.value}`}
-                                >
-                                  {
-                                    option.name
-                                  }
-                                  :{' '}
-                                  {
-                                    option.value
-                                  }
-                                </span>
-                              )
-                            )}
-                          </div>
-                        )}
-                      </div>
-
-                      <button
-                        type="button"
-                        className="cart-remove"
-                        onClick={() =>
-                          removeItem(
-                            item.cartId
-                          )
-                        }
-                        aria-label={`${item.name} 삭제`}
-                      >
-                        <span className="material-symbols-rounded">
-                          delete
-                        </span>
-                      </button>
-                    </div>
-
-                    <div className="cart-item-bottom">
-                      <div className="cart-quantity">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            decreaseQuantity(
-                              item.cartId
-                            )
-                          }
-                          disabled={
-                            item.quantity <= 1
-                          }
-                          aria-label="수량 감소"
-                        >
-                          −
-                        </button>
-
-                        <span>
-                          {item.quantity}
-                        </span>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            increaseQuantity(
-                              item.cartId
-                            )
-                          }
-                          disabled={
-                            item.quantity >=
-                            item.stock
-                          }
-                          aria-label="수량 증가"
-                        >
-                          +
-                        </button>
-                      </div>
-
-                      <strong>
-                        {(
-                          item.price *
-                          item.quantity
-                        ).toLocaleString()}
-                        원
-                      </strong>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <div className="cart-footer">
-              <div className="cart-summary">
-                <span>
-                  총 상품금액
-                </span>
-
-                <strong>
-                  {totalPrice.toLocaleString()}
-                  원
-                </strong>
-              </div>
-
-              <div className="cart-actions">
-                <button
-                  type="button"
-                  className="cart-clear"
-                  onClick={clearCart}
-                >
-                  전체 삭제
-                </button>
-
-                <button
-                  type="button"
-                  className="cart-order"
-                >
-                  구매 신청
-                </button>
-              </div>
-            </div>
-          </>
+        {step === 'cart' && (
+          <CartView
+            items={items}
+            totalPrice={totalPrice}
+            removeItem={removeItem}
+            increaseQuantity={
+              increaseQuantity
+            }
+            decreaseQuantity={
+              decreaseQuantity
+            }
+            clearCart={clearCart}
+            closeCart={closeCart}
+            onOrder={() =>
+              setStep('order')
+            }
+          />
         )}
+
+        {step === 'order' && (
+          <OrderView
+            items={items}
+            totalPrice={totalPrice}
+            onBack={() =>
+              setStep('cart')
+            }
+            onComplete={
+              handleComplete
+            }
+          />
+        )}
+
+        {step === 'complete' && (
+          <CompleteView
+            orderNumber={
+              orderNumber
+            }
+            onClose={closeCart}
+          />
+        )}
+
       </div>
     </div>
   );
