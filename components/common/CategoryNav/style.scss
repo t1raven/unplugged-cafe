@@ -115,14 +115,18 @@
       border-radius: 10em;
       padding-left: 45px;
       padding-right: 20px;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--primary-color);
       background-color: #fff;
 
-      font-size: 1em;
+      font-size: 16px;
       color: var(--font-color);
 
-      &:focus {
-        outline-color: var(--primary-color);
+      -webkit-appearance: none;
+      appearance: none;
+
+      &:focus,
+      &:focus-visible {
+        outline: 2px solid var(--primary-color);
       }
 
       &::placeholder {

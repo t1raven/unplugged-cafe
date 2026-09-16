@@ -304,19 +304,15 @@ export default function ArchiveList({
 
   const searchRef = useRef<HTMLInputElement>(null);
 
-  const toggleSearch = () => {
+  const toggleSearch = async() => {
     setSearchActive((prev) => {
       const state = !prev;
       
       // 활성화되는 시점(true)에 내부 input에 포커스
       if (state) {
-        setTimeout(() => {
-          searchRef.current?.focus();
-        }, 200);
+        searchRef.current?.focus();
       }else{
-        setTimeout(() => {
-          searchRef.current?.blur();
-        }, 200);
+        searchRef.current?.blur();
       }
       
       return state;
@@ -344,23 +340,16 @@ export default function ArchiveList({
       }
     };
 
-    const handleScroll = () => {
-      setSearchActive(false);
-    };
-
-
     if(searchActive) {
       document.addEventListener('mousedown', handleOutsideClick);
       document.addEventListener('keydown', handleKeyDown);
       document.addEventListener('focusout', handlefocusout);
-      //window.addEventListener('scroll', handleScroll, { passive: true });
     }
     
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('focusout', handlefocusout);
-      //window.removeEventListener('scroll', handleScroll);
     };
   }, [searchActive]);
 
@@ -422,9 +411,7 @@ export default function ArchiveList({
           <div className="search-nav">
             <div className="input">
               <span className="material-symbols-rounded icon">search</span>
-              <input
-                className="mobile:text-[13px]"
-                type="search"
+              <input type="search"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyDown={(e) => {
