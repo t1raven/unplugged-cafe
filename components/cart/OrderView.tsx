@@ -306,6 +306,62 @@ export default function OrderView({
             </div>
           </section>
 
+          {/* 주문내역 */}
+          <section className="order-section order-products">
+
+            <h3>
+              주문 내역
+            </h3>
+
+            {items.map((item) => (
+              <div
+                key={item.cartId}
+                className="order-product"
+              >
+                <div className="order-product-info">
+
+                  <strong>
+                    {item.name}
+                  </strong>
+
+                  {!!item.options
+                    .length && (
+                    <small>
+                      {item.options
+                        .map(
+                          (
+                            option
+                          ) =>
+                            `${option.name}: ${option.value}`
+                        )
+                        .join(
+                          ' / '
+                        )}
+                    </small>
+                  )}
+
+                  <span>
+                    수량{' '}
+                    {
+                      item.quantity
+                    }
+                  </span>
+
+                </div>
+
+                <strong>
+                  {(
+                    item.price *
+                    item.quantity
+                  ).toLocaleString()}
+                  원
+                </strong>
+
+              </div>
+            ))}
+
+          </section>
+
           {/* 구매자 정보 */}
           <section className="order-section">
 
@@ -501,62 +557,6 @@ export default function OrderView({
                 정책에 따른 보관 기간
               </p>
             </div>
-
-          </section>
-
-          {/* 주문내역 */}
-          <section className="order-section order-products">
-
-            <h3>
-              주문 내역
-            </h3>
-
-            {items.map((item) => (
-              <div
-                key={item.cartId}
-                className="order-product"
-              >
-                <div className="order-product-info">
-
-                  <strong>
-                    {item.name}
-                  </strong>
-
-                  {!!item.options
-                    .length && (
-                    <small>
-                      {item.options
-                        .map(
-                          (
-                            option
-                          ) =>
-                            `${option.name}: ${option.value}`
-                        )
-                        .join(
-                          ' / '
-                        )}
-                    </small>
-                  )}
-
-                  <span>
-                    수량{' '}
-                    {
-                      item.quantity
-                    }
-                  </span>
-
-                </div>
-
-                <strong>
-                  {(
-                    item.price *
-                    item.quantity
-                  ).toLocaleString()}
-                  원
-                </strong>
-
-              </div>
-            ))}
 
           </section>
 

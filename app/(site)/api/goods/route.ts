@@ -11,16 +11,17 @@ export async function GET(request: NextRequest) {
 
   const listQuery = `
     *[
-      _type == "menuItem"
+      _type == "goodsItem"
       ${category ? `&& category->slug.current == $category` : ''}
       && isAvailable == true
     ]
-    | order(orderRank)
-    [$start...$end] {
+    | order(orderRank) {
       _id,
       name,
+      "slug": slug.current,
       description,
       price,
+      discountPrice,
 
       "category": category->{
         _id,
@@ -28,7 +29,17 @@ export async function GET(request: NextRequest) {
         "slug": slug.current
       },
 
-      "imageUrl": image.asset->url
+      "image": image.asset->url,
+
+      options[]{
+        name,
+        values
+      },
+
+      stock,
+      newItem,
+      bestItem,
+      soldOut
     }
   `;
 

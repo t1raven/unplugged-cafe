@@ -1,7 +1,5 @@
 import type {StructureResolver} from 'sanity/structure'
-
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
-
 import {CalendarIcon} from '@sanity/icons/Calendar'
 import {MarkerIcon} from '@sanity/icons/Marker'
 import {StarIcon} from '@sanity/icons/Star'
@@ -12,19 +10,13 @@ import {TiersIcon} from '@sanity/icons/Tiers'
 import {UsersIcon} from '@sanity/icons/Users'
 import {PackageIcon} from '@sanity/icons/Package'
 import {BillIcon} from '@sanity/icons/Bill'
-
 import {getStudioRole} from './studioAccess'
 
+const API_VERSION = '2026-01-01'
+
 export const structure: StructureResolver = async (S, context) => {
-
-  const client = context.getClient({
-    apiVersion: '2026-01-01',
-  })
-
-  const role = await getStudioRole(
-    client,
-    context.currentUser
-  )
+  const client = context.getClient({ apiVersion: API_VERSION })
+  const role = await getStudioRole(client, context.currentUser)
 
   // ===============================
   // 최고관리자
@@ -44,24 +36,20 @@ export const structure: StructureResolver = async (S, context) => {
               .schemaType('home')
               .documentId('home')
           ),
-
         S.divider(),
 
         // Performance
         S.documentTypeListItem('performance')
           .title('공연 일정')
           .icon(CalendarIcon),
-
         // Place
         S.documentTypeListItem('place')
           .title('공연 장소')
           .icon(MarkerIcon),
-
         // Artist
         S.documentTypeListItem('artist')
           .title('아티스트')
           .icon(StarIcon),
-
         S.divider(),
 
         // Cafe Category
@@ -72,7 +60,6 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
-
         // Cafe Menu
         orderableDocumentListDeskItem({
           type: 'menuItem',
@@ -81,7 +68,6 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
-
         S.divider(),
 
         // Gallery Category
@@ -92,7 +78,6 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
-
         // Gallery Item
         orderableDocumentListDeskItem({
           type: 'galleryItem',
@@ -101,7 +86,6 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
-
         S.divider(),
 
         // Goods Category
@@ -112,7 +96,6 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
-
         // Goods Item
         orderableDocumentListDeskItem({
           type: 'goodsItem',
@@ -121,12 +104,59 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
-
+        
         // Goods Order
-        S.documentTypeListItem('purchaseOrder')
-          .title('굿즈 구매내역')
-          .icon(BillIcon),
+        S.listItem()
+          .id('purchase-management') // 고유 ID 추가
+          .title('굿즈 주문내역')
+          .icon(BillIcon)
+          .child(
+            S.list()
+              .id('purchase-management-list') // 고유 ID 추가
+              .title('굿즈 주문내역')
+              .items([
+                createOrderList(
+                  S, 
+                  'all-orders', 
+                  '전체'
+                ),
 
+                createOrderList(
+                  S,
+                  'pending-orders', 
+                  '신청',
+                  'pending'
+                ),
+
+                createOrderList(
+                  S,
+                  'confirmed-orders', 
+                  '확인',
+                  'confirmed'
+                ),
+
+                createOrderList(
+                  S,
+                  'paid-orders', 
+                  '입금 완료',
+                  'paid'
+                ),
+
+                createOrderList(
+                  S,
+                  'completed-orders', 
+                  '수령 완료',
+                  'completed'
+                ),
+
+                createOrderList(
+                  S,
+                  'cancelled-orders', 
+                  '취소',
+                  'cancelled'
+                ),
+              ])
+          ),
         S.divider(),
 
         S.documentTypeListItem('studioUser')
@@ -146,11 +176,9 @@ export const structure: StructureResolver = async (S, context) => {
         S.documentTypeListItem('performance')
           .title('공연 일정')
           .icon(CalendarIcon),
-
         S.documentTypeListItem('place')
           .title('공연 장소')
           .icon(MarkerIcon),
-
         S.documentTypeListItem('artist')
           .title('아티스트')
           .icon(StarIcon),
@@ -172,7 +200,6 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
-
         orderableDocumentListDeskItem({
           type: 'galleryItem',
           title: '아카이브 이미지',
@@ -198,7 +225,6 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
-
         orderableDocumentListDeskItem({
           type: 'menuItem',
           title: '카페 메뉴',
@@ -224,18 +250,25 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
-
         orderableDocumentListDeskItem({
           type: 'goodsItem',
           title: '굿즈 아이템',
-          icon: ImageIcon,
+          icon: PackageIcon,
           S,
           context,
         }),
-
-        S.documentTypeListItem('purchaseOrder')
-          .title('굿즈 구매내역')
-          .icon(BillIcon),
+        S.listItem()
+          .id('purchase-management-goods') // 고유 ID 추가
+          .title('구매 관리')
+          .icon(BillIcon)
+          .child(
+            S.list()
+              .id('purchase-management-list-goods') // 고유 ID 추가
+              .title('구매 관리')
+              .items([
+                createOrderList(S, 'all-orders-goods', '전체 주문'), // ID 파라미터 추가
+              ])
+          ),
       ])
   }
 
@@ -247,3 +280,37 @@ export const structure: StructureResolver = async (S, context) => {
     .title('관리')
     .items([])
 }
+
+function createOrderList(
+  S: Parameters<StructureResolver>[0],
+  id: string,
+  title: string,
+  status?: string
+) {
+  const filter = status
+    ? `_type == "purchaseOrder" && status == "${status}"`
+    : `_type == "purchaseOrder"`;
+
+  const list = S.documentList()
+    .id(`${id}-list`)
+    .title(title)
+    .schemaType('purchaseOrder')
+    .apiVersion(API_VERSION)
+    .filter(filter)
+    .defaultOrdering([
+      {
+        field: 'createdAt',
+        direction: 'desc',
+      },
+    ]);
+
+  if (status) {
+    list.params({ status });
+  }
+
+  return S.listItem()
+    .id(id)
+    .title(title)
+    .child(list);
+}
+

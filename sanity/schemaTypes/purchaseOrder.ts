@@ -2,7 +2,7 @@ import { defineField, defineType } from 'sanity';
 
 export const purchaseOrder = defineType({
   name: 'purchaseOrder',
-  title: '구매내역',
+  title: '굿즈 주문내역',
   type: 'document',
 
   fields: [
@@ -346,15 +346,23 @@ export const purchaseOrder = defineType({
       orderNumber: 'orderNumber',
       customerName: 'customer.name',
       totalPrice: 'totalPrice',
+      deliveryMethod: 'deliveryMethod',
       status: 'status',
     },
 
     prepare({
       orderNumber,
       customerName,
+      deliveryMethod,
       totalPrice,
       status,
     }) {
+      const deliveryLabel =
+        deliveryMethod ===
+        'delivery'
+          ? '배송'
+          : '픽업';
+
       const statusLabels: Record<string, string> = {
         pending: '신청',
         confirmed: '확인',
@@ -365,9 +373,15 @@ export const purchaseOrder = defineType({
 
       return {
         title: `${orderNumber} · ${customerName}`,
-        subtitle: `${totalPrice?.toLocaleString() ?? 0}원 · ${
-          statusLabels[status] ?? status
-        }`,
+        subtitle: [
+          deliveryLabel,
+
+          `${totalPrice?.toLocaleString() ?? 0}원`,
+
+          statusLabels[
+            status
+          ] ?? status,
+        ].join(' · '),
       };
     },
   },

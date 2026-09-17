@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server';
 
 import { writeClient } from '@/sanity/lib/writeClient';
+import { appendOrderRow } from '@/lib/googleSheets';
 
 import type {
   OrderRequest,
   OrderRequestItem,
 } from '@/types/order';
 
-import { normalizePhone } from "@/utils/formatPhone";
+import { normalizePhone, formatPhone } from "@/utils/formatPhone";
 
 interface GoodsDocument {
   _id: string;
@@ -235,81 +236,168 @@ export async function POST(
     /*
      * 7. Sanity 주문 생성
      */
-    await writeClient.create({
-      _type:
-        'purchaseOrder',
+    const createdOrder =
+      await writeClient.create({
+        _type: 'purchaseOrder',
 
-      orderNumber,
+        orderNumber,
+        createdAt: now,
 
-      createdAt:
-        now,
+        deliveryMethod:
+          body.deliveryMethod,
 
-      deliveryMethod:
-        body.deliveryMethod,
+        customer: {
+          name:
+            body.customer.name.trim(),
 
-      customer: {
-        _type:
-          'orderCustomer',
+          phone:
+            formatPhone(
+              body.customer.phone
+            ),
 
-        name:
-          body.customer.name.trim(),
+          address:
+            body.deliveryMethod ===
+            'delivery'
+              ? {
+                  postcode:
+                    body.customer
+                      .address!
+                      .postcode,
 
-        phone:
-          normalizePhone(
-            body.customer.phone
-          ),
+                  address:
+                    body.customer
+                      .address!
+                      .address,
 
-        address:
-          body.deliveryMethod ===
-          'delivery'
-            ? {
-                _type:
-                  'orderAddress',
+                  detailAddress:
+                    body.customer
+                      .address!
+                      .detailAddress,
+                }
+              : undefined,
+        },
 
-                postcode:
-                  body.customer
-                    .address!
-                    .postcode,
+        items:
+          validatedItems,
 
-                address:
-                  body.customer
-                    .address!
-                    .address,
+        totalPrice,
 
-                detailAddress:
-                  body.customer
-                    .address!
-                    .detailAddress,
-              }
-            : undefined,
-      },
+        memo:
+          body.memo?.trim() ||
+          '',
 
-      items:
-        validatedItems,
+        status: 'pending',
 
-      totalPrice,
+        privacyAgreed: true,
 
-      memo:
-        body.memo?.trim() ||
-        '',
+        privacyAgreedAt: now,
 
-      status:
-        'pending',
-
-      privacyAgreed:
-        true,
-
-      privacyAgreedAt:
-        now,
-
-      sheetSynced:
-        false,
-    });
+        sheetSynced: false,
+      });
 
     /*
-     * Google Sheets 동기화는
-     * 다음 단계에서 추가
+     * Google Sheets 동기화
      */
+    try {
+      const itemText = validatedItems
+        .map((item) => {
+          const optionText =
+            item.options.length > 0
+              ? ` (${item.options
+                  .map(
+                    (option) =>
+                      `${option.name}:${option.value}`
+                  )
+                  .join(', ')})`
+              : '';
+
+          return `${item.name}${optionText} × ${item.quantity}`;
+        })
+        .join(' / ');
+
+      const totalQuantity =
+        validatedItems.reduce(
+          (total, item) =>
+            total + item.quantity,
+          0
+        );
+
+      const row = [
+        orderNumber,
+
+        now,
+
+        body.deliveryMethod === 'delivery'
+          ? '배송'
+          : '픽업',
+
+        body.customer.name.trim(),
+
+        formatPhone(
+          body.customer.phone
+        ),
+
+        body.deliveryMethod === 'delivery'
+          ? body.customer.address
+              ?.postcode ?? ''
+          : '',
+
+        body.deliveryMethod === 'delivery'
+          ? body.customer.address
+              ?.address ?? ''
+          : '',
+
+        body.deliveryMethod === 'delivery'
+          ? body.customer.address
+              ?.detailAddress ?? ''
+          : '',
+
+        itemText,
+
+        totalQuantity,
+
+        totalPrice,
+
+        body.memo?.trim() || '',
+
+        '신청',
+      ];
+
+      await appendOrderRow(
+        row
+      );
+
+      await writeClient
+        .patch(createdOrder._id)
+        .set({
+          sheetSynced: true,
+
+          sheetSyncedAt:
+            new Date().toISOString(),
+        })
+        .unset([
+          'sheetSyncError',
+        ])
+        .commit();
+    } catch (sheetError) {
+      console.error(
+        '[Google Sheets Sync]',
+        sheetError
+      );
+
+      await writeClient
+        .patch(createdOrder._id)
+        .set({
+          sheetSynced: false,
+
+          sheetSyncError:
+            sheetError instanceof
+            Error
+              ? sheetError.message
+              : 'Google Sheets 동기화 실패',
+        })
+        .commit();
+    }
 
     return NextResponse.json(
       {
@@ -323,7 +411,7 @@ export async function POST(
     );
   } catch (error) {
     console.error(
-      '[POST /api/orders]',
+      '[POST /api/order]',
       error
     );
 
