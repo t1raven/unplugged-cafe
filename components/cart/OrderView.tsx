@@ -109,7 +109,7 @@ export default function OrderView({
 
     try {
       const response =
-        await fetch('/api/orders', {
+        await fetch('/api/order', {
           method: 'POST',
 
           headers: {
@@ -368,6 +368,9 @@ export default function OrderView({
                       id="order-postcode"
                       type="text"
                       value={postcode}
+                      onClick={
+                        handleAddressSearch
+                      }
                       readOnly
                       required
                     />

@@ -12,8 +12,8 @@ import { formatDateTime } from "@/utils/formatDateTime";
 import {apiVersion} from '../env'
 
 const POSTER_CATEGORY_ID = 'b357b289-48b0-4924-b0ef-7ee003296edf'
-const POSTER_CATEGORY_SLUG = '공연-포스터'
-const POSTER_CATEGORY_TITLE = '공연 포스터'
+const POSTER_CATEGORY_SLUG = '공연'
+const POSTER_CATEGORY_TITLE = '공연'
 
 type PerformanceDocument = SanityDocument & {
   title?: string

@@ -1,33 +1,46 @@
-export function formatPhone(value: string) {
-  const numbers =
-    value.replace(
-      /\D/g,
-      ''
-    );
+export function normalizePhone(
+  phone: string
+) {
+  return phone.replace(
+    /\D/g,
+    ''
+  );
+}
+
+export function formatPhone(
+  phone: string
+) {
+  const value =
+    normalizePhone(phone);
 
   if (
-    numbers.length <= 3
+    value.length <= 3
   ) {
-    return numbers;
+    return value;
   }
 
   if (
-    numbers.length <= 7
+    value.length <= 7
   ) {
-    return `${numbers.slice(
+    return `${value.slice(
       0,
       3
-    )}-${numbers.slice(3)}`;
+    )}-${value.slice(3)}`;
   }
 
-  return `${numbers.slice(
+  return `${value.slice(
     0,
     3
-  )}-${numbers.slice(
+  )}-${value.slice(
     3,
     7
-  )}-${numbers.slice(
+  )}-${value.slice(
     7,
     11
   )}`;
-};
+
+  /*return value.replace(
+    /(\d{3})(\d{3,4})(\d{4})/,
+    '$1-$2-$3'
+  );*/
+}

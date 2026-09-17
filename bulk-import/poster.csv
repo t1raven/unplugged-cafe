@@ -1,4 +1,4 @@
-id,title,description,image,display
-001,공연포스터 001,공연포스터 설명 001,image-001.webp,true
-002,공연포스터 002,공연포스터 설명 002,image-002.webp,true
-003,공연포스터 003,공연포스터 설명 003,image-003.webp,true
+id,title,artists,date,image
+001,공연 포스터 테스트 001,Name · Name,YYYY.MM.DD WEEK 00:00,202606\17936555199251905.jpg
+002,공연 포스터 테스트 002,Name · Name,YYYY.MM.DD WEEK 00:00,202606\18055949516710583.jpg
+003,공연 포스터 테스트 003,Name · Name,YYYY.MM.DD WEEK 00:00,202606\18128320501593069.jpg

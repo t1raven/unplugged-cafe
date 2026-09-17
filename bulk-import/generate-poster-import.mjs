@@ -49,6 +49,10 @@ function toBoolean(value, defaultValue = true) {
   return ['true', '1', 'yes', 'y'].includes(normalized)
 }
 
+function posterDescription(artists, date) {
+  return [`아티스트: ${artists}`, `공연 일시: ${date}`].join('\n')
+}
+
 /**
  * Sanity document ID 생성
  *
@@ -64,7 +68,7 @@ function createDocumentId(row) {
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
 
-    return `poster-${safeId}`
+    return `performance-poster-test-${safeId}`
   }
 
   const source = [
@@ -156,7 +160,8 @@ rows.forEach((row, index) => {
   const rowNumber = index + 2
 
   const title = clean(row.title)
-  const description = clean(row.description)
+  const artists = clean(row.artists)
+  const date = clean(row.date)
   const image = clean(row.image)
 
   const categoryRef =
@@ -252,6 +257,8 @@ rows.forEach((row, index) => {
 
     title,
 
+    description: posterDescription(artists,date),
+
     image: {
       _type: 'image',
 
@@ -260,19 +267,16 @@ rows.forEach((row, index) => {
       ),
     },
 
-    display: toBoolean(
-      row.display,
-      true,
-    ),
+    display: true,
   }
 
   /**
    * description이 있을 때만 추가
    */
 
-  if (description) {
+  /*if (description) {
     document.description = description
-  }
+  }*/
 
   /**
    * category reference
