@@ -226,12 +226,36 @@ export const purchaseOrder = defineType({
     }),
 
     defineField({
-      name: 'totalPrice',
-      title: '총 구매금액',
+      name: 'productPrice',
+      title: '상품금액',
       type: 'number',
       readOnly: true,
+
       validation: (Rule) =>
-        Rule.required().min(0),
+        Rule.required()
+          .min(0),
+    }),
+
+    defineField({
+      name: 'deliveryFee',
+      title: '배송비',
+      type: 'number',
+      readOnly: true,
+
+      validation: (Rule) =>
+        Rule.required()
+          .min(0),
+    }),
+
+    defineField({
+      name: 'totalPrice',
+      title: '최종 결제금액',
+      type: 'number',
+      readOnly: true,
+
+      validation: (Rule) =>
+        Rule.required()
+          .min(0),
     }),
 
     defineField({

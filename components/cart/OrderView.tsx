@@ -16,6 +16,8 @@ import type {
 
 import { formatPhone } from "@/utils/formatPhone";
 
+import { getDeliveryFee } from '@/lib/order';
+
 interface Props {
   items: CartItem[];
 
@@ -213,6 +215,15 @@ export default function OrderView({
         );
       }
     };
+
+  const deliveryFee =
+    getDeliveryFee(
+      deliveryMethod
+    );
+
+  const finalPrice =
+    totalPrice +
+    deliveryFee;
 
   return (
     <>
@@ -573,15 +584,53 @@ export default function OrderView({
             </p>
           )}
 
-          <div className="order-total">
+          {/*<div className="order-total">
             <span>
-              총 구매금액
+              총 금액
             </span>
 
             <strong>
               {totalPrice.toLocaleString()}
               원
             </strong>
+          </div>*/}
+
+          <div className="order-price-summary">
+
+            <div className="order-price-row">
+              <span>
+                상품금액
+              </span>
+
+              <strong>
+                {totalPrice.toLocaleString()}
+                원
+              </strong>
+            </div>
+
+            <div className="order-price-row">
+              <span>
+                배송비
+              </span>
+
+              <strong>
+                {deliveryFee > 0
+                  ? `${deliveryFee.toLocaleString()}원`
+                  : '0원'}
+              </strong>
+            </div>
+
+            <div className="order-price-row total">
+              <span>
+                총 결제금액
+              </span>
+
+              <strong>
+                {finalPrice.toLocaleString()}
+                원
+              </strong>
+            </div>
+
           </div>
 
           <button

@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
 
 import { writeClient } from '@/sanity/lib/writeClient';
-import { appendOrderRow } from '@/lib/googleSheets';
+import { insertOrderRow } from '@/lib/googleSheets';
 
 import type {
   OrderRequest,
   OrderRequestItem,
 } from '@/types/order';
+
+import {
+  getDeliveryFee,
+} from '@/lib/order';
 
 import { normalizePhone, formatPhone } from "@/utils/formatPhone";
 
@@ -216,13 +220,20 @@ export async function POST(
     /*
      * 5. 총액 서버 계산
      */
-    const totalPrice =
+    const productPrice =
       validatedItems.reduce(
         (total, item) =>
           total +
           item.subtotal,
         0
       );
+
+    const deliveryFee =
+      getDeliveryFee(
+        body.deliveryMethod
+      );
+
+    const totalPrice = productPrice + deliveryFee;
 
     /*
      * 6. 주문번호
@@ -280,6 +291,10 @@ export async function POST(
         items:
           validatedItems,
 
+        productPrice,
+
+        deliveryFee,
+
         totalPrice,
 
         memo:
@@ -333,6 +348,8 @@ export async function POST(
       const row = [
         orderNumber,
 
+        '신청',
+
         formatDateTime(now),
 
         body.deliveryMethod === 'delivery'
@@ -371,13 +388,9 @@ export async function POST(
         totalPrice,
 
         body.memo?.trim() || '',
-
-        '신청',
       ];
 
-      await appendOrderRow(
-        row
-      );
+      await insertOrderRow(row);
 
       await writeClient
         .patch(createdOrder._id)

@@ -39,7 +39,7 @@ const sheets = google.sheets({
 
 const SHEET_NAME = '주문내역';
 
-export async function appendOrderRow(
+export async function insertOrderRow(
   row: (
     | string
     | number
@@ -47,19 +47,77 @@ export async function appendOrderRow(
     | null
   )[]
 ) {
-  await sheets.spreadsheets.values.append({
+  const sheetId =
+    await getSheetId(
+      SHEET_NAME
+    );
+
+  await sheets.spreadsheets.batchUpdate({
     spreadsheetId,
 
-    range: `${SHEET_NAME}!A:K`,
+    requestBody: {
+      requests: [
+        {
+          insertDimension: {
+            range: {
+              sheetId,
+              dimension: 'ROWS',
+
+              // 0-based
+              // 1 = 실제 2행
+              startIndex: 1,
+              endIndex: 2,
+            },
+            inheritFromBefore: false,
+          },
+        },
+      ],
+    },
+  });
+
+  await sheets.spreadsheets.values.update({
+    spreadsheetId,
+
+    range: `${SHEET_NAME}!A2:K2`,
 
     valueInputOption: 'USER_ENTERED',
-
-    insertDataOption: 'INSERT_ROWS',
 
     requestBody: {
       values: [row],
     },
   });
+}
+
+async function getSheetId(
+  sheetName: string
+) {
+  const response =
+    await sheets.spreadsheets.get({
+      spreadsheetId,
+
+      fields:
+        'sheets.properties',
+    });
+
+  const sheet =
+    response.data.sheets?.find(
+      (sheet) =>
+        sheet.properties?.title ===
+        sheetName
+    );
+
+  const sheetId =
+    sheet?.properties?.sheetId;
+
+  if (
+    sheetId === undefined
+  ) {
+    throw new Error(
+      `${sheetName} 시트를 찾을 수 없습니다.`
+    );
+  }
+
+  return sheetId;
 }
 
 export async function updateOrderStatus(
@@ -105,7 +163,7 @@ export async function updateOrderStatus(
     spreadsheetId,
 
     range:
-      `${SHEET_NAME}!K${sheetRow}`,
+      `${SHEET_NAME}!B${sheetRow}`,
 
     valueInputOption:
       'USER_ENTERED',
