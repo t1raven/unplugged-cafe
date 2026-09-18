@@ -6,6 +6,8 @@ import {
   useState,
 } from 'react';
 
+import Image from 'next/image';
+
 import {
   useDaumPostcode,
 } from '@/hooks/useDaumPostcode';
@@ -235,7 +237,7 @@ export default function OrderView({
           aria-label="장바구니로 돌아가기"
         >
           <span className="material-symbols-rounded">
-            arrow_back
+            arrow_back_ios
           </span>
         </button>
 
@@ -315,6 +317,29 @@ export default function OrderView({
               </label>
 
             </div>
+
+            <div className="delivery-guide">
+              {deliveryMethod === 'delivery' ? (
+                <>
+                  {/*<div className="guide-title">배송 안내</div>*/}
+                  <div className="guide-content">
+                    입금 확인 후 배송이 시작됩니다.<br/>
+                    입금 계좌: <strong>토스뱅크 0000-00-00000000 언플러그드</strong><br/>
+                    배송비 3,0000원이 포함됩니다.
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/*<div className="guide-title">픽업 안내</div>*/}
+                  <div className="guide-content">
+                    아래 주소로 픽업하러 와주세요.<br/>
+                    도로명: 서울 마포구 와우산로29길 15 2층<br/>
+                    지번: 서울 마포구 서교동 336-5 2층
+                  </div>
+                </>
+              )}
+            </div>
+              
           </section>
 
           {/* 주문내역 */}
@@ -329,6 +354,17 @@ export default function OrderView({
                 key={item.cartId}
                 className="order-product"
               >
+                {item.image && (
+                  <div className="order-product-image">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      sizes="96px"
+                    />
+                  </div>
+                )}
+
                 <div className="order-product-info">
 
                   <strong>
@@ -515,7 +551,7 @@ export default function OrderView({
                     event.target.value
                   )
                 }
-                rows={5}
+                rows={3}
               />
             </div>
 

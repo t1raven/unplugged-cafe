@@ -53,6 +53,10 @@
     font-size: 20px;
     font-weight: 500;
   }
+
+  > div {
+    width: 40px;
+  }
 }
 
 .cart-close {
@@ -305,7 +309,6 @@
 }
 
 
-
 // OrderView
 .order-form {
   display: flex;
@@ -396,7 +399,7 @@
 .order-product {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 15px;
 
   padding: 14px 0;
 
@@ -412,6 +415,8 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+
+    width: 100%;
   }
 
   small {
@@ -422,6 +427,24 @@
     font-size: 12px;
 
     opacity: 0.5;
+  }
+}
+
+.order-product-image {
+  position: relative;
+
+  flex: 0 0 76px;
+
+  width: 76px;
+  height: 76px;
+
+  overflow: hidden;
+
+  background:
+    rgba(255, 255, 255, 0.05);
+
+  img {
+    object-fit: cover;
   }
 }
 
@@ -453,6 +476,45 @@
 
   strong {
     font-size: 20px;
+  }
+}
+
+.order-price-summary {
+  margin-bottom: 18px;
+}
+
+.order-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 6px 0;
+
+  font-size: 13px;
+
+  span {
+    opacity: 0.6;
+  }
+
+  strong {
+    font-weight: 500;
+  }
+
+  &.total {
+    margin-top: 8px;
+    padding-top: 16px;
+
+    border-top:
+      1px solid
+      rgba(255, 255, 255, 0.12);
+
+    span {
+      opacity: 1;
+    }
+
+    strong {
+      font-size: 20px;
+    }
   }
 }
 
@@ -517,9 +579,10 @@
     min-height: 50px;
 
     border: 0;
+    border-radius: 10em;
 
-    background: #fff;
-    color: #000;
+    background: var(--primary-color);
+    color: #fff;
   }
 }
 
@@ -536,10 +599,14 @@
       255,
       255,
       255,
-      0.2
+      0.65
     );
 
   border-radius: 50%;
+
+  > span {
+    color: var(--primary-color);
+  }
 }
 
 .complete-order-number {
@@ -592,6 +659,8 @@
         0.15
       );
 
+    border-radius: 10px;
+
     cursor: pointer;
 
     transition:
@@ -617,6 +686,48 @@
           255,
           0.08
         );
+    }
+  }
+}
+
+.delivery-guide {
+  margin-top: 20px;
+  padding: 18px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
+
+  border-radius: 10px;
+
+  .guide-title {
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+
+    border-bottom:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        0.08
+      );
+
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .guide-content {
+    font-size: 0.9em;
+    line-height: 1.8;
+
+    strong {
+      font-weight: 600;
     }
   }
 }
@@ -661,7 +772,7 @@
         0.15
       );
 
-    border-radius: 0;
+    border-radius: 10px;
 
     background:
       rgba(
@@ -713,6 +824,8 @@
         0.2
       );
 
+    border-radius: 15px;
+
     background:
       rgba(
         255,
@@ -737,25 +850,69 @@
       255,
       0.04
     );
+
+  border-radius: 10px;
 }
 
 .privacy-check {
   display: flex;
   align-items: flex-start;
-
   gap: 10px;
 
   cursor: pointer;
 
   input {
-    flex: 0 0 auto;
+    position: absolute; 
+    left: -9999px; 
+    opacity: 0;
+  }
 
-    margin-top: 2px;
+  input:checked + span {
+    &:before {
+      background-color: var(--primary-color);
+    }
+
+    &:after {
+      opacity: 1;
+    }
   }
 
   span {
     font-size: 13px;
     line-height: 1.4;
+
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+
+    &:before {
+      content: ''; 
+      width: 20px; 
+      height: 20px; 
+      z-index: 0; 
+      border: 1px solid var(--border-color); 
+      background-color: #fff; 
+      transition: .2s; 
+      margin: 0;  
+      box-sizing: border-box; 
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    &:after {
+      content: '';
+      opacity: 0;  
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      width: 20px; 
+      height: 20px;
+      background-size: 46%; 
+      background-repeat: no-repeat; 
+      background-position: center;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--%3E%3Cpath fill='%23ffffff' d='M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z'/%3E%3C/svg%3E");
+    }
   }
 
   em {
@@ -783,53 +940,13 @@
   p {
     margin: 0;
 
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.7;
 
     opacity: 0.45;
 
     & + p {
       margin-top: 2px;
-    }
-  }
-}
-
-
-.order-price-summary {
-  margin-bottom: 18px;
-}
-
-.order-price-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 6px 0;
-
-  font-size: 13px;
-
-  span {
-    opacity: 0.6;
-  }
-
-  strong {
-    font-weight: 500;
-  }
-
-  &.total {
-    margin-top: 8px;
-    padding-top: 16px;
-
-    border-top:
-      1px solid
-      rgba(255, 255, 255, 0.12);
-
-    span {
-      opacity: 1;
-    }
-
-    strong {
-      font-size: 20px;
     }
   }
 }
