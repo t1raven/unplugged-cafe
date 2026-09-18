@@ -50,7 +50,7 @@ export async function appendOrderRow(
   await sheets.spreadsheets.values.append({
     spreadsheetId,
 
-    range: `${SHEET_NAME}!A:M`,
+    range: `${SHEET_NAME}!A:K`,
 
     valueInputOption: 'USER_ENTERED',
 
@@ -99,13 +99,13 @@ export async function updateOrderStatus(
     rowIndex + 1;
 
   /*
-   * M열 = 주문상태
+   * K열 = 주문상태
    */
   await sheets.spreadsheets.values.update({
     spreadsheetId,
 
     range:
-      `${SHEET_NAME}!M${sheetRow}`,
+      `${SHEET_NAME}!K${sheetRow}`,
 
     valueInputOption:
       'USER_ENTERED',

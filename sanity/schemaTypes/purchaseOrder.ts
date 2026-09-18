@@ -16,7 +16,7 @@ export const purchaseOrder = defineType({
 
     defineField({
       name: 'createdAt',
-      title: '구매 신청일',
+      title: '주문일시',
       type: 'datetime',
       readOnly: true,
       validation: (Rule) => Rule.required(),

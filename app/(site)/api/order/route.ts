@@ -315,6 +315,14 @@ export async function POST(
         })
         .join(' / ');
 
+
+      let addressText = '';
+
+      if (body.deliveryMethod === 'delivery' && body.customer?.address) {
+        const { address = '', detailAddress = '', postcode = '' } = body.customer.address;
+        addressText = `${address} ${detailAddress} (${postcode})`.trim();
+      }
+
       const totalQuantity =
         validatedItems.reduce(
           (total, item) =>
@@ -325,7 +333,7 @@ export async function POST(
       const row = [
         orderNumber,
 
-        now,
+        formatDateTime(now),
 
         body.deliveryMethod === 'delivery'
           ? '배송'
@@ -338,6 +346,10 @@ export async function POST(
         ),
 
         body.deliveryMethod === 'delivery'
+          ? addressText ?? ''
+          : '',
+
+        /*body.deliveryMethod === 'delivery'
           ? body.customer.address
               ?.postcode ?? ''
           : '',
@@ -350,7 +362,7 @@ export async function POST(
         body.deliveryMethod === 'delivery'
           ? body.customer.address
               ?.detailAddress ?? ''
-          : '',
+          : '',*/
 
         itemText,
 
@@ -759,3 +771,27 @@ function createOrderNumber() {
 
   return `G${year}${month}${day}-${random}`;
 }
+
+function formatDateTime(d: Date | string) {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    weekday: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }).formatToParts(new Date(d));
+
+  const get = (type: string) =>
+    parts.find((part) => part.type === type)?.value ?? '';
+
+  const year = get('year');
+  const month = get('month');
+  const day = get('day');
+  const hours = get('hour');
+  const minutes = get('minute');
+
+  return `${year}. ${month}. ${day} ${hours}:${minutes}`;
+};
