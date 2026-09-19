@@ -10,6 +10,7 @@ import {TiersIcon} from '@sanity/icons/Tiers'
 import {UsersIcon} from '@sanity/icons/Users'
 import {PackageIcon} from '@sanity/icons/Package'
 import {BillIcon} from '@sanity/icons/Bill'
+import {CogIcon} from '@sanity/icons/Cog';
 import {getStudioRole} from './studioAccess'
 
 const API_VERSION = '2026-01-01'
@@ -35,7 +36,9 @@ export const structure: StructureResolver = async (S, context) => {
             S.document()
               .schemaType('home')
               .documentId('home')
+              .title('홈')
           ),
+          
         S.divider(),
 
         // Performance
@@ -50,6 +53,7 @@ export const structure: StructureResolver = async (S, context) => {
         S.documentTypeListItem('artist')
           .title('아티스트')
           .icon(StarIcon),
+
         S.divider(),
 
         // Cafe Category
@@ -68,6 +72,7 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
+
         S.divider(),
 
         // Gallery Category
@@ -86,6 +91,7 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
+
         S.divider(),
 
         // Goods Category
@@ -158,6 +164,17 @@ export const structure: StructureResolver = async (S, context) => {
               ])
           ),
         S.divider(),
+
+        S.listItem()
+          .id('site-settings')
+          .title('사이트 설정')
+          .icon(CogIcon)
+          .child(
+            S.document()
+              .schemaType('siteSettings')
+              .documentId('siteSettings')
+              .title('사이트 설정')
+          ),
 
         S.documentTypeListItem('studioUser')
           .title('관리자 계정')

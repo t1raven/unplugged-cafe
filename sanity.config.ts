@@ -15,6 +15,11 @@ import {
 
 import {koKRLocale} from '@sanity/locale-ko-kr'
 
+const singletonTypes = new Set([
+  'siteSettings',
+  'home',
+]);
+
 export default defineConfig({
   basePath: '/studio',
   title: 'Unplugged Lounge CMS',
@@ -37,6 +42,11 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+
+    templates: (templates) =>
+      templates.filter(
+        ({ schemaType }) => !singletonTypes.has(schemaType)
+      ),
   },
 
   document: {

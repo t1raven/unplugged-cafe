@@ -16,6 +16,8 @@ import {goodsCategory} from './goodsCategory'
 import {goodsItem} from './goodsItem'
 import {purchaseOrder} from './purchaseOrder'
 import {studioUser} from './studioUser'
+import {siteSettings} from './siteSettings';
+
 
 export const schemaTypes = [
   home,
@@ -30,4 +32,5 @@ export const schemaTypes = [
   goodsItem,
   purchaseOrder,
   studioUser,
+  siteSettings
 ]

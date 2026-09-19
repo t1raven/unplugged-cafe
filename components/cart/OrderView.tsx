@@ -325,7 +325,7 @@ export default function OrderView({
                   <div className="guide-content">
                     입금 확인 후 배송이 시작됩니다.<br/>
                     입금 계좌: <strong>토스뱅크 0000-00-00000000 언플러그드</strong><br/>
-                    배송비 3,0000원이 포함됩니다.
+                    배송비 3,000원이 포함됩니다.
                   </div>
                 </>
               ) : (
