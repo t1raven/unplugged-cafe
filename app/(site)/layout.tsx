@@ -9,20 +9,53 @@ const notoSansKR = Noto_Sans_KR({
 });
 
 import type { Metadata, Viewport } from "next";
-export const metadata: Metadata = {
-  title: "UNPLUGGED LOUNGE",
-  description: "음악과 사람이 머무는 공간 & 한국 인디뮤지션의 출발지 Live & Indie Cafe",
-  keywords: ["언플러그드, 라운지, 라이브, 인디, 뮤직, 카페, 서교음악다방, 홍대, 서울, Unplugged, Lounge, Live, Indie, Music, Cafe, Hongdae, Seoul"],
-  openGraph: {
-    type: 'website',
-    images: [{ url: "/images/common/og-image.png" }],
-  },
-  formatDetection: {
-    telephone: false,
-    address: false,
-    email: false,
-  },
-};
+import { getSiteSettings } from '@/sanity/lib/getSiteSettings';
+import { urlFor } from '@/sanity/lib/image';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+
+  const title =
+    settings?.seo?.title ??
+    settings?.siteName ??
+    'UNPLUGGED LOUNGE';
+
+  const description =
+    settings?.seo?.description ?? '';
+
+  const ogImage = settings?.seo?.ogImage
+    ? urlFor(settings.seo.ogImage)
+        .width(400)
+        .height(400)
+        .url()
+    : undefined;
+
+  return {
+    title,
+    description,
+    keywords: settings?.seo?.keywords,
+
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      images: ogImage
+        ? [
+            {
+              url: ogImage,
+              width: 400,
+              height: 400,
+            },
+          ]
+        : undefined,
+    },
+    formatDetection: {
+      telephone: false,
+      address: false,
+      email: false,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: 'device-width',

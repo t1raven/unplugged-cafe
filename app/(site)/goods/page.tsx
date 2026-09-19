@@ -1,5 +1,3 @@
-import type { Metadata } from 'next';
-
 import { client } from '@/sanity/lib/client';
 
 import SubPageHero from '@/components/common/SubPageHero';
@@ -8,9 +6,22 @@ import GoodsList from '@/components/goods/GoodsList';
 import type { Category } from '@/types/category'
 import type { Goods  } from '@/types/goods'
 
-export const metadata: Metadata = {
-  title: "굿즈·앨범 | UNPLUGGED LOUNGE",
-};
+import type { Metadata } from "next";
+import { getSiteSettings } from '@/sanity/lib/getSiteSettings';
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+
+  const title =
+    '굿즈·앨범 | ' +
+    settings?.seo?.title ??
+    settings?.siteName ??
+    'UNPLUGGED LOUNGE';
+
+  return {
+    title
+  }
+}
+
 
 const categoryQuery = `
   *[

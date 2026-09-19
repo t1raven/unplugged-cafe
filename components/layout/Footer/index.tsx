@@ -1,4 +1,7 @@
 import './style.scss'
+import { getSiteSettings } from '@/sanity/lib/getSiteSettings';
+
+const settings = await getSiteSettings();
 
 export default function Footer() {
   return (
@@ -7,12 +10,12 @@ export default function Footer() {
         <div>
           <div className="footer-info">
             <ul>
-              <li><b>주소</b> 서울 마포구 와우산로29길 15 2층, 3층</li>
-              <li><b>전화번호</b> 070-7517-3004</li>
-              <li><b>영업시간</b> 12:00 - 24:00 (23:00 라스트 오더)</li>
+              <li><b>주소</b> {settings?.address}</li>
+              <li><b>전화번호</b> {settings?.phone}</li>
+              <li><b>영업시간</b> {settings?.businessHours}</li>
             </ul>
           </div>
-          <div className="footer-copy">© 2026 Unplugged Lounge. All Rights Reserved.</div>
+          <div className="footer-copy">© 2026 {settings?.siteName}. All Rights Reserved.</div>
         </div>
       </div>
     </footer>

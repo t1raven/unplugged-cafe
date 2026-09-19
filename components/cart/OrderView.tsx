@@ -18,7 +18,11 @@ import type {
 
 import { formatPhone } from "@/utils/formatPhone";
 
-import { getDeliveryFee } from '@/lib/order';
+import { getSiteSettings } from '@/sanity/lib/getSiteSettings';
+
+const settings = await getSiteSettings();
+
+const depositAccount = settings?.depositAccount;
 
 interface Props {
   items: CartItem[];
@@ -219,9 +223,9 @@ export default function OrderView({
     };
 
   const deliveryFee =
-    getDeliveryFee(
-      deliveryMethod
-    );
+    deliveryMethod === 'delivery'
+      ? (settings?.deliveryFee ?? 3000)
+      : 0;
 
   const finalPrice =
     totalPrice +
@@ -324,8 +328,8 @@ export default function OrderView({
                   {/*<div className="guide-title">배송 안내</div>*/}
                   <div className="guide-content">
                     입금 확인 후 배송이 시작됩니다.<br/>
-                    입금 계좌: <strong>토스뱅크 0000-00-00000000 언플러그드</strong><br/>
-                    배송비 3,000원이 포함됩니다.
+                    입금 계좌: <strong>{depositAccount}</strong><br/>
+                    배송비 {deliveryFee.toLocaleString()}원이 포함됩니다.
                   </div>
                 </>
               ) : (
@@ -396,13 +400,15 @@ export default function OrderView({
 
                 </div>
 
-                <strong>
-                  {(
-                    item.price *
-                    item.quantity
-                  ).toLocaleString()}
-                  원
-                </strong>
+                <div className="order-product-price">
+                  <strong>
+                    {(
+                      item.price *
+                      item.quantity
+                    ).toLocaleString()}
+                    원
+                  </strong>
+                </div>
 
               </div>
             ))}

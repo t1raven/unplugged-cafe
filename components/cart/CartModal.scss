@@ -411,14 +411,6 @@
       0.1
     );
 
-  > div {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-
-    width: 100%;
-  }
-
   small {
     opacity: 0.5;
   }
@@ -446,6 +438,18 @@
   img {
     object-fit: cover;
   }
+}
+
+.order-product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  width: 100%;
+}
+
+.order-product-price {
+  white-space: nowrap;
 }
 
 .order-footer {
