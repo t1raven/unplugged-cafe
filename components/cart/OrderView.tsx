@@ -18,11 +18,9 @@ import type {
 
 import { formatPhone } from "@/utils/formatPhone";
 
-import { getSiteSettings } from '@/sanity/lib/getSiteSettings';
+import { getSiteSettings } from '@/sanity/lib/siteSettings';
 
 const settings = await getSiteSettings();
-
-const depositAccount = settings?.depositAccount;
 
 interface Props {
   items: CartItem[];
@@ -230,6 +228,8 @@ export default function OrderView({
   const finalPrice =
     totalPrice +
     deliveryFee;
+
+  const depositAccount = settings?.depositAccount;
 
   return (
     <>

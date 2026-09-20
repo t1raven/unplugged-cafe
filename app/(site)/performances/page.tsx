@@ -5,7 +5,7 @@ import SubPageHero from '@/components/common/SubPageHero';
 import PerformanceList from '@/components/performances/PerformanceList';
 
 export const metadata: Metadata = {
-  title: "공연 예매 | UNPLUGGED LOUNGE",
+  title: "공연 예매",
 };
 
 const performancesQuery = `

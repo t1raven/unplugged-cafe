@@ -6,7 +6,7 @@ import RentalPage from '@/components/rental/RentalPage';
 import './style.scss';
 
 export const metadata: Metadata = {
-  title: "대관신청 | UNPLUGGED LOUNGE",
+  title: "대관신청",
 };
 
 export default function Rental() {

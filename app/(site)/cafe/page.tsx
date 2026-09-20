@@ -9,7 +9,7 @@ import type { Category } from '@/types/category'
 import type { Cafe } from '@/types/cafe'
 
 export const metadata: Metadata = {
-  title: '카페 | UNPLUGGED LOUNGE',
+  title: '카페',
 }
 
 const categoryQuery = `

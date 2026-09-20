@@ -3,10 +3,12 @@
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { getSiteSettings } from '@/sanity/lib/siteSettings';
 
 import './style.scss';
 
 gsap.registerPlugin(ScrollTrigger);
+const settings = await getSiteSettings();
 
 export default function Location() {
   const rootRef = useRef<HTMLElement>(null);
@@ -51,20 +53,18 @@ export default function Location() {
         </p>
 
         <h2>
-          UNPLUGGED
-          <br />
-          LOUNGE
+          {settings?.siteName}
         </h2>
 
         <div className="location__info">
           <p>
-            서울 마포구 와우산로29길 15 2층, 3층
+            {settings?.address}
           </p>
 
           <p>
             영업시간
             <br />
-            12:00 - 24:00 (23:00 라스트 오더)
+            {settings?.businessHours}
           </p>
         </div>
 

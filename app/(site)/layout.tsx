@@ -9,19 +9,19 @@ const notoSansKR = Noto_Sans_KR({
 });
 
 import type { Metadata, Viewport } from "next";
-import { getSiteSettings } from '@/sanity/lib/getSiteSettings';
+import { getSiteSettings } from '@/sanity/lib/siteSettings';
 import { urlFor } from '@/sanity/lib/image';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
 
-  const title =
-    settings?.seo?.title ??
-    settings?.siteName ??
-    'UNPLUGGED LOUNGE';
+  const siteName = settings?.siteName ?? 'UNPLUGGED LOUNGE';
 
-  const description =
-    settings?.seo?.description ?? '';
+  const title = settings?.seo?.title ?? siteName;
+
+  const description = settings?.seo?.description ?? '';
+
+  const keywords = settings?.seo?.keywords ?? [];
 
   const ogImage = settings?.seo?.ogImage
     ? urlFor(settings.seo.ogImage)
@@ -31,24 +31,39 @@ export async function generateMetadata(): Promise<Metadata> {
     : undefined;
 
   return {
-    title,
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL ?? 'https://unplugged-lounge.com'
+    ),
+
+    title: {
+      default: title,
+      template: `%s | ${siteName}`,
+    },
+
     description,
-    keywords: settings?.seo?.keywords,
+    keywords,
 
     openGraph: {
-      title,
-      description,
       type: 'website',
+      locale: 'ko_KR',
+
       images: ogImage
         ? [
             {
               url: ogImage,
               width: 400,
               height: 400,
+              alt: title,
             },
           ]
-        : undefined,
+        : [{ url: "/images/common/og-image.png" }],
     },
+
+    robots: {
+      index: true,
+      follow: true,
+    },
+
     formatDetection: {
       telephone: false,
       address: false,

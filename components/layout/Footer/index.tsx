@@ -1,5 +1,5 @@
 import './style.scss'
-import { getSiteSettings } from '@/sanity/lib/getSiteSettings';
+import { getSiteSettings } from '@/sanity/lib/siteSettings';
 
 const settings = await getSiteSettings();
 

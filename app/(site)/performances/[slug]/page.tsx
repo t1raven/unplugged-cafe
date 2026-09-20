@@ -76,7 +76,7 @@ export async function generateMetadata({
 
   if (!performance) {
     return {
-      title: '공연 | UNPLUGGED LOUNGE',
+      title: '공연',
       description: 'UNPLUGGED LOUNGE 공연 안내',
     };
   }
@@ -87,11 +87,16 @@ export async function generateMetadata({
   const imageUrl = performance.poster ? urlFor(performance.poster).width(600).height(800).fit('crop').url() : '/images/common/og-image.png';
 
   return {
-    title: `${performance.title} | UNPLUGGED LOUNGE`,
+    title: performance.title,
     description: description,
     openGraph: {
       type: 'website',
-      images: [{ url: imageUrl }],
+      locale: 'ko_KR',
+      images: [{ 
+        url: imageUrl,
+        width: 600,
+        height: 800,
+      }],
     },
   };
 }
