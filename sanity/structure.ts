@@ -64,14 +64,70 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
+
         // Cafe Menu
-        orderableDocumentListDeskItem({
+        S.listItem()
+          .id('cafe-menu')
+          .title('카페 메뉴')
+          .icon(BottleIcon)
+          .child(async () => {
+            const client = context.getClient({
+              apiVersion: '2026-01-01',
+            });
+
+            const categories = await client.fetch<
+              {
+                _id: string;
+                title: string;
+                count: number;
+              }[]
+            >(`
+              *[_type == "menuCategory"]
+                | order(orderRank asc) {
+                  _id,
+                  title,
+                  "count": count(
+                    *[
+                      _type == "menuItem"
+                      && category._ref == ^._id
+                    ]
+                  )
+                }
+              `);
+
+            return S.list()
+              .id('cafe-menu-category-list')
+              .title('카페 메뉴')
+              .items(
+                categories.map((category) =>
+                  orderableDocumentListDeskItem({
+                    type: 'menuItem',
+                    id: `menu-${category._id}`,
+                    title: `${category.title} (${category.count})`,
+                    icon: BottleIcon,
+
+                    filter:
+                      '_type == "menuItem" && category._ref == $categoryId',
+
+                    params: {
+                      categoryId: category._id,
+                    },
+
+                    S,
+                    context,
+                  })
+                )
+              );
+          }),
+
+        // Cafe Menu
+        /*orderableDocumentListDeskItem({
           type: 'menuItem',
           title: '카페 메뉴',
           icon: BottleIcon,
           S,
           context,
-        }),
+        }),*/
 
         S.divider(),
 
@@ -83,14 +139,70 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
+
         // Gallery Item
-        orderableDocumentListDeskItem({
+        S.listItem()
+          .id('gallery-images')
+          .title('아카이브 이미지')
+          .icon(ImageIcon)
+          .child(async () => {
+            const client = context.getClient({
+              apiVersion: '2026-01-01',
+            });
+
+            const categories = await client.fetch<
+              {
+                _id: string;
+                title: string;
+                count: number;
+              }[]
+            >(`
+              *[_type == "galleryCategory"]
+                | order(orderRank asc) {
+                  _id,
+                  title,
+                  "count": count(
+                    *[
+                      _type == "galleryItem"
+                      && category._ref == ^._id
+                    ]
+                  )
+                }
+              `);
+
+            return S.list()
+              .id('gallery-images-category-list')
+              .title('아카이브 이미지')
+              .items(
+                categories.map((category) =>
+                  orderableDocumentListDeskItem({
+                    type: 'galleryItem',
+                    id: `gallery-${category._id}`,
+                    title: `${category.title} (${category.count})`,
+                    icon: ImageIcon,
+
+                    filter:
+                      '_type == "galleryItem" && category._ref == $categoryId',
+
+                    params: {
+                      categoryId: category._id,
+                    },
+
+                    S,
+                    context,
+                  })
+                )
+              );
+          }),
+
+        // Gallery Item
+        /*orderableDocumentListDeskItem({
           type: 'galleryItem',
           title: '아카이브 이미지',
           icon: ImageIcon,
           S,
           context,
-        }),
+        }),*/
 
         S.divider(),
 
@@ -102,14 +214,70 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
+
         // Goods Item
-        orderableDocumentListDeskItem({
+        S.listItem()
+          .id('goods-item')
+          .title('굿즈 아이템')
+          .icon(PackageIcon)
+          .child(async () => {
+            const client = context.getClient({
+              apiVersion: '2026-01-01',
+            });
+
+            const categories = await client.fetch<
+              {
+                _id: string;
+                title: string;
+                count: number;
+              }[]
+            >(`
+              *[_type == "goodsCategory"]
+                | order(orderRank asc) {
+                  _id,
+                  title,
+                  "count": count(
+                    *[
+                      _type == "goodsItem"
+                      && category._ref == ^._id
+                    ]
+                  )
+                }
+              `);
+
+            return S.list()
+              .id('goods-item-category-list')
+              .title('굿즈 아이템')
+              .items(
+                categories.map((category) =>
+                  orderableDocumentListDeskItem({
+                    type: 'goodsItem',
+                    id: `goods-${category._id}`,
+                    title: `${category.title} (${category.count})`,
+                    icon: PackageIcon,
+
+                    filter:
+                      '_type == "goodsItem" && category._ref == $categoryId',
+
+                    params: {
+                      categoryId: category._id,
+                    },
+
+                    S,
+                    context,
+                  })
+                )
+              );
+          }),
+
+        // Goods Item
+        /*orderableDocumentListDeskItem({
           type: 'goodsItem',
           title: '굿즈 아이템',
           icon: PackageIcon,
           S,
           context,
-        }),
+        }),*/
         
         // Goods Order
         S.listItem()
@@ -163,6 +331,7 @@ export const structure: StructureResolver = async (S, context) => {
                 ),
               ])
           ),
+
         S.divider(),
 
         S.listItem()

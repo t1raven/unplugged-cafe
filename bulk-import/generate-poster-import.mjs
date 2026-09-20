@@ -50,7 +50,12 @@ function toBoolean(value, defaultValue = true) {
 }
 
 function posterDescription(artists, date) {
-  return [`아티스트: ${artists}`, `공연 일시: ${date}`].join('\n')
+  return [
+    artists?.trim() && `아티스트: ${artists.trim()}`,
+    date?.trim() && `공연 일시: ${date.trim()}`,
+  ]
+    .filter(Boolean)
+    .join('\n')
 }
 
 /**
@@ -68,7 +73,7 @@ function createDocumentId(row) {
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
 
-    return `performance-poster-test-${safeId}`
+    return `performance-poster-${safeId}`
   }
 
   const source = [

@@ -41,7 +41,7 @@ export default function ArchiveList({
     initialItems.length === PAGE_SIZE
   )
 
-  const pageRef = useRef(1)
+  //const pageRef = useRef(1)
   const gridRef = useRef<HTMLDivElement>(null)
   const sentinelRef = useRef<HTMLDivElement>(null)
   const categoryRef = useRef<HTMLElement>(null);
@@ -61,7 +61,7 @@ export default function ArchiveList({
     setLoading(true)
 
     try {
-      const nextPage = pageRef.current + 1;
+      const nextPage = page + 1;
 
       const params = new URLSearchParams({
         category: activeCategory,
@@ -88,6 +88,8 @@ export default function ArchiveList({
 
       setPage(nextPage)
       setHasMore(data.hasMore)
+
+      console.log(page);
     } catch (error) {
       console.error(error)
     } finally {
