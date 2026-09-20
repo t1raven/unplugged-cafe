@@ -5,6 +5,11 @@ export interface GoodsOption {
   values: string[];
 }
 
+export interface QuantityDiscount {
+  minQuantity: number;
+  unitPrice: number;
+}
+
 export interface Goods {
   _id: string;
   name: string;
@@ -14,7 +19,9 @@ export interface Goods {
   
   description?: string;
   price: number;
-  discountPrice: number;
+  salePrice?: number | null;
+
+  quantityDiscounts?: QuantityDiscount[] | null;
 
   image?: string;
 

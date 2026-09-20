@@ -70,9 +70,58 @@ export const goodsItem = defineType({
     }),
 
     defineField({
-      name: 'discountPrice',
+      name: 'salePrice',
       title: '할인가',
       type: 'number',
+      description: '비워두면 정상가로 판매됩니다.',
+      validation: (Rule) => Rule.min(0),
+    }),
+
+    defineField({
+      name: 'quantityDiscounts',
+      title: '수량 할인',
+      type: 'array',
+      description: '수량이 많을수록 할인 단가를 설정합니다.',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'minQuantity',
+              title: '최소 수량',
+              type: 'number',
+              validation: (Rule) => Rule.required().integer().min(2),
+            },
+
+            {
+              name: 'unitPrice',
+              title: '할인 단가',
+              type: 'number',
+              validation: (Rule) => Rule.required().integer().min(0),
+            },
+          ],
+
+          preview: {
+            select: {
+              minQuantity: 'minQuantity',
+              unitPrice: 'unitPrice',
+            },
+
+            prepare({
+              minQuantity,
+              unitPrice,
+            }) {
+              return {
+                title:
+                  `${minQuantity}개 이상`,
+
+                subtitle:
+                  `개당 ${unitPrice?.toLocaleString() ?? 0}원`,
+              };
+            },
+          },
+        },
+      ],
     }),
 
     defineField({

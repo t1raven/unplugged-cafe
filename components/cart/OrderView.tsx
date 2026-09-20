@@ -245,7 +245,7 @@ export default function OrderView({
           </span>
         </button>
 
-        <h2>구매 신청</h2>
+        <h2>주문 신청</h2>
 
         <div />
       </div>
@@ -632,7 +632,7 @@ export default function OrderView({
             </span>
 
             <strong>
-              {totalPrice.toLocaleString()}
+              {finalPrice.toLocaleString()}
               원
             </strong>
           </div>*/}
@@ -664,7 +664,7 @@ export default function OrderView({
 
             <div className="order-price-row total">
               <span>
-                총 결제금액
+                총 주문금액
               </span>
 
               <strong>
@@ -685,7 +685,7 @@ export default function OrderView({
           >
             {loading
               ? '신청 중...'
-              : '구매 신청하기'}
+              : '주문 신청하기'}
           </button>
 
         </div>

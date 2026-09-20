@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useCartStore, type CartOption } from '@/store/cartStore';
+import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 import type { Goods } from '@/types/goods';
 
 interface Props {
@@ -28,6 +29,23 @@ export default function GoodsOptionModal({
 
   const [quantity, setQuantity] =
     useState(1);
+
+  const unitPrice =
+    useMemo(() => {
+      if (!goods) {
+        return 0;
+      }
+
+      return getGoodsUnitPrice(
+        goods,
+        quantity
+      );
+    }, [
+      goods,
+      quantity,
+    ]);
+
+  const subtotal = unitPrice * quantity;
 
   /*
    * 모든 옵션 선택 여부
@@ -159,6 +177,8 @@ export default function GoodsOptionModal({
 
       name: goods.name,
       price: goods.price,
+      salePrice: goods.salePrice ?? undefined,
+      quantityDiscounts: goods.quantityDiscounts ?? undefined,
 
       image: goods.image,
 
@@ -300,10 +320,8 @@ export default function GoodsOptionModal({
           <span>총 금액</span>
 
           <strong>
-            {(
-              goods.price *
-              quantity
-            ).toLocaleString()}
+            {goods.quantityDiscounts?.length ? (<small>(개당 {unitPrice.toLocaleString()}원)</small>) : null}
+            {subtotal.toLocaleString()}
             원
           </strong>
         </div>

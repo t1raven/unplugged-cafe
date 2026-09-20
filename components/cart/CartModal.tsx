@@ -9,6 +9,7 @@ import {
 import Image from 'next/image';
 
 import { useCartStore } from '@/store/cartStore';
+import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 
 import CartView from './CartView';
 import OrderView from './OrderView';
@@ -38,15 +39,50 @@ export default function CartModal() {
   const [orderNumber, setOrderNumber] =
     useState<string | null>(null);
 
-  const totalPrice = useMemo(() => {
-    return items.reduce(
+  const originalTotalPrice =
+    items.reduce(
       (total, item) =>
         total +
-        item.price *
-          item.quantity,
+        item.price * item.quantity,
       0
     );
-  }, [items]);
+
+  const discountedTotalPrice =
+    items.reduce(
+      (total, item) => {
+        const unitPrice =
+          getGoodsUnitPrice(
+            item,
+            item.quantity
+          );
+
+        return (
+          total +
+          unitPrice * item.quantity
+        );
+      },
+      0
+    );
+
+  const totalDiscountPrice = originalTotalPrice - discountedTotalPrice;
+
+  const totalPrice = 
+    items.reduce(
+      (total, item) => {
+        const unitPrice =
+          getGoodsUnitPrice(
+            item,
+            item.quantity
+          );
+
+        return (
+          total +
+          unitPrice *
+            item.quantity
+        );
+      },
+      0
+    );
 
   useEffect(() => {
     if (!isCartOpen) return;
@@ -120,7 +156,9 @@ export default function CartModal() {
         {step === 'cart' && (
           <CartView
             items={items}
-            totalPrice={totalPrice}
+            originalTotalPrice={originalTotalPrice}
+            discountedTotalPrice={discountedTotalPrice}
+            totalDiscountPrice={totalDiscountPrice}
             removeItem={removeItem}
             increaseQuantity={
               increaseQuantity

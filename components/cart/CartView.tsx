@@ -2,14 +2,15 @@
 
 import Image from 'next/image';
 
-import type {
-  CartItem,
-} from '@/store/cartStore';
+import type { CartItem } from '@/store/cartStore';
+import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 
 interface Props {
   items: CartItem[];
 
-  totalPrice: number;
+  originalTotalPrice: number;
+  discountedTotalPrice: number;
+  totalDiscountPrice: number;
 
   removeItem: (
     cartId: string
@@ -32,7 +33,9 @@ interface Props {
 
 export default function CartView({
   items,
-  totalPrice,
+  originalTotalPrice,
+  discountedTotalPrice,
+  totalDiscountPrice,
   removeItem,
   increaseQuantity,
   decreaseQuantity,
@@ -67,116 +70,120 @@ export default function CartView({
         <>
           <div className="cart-list">
 
-            {items.map((item) => (
-              <article
-                key={item.cartId}
-                className="cart-item"
-              >
-                {item.image && (
-                  <div className="cart-image">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      sizes="96px"
-                    />
-                  </div>
-                )}
+            {items.map((item) => {
+              const unitPrice = getGoodsUnitPrice( item, item.quantity );
+              const originalSubtotal = item.price * item.quantity;
+              const subtotal = unitPrice * item.quantity;
+              const discountPrice = originalSubtotal - subtotal;
 
-                <div className="cart-info">
+              return (
+                <article
+                  key={item.cartId}
+                  className="cart-item"
+                >
+                  {item.image && (
+                    <div className="cart-image">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        sizes="96px"
+                      />
+                    </div>
+                  )}
 
-                  <div className="cart-item-head">
-                    <div>
-                      <h3>
-                        {item.name}
-                      </h3>
+                  <div className="cart-info">
 
-                      {!!item.options.length && (
-                        <div className="cart-options">
-                          {item.options.map(
-                            (option) => (
-                              <span
-                                key={`${option.name}-${option.value}`}
-                              >
-                                {option.name}: {option.value}
-                              </span>
+                    <div className="cart-item-head">
+                      <div>
+                        <h3>
+                          {item.name}
+                        </h3>
+
+                        {!!item.options.length && (
+                          <div className="cart-options">
+                            {item.options.map(
+                              (option) => (
+                                <span
+                                  key={`${option.name}-${option.value}`}
+                                >
+                                  {option.name}: {option.value}
+                                </span>
+                              )
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                      <button
+                        type="button"
+                        className="cart-remove"
+                        onClick={() =>
+                          removeItem(
+                            item.cartId
+                          )
+                        }
+                        aria-label={`${item.name} 삭제`}
+                      >
+                        <span className="material-symbols-rounded">
+                          delete
+                        </span>
+                      </button>
+                    </div>
+
+                    <div className="cart-item-bottom">
+
+                      <div className="cart-quantity">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            decreaseQuantity(
+                              item.cartId
                             )
-                          )}
-                        </div>
-                      )}
+                          }
+                          disabled={
+                            item.quantity <= 1
+                          }
+                        >
+                          −
+                        </button>
+
+                        <span>
+                          {item.quantity}
+                        </span>
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            increaseQuantity(
+                              item.cartId
+                            )
+                          }
+                          disabled={
+                            item.quantity >=
+                            item.stock
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      <strong>
+                        {subtotal.toLocaleString()}
+                        원
+                      </strong>
+
                     </div>
-
-                    <button
-                      type="button"
-                      className="cart-remove"
-                      onClick={() =>
-                        removeItem(
-                          item.cartId
-                        )
-                      }
-                      aria-label={`${item.name} 삭제`}
-                    >
-                      <span className="material-symbols-rounded">
-                        delete
-                      </span>
-                    </button>
                   </div>
-
-                  <div className="cart-item-bottom">
-
-                    <div className="cart-quantity">
-                      <button
-                        type="button"
-                        onClick={() =>
-                          decreaseQuantity(
-                            item.cartId
-                          )
-                        }
-                        disabled={
-                          item.quantity <= 1
-                        }
-                      >
-                        −
-                      </button>
-
-                      <span>
-                        {item.quantity}
-                      </span>
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          increaseQuantity(
-                            item.cartId
-                          )
-                        }
-                        disabled={
-                          item.quantity >=
-                          item.stock
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
-
-                    <strong>
-                      {(
-                        item.price *
-                        item.quantity
-                      ).toLocaleString()}
-                      원
-                    </strong>
-
-                  </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              ) 
+            })}
 
           </div>
 
           <div className="cart-footer">
 
-            <div className="cart-summary">
+            {/*<div className="cart-summary">
               <span>
                 총 상품금액
               </span>
@@ -185,6 +192,35 @@ export default function CartView({
                 {totalPrice.toLocaleString()}
                 원
               </strong>
+            </div>*/}
+
+            <div className="cart-summary">
+              <div className="cart-summary-row">
+                <span>상품금액</span>
+
+                <strong>
+                  {originalTotalPrice.toLocaleString()}
+                  원
+                </strong>
+              </div>
+
+              <div className="cart-summary-row discount">
+                <span>할인금액</span>
+
+                <strong>
+                  -{totalDiscountPrice.toLocaleString()}
+                  원
+                </strong>
+              </div>
+
+              <div className="cart-summary-row total">
+                <span>총 주문금액</span>
+
+                <strong>
+                  {discountedTotalPrice.toLocaleString()}
+                  원
+                </strong>
+              </div>
             </div>
 
             <div className="cart-actions">
@@ -194,7 +230,7 @@ export default function CartView({
                 className="cart-order"
                 onClick={onOrder}
               >
-                구매 신청
+                주문하기
               </button>
 
               <button

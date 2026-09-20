@@ -35,8 +35,14 @@ const listQuery = `
     name,
     "slug": slug.current,
     description,
+
     price,
-    discountPrice,
+    salePrice,
+
+    quantityDiscounts[]{
+      minQuantity,
+      unitPrice
+    },
 
     "category": category->{
       _id,

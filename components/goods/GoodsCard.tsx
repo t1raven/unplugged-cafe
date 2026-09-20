@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 
 import { useCartStore } from '@/store/cartStore';
+import { getDiscountRate } from '@/lib/goodsPrice';
 
 import type { Goods } from '@/types/goods';
 
@@ -25,6 +26,16 @@ export default function GoodsCard({
   const addItem = useCartStore((state) => state.addItem);
 
   const [added, setAdded] = useState(false);
+
+  const basePrice = goods.price;
+
+  const displayPrice = goods.salePrice ?? goods.price;
+
+  const discountRate =
+    getDiscountRate(
+      goods.price,
+      goods.salePrice
+    );
 
   const isSoldOut =
     goods.soldOut ||
@@ -55,6 +66,8 @@ export default function GoodsCard({
       slug: goods.slug,
       name: goods.name,
       price: goods.price,
+      salePrice: goods.salePrice ?? undefined,
+      quantityDiscounts: goods.quantityDiscounts ?? undefined,
       image: goods.image,
       options: [],
       quantity: 1,
@@ -133,13 +146,47 @@ export default function GoodsCard({
         <div className="goods-card__title">
           <h2>{goods.name}</h2>
 
-          <strong>
+          {/*<strong>
             {goods.price.toLocaleString()}원
+          </strong>*/}
+        </div>
+
+        <div className="goods-card__price">
+          {goods.salePrice != null && goods.salePrice < goods.price && (
+            <del>
+              {basePrice.toLocaleString()}원
+            </del>
+          )}
+
+          <strong>
+            {discountRate > 0 && (
+              <span className="discount-rate">
+                {discountRate}%
+              </span>
+            )}
+            {displayPrice.toLocaleString()}원
           </strong>
         </div>
 
+        {goods.quantityDiscounts?.length ? (
+          <div className="quantity-discounts">
+            {goods.quantityDiscounts.map(
+              (discount) => (
+                <span
+                  key={
+                    discount.minQuantity
+                  }
+                >
+                  {discount.minQuantity}개 이상 구매시{' '}
+                  {discount.unitPrice.toLocaleString()}원
+                </span>
+              )
+            )}
+          </div>
+        ) : null}
+
         {goods.description && (
-          <p>{goods.description}</p>
+          <p className="goods-card__description">{goods.description}</p>
         )}
       </div>
     </article>

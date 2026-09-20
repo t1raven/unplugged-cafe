@@ -174,8 +174,15 @@ export const purchaseOrder = defineType({
             },
 
             {
+              name: 'originalPrice',
+              title: '정상가',
+              type: 'number',
+              readOnly: true,
+            },
+
+            {
               name: 'price',
-              title: '구매 당시 단가',
+              title: '실제 구매 단가',
               type: 'number',
               readOnly: true,
               validation: (Rule) =>

@@ -241,22 +241,45 @@
     color: var(--font-color);
 
     font-size: 16px;
-    font-weight: 500;
     line-height: 1.4;
-  }
-
-  strong {
-    flex-shrink: 0;
-
-    color: var(--primary-color);
-
-    font-size: 16px;
-    font-weight: 500;
   }
 }
 
+.goods-card__price {
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+  margin-top: 5px;
 
-.goods-card__info p {
+  del {
+    font-size: 13px;
+    color: var(--font-sec-color);
+  }
+
+  strong {
+    display: flex;
+    align-items: flex-end;
+    gap: 7px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    color: var(--font-color);
+  }
+
+  .discount-rate {
+    color: var(--primary-color);
+  }
+}
+
+.quantity-discounts {
+  font-size: 12px;
+  color: var(--font-sec-color);
+  margin-top: 3px;
+}
+
+
+.goods-card__description {
   margin: 10px 0 0;
 
   color: var(--font-sec-color);
@@ -469,7 +492,7 @@
   inset: 0;
 
   border: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.55);
 }
 
 .modal-panel {
@@ -480,10 +503,10 @@
 
   padding: 28px;
 
-  background-color: #222222e6;
+  background-color: #111111e6;
   backdrop-filter: blur(3px) brightness(1.1);
 
-  box-shadow: 0 0 0 1px var(--border-color);
+  box-shadow: 0 0 0 1px #eeeeee1a;
 
   border-radius: 15px;
 
@@ -575,12 +598,31 @@
     rgba(255, 255, 255, 0.12);
 }
 
+.modal-price {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 20px;
+}
+
 .modal-total {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   margin-top: 20px;
+
+  strong {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+  }
+  small {
+    opacity: 0.65;
+    font-size: 0.65em;
+    font-weight: 400;
+  }
 }
 
 .quantity-control {
@@ -719,10 +761,6 @@
     width: 100%;
   }
 
-  .goods-card__info p {
-    margin-top: 5px;
-  }
-
   .goods-card__label {
     display: flex;
 
@@ -745,10 +783,9 @@
     }
   }
 
-  .goods-card__info {
-    p {
-      font-size: 12px;
-    }
+  .goods-card__description {
+    margin-top: 5px;
+    font-size: 12px;
   }
 
   .goods_gnb_cart {

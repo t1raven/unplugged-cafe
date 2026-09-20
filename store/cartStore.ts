@@ -15,7 +15,14 @@ export interface CartItem {
   slug: string;
 
   name: string;
+  
   price: number;
+  salePrice?: number;
+
+  quantityDiscounts?: {
+    minQuantity: number;
+    unitPrice: number;
+  }[];
 
   image?: string;
 

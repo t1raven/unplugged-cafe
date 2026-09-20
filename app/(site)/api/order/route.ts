@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { writeClient } from '@/sanity/lib/writeClient';
 import { insertOrderRow } from '@/lib/googleSheets';
+import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 
 import type {
   OrderRequest,
@@ -16,15 +17,19 @@ import { normalizePhone, formatPhone } from "@/utils/formatPhone";
 
 interface GoodsDocument {
   _id: string;
-
   name: string;
 
   price: number;
+  salePrice?: number;
+
+  quantityDiscounts?: {
+    minQuantity: number;
+    unitPrice: number;
+  }[];
 
   stock: number;
 
   soldOut: boolean;
-
   isAvailable: boolean;
 
   options?: {
@@ -52,6 +57,7 @@ interface ValidatedItem {
     value: string;
   }[];
 
+  originalPrice: number;
   price: number;
   quantity: number;
   subtotal: number;
@@ -64,7 +70,15 @@ const GOODS_QUERY = `
   ] {
     _id,
     name,
+
     price,
+    salePrice,
+
+    quantityDiscounts[]{
+      minQuantity,
+      unitPrice
+    },
+
     stock,
     soldOut,
     isAvailable,
@@ -163,8 +177,14 @@ export async function POST(
         item
       );
 
+      const unitPrice =
+        getGoodsUnitPrice(
+          goods,
+          item.quantity
+        );
+
       const subtotal =
-        goods.price *
+        unitPrice *
         item.quantity;
 
       validatedItems.push({
@@ -207,6 +227,9 @@ export async function POST(
          * 클라이언트 가격이 아니라
          * Sanity 원본 사용
          */
+        originalPrice:
+          goods.price,
+
         price:
           goods.price,
 
@@ -327,6 +350,12 @@ export async function POST(
               : '';
 
           return `${item.name}${optionText} × ${item.quantity}`;
+          /*return [
+            `${item.name}${optionText}`,
+            `${item.quantity}개`,
+            `개당 ${item.price.toLocaleString()}원`,
+            `${item.subtotal.toLocaleString()}원`,
+          ].join(' / ');*/
         })
         .join(' / ');
 
