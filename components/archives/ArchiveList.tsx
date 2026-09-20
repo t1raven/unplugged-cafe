@@ -299,9 +299,6 @@ export default function ArchiveList({
     };
   }, [selectedIndex]);
 
-
-
-
   const [searchActive, setSearchActive] = useState<boolean>(false);
 
   const searchRef = useRef<HTMLInputElement>(null);
@@ -395,8 +392,6 @@ export default function ArchiveList({
       setLoading(false);
     }
   }, [activeCategory, searchInput]);
-
-
 
   return (
     <>

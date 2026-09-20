@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import Link from 'next/link';
@@ -18,14 +18,6 @@ interface Props {
   onNext: () => void;
 }
 
-const rgbDataURL = (r: number, g: number, b: number) =>
-  `data:image/gif;base64,R0lGODlhAQABAPAA${
-    triplet(0, r, g) + triplet(b, 255, 255)
-  }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
-
-const triplet = (e1: number, e2: number, e3: number) =>
-  String.fromCharCode(e1, e2, e3)
-
 export default function ArchiveModal({
   items,
   currentIndex,
@@ -34,8 +26,15 @@ export default function ArchiveModal({
   onNext,
 }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const item = items[currentIndex];
+
+  useEffect(() => {
+    setImageLoaded(false);
+  }, [currentIndex]);
 
   /*
    * Modal 등장 애니메이션
@@ -78,18 +77,38 @@ export default function ArchiveModal({
     return () => ctx.revert();
   }, []);
 
+  useEffect(() => {
+    if (items.length <= 1) return;
+
+    const nextIndex =
+      currentIndex === items.length - 1
+        ? 0
+        : currentIndex + 1;
+
+    const prevIndex =
+      currentIndex === 0
+        ? items.length - 1
+        : currentIndex - 1;
+
+    const preload = (src?: string) => {
+      if (!src) return;
+
+      const img = new window.Image();
+      img.src = src;
+    };
+
+    preload(items[nextIndex]?.imageUrl);
+    preload(items[prevIndex]?.imageUrl);
+  }, [currentIndex, items]);
+
   /*
    * 이미지 변경
    */
   useEffect(() => {
-    const image = modalRef.current?.querySelector(
-      '.gallery-modal__image img'
-    );
-
-    if (!image) return;
+    if (!imageLoaded || !imageRef.current) return;
 
     gsap.fromTo(
-      image,
+      imageRef.current,
       {
         opacity: 0,
         scale: 0.98,
@@ -99,9 +118,10 @@ export default function ArchiveModal({
         scale: 1,
         duration: 0.4,
         ease: 'power2.out',
+        clearProps: 'transform',
       }
     );
-  }, [currentIndex]);
+  }, [imageLoaded]);
 
   /*
    * ESC
@@ -200,12 +220,16 @@ export default function ArchiveModal({
 
         <div className="gallery-modal__image">
           <Image
+            key={item.imageUrl}
+            ref={imageRef}
             src={item.imageUrl}
             alt={item.title}
             fill
-            placeholder="blur"
-            blurDataURL={rgbDataURL(0, 0, 0)}
             sizes="(max-width: 768px) 100vw, 50vw"
+            onLoad={() => setImageLoaded(true)}
+            style={{
+              opacity: imageLoaded ? 1 : 0,
+            }}
           />
         </div>
 
