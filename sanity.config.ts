@@ -51,10 +51,10 @@ export default defineConfig({
 
   document: {
 
-    newDocumentOptions: (prev, context) => {
+    /*newDocumentOptions: (prev, context) => {
       // 빈 배열을 반환하면 상단 내비게이션 바에서 (+) 추가 버튼이 자동으로 사라집니다.
       return []
-    },
+    },*/
     
     actions: (previousActions, context) => {
       if (context.schemaType !== 'performance') return previousActions

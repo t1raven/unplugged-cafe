@@ -161,6 +161,10 @@ const documentIds = new Set()
 
 const imageNames = new Set()
 
+const dateTime = new Date().getTime()
+
+const interval = 1000
+
 rows.forEach((row, index) => {
   const rowNumber = index + 2
 
@@ -168,6 +172,7 @@ rows.forEach((row, index) => {
   const artists = clean(row.artists)
   const date = clean(row.date)
   const image = clean(row.image)
+  const _createdAt = new Date(dateTime - index * interval).toISOString()
 
   const categoryRef =
     clean(row.categoryRef) ||
@@ -259,6 +264,8 @@ rows.forEach((row, index) => {
     _id: documentId,
 
     _type: 'galleryItem',
+
+    _createdAt,
 
     title,
 

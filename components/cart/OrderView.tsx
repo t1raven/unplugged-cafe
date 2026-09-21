@@ -8,13 +8,9 @@ import {
 
 import Image from 'next/image';
 
-import {
-  useDaumPostcode,
-} from '@/hooks/useDaumPostcode';
+import { useDaumPostcode } from '@/hooks/useDaumPostcode';
 
-import type {
-  CartItem,
-} from '@/store/cartStore';
+import type { CartItem } from '@/hooks/cartStore';
 
 import { formatPhone } from "@/utils/formatPhone";
 

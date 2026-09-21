@@ -8,7 +8,7 @@ import {
 
 import Image from 'next/image';
 
-import { useCartStore } from '@/store/cartStore';
+import { useCartStore } from '@/hooks/cartStore';
 import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 
 import CartView from './CartView';

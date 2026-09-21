@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { useCartStore } from '@/store/cartStore';
+import { useCartStore } from '@/hooks/cartStore';
 
 export default function CartButton() {
   const [mounted, setMounted] =

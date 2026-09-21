@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import type { CartItem } from '@/store/cartStore';
+import type { CartItem } from '@/hooks/cartStore';
 import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 
 interface Props {
