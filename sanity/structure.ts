@@ -43,15 +43,12 @@ export const structure: StructureResolver = async (S, context) => {
           
         S.divider(),
 
+        // Performance
         S.listItem()
           .id('performances')
           .title('공연 일정')
           .icon(CalendarIcon)
           .child(async () => {
-            const client = context.getClient({
-              apiVersion: '2026-01-01',
-            });
-
             const now = new Date();
 
             const todayStart = new Date(now);
@@ -177,7 +174,6 @@ export const structure: StructureResolver = async (S, context) => {
               ]);
           }),
 
-        // Performance
         /*S.documentTypeListItem('performance')
           .title('공연 일정')
           .icon(CalendarIcon),*/
@@ -209,10 +205,6 @@ export const structure: StructureResolver = async (S, context) => {
           .title('카페 메뉴')
           .icon(BottleIcon)
           .child(async () => {
-            const client = context.getClient({
-              apiVersion: '2026-01-01',
-            });
-
             const categories = await client.fetch<
               {
                 _id: string;
@@ -258,7 +250,6 @@ export const structure: StructureResolver = async (S, context) => {
               );
           }),
 
-        // Cafe Menu
         /*orderableDocumentListDeskItem({
           type: 'menuItem',
           title: '카페 메뉴',
@@ -284,10 +275,6 @@ export const structure: StructureResolver = async (S, context) => {
           .title('아카이브 이미지')
           .icon(ImageIcon)
           .child(async () => {
-            const client = context.getClient({
-              apiVersion: '2026-01-01',
-            });
-
             const categories = await client.fetch<
               {
                 _id: string;
@@ -333,7 +320,6 @@ export const structure: StructureResolver = async (S, context) => {
               );
           }),
 
-        // Gallery Item
         /*orderableDocumentListDeskItem({
           type: 'galleryItem',
           title: '아카이브 이미지',
@@ -359,10 +345,6 @@ export const structure: StructureResolver = async (S, context) => {
           .title('굿즈 아이템')
           .icon(PackageIcon)
           .child(async () => {
-            const client = context.getClient({
-              apiVersion: '2026-01-01',
-            });
-
             const categories = await client.fetch<
               {
                 _id: string;
@@ -408,7 +390,6 @@ export const structure: StructureResolver = async (S, context) => {
               );
           }),
 
-        // Goods Item
         /*orderableDocumentListDeskItem({
           type: 'goodsItem',
           title: '굿즈 아이템',
@@ -497,9 +478,135 @@ export const structure: StructureResolver = async (S, context) => {
       .id('performance-root')
       .title('공연 관리')
       .items([
-        S.documentTypeListItem('performance')
+        S.listItem()
+          .id('performances')
           .title('공연 일정')
-          .icon(CalendarIcon),
+          .icon(CalendarIcon)
+          .child(async () => {
+            const now = new Date();
+
+            const todayStart = new Date(now);
+            todayStart.setHours(0, 0, 0, 0);
+
+            const tomorrowStart = new Date(todayStart);
+            tomorrowStart.setDate(tomorrowStart.getDate() + 1);
+
+            const todayStartISO = todayStart.toISOString();
+            const tomorrowStartISO = tomorrowStart.toISOString();
+
+            const counts = await client.fetch<{
+              today: number;
+              upcoming: number;
+              past: number;
+            }>(
+              `{
+                "today": count(
+                  *[
+                    _type == "performance"
+                    && date >= $todayStart
+                    && date < $tomorrowStart
+                  ]
+                ),
+
+                "upcoming": count(
+                  *[
+                    _type == "performance"
+                    && date >= $tomorrowStart
+                  ]
+                ),
+
+                "past": count(
+                  *[
+                    _type == "performance"
+                    && date < $todayStart
+                  ]
+                )
+              }`,
+              {
+                todayStart: todayStartISO,
+                tomorrowStart: tomorrowStartISO,
+              }
+            );
+
+            return S.list()
+              .id('performance-list')
+              .title('공연 일정')
+              .items([
+                S.listItem()
+                  .id('performance-today')
+                  .title(`오늘 공연 (${counts.today})`)
+                  .icon(ClockIcon)
+                  .child(
+                    S.documentList()
+                      .id('performance-today-list')
+                      .title('오늘 공연')
+                      .schemaType('performance')
+                      .filter(`
+                        _type == "performance"
+                        && date >= $todayStart
+                        && date < $tomorrowStart
+                      `)
+                      .params({
+                        todayStart: todayStartISO,
+                        tomorrowStart: tomorrowStartISO,
+                      })
+                      .defaultOrdering([
+                        {
+                          field: 'date',
+                          direction: 'asc',
+                        },
+                      ])
+                  ),
+
+                S.listItem()
+                  .id('performance-upcoming')
+                  .title(`다가오는 공연 (${counts.upcoming})`)
+                  .icon(ClockIcon)
+                  .child(
+                    S.documentList()
+                      .id('performance-upcoming-list')
+                      .title('다가오는 공연')
+                      .schemaType('performance')
+                      .filter(`
+                        _type == "performance"
+                        && date >= $tomorrowStart
+                      `)
+                      .params({
+                        tomorrowStart: tomorrowStartISO,
+                      })
+                      .defaultOrdering([
+                        {
+                          field: 'date',
+                          direction: 'asc',
+                        },
+                      ])
+                  ),
+
+                S.listItem()
+                  .id('performance-past')
+                  .title(`이전 공연 (${counts.past})`)
+                  .icon(ClockIcon)
+                  .child(
+                    S.documentList()
+                      .id('performance-past-list')
+                      .title('이전 공연')
+                      .schemaType('performance')
+                      .filter(`
+                        _type == "performance"
+                        && date < $todayStart
+                      `)
+                      .params({
+                        todayStart: todayStartISO,
+                      })
+                      .defaultOrdering([
+                        {
+                          field: 'date',
+                          direction: 'desc',
+                        },
+                      ])
+                  ),
+              ]);
+          }),
         S.documentTypeListItem('place')
           .title('공연 장소')
           .icon(MarkerIcon),
@@ -524,13 +631,55 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
-        orderableDocumentListDeskItem({
-          type: 'galleryItem',
-          title: '아카이브 이미지',
-          icon: ImageIcon,
-          S,
-          context,
-        }),
+        S.listItem()
+          .id('gallery-images')
+          .title('아카이브 이미지')
+          .icon(ImageIcon)
+          .child(async () => {
+            const categories = await client.fetch<
+              {
+                _id: string;
+                title: string;
+                count: number;
+              }[]
+            >(`
+              *[_type == "galleryCategory"]
+                | order(orderRank asc) {
+                  _id,
+                  title,
+                  "count": count(
+                    *[
+                      _type == "galleryItem"
+                      && category._ref == ^._id
+                    ]
+                  )
+                }
+              `);
+
+            return S.list()
+              .id('gallery-images-category-list')
+              .title('아카이브 이미지')
+              .items(
+                categories.map((category) =>
+                  orderableDocumentListDeskItem({
+                    type: 'galleryItem',
+                    id: `gallery-${category._id}`,
+                    title: `${category.title} (${category.count})`,
+                    icon: ImageIcon,
+
+                    filter:
+                      '_type == "galleryItem" && category._ref == $categoryId',
+
+                    params: {
+                      categoryId: category._id,
+                    },
+
+                    S,
+                    context,
+                  })
+                )
+              );
+          }),
       ])
   }
 
@@ -549,13 +698,55 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
-        orderableDocumentListDeskItem({
-          type: 'menuItem',
-          title: '카페 메뉴',
-          icon: BottleIcon,
-          S,
-          context,
-        }),
+        S.listItem()
+          .id('cafe-menu')
+          .title('카페 메뉴')
+          .icon(BottleIcon)
+          .child(async () => {
+            const categories = await client.fetch<
+              {
+                _id: string;
+                title: string;
+                count: number;
+              }[]
+            >(`
+              *[_type == "menuCategory"]
+                | order(orderRank asc) {
+                  _id,
+                  title,
+                  "count": count(
+                    *[
+                      _type == "menuItem"
+                      && category._ref == ^._id
+                    ]
+                  )
+                }
+              `);
+
+            return S.list()
+              .id('cafe-menu-category-list')
+              .title('카페 메뉴')
+              .items(
+                categories.map((category) =>
+                  orderableDocumentListDeskItem({
+                    type: 'menuItem',
+                    id: `menu-${category._id}`,
+                    title: `${category.title} (${category.count})`,
+                    icon: BottleIcon,
+
+                    filter:
+                      '_type == "menuItem" && category._ref == $categoryId',
+
+                    params: {
+                      categoryId: category._id,
+                    },
+
+                    S,
+                    context,
+                  })
+                )
+              );
+          }),
       ])
   }
 
@@ -574,23 +765,104 @@ export const structure: StructureResolver = async (S, context) => {
           S,
           context,
         }),
-        orderableDocumentListDeskItem({
-          type: 'goodsItem',
-          title: '굿즈 아이템',
-          icon: PackageIcon,
-          S,
-          context,
-        }),
         S.listItem()
-          .id('purchase-management-goods') // 고유 ID 추가
-          .title('구매 관리')
+          .id('goods-item')
+          .title('굿즈 아이템')
+          .icon(PackageIcon)
+          .child(async () => {
+            const categories = await client.fetch<
+              {
+                _id: string;
+                title: string;
+                count: number;
+              }[]
+            >(`
+              *[_type == "goodsCategory"]
+                | order(orderRank asc) {
+                  _id,
+                  title,
+                  "count": count(
+                    *[
+                      _type == "goodsItem"
+                      && category._ref == ^._id
+                    ]
+                  )
+                }
+              `);
+
+            return S.list()
+              .id('goods-item-category-list')
+              .title('굿즈 아이템')
+              .items(
+                categories.map((category) =>
+                  orderableDocumentListDeskItem({
+                    type: 'goodsItem',
+                    id: `goods-${category._id}`,
+                    title: `${category.title} (${category.count})`,
+                    icon: PackageIcon,
+
+                    filter:
+                      '_type == "goodsItem" && category._ref == $categoryId',
+
+                    params: {
+                      categoryId: category._id,
+                    },
+
+                    S,
+                    context,
+                  })
+                )
+              );
+          }),
+        S.listItem()
+          .id('purchase-management') // 고유 ID 추가
+          .title('굿즈 주문내역')
           .icon(BillIcon)
           .child(
             S.list()
-              .id('purchase-management-list-goods') // 고유 ID 추가
-              .title('구매 관리')
+              .id('purchase-management-list') // 고유 ID 추가
+              .title('굿즈 주문내역')
               .items([
-                createOrderList(S, 'all-orders-goods', '전체 주문'), // ID 파라미터 추가
+                createOrderList(
+                  S, 
+                  'all-orders', 
+                  '전체'
+                ),
+
+                createOrderList(
+                  S,
+                  'pending-orders', 
+                  '신청',
+                  'pending'
+                ),
+
+                createOrderList(
+                  S,
+                  'confirmed-orders', 
+                  '확인',
+                  'confirmed'
+                ),
+
+                createOrderList(
+                  S,
+                  'paid-orders', 
+                  '입금 완료',
+                  'paid'
+                ),
+
+                createOrderList(
+                  S,
+                  'completed-orders', 
+                  '수령 완료',
+                  'completed'
+                ),
+
+                createOrderList(
+                  S,
+                  'cancelled-orders', 
+                  '취소',
+                  'cancelled'
+                ),
               ])
           ),
       ])

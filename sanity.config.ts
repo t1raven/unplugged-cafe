@@ -49,12 +49,21 @@ export default defineConfig({
       ),
   },
 
+  /*studio: {
+    components: {
+      navbar: () => null, 
+    },
+  },*/
+
   document: {
 
-    /*newDocumentOptions: (prev, context) => {
-      // 빈 배열을 반환하면 상단 내비게이션 바에서 (+) 추가 버튼이 자동으로 사라집니다.
-      return []
-    },*/
+    newDocumentOptions: (prev, {creationContext}) => {
+      if (creationContext.type === 'global') {
+        // Hide the creation of "settings" documents if the context is global
+        return []
+      }
+      return prev
+    },
     
     actions: (previousActions, context) => {
       if (context.schemaType !== 'performance') return previousActions
