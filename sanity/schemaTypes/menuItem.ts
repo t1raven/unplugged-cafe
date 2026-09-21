@@ -84,12 +84,14 @@ export const menuItem = defineType({
       title: 'name',
       category: 'category.title',
       price: 'price',
+      media: 'image',
     },
 
-    prepare({title, category, price}) {
+    prepare({title, category, price, media}) {
       return {
         title,
         subtitle: `${category ?? ''} · ${price ?? ''}`,
+        media,
       }
     },
   },

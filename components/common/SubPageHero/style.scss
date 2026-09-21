@@ -40,7 +40,7 @@
     }
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 767px){
   .sub-page-hero {
     padding-top: calc(var(--header-height) + 20px);
     padding-bottom: 20px;
@@ -48,5 +48,5 @@
     &-description {
         font-size: 13px;
     }
-}
+  }
 }

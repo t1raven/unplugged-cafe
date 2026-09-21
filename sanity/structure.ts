@@ -1,4 +1,6 @@
 import type {StructureResolver} from 'sanity/structure'
+import {getStudioRole} from './studioAccess'
+
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 import {CalendarIcon} from '@sanity/icons/Calendar'
 import {MarkerIcon} from '@sanity/icons/Marker'
@@ -11,7 +13,7 @@ import {UsersIcon} from '@sanity/icons/Users'
 import {PackageIcon} from '@sanity/icons/Package'
 import {BillIcon} from '@sanity/icons/Bill'
 import {CogIcon} from '@sanity/icons/Cog';
-import {getStudioRole} from './studioAccess'
+import {ClockIcon} from '@sanity/icons/Clock';
 
 const API_VERSION = '2026-01-01'
 
@@ -41,14 +43,150 @@ export const structure: StructureResolver = async (S, context) => {
           
         S.divider(),
 
-        // Performance
-        S.documentTypeListItem('performance')
+        S.listItem()
+          .id('performances')
           .title('공연 일정')
-          .icon(CalendarIcon),
+          .icon(CalendarIcon)
+          .child(async () => {
+            const client = context.getClient({
+              apiVersion: '2026-01-01',
+            });
+
+            const now = new Date();
+
+            const todayStart = new Date(now);
+            todayStart.setHours(0, 0, 0, 0);
+
+            const tomorrowStart = new Date(todayStart);
+            tomorrowStart.setDate(tomorrowStart.getDate() + 1);
+
+            const todayStartISO = todayStart.toISOString();
+            const tomorrowStartISO = tomorrowStart.toISOString();
+
+            const counts = await client.fetch<{
+              today: number;
+              upcoming: number;
+              past: number;
+            }>(
+              `{
+                "today": count(
+                  *[
+                    _type == "performance"
+                    && date >= $todayStart
+                    && date < $tomorrowStart
+                  ]
+                ),
+
+                "upcoming": count(
+                  *[
+                    _type == "performance"
+                    && date >= $tomorrowStart
+                  ]
+                ),
+
+                "past": count(
+                  *[
+                    _type == "performance"
+                    && date < $todayStart
+                  ]
+                )
+              }`,
+              {
+                todayStart: todayStartISO,
+                tomorrowStart: tomorrowStartISO,
+              }
+            );
+
+            return S.list()
+              .id('performance-list')
+              .title('공연 일정')
+              .items([
+                S.listItem()
+                  .id('performance-today')
+                  .title(`오늘 공연 (${counts.today})`)
+                  .icon(ClockIcon)
+                  .child(
+                    S.documentList()
+                      .id('performance-today-list')
+                      .title('오늘 공연')
+                      .schemaType('performance')
+                      .filter(`
+                        _type == "performance"
+                        && date >= $todayStart
+                        && date < $tomorrowStart
+                      `)
+                      .params({
+                        todayStart: todayStartISO,
+                        tomorrowStart: tomorrowStartISO,
+                      })
+                      .defaultOrdering([
+                        {
+                          field: 'date',
+                          direction: 'asc',
+                        },
+                      ])
+                  ),
+
+                S.listItem()
+                  .id('performance-upcoming')
+                  .title(`다가오는 공연 (${counts.upcoming})`)
+                  .icon(ClockIcon)
+                  .child(
+                    S.documentList()
+                      .id('performance-upcoming-list')
+                      .title('다가오는 공연')
+                      .schemaType('performance')
+                      .filter(`
+                        _type == "performance"
+                        && date >= $tomorrowStart
+                      `)
+                      .params({
+                        tomorrowStart: tomorrowStartISO,
+                      })
+                      .defaultOrdering([
+                        {
+                          field: 'date',
+                          direction: 'asc',
+                        },
+                      ])
+                  ),
+
+                S.listItem()
+                  .id('performance-past')
+                  .title(`이전 공연 (${counts.past})`)
+                  .icon(ClockIcon)
+                  .child(
+                    S.documentList()
+                      .id('performance-past-list')
+                      .title('이전 공연')
+                      .schemaType('performance')
+                      .filter(`
+                        _type == "performance"
+                        && date < $todayStart
+                      `)
+                      .params({
+                        todayStart: todayStartISO,
+                      })
+                      .defaultOrdering([
+                        {
+                          field: 'date',
+                          direction: 'desc',
+                        },
+                      ])
+                  ),
+              ]);
+          }),
+
+        // Performance
+        /*S.documentTypeListItem('performance')
+          .title('공연 일정')
+          .icon(CalendarIcon),*/
+
         // Place
         S.documentTypeListItem('place')
           .title('공연 장소')
           .icon(MarkerIcon),
+
         // Artist
         S.documentTypeListItem('artist')
           .title('아티스트')

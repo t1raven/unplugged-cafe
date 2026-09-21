@@ -72,8 +72,15 @@ export default function PerformanceViewPage({
 
   const now = new Date();
 
-  const salesOpen = new Date(performance.salesOpen ?? new Date());
-  const salesClose = new Date(performance.salesClose ?? new Date());
+  const performanceDate = new Date(performance.date);
+  const endDate = new Date(performanceDate.getTime() + 2 * 60 * 60 * 1000);
+  const isEnd = now >= endDate;
+
+  const salesOpenDate = new Date(performance.salesOpen ?? new Date());
+  const isSalesOpen = now <= salesOpenDate;
+
+  const salesCloseDate = new Date(performance.salesClose ?? new Date());
+  const isSalesClose = now >= salesCloseDate;
 
   const [ios, setIos] = useState(false);
 
@@ -305,15 +312,19 @@ export default function PerformanceViewPage({
           <button type="button" onClick={handleShare} className="gnb_btn">
             <span className="material-symbols-rounded icon" aria-label="공유하기">{ios ? "ios_share" : "share"}</span>
           </button>
-          {!performance.reservationOpen ? (
+          {isEnd ? (
             <button disabled className="gnb_btn reservation_btn">
-              <span>매진되었습니다</span>
+              <span>공연 종료</span>
             </button>
-          ) : now < salesOpen ? (
+          ) : !performance.reservationOpen ? (
+            <button disabled className="gnb_btn reservation_btn">
+              <span>매진되었습니다.</span>
+            </button>
+          ) : isSalesOpen ? (
             <button disabled className="gnb_btn reservation_btn">
               <span>사전 예매 오픈전</span>
             </button>
-          ) : now >= salesClose ? (
+          ) : isSalesClose ? (
             <button disabled className="gnb_btn reservation_btn">
               <span>사전 예매 마감 <br/><small>(현장 예매만 가능합니다)</small></span>
             </button>
