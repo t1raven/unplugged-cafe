@@ -26,6 +26,7 @@ export interface SiteSEO {
 
 export interface SiteSettings {
   siteName: string;
+  businessName?: string;
   phone?: string;
   address: string;
   businessHours: string;

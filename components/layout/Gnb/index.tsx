@@ -44,12 +44,14 @@ export default function Gnb() {
       gsap.set(moveBgRef.current, { 
         scale: 0,
         x,
+        y: '-50%',
         width, 
       }); 
     } 
 
     gsap.to(moveBgRef.current, { 
       x,
+      y: '-50%',
       scale: 1,
       width, 
       duration: 0.35, 
@@ -102,7 +104,7 @@ export default function Gnb() {
       moveBackground(true);
       setTimeout(() => {
         moveBackground(true); 
-      }, 350);
+      }, 400);
     });
   }, [pathname]);
 
@@ -119,7 +121,7 @@ export default function Gnb() {
           <li className={pathname === '/' ? "active" : ""}><Link href="/" title="홈"><span className="icon material-symbols-rounded" translate="no">home</span><span className="text">홈</span></Link></li>
           <li className={pathname.startsWith('/cafe') ? "active" : ""}><Link href="/cafe" title="카페"><span className="icon material-symbols-rounded" translate="no">local_cafe</span><span className="text">카페</span></Link></li>
           <li className={pathname.startsWith('/performances') ? "active" : ""}><Link href="/performances" title="공연예매"><span className="icon material-symbols-rounded" translate="no">confirmation_number</span><span className="text">공연예매</span></Link></li>
-          <li className={pathname.startsWith('/rental') ? "active" : ""}><Link href="/rental" title="대관신청"><span className="icon material-symbols-rounded" translate="no">developer_guide</span><span className="text">대관신청</span></Link></li>
+          <li className={pathname.startsWith('/rental') ? "active" : ""}><Link href="/rental" title="공연·대관신청"><span className="icon material-symbols-rounded" translate="no">developer_guide</span><span className="text">공연·대관신청</span></Link></li>
           <li className={pathname.startsWith('/goods') ? "active" : ""}><Link href="/goods" title="굿즈·앨범"><span className="icon material-symbols-rounded" translate="no">local_mall</span><span className="text">굿즈·앨범</span></Link></li>
           <li className={pathname.startsWith('/archives') ? "active" : ""}><Link href="/archives" title="아카이브"><span className="icon material-symbols-rounded" translate="no">photo</span><span className="text">아카이브</span></Link></li>
         </ul>

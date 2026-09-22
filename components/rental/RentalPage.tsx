@@ -266,8 +266,6 @@ export default function RentalPage() {
           </div>
 
           <div className="rental-contact">
-            <p>UNPLUGGED LOUNGE / 서교음악다방</p>
-
             <span>
               DM @unplugged.lounge
               <br />

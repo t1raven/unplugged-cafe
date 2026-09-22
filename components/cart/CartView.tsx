@@ -230,7 +230,7 @@ export default function CartView({
                 className="cart-order"
                 onClick={onOrder}
               >
-                주문하기
+                구매하기
               </button>
 
               <button

@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { getSiteSettings } from '@/sanity/lib/siteSettings';
+import { getSiteSettings } from '@/lib/siteSettings';
 
 import './style.scss';
 

@@ -8,6 +8,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
       _id == "siteSettings"
     ][0] {
       siteName,
+      businessName,
       address,
       phone,
       businessHours,

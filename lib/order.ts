@@ -1,5 +1,5 @@
 import type { DeliveryMethod } from '@/types/order';
-import { getSiteSettings } from '@/sanity/lib/siteSettings';
+import { getSiteSettings } from '@/lib/siteSettings';
 
 const settings = await getSiteSettings();
 

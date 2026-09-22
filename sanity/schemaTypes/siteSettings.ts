@@ -34,6 +34,13 @@ export const siteSettings = defineType({
     }),
 
     defineField({
+      name: 'businessName',
+      title: '상호명',
+      type: 'string',
+      group: 'general',
+    }),
+
+    defineField({
       name: 'address',
       title: '주소',
       type: 'string',

@@ -1,5 +1,5 @@
 import './style.scss'
-import { getSiteSettings } from '@/sanity/lib/siteSettings';
+import { getSiteSettings } from '@/lib/siteSettings';
 
 const settings = await getSiteSettings();
 
@@ -8,6 +8,7 @@ export default function Footer() {
     <footer id="site-footer">
       <div className="inner">
         <div>
+          <div className="footer-title">{settings?.businessName}</div>
           <div className="footer-info">
             <ul>
               <li><b>주소</b> {settings?.address}</li>

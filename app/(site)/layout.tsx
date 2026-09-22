@@ -9,7 +9,7 @@ const notoSansKR = Noto_Sans_KR({
 });
 
 import type { Metadata, Viewport } from "next";
-import { getSiteSettings } from '@/sanity/lib/siteSettings';
+import { getSiteSettings } from '@/lib/siteSettings';
 import { urlFor } from '@/sanity/lib/image';
 
 export async function generateMetadata(): Promise<Metadata> {

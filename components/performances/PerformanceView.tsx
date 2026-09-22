@@ -322,11 +322,17 @@ export default function PerformanceViewPage({
             </button>
           ) : isSalesOpen ? (
             <button disabled className="gnb_btn reservation_btn">
-              <span>사전 예매 오픈전</span>
+              <span>
+                사전 예매 오픈전
+                {performance.salesOpen && <><br /><small>(오픈: {formatDateTime(performance.salesOpen)})</small></>}
+              </span>
             </button>
           ) : isSalesClose ? (
             <button disabled className="gnb_btn reservation_btn">
-              <span>사전 예매 마감 <br/><small>(현장 예매만 가능합니다)</small></span>
+              <span>
+                사전 예매 마감 
+                <br/><small>(현장 예매만 가능합니다)</small>
+              </span>
             </button>
           ) : (
             <Link

@@ -14,7 +14,7 @@ import type { CartItem } from '@/hooks/cartStore';
 
 import { formatPhone } from "@/utils/formatPhone";
 
-import { getSiteSettings } from '@/sanity/lib/siteSettings';
+import { getSiteSettings } from '@/lib/siteSettings';
 
 const settings = await getSiteSettings();
 
@@ -241,7 +241,7 @@ export default function OrderView({
           </span>
         </button>
 
-        <h2>주문 신청</h2>
+        <h2>구매 신청</h2>
 
         <div />
       </div>
@@ -681,7 +681,7 @@ export default function OrderView({
           >
             {loading
               ? '신청 중...'
-              : '주문 신청하기'}
+              : '구매 신청하기'}
           </button>
 
         </div>

@@ -13,7 +13,7 @@
   inset: 0;
 
   border: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background-color: rgba(0, 0, 0, 0.55);
 }
 
 .sns-modal-panel {
@@ -24,7 +24,7 @@
 
   padding: 40px;
 
-  background-color: rgba(238, 238, 238, .8);
+  background-color: var(--background-sec-color);
   backdrop-filter: blur(5px) brightness(1.1);
   box-shadow: 0 0 0 1px var(--border-color);
 
@@ -69,7 +69,7 @@
 
 [data-theme="dark"] {
 	.sns-modal-panel {
-		background-color: rgba(25, 23, 20, .75);
+		//background-color: rgba(25, 23, 20, .75);
 	}
 }
 
