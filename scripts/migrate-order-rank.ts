@@ -9,6 +9,7 @@ const writeClient = client.withConfig({
 })
 
 const DOCUMENT_TYPE = 'galleryItem'
+const CATEGORY = '공연'
 
 async function migrate() {
   const documents = await writeClient.fetch<
@@ -21,9 +22,10 @@ async function migrate() {
     `
       *[
         _type == $type &&
+        category->slug.current == $category &&
         !(_id in path("drafts.**"))
       ]
-      | order(_createdAt asc) {
+      | order(_createdAt desc) {
         _id,
         _createdAt,
         orderRank
@@ -31,6 +33,7 @@ async function migrate() {
     `,
     {
       type: DOCUMENT_TYPE,
+      category: CATEGORY,
     }
   )
 

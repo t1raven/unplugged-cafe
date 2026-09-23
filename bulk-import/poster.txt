@@ -1,3 +1,10 @@
 node .\bulk-import\generate-poster-import.mjs
 
+
+npx sanity@latest datasets import -d production --replace .\bulk-import\artists.ndjson
+
+npx sanity@latest datasets import -d production --replace --asset-concurrency 5 .\bulk-import\performance.ndjson
+
 npx sanity@latest datasets import -d production --replace --asset-concurrency 5 .\bulk-import\poster.ndjson
+
+

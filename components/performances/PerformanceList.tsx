@@ -95,30 +95,15 @@ export default function PerformanceCalendar({
     };
   };
 
-
   const getDDay = (date: string) => {
+    const todayDate = new Date();
     const performanceDate = new Date(date);
 
-    const todayDate = new Date();
+    const today = getDateOnly(todayDate);
+    const target = getDateOnly(performanceDate);
 
-    // 시간을 제거하고 날짜만 비교
-    const today = new Date(
-      todayDate.getFullYear(),
-      todayDate.getMonth(),
-      todayDate.getDate()
-    );
-
-    const target = new Date(
-      performanceDate.getFullYear(),
-      performanceDate.getMonth(),
-      performanceDate.getDate()
-    );
-
-    const diffTime =
-      target.getTime() - today.getTime();
-
-    const diffDays =
-      Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffTime = target - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     if (diffDays === 0) {
       return 'D-DAY';
@@ -127,6 +112,12 @@ export default function PerformanceCalendar({
     return `D-${diffDays}`;
   }
 
+  const getDateOnly = (date: Date) =>
+    new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    ).getTime();
 
   // ==================================================
   // Performance Filter
@@ -357,25 +348,19 @@ export default function PerformanceCalendar({
   const upcomingPerformances =
     performances
       .filter((performance) => {
-        if (!performance.date) {
-          return false;
-        }
+        if (!performance.date) return false;
 
-        const performanceDate =
-          getPerformanceDate(performance);
+        const performanceDate = getPerformanceDate(performance);
 
-        return performanceDate > today;
+        return getDateOnly(getPerformanceDate(performance)) > getDateOnly(today);
       })
       .sort((a, b) => {
-        const dateA =
-          getPerformanceDate(a).getTime();
-
-        const dateB =
-          getPerformanceDate(b).getTime();
+        const dateA = getPerformanceDate(a).getTime();
+        const dateB = getPerformanceDate(b).getTime();
 
         return dateA - dateB;
       })
-      .slice(0, 12);
+      .slice(0, 16);
 
   return (
     <div className="sub-page-section performance-calendar">

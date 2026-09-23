@@ -6,7 +6,6 @@ export interface Artist {
   slug?: {
     current?: string;
   };
-  genre?: string;
   bio?: PortableTextBlock[];
   instagram?: string;
   youtube?: string;

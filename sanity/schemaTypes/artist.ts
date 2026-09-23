@@ -31,23 +31,6 @@ export const artist = defineType({
     }),
 
     defineField({
-      name: 'genre',
-      title: '장르',
-      type: 'string',
-      options: {
-        list: [
-          {title: '어쿠스틱', value: 'acoustic'},
-          {title: '재즈', value: 'jazz'},
-          {title: '록', value: 'rock'},
-          {title: '팝', value: 'pop'},
-          {title: '인디', value: 'indie'},
-          {title: '블루스', value: 'blues'},
-          {title: '기타', value: 'etc'},
-        ],
-      },
-    }),
-
-    defineField({
       name: 'bio',
       title: '아티스트 소개',
       type: 'array',
@@ -80,8 +63,6 @@ export const artist = defineType({
   preview: {
     select: {
       title: 'name',
-      subtitle: 'genre',
-      media: 'profileImage',
     },
   },
 })
