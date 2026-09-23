@@ -94,6 +94,14 @@
   cursor: pointer;
 }
 
+.cart-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  overflow-y: auto;
+}
+
 .cart-empty {
   display: flex;
   align-items: center;
@@ -109,9 +117,7 @@
 .cart-list {
   flex: 1;
 
-  overflow-y: auto;
-
-  padding: 0 24px;
+  padding: 0 24px 20px;
 }
 
 .cart-item {
@@ -139,7 +145,7 @@
   background-color: var(--background-sec-color);
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 40px;
+  background-size: 35%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23333333cc'%3E%3Cpath d='M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-80 92L160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11Zm200-528 77-44-237-137-78 45 238 136Zm-160 93 78-45-237-137-78 45 237 137Z'/%3E%3C/svg%3E");
 
   img {
@@ -256,11 +262,31 @@
 }
 
 .cart-footer {
+  position: sticky;
+  bottom: 0;
+
   flex: 0 0 auto;
 
   padding: 20px 24px 24px;
 
   border-top: 1px solid var(--border-color);
+  backdrop-filter: blur(5px);
+
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--background-color);
+    opacity: 0.8;
+  }
 }
 
 .cart-summary {
@@ -355,7 +381,7 @@
 
   overflow-y: auto;
 
-  padding: 24px;
+  padding: 20px 24px;
 }
 
 .order-products {
@@ -404,7 +430,7 @@
   background-color: var(--background-sec-color);
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 40px;
+  background-size: 35%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23333333cc'%3E%3Cpath d='M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-80 92L160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11Zm200-528 77-44-237-137-78 45 238 136Zm-160 93 78-45-237-137-78 45 237 137Z'/%3E%3C/svg%3E");
 
   img {
@@ -455,7 +481,11 @@
   flex-direction: column;
   gap: 8px;
 
+  border-top: 1px solid var(--border-color);
+
+  margin-top: 8px;
   margin-bottom: 18px;
+  padding-top: 14px;
 }
 
 .order-price-row {
@@ -487,21 +517,76 @@
 }
 
 .order-submit {
+  position: sticky;
+  bottom: 0;
+
   width: 100%;
   min-height: 50px;
 
   border: 0;
   border-radius: 10em;
 
-  background: var(--primary-color);
   color: #fff;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  backdrop-filter: blur(3px) brightness(1.1);
+  box-shadow: 0 0 0 1px var(--border-color);
+
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease;
 
   cursor: pointer;
 
-  &:disabled {
-    opacity: 0.4;
+  & > * {
+    position: relative;
+    z-index: 2;
+  }
 
+  &:after {
+    content: ''; 
+    position: absolute; 
+    left: 0; 
+    top: 0; 
+    z-index: 1;
+    width: 100%; 
+    height: 100%;
+    border-radius: 999px;
+    background-color: var(--primary-color);
+    opacity: 0.8;
+  }
+
+  &:before { 
+    content: ''; 
+    position: absolute; 
+    left: 0; 
+    top: 0; 
+    z-index: 3;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(255,255,255,0.2); 
+    opacity: 0;
+    -webkit-transition: .25s ease; 
+    transition: .25s ease;
+  }
+
+  &:active {
+    transform: scale(1.06);
+  }
+
+  &:hover:before {
+    opacity: 1;
+  }
+
+  &:disabled {
+    color: #ccc;
     cursor: default;
+  }
+
+  &:disabled:after {
+    background-color: var(--disabled-color);
+    
   }
 }
 
@@ -739,7 +824,7 @@
 
     background-color: var(--border-color); 
 
-    font-size: 16px;
+    font-size: 1em;
 
     color: var(--font-sec-color);
 
@@ -856,12 +941,12 @@
 
   .cart-header {
     padding:
-      14px 18px;
+      14px 20px;
   }
 
   .cart-list {
     padding:
-      0 18px;
+      0 20px 20px;
   }
 
   .cart-footer {

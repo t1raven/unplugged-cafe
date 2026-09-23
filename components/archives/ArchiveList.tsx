@@ -88,8 +88,7 @@ export default function ArchiveList({
 
       setPage(nextPage)
       setHasMore(data.hasMore)
-
-      console.log(page);
+      
     } catch (error) {
       console.error(error)
     } finally {
@@ -117,8 +116,8 @@ export default function ArchiveList({
         }
       },
       {
-        //rootMargin: `${window.innerHeight * 0.2}px 0px`,
-        rootMargin: `0px`,
+        rootMargin: `${window.innerHeight * 0.3}px 0px`,
+        //rootMargin: `0px`,
       }
     )
 

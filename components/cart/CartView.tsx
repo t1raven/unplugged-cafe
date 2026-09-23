@@ -68,181 +68,173 @@ export default function CartView({
         </div>
       ) : (
         <>
-          <div className="cart-list">
+          <div className="cart-body">
+            <div className="cart-list">
 
-            {items.map((item) => {
-              const unitPrice = getGoodsUnitPrice( item, item.quantity );
-              const originalSubtotal = item.price * item.quantity;
-              const subtotal = unitPrice * item.quantity;
-              const discountPrice = originalSubtotal - subtotal;
+              {items.map((item) => {
+                const unitPrice = getGoodsUnitPrice( item, item.quantity );
+                const originalSubtotal = item.price * item.quantity;
+                const subtotal = unitPrice * item.quantity;
+                const discountPrice = originalSubtotal - subtotal;
 
-              return (
-                <article
-                  key={item.cartId}
-                  className="cart-item"
-                >
-                  {item.image && (
+                return (
+                  <article
+                    key={item.cartId}
+                    className="cart-item"
+                  >
+                    
                     <div className="cart-image">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        sizes="96px"
-                      />
+                      {item.image && (
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          fill
+                          sizes="96px"
+                        />
+                      )}
                     </div>
-                  )}
 
-                  <div className="cart-info">
+                    <div className="cart-info">
 
-                    <div className="cart-item-head">
-                      <div>
-                        <h3>
-                          {item.name}
-                        </h3>
+                      <div className="cart-item-head">
+                        <div>
+                          <h3>
+                            {item.name}
+                          </h3>
 
-                        {!!item.options.length && (
-                          <div className="cart-options">
-                            {item.options.map(
-                              (option) => (
-                                <span
-                                  key={`${option.name}-${option.value}`}
-                                >
-                                  {option.name}: {option.value}
-                                </span>
+                          {!!item.options.length && (
+                            <div className="cart-options">
+                              {item.options.map(
+                                (option) => (
+                                  <span
+                                    key={`${option.name}-${option.value}`}
+                                  >
+                                    {option.name}: {option.value}
+                                  </span>
+                                )
+                              )}
+                            </div>
+                          )}
+                        </div>
+
+                        <button
+                          type="button"
+                          className="cart-remove"
+                          onClick={() =>
+                            removeItem(
+                              item.cartId
+                            )
+                          }
+                          aria-label={`${item.name} 삭제`}
+                        >
+                          <span className="material-symbols-rounded">
+                            delete
+                          </span>
+                        </button>
+                      </div>
+
+                      <div className="cart-item-bottom">
+
+                        <div className="cart-quantity">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              decreaseQuantity(
+                                item.cartId
                               )
-                            )}
-                          </div>
-                        )}
+                            }
+                            disabled={
+                              item.quantity <= 1
+                            }
+                          >
+                            −
+                          </button>
+
+                          <span>
+                            {item.quantity}
+                          </span>
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              increaseQuantity(
+                                item.cartId
+                              )
+                            }
+                            disabled={
+                              item.quantity >=
+                              item.stock
+                            }
+                          >
+                            +
+                          </button>
+                        </div>
+
+                        <strong>
+                          {subtotal.toLocaleString()}
+                          원
+                        </strong>
+
                       </div>
-
-                      <button
-                        type="button"
-                        className="cart-remove"
-                        onClick={() =>
-                          removeItem(
-                            item.cartId
-                          )
-                        }
-                        aria-label={`${item.name} 삭제`}
-                      >
-                        <span className="material-symbols-rounded">
-                          delete
-                        </span>
-                      </button>
                     </div>
-
-                    <div className="cart-item-bottom">
-
-                      <div className="cart-quantity">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            decreaseQuantity(
-                              item.cartId
-                            )
-                          }
-                          disabled={
-                            item.quantity <= 1
-                          }
-                        >
-                          −
-                        </button>
-
-                        <span>
-                          {item.quantity}
-                        </span>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            increaseQuantity(
-                              item.cartId
-                            )
-                          }
-                          disabled={
-                            item.quantity >=
-                            item.stock
-                          }
-                        >
-                          +
-                        </button>
-                      </div>
-
-                      <strong>
-                        {subtotal.toLocaleString()}
-                        원
-                      </strong>
-
-                    </div>
-                  </div>
-                </article>
-              ) 
-            })}
-
-          </div>
-
-          <div className="cart-footer">
-
-            {/*<div className="cart-summary">
-              <span>
-                총 상품금액
-              </span>
-
-              <strong>
-                {totalPrice.toLocaleString()}
-                원
-              </strong>
-            </div>*/}
-
-            <div className="cart-summary">
-              <div className="cart-summary-row">
-                <span>상품금액</span>
-
-                <strong>
-                  {originalTotalPrice.toLocaleString()}
-                  원
-                </strong>
-              </div>
-
-              <div className="cart-summary-row discount">
-                <span>할인금액</span>
-
-                <strong>
-                  -{totalDiscountPrice.toLocaleString()}
-                  원
-                </strong>
-              </div>
-
-              <div className="cart-summary-row total">
-                <span>총 주문금액</span>
-
-                <strong>
-                  {discountedTotalPrice.toLocaleString()}
-                  원
-                </strong>
-              </div>
-            </div>
-
-            <div className="cart-actions">
-
-              <button
-                type="button"
-                className="cart-order"
-                onClick={onOrder}
-              >
-                구매하기
-              </button>
-
-              <button
-                type="button"
-                className="cart-clear"
-                onClick={clearCart}
-              >
-                전체 삭제
-              </button>
+                  </article>
+                ) 
+              })}
 
             </div>
 
+            <div className="cart-footer">
+
+              <div className="cart-summary">
+                <div className="cart-summary-row">
+                  <span>상품금액</span>
+
+                  <strong>
+                    {originalTotalPrice.toLocaleString()}
+                    원
+                  </strong>
+                </div>
+
+                <div className="cart-summary-row discount">
+                  <span>할인금액</span>
+
+                  <strong>
+                    -{totalDiscountPrice.toLocaleString()}
+                    원
+                  </strong>
+                </div>
+
+                <div className="cart-summary-row total">
+                  <span>총 주문금액</span>
+
+                  <strong>
+                    {discountedTotalPrice.toLocaleString()}
+                    원
+                  </strong>
+                </div>
+              </div>
+
+              <div className="cart-actions">
+
+                <button
+                  type="button"
+                  className="cart-order"
+                  onClick={onOrder}
+                >
+                  구매하기
+                </button>
+
+                <button
+                  type="button"
+                  className="cart-clear"
+                  onClick={clearCart}
+                >
+                  전체 삭제
+                </button>
+
+              </div>
+
+            </div>
           </div>
         </>
       )}

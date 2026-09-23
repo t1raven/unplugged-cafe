@@ -5,6 +5,7 @@
 	top: 0;
 	left: 0;
 	z-index: 100;
+	backdrop-filter: blur(5px);
 	transition: top 0.25s ease;
 
 	&:after {
@@ -14,8 +15,8 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		background-color: rgba(234, 231, 224, .8);
-		backdrop-filter: blur(5px);
+		background-color: var(--background-sec-color);
+		opacity: 0.8;
 	}
 	> .inner {
 		position: relative;
@@ -106,14 +107,6 @@ html.scrollDown #site-header {
 
 html.scrollUp #site-header {
   top: 0;
-}
-
-[data-theme="dark"] {
-	#site-header {
-		&:after {
-			background-color: rgba(25, 23, 20, .75);
-		}
-	}
 }
 
 @media screen and (max-width: 1023px){

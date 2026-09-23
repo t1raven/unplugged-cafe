@@ -354,16 +354,16 @@ export default function OrderView({
                 key={item.cartId}
                 className="order-product"
               >
-                {item.image && (
-                  <div className="order-product-image">
+                <div className="order-product-image">
+                  {item.image && (
                     <Image
                       src={item.image}
                       alt={item.name}
                       fill
                       sizes="96px"
                     />
-                  </div>
-                )}
+                  )}
+                </div>
 
                 <div className="order-product-info">
 
@@ -609,31 +609,7 @@ export default function OrderView({
 
           </section>
 
-        </div>
-
-        <div className="order-footer">
-
-          {error && (
-            <p
-              className="order-error"
-              role="alert"
-            >
-              {error}
-            </p>
-          )}
-
-          {/*<div className="order-total">
-            <span>
-              총 금액
-            </span>
-
-            <strong>
-              {finalPrice.toLocaleString()}
-              원
-            </strong>
-          </div>*/}
-
-          <div className="order-price-summary">
+          <section className="order-section order-price-summary">
 
             <div className="order-price-row">
               <span>
@@ -669,7 +645,16 @@ export default function OrderView({
               </strong>
             </div>
 
-          </div>
+          </section>
+
+          {error && (
+            <p
+              className="order-error"
+              role="alert"
+            >
+              {error}
+            </p>
+          )}
 
           <button
             type="submit"
@@ -679,12 +664,37 @@ export default function OrderView({
               !privacyAgreed
             }
           >
-            {loading
-              ? '신청 중...'
-              : '구매 신청하기'}
+            <span>
+              {loading
+                ? '신청 중...'
+                : '구매 신청하기'}
+            </span>
           </button>
 
         </div>
+
+        {/*<div className="order-footer">
+
+          {error && (
+            <p
+              className="order-error"
+              role="alert"
+            >
+              {error}
+            </p>
+          )}
+
+          <div className="order-total">
+            <span>
+              총 금액
+            </span>
+
+            <strong>
+              {finalPrice.toLocaleString()}
+              원
+            </strong>
+          </div>
+        </div>*/}
       </form>
     </>
   );

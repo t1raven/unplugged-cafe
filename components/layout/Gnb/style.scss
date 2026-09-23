@@ -44,7 +44,7 @@
 			    justify-content: center;
 			    gap: 1px;
 			    align-items: center;
-			    width: 90px;
+			    width: 100px;
 			    height: 50px;
 			    padding: 5px 10px;
 			    border-radius: 999px;
@@ -62,6 +62,7 @@
 					  -webkit-font-smoothing: antialiased;
 					  width: 1em;
 						height: 1em;
+						position: relative;
 					  overflow: hidden;
 					  transition: all .35s ease-in-out;
 			    }
@@ -70,6 +71,30 @@
 				    line-height: 1.25;
 				    white-space: nowrap;
 			    }
+			    .goods_icon {
+			    	display: inline-block;
+			    	position: relative;
+			    	width: 22px;
+			    	height: 22px;;
+			    }
+			    .cnt {
+		        position: absolute;
+		        top: -2px;
+		        left: 100%;
+		        transform: translateX(-50%);
+		        display: flex;
+		        align-items: center;
+		        justify-content: center;
+		        text-align: center;
+		        min-width: 15px;
+		        height: 15px;
+		        padding: 0 4px;
+		        border-radius: 10em;
+		        background-color: var(--secondary-color);
+		        color: #fff;
+		        font-size: 10px;
+		        line-height: 1;
+		      }
 			    &:hover {
 			    	opacity: 0.7;
 			    }
@@ -135,9 +160,12 @@ html.scrollUp #site-gnb {
 			> ul {
 				> li {
 					> a {
-						padding: 6px 15px;
 						.icon {
 					  	font-size: 24px;
+					  }
+					  .goods_icon {
+					  	width: 24px;
+					  	height: 24px;
 					  }
 					}
 				}

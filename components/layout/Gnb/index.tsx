@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname, useParams, useRouter } from "next/navigation";
 import { getDeviceType, DeviceType } from "@/utils/device";
+import { useCartStore } from '@/hooks/cartStore';
 import Link from 'next/link';
 import gsap from 'gsap';
 
@@ -108,6 +109,25 @@ export default function Gnb() {
     });
   }, [pathname]);
 
+  const [mounted, setMounted] =
+    useState(false);
+
+  const items = useCartStore(
+    (state) => state.items
+  );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const count = mounted
+    ? items.reduce(
+        (total, item) =>
+          total + item.quantity,
+        0
+      )
+    : 0;
+
   /*useEffect(() => {
     const handleResize = () => { moveBackground(false); };
     window.addEventListener('resize', handleResize);
@@ -118,12 +138,47 @@ export default function Gnb() {
     <div id="site-gnb" className={device !== "desktop" && (!!params.slug || pathname.startsWith('/goods')) ? 'hide' : ''}>
       <nav ref={gnbRef}>
         <ul>
-          <li className={pathname === '/' ? "active" : ""}><Link href="/" title="홈"><span className="icon material-symbols-rounded" translate="no">home</span><span className="text">홈</span></Link></li>
-          <li className={pathname.startsWith('/cafe') ? "active" : ""}><Link href="/cafe" title="카페"><span className="icon material-symbols-rounded" translate="no">local_cafe</span><span className="text">카페</span></Link></li>
-          <li className={pathname.startsWith('/performances') ? "active" : ""}><Link href="/performances" title="공연예매"><span className="icon material-symbols-rounded" translate="no">confirmation_number</span><span className="text">공연예매</span></Link></li>
-          <li className={pathname.startsWith('/rental') ? "active" : ""}><Link href="/rental" title="공연·대관신청"><span className="icon material-symbols-rounded" translate="no">developer_guide</span><span className="text">공연·대관신청</span></Link></li>
-          <li className={pathname.startsWith('/goods') ? "active" : ""}><Link href="/goods" title="굿즈·앨범"><span className="icon material-symbols-rounded" translate="no">local_mall</span><span className="text">굿즈·앨범</span></Link></li>
-          <li className={pathname.startsWith('/archives') ? "active" : ""}><Link href="/archives" title="아카이브"><span className="icon material-symbols-rounded" translate="no">photo</span><span className="text">아카이브</span></Link></li>
+          <li className={pathname === '/' ? "active" : ""}>
+            <Link href="/" title="홈">
+              <span className="icon material-symbols-rounded" translate="no">home</span>
+              <span className="text">홈</span>
+            </Link>
+          </li>
+          <li className={pathname.startsWith('/cafe') ? "active" : ""}>
+            <Link href="/cafe" title="카페">
+              <span className="icon material-symbols-rounded" translate="no">local_cafe</span>
+              <span className="text">카페</span>
+            </Link>
+          </li>
+          <li className={pathname.startsWith('/performances') ? "active" : ""}>
+            <Link href="/performances" title="공연예매">
+              <span className="icon material-symbols-rounded" translate="no">confirmation_number</span>
+              <span className="text">공연예매</span>
+            </Link>
+          </li>
+          <li className={pathname.startsWith('/rental') ? "active" : ""}>
+            <Link href="/rental" title="공연·대관신청">
+              <span className="icon material-symbols-rounded" translate="no">developer_guide</span>
+              <span className="text">공연·대관신청</span>
+            </Link>
+          </li>
+          <li className={pathname.startsWith('/goods') ? "active" : ""}>
+            <Link href="/goods" title="굿즈·앨범">
+              <span className="goods_icon">
+                <span className="icon material-symbols-rounded" translate="no">local_mall</span>
+                {count > 0 && (
+                  <span className="cnt">{count}</span>
+                )}
+              </span>
+              <span className="text">굿즈·앨범</span>
+            </Link>
+          </li>
+          <li className={pathname.startsWith('/archives') ? "active" : ""}>
+            <Link href="/archives" title="아카이브">
+              <span className="icon material-symbols-rounded" translate="no">photo</span>
+              <span className="text">아카이브</span>
+            </Link>
+          </li>
         </ul>
         <div className="move-bg" ref={moveBgRef}></div>
       </nav>
