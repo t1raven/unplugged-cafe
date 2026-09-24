@@ -84,13 +84,17 @@ export const menuItem = defineType({
       title: 'name',
       category: 'category.title',
       price: 'price',
+      isAvailable: 'isAvailable',
       media: 'image',
     },
 
-    prepare({title, category, price, media}) {
+    prepare({title, category, price, media, isAvailable}) {
+
+      const status = !isAvailable ? ' · 판매중지' : '';
+
       return {
         title,
-        subtitle: `${category ?? ''} · ${price ?? ''}`,
+        subtitle: `${category ?? ''} · ${price ?? ''}${status}`,
         media,
       }
     },

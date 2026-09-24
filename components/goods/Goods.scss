@@ -347,7 +347,7 @@
   > nav {
     position: absolute;
     left: 50%;
-    bottom: 30px;
+    bottom: 20px;
 
     width: 100%;
 
@@ -449,6 +449,20 @@
 
     &:hover:before {
       opacity: 1;
+    }
+
+    &.cart_btn {
+      max-width: 300px;
+      &:after {
+        background-color: var(--primary-color);
+      }
+    }
+
+    &.tracking_btn {
+      max-width: 100px;
+      &:after {
+        background-color: var(--secondary-color);
+      }
     }
   }
 
@@ -797,7 +811,6 @@
   .goods_gnb_cart {
     > nav {
       width: 90%;
-      bottom: 10px;
       gap: 5px;
     }
 

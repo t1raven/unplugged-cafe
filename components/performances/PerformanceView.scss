@@ -7,7 +7,7 @@
     margin: 0 auto;
   }
 
-  // ==================================================
+  // ==================================================f
   // Hero
   // ==================================================
 
@@ -379,7 +379,7 @@
     > nav {
       position: absolute;
       left: 50%;
-      bottom: 30px;
+      bottom: 20px;
 
       transform: translateX(-50%);
 
@@ -393,6 +393,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 10px;
       min-width: 60px;
       width: 60px;
       height: 60px;
@@ -597,7 +598,6 @@
     .reservation_gnb_btn {
       > nav {
         width: 90%;
-        bottom: 10px;
         gap: 5px;
       }
 

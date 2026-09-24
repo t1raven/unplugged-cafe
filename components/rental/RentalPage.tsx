@@ -46,8 +46,40 @@ export default function RentalPage() {
 
   return (
     <div className="rental-container" ref={containerRef}>
+      {/* USSOM */}
+      <section className="rental-section rental-ussom-application">
+        <div className="rental-section__heading">
+          <h2>어썸나이트?</h2>
+        </div>
+
+        <div className="rental-ussom-application__content">
+          <p>
+            <strong>어썸나이트(USSOM NIGHT)</strong>는<br className="mo-view"/> <span>'Unplugged Seogyo Special Open Mic'</span>의 약자로, <br className="pc-view"/>
+            열정 가득한 신인 뮤지션들의 데뷔 무대이자 언플러그드 라운지만의 특별한 오픈마이크 공연입니다.
+            <br/><br/>
+            본인만의 새로운 음악을 세상에 알리고 소통하고자 하는 신인 뮤지션분들의 많은 참여와 신청 부탁드립니다.
+          </p>
+        </div>
+
+        <div className="rental-summary__buttons" style={{ textAlign: 'left' }}>
+          <a
+            href="http://docs.google.com/forms/d/e/1FAIpQLSfnNPNbnuCbFNlQUhYIzNCof2dH3RTOURIkbWh2D59GdTKBLA/closedform"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rental-button apply-button"
+            style={{ minWidth: 300 }}
+          >
+            어썸나이트 신청하기
+            <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
+          </a>
+        </div>
+      </section>
+
       {/* SUMMARY */}
       <section className="rental-section rental-summary">
+        <div className="rental-section__heading">
+          <h2>대관 개요</h2>
+        </div>
         <div className="rental-summary__grid">
           <article>
             <span>SPACE</span>
@@ -75,7 +107,7 @@ export default function RentalPage() {
         </div>
 
         <div className="rental-summary__buttons">
-          <a href="#rental-application" className="rental-button apply-button">
+          <a href="#rental-application" className="rental-button apply-button" style={{ minWidth: 300 }}>
             대관 신청 바로가기
             <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
           </a>

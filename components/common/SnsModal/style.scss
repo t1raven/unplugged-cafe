@@ -37,14 +37,14 @@
 .sns-list {
 	display: flex;
 	flex-direction: column;
-	gap: 15px;
+	gap: 20px;
 	line-height: 1;
 
 	a {
 		display: inline-flex;
 		align-items: center;
 
-		font-size: 1.15em;
+		font-size: 1.2em;
 		line-height: 1;
 		color: var(--font-color);
 		white-space: nowrap;
@@ -54,9 +54,9 @@
 		}
 
 		.icon {
+			width: 35px;
 			font-size: 1.35em;
 			color: var(--primary-color);
-			margin-right: 10px;
 		}
 
 		.outlink {
@@ -64,6 +64,13 @@
 			color: var(--primary-color);
 			margin-left: 5px;
 		}
+	}
+
+	p {
+		font-size: 1em;
+		padding-left: 35px;
+		margin-top: 5px;
+		color: var(--font-sec-color);
 	}
 }
 
@@ -74,5 +81,7 @@
 }
 
 @media screen and (max-width: 767px){
-  
+  .sns-modal-panel {
+  	padding: 40px 30px;
+  }
 }

@@ -68,6 +68,7 @@ export default function SnsModal({
               언플러그드 라운지
               <i className="material-symbols-rounded outlink" translate="no">arrow_outward</i>
             </Link>
+            <p>언플러그드 라운지의 공연 일정과 공식 소식</p>
           </li>
           <li>
             <Link href="https://www.instagram.com/cafeunplugged.seogyo/" target="_blank">
@@ -75,6 +76,7 @@ export default function SnsModal({
               서교음악다방
               <i className="material-symbols-rounded outlink" translate="no">arrow_outward</i>
             </Link>
+            <p>따뜻하고 활기찬 2층의 카페 소식</p>
           </li>
           <li>
             <Link href="https://www.instagram.com/unplugged.lounge.zip/" target="_blank">
@@ -82,6 +84,7 @@ export default function SnsModal({
               언플러그드 라운지 매거진
               <i className="material-symbols-rounded outlink" translate="no">arrow_outward</i>
             </Link>
+            <p>공연 후기와 다양한 컨텐츠</p>
           </li>
         </ul>
       </div>

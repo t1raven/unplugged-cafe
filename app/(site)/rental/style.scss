@@ -81,7 +81,7 @@
 
       h2 {
         margin: 0;
-        font-size: clamp(36px, 5vw, 72px);
+        font-size: clamp(36px, 5vw, 52px);
         font-weight: 400;
         line-height: 1;
       }
@@ -128,6 +128,24 @@
     &__buttons {
       margin-top: 40px;
       text-align: center;
+    }
+  }
+
+  &-ussom-application {
+    &__content {
+      > p {
+        color: var(--font-sec-color);
+        font-size: 20px;
+        line-height: 1.7;
+
+        strong {
+          color: var(--font-color);
+        }
+
+        span {
+          color: var(--primary-color);
+        }
+      }
     }
   }
 
@@ -325,6 +343,7 @@
       &__icon {
         color: var(--primary-color);
         font-size: 24px !important;
+        text-align: center;
         transition: transform 0.3s ease;
       }
 
@@ -504,6 +523,14 @@
           p {
             font-size: 11px;
           }
+        }
+      }
+    }
+
+    &-ussom-application {
+      &__content {
+        > p {
+          font-size: 16px;
         }
       }
     }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -25,6 +25,10 @@ interface Props {
       text?: string;
       align?: TextAlign;
     };
+    faq?: {
+      title?: string;
+      content?: string;
+    }[];
     caution?: {
       title?: string;
       texts?: {
@@ -36,6 +40,12 @@ interface Props {
 
 export default function About({ data }: Props) {
   const rootRef = useRef<HTMLElement>(null);
+
+  const [active, setActive] = useState<number | null>(0);
+
+  const toggle = (index: number) => {
+    setActive((current) => (current === index ? null : index));
+  };
 
   useLayoutEffect(() => {
     if (!rootRef.current) return;
@@ -196,15 +206,62 @@ export default function About({ data }: Props) {
           </div>
         )}
 
-        {data.caution?.title && (
+        {(data.faq?.length ?? 0) > 0 && (
+          <div className="about__faq">
+            {(data.faq ?? []).map((item, index) => {
+              const isActive = active === index;
+
+              return (
+                <div
+                  key={index}
+                  className={`faq-item ${
+                    isActive ? 'is-active' : ''
+                  }`}
+                >
+                  <button
+                    type="button"
+                    className="faq-item__header"
+                    onClick={() => toggle(index)}
+                    aria-expanded={isActive}
+                  >
+                    <span className="faq-item__number">
+                      0{index + 1}
+                    </span>
+
+                    <strong>{item.title}</strong>
+
+                    <span className="faq-item__icon">
+                      +
+                    </span>
+                  </button>
+
+                  <div
+                    className="faq-item__content"
+                    style={{
+                      gridTemplateRows: isActive ? '1fr' : '0fr',
+                    }}
+                  >
+                    <div>
+                      <p>
+                        {item.content}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {false/*data.caution?.title*/ && (
           <div className="about__notice">
 
             <h4>
-              {data.caution.title || 'ETIQUETTE'}
+              {data.caution?.title || 'ETIQUETTE'}
             </h4>
 
             <ul>
-              {data.caution.texts?.map((item, index) => (
+              {data.caution?.texts?.map((item, index) => (
                 <li key={index}>
                   {item.text}
                 </li>
@@ -214,7 +271,6 @@ export default function About({ data }: Props) {
           </div>
         )}
           
-
         {/* Equipment */}
         {/*<div className="about__equipment">
 

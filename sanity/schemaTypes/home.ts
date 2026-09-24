@@ -112,6 +112,36 @@ export const home = defineType({
         }),
 
         defineField({
+          name: "faq",
+          title: "자주 하는 질문",
+          type: "array",
+          of: [
+                {
+                  type: "object",
+                  fields: [
+                    defineField({
+                      name: "title",
+                      title: "타이틀",
+                      type: "string",
+                    }),
+                    defineField({
+                      name: "content",
+                      title: "내용",
+                      type: "text",
+                      rows: 12,
+                    }),
+                  ],
+
+                  preview: {
+                    select: {
+                      title: "title",
+                    },
+                  },
+                },
+              ],
+        }),
+
+        defineField({
           name: "caution",
           title: "주의사항",
           type: "object",

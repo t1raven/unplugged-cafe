@@ -309,9 +309,6 @@ export default function PerformanceViewPage({
 
       <div className="reservation_gnb_btn">
         <nav>
-          <button type="button" onClick={handleShare} className="gnb_btn">
-            <span className="material-symbols-rounded icon" aria-label="공유하기">{ios ? "ios_share" : "share"}</span>
-          </button>
           {isEnd ? (
             <button disabled className="gnb_btn reservation_btn">
               <span>공연 종료</span>
@@ -341,9 +338,13 @@ export default function PerformanceViewPage({
               rel="noopener noreferrer"
               className="gnb_btn reservation_btn"
             >
+              <span className="icon material-symbols-rounded" translate="no" style={{fontVariationSettings: `"FILL" 1`}}>confirmation_number</span>
               <span>예매하기</span>
             </Link>
           )}
+          <button type="button" onClick={handleShare} className="gnb_btn">
+            <span className="material-symbols-rounded icon" aria-label="공유하기">{ios ? "ios_share" : "share"}</span>
+          </button>
         </nav>
       </div>
 

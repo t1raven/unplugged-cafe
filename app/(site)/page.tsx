@@ -44,12 +44,16 @@ export const homeQuery = `
         text,
         align
       },
+      faq[]{
+        title,
+        content
+      },
       caution{
         title,
         texts[]{
           text
         }
-      }
+      },
     }
   }
 `;
