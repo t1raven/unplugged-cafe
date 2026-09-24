@@ -8,3 +8,5 @@ npx sanity@latest datasets import -d production --replace --asset-concurrency 5 
 npx sanity@latest datasets import -d production --replace --asset-concurrency 5 .\bulk-import\poster.ndjson
 
 
+npx sanity@latest exec .\scripts\update-performance-fields.mjs --with-user-token -- --dry-run
+npx sanity@latest exec .\scripts\update-performance-fields.mjs --with-user-token

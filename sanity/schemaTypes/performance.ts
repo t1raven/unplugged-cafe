@@ -171,10 +171,11 @@ export const performance = defineType({
     select: {
       title: 'title',
       date: 'date',
+      open: 'reservationOpen',
       media: 'poster',
     },
 
-    prepare({title, date, media}) {
+    prepare({title, date, media, open}) {
       const getDate = new Date(date);
 
       const year = getDate.getFullYear();
@@ -203,9 +204,11 @@ export const performance = defineType({
         getDate.getMinutes()
       ).padStart(2, '0');
 
+      const status = !open ? ' · 매진' : '';
+
       return {
         title,
-        subtitle: `${year}-${month}-${day} (${weekday}) ${hours}:${minutes}`,
+        subtitle: `${year}-${month}-${day} (${weekday}) ${hours}:${minutes}${status}`,
         media,
       }
     },
