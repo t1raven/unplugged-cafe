@@ -15,8 +15,8 @@
     p {
       margin: 0 0 40px;
 
-      font-size: 22px;
-      font-weight: 500;
+      
+      font-weight: 500;font-size: clamp(20px, 4vw, 24px);
       color: var(--primary-color);
       letter-spacing: 0.2em;
     }
@@ -24,7 +24,7 @@
     h2 {
       margin: 0;
 
-      font-size: clamp(60px, 7vw, 100px);
+      font-size: clamp(46px, 8vw, 86px);
       font-weight: 500;
       line-height: 1;
       letter-spacing: -0.06em;
@@ -297,7 +297,7 @@
         cursor: pointer;
 
         span {
-          font-size: 13px;
+          font-size: 12px;
         }
       }
 
@@ -336,8 +336,9 @@
         p {
           max-width: 800px;
           padding: 0 60px 35px 60px;
-          white-space: pre-line;
+          font-size: 1em;
           color: var(--font-sec-color);
+          white-space: pre-line;
         }
       }
     }
@@ -400,7 +401,7 @@
       margin-top: 50px;
 
       p {
-        font-size: 18px;
+        font-size: 16px;
       }
     }
 
