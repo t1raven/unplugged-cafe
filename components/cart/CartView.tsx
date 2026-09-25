@@ -8,6 +8,8 @@ import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 interface Props {
   items: CartItem[];
 
+  quantityByGoodsId: Map<string, number>;
+  
   originalTotalPrice: number;
   discountedTotalPrice: number;
   totalDiscountPrice: number;
@@ -33,6 +35,7 @@ interface Props {
 
 export default function CartView({
   items,
+  quantityByGoodsId,
   originalTotalPrice,
   discountedTotalPrice,
   totalDiscountPrice,
@@ -72,7 +75,9 @@ export default function CartView({
             <div className="cart-list">
 
               {items.map((item) => {
-                const unitPrice = getGoodsUnitPrice( item, item.quantity );
+                const totalQuantity = quantityByGoodsId.get( item.goodsId ) ?? item.quantity;
+                const unitPrice = getGoodsUnitPrice( item, totalQuantity );
+                //const unitPrice = getGoodsUnitPrice( item, item.quantity );
                 const originalSubtotal = item.price * item.quantity;
                 const subtotal = unitPrice * item.quantity;
                 const discountPrice = originalSubtotal - subtotal;
@@ -135,7 +140,7 @@ export default function CartView({
 
                       <div className="cart-item-bottom">
 
-                        <div className="cart-quantity">
+                        <div className="cart-item-quantity">
                           <button
                             type="button"
                             onClick={() =>
@@ -170,10 +175,27 @@ export default function CartView({
                           </button>
                         </div>
 
-                        <strong>
-                          {subtotal.toLocaleString()}
-                          원
-                        </strong>
+                        <div className="cart-item-price">
+                          {discountPrice > 0 && (
+                            <del>
+                              {originalSubtotal.toLocaleString()}
+                              원
+                            </del>
+                          )}
+
+                          <strong>
+                            {subtotal.toLocaleString()}
+                            원
+                          </strong>
+
+                          {/*{totalQuantity !== item.quantity && (
+                            <small>
+                              동일 상품 총{' '}
+                              {totalQuantity}개<br className="mo-view"/>
+                              수량할인 적용
+                            </small>
+                          )}*/}
+                        </div>
 
                       </div>
                     </div>

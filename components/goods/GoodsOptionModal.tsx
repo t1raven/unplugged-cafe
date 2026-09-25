@@ -227,6 +227,21 @@ export default function GoodsOptionModal({
             {goods.price.toLocaleString()}
             원
           </span>
+
+          {goods.quantityDiscounts?.length ? (
+            goods.quantityDiscounts.map(
+              (discount) => (
+                <small
+                  key={
+                    discount.minQuantity
+                  }
+                >
+                  {discount.minQuantity}개 이상 구매시{' '}
+                  {discount.unitPrice.toLocaleString()}원
+                </small>
+              )
+            )
+          ) : null}
         </div>
 
         {/* 옵션 */}

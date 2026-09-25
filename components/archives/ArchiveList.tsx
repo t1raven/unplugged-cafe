@@ -26,6 +26,16 @@ export default function ArchiveList({
   items: initialItems,
 }: Props) {
 
+  const gridRef = useRef<HTMLDivElement>(null)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const categoryRef = useRef<HTMLElement>(null)
+
+  const animationContextRef = useRef<gsap.Context | null>(null)
+  const previousLengthRef = useRef(0)
+
+  const [search, setSearch] = useState('')
+  const [searchInput, setSearchInput] = useState('')
+
   const [activeCategory, setActiveCategory] = useState(
     categories[0]?.slug ?? ''
   )
@@ -40,17 +50,6 @@ export default function ArchiveList({
   const [hasMore, setHasMore] = useState(
     initialItems.length === PAGE_SIZE
   )
-
-  //const pageRef = useRef(1)
-  const gridRef = useRef<HTMLDivElement>(null)
-  const sentinelRef = useRef<HTMLDivElement>(null)
-  const categoryRef = useRef<HTMLElement>(null);
-
-  const animationContextRef = useRef<gsap.Context | null>(null)
-  const previousLengthRef = useRef(0)
-
-  const [search, setSearch] = useState('')
-  const [searchInput, setSearchInput] = useState('')
 
   /*
    * 다음 페이지 로드

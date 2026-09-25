@@ -15,12 +15,13 @@ export async function GET(request: NextRequest) {
       ${category ? `&& category->slug.current == $category` : ''}
       && isAvailable == true
     ]
-    | order(orderRank)
-    [$start...$end] {
+    | order(orderRank) {
       _id,
       name,
       description,
       price,
+      newItem,
+      bestItem,
 
       "category": category->{
         _id,

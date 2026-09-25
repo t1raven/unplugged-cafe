@@ -22,17 +22,21 @@ interface Props {
 
 export default function goodsList({
   categories,
-  items,
+  items: initialItems,
 }: Props) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const categoryRef = useRef<HTMLElement>(null);
+
+  const gridRef = useRef<HTMLDivElement>(null)
+  const categoryRef = useRef<HTMLElement>(null)
+
+  const animationContextRef = useRef<gsap.Context | null>(null)
+  const previousLengthRef = useRef(0)
 
   const [activeCategory, setActiveCategory] = useState(
     categories[0]?.slug ?? ''
   )
 
-  const filteredItems = items.filter(
-    (item) => item.category?.slug === activeCategory
+  const [items, setItems] = useState<Goods[]>(
+    initialItems
   )
 
   /*
@@ -40,8 +44,30 @@ export default function goodsList({
    */
   const handleCategoryChange = useCallback(
     async (category: string) => {
+      if (category === activeCategory) return
 
-      setActiveCategory(category);
+      setActiveCategory(category)
+      const params = new URLSearchParams({
+        category,
+      })
+
+      const response = await fetch(
+        `/api/goods?${params.toString()}`
+      )
+
+      if (!response.ok) {
+        throw new Error(
+          '데이터를 불러오지 못했습니다.'
+        )
+      }
+
+      const data = await response.json()
+
+      animationContextRef.current?.revert();
+      animationContextRef.current = null;
+      previousLengthRef.current = 0;
+
+      setItems(data.items)
 
       requestAnimationFrame(() => {
         scrollToCategory();
@@ -69,32 +95,51 @@ export default function goodsList({
     });
   };
 
+  /*
+   *  등장 애니메이션
+   */
   useLayoutEffect(() => {
-    const container = containerRef.current
+    const grid = gridRef.current
 
-    if (!container) return
+    if (!grid || items.length === 0) return
 
-    const gridItems = gsap.utils.toArray<HTMLElement>(
-      '.goods-card',
-      container
-    )
+    const previousLength = previousLengthRef.current;
 
-    if (!gridItems.length) return
+    const allItems = grid.querySelectorAll('.goods-card');
+
+    const newItems = Array.from(allItems).slice(
+      previousLength
+    );
+
+    if (!newItems.length) return;
+
+    animationContextRef.current?.revert();
 
     const ctx = gsap.context(() => {
-      gsap.from(gridItems, {
-        opacity: 0,
-        scale: 0.94,
-        y: 20,
-        duration: 0.65,
-        stagger: 0.08,
-        ease: 'power3.out',
-        clearProps: 'all',
-      })
-    }, container)
+      gsap.fromTo(
+        newItems,
+        {
+          opacity: 0,
+          y: 30,
+          scale: 0.96,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.65,
+          stagger: 0.08,
+          ease: 'power3.out',
+          clearProps: 'all',
+        }
+      );
+    }, grid)
 
-    return () => ctx.revert()
-  }, [activeCategory]);
+    animationContextRef.current = ctx;
+
+    previousLengthRef.current = items.length;
+
+  }, [items])
 
   const [selectedGoods, setSelectedGoods] = useState<Goods | null>(null);
 
@@ -122,11 +167,11 @@ export default function goodsList({
       </div>
           
       <section className="sub-page-section goods-list">
-        <div className="inner" ref={containerRef}>
-          {filteredItems.length ? (
-            <div className="goods-grid">
-              {filteredItems.map((item) => (
-                <GoodsCard key={item._id} goods={item} onOpenOptionModal={handleOpenOptionModal} />
+        <div className="inner">
+          {items.length ? (
+            <div className="goods-grid" ref={gridRef}>
+              {items.map((item) => (
+                <GoodsCard goods={item} onOpenOptionModal={handleOpenOptionModal} key={item._id} />
               ))}
             </div>
           ) : (

@@ -152,6 +152,22 @@ export async function POST(
         ])
       );
 
+    const quantityByGoodsId =
+      body.items.reduce(
+        (map, item) => {
+          map.set(
+            item.goodsId,
+            (map.get(
+              item.goodsId
+            ) ?? 0) +
+              item.quantity
+          );
+
+          return map;
+        },
+        new Map<string, number>()
+      );
+
     /*
      * 4. 주문 항목 검증
      */
@@ -172,15 +188,21 @@ export async function POST(
         );
       }
 
+      const totalQuantity =
+        quantityByGoodsId.get(
+          item.goodsId
+        ) ?? item.quantity;
+
       validateGoods(
         goods,
-        item
+        item,
+        totalQuantity
       );
 
       const unitPrice =
         getGoodsUnitPrice(
           goods,
-          item.quantity
+          totalQuantity
         );
 
       const subtotal =
@@ -231,7 +253,7 @@ export async function POST(
           goods.price,
 
         price:
-          goods.price,
+          unitPrice,
 
         quantity:
           item.quantity,
@@ -667,7 +689,8 @@ function validateRequest(
 
 function validateGoods(
   goods: GoodsDocument,
-  item: OrderRequestItem
+  item: OrderRequestItem,
+  totalQuantity: number
 ) {
   /*
    * 판매 중인지
@@ -693,7 +716,7 @@ function validateGoods(
    * 수량 / 재고
    */
   if (
-    item.quantity >
+    totalQuantity >
     goods.stock
   ) {
     throw new OrderError(

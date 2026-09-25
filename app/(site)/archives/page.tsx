@@ -59,8 +59,7 @@ export default async function ArchivesPage() {
 
   const activeCategory = categories[0]?.slug ?? ''
 
-  const items =
-    activeCategory
+  const items = activeCategory
       ? await client.fetch<Archive[]>(
           listQuery,
           {

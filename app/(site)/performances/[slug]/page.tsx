@@ -29,6 +29,7 @@ const performanceQuery = `
     price2,
     admissionType,
     viewingType,
+    siteSalesOnly,
     reservationOpen,
     reservationUrl,
 

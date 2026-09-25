@@ -148,14 +148,14 @@ export default function PerformanceViewPage({
               </div>
 
               {performance.price1 && (
-                <div className="meta-item">
+                <div className="meta-item" style={{ gridColumn: !performance.price2 ? '1/3' : 'auto' }}>
                   <span>사전 예매</span>
                   <strong>{performance.price1?.toLocaleString()}원</strong>
                 </div>
               )}
 
               {performance.price2 && (
-                <div className="meta-item">
+                <div className="meta-item" style={{ gridColumn: !performance.price1 ? '1/3' : 'auto' }}>
                   <span>현장 예매</span>
                   <strong>{performance.price2?.toLocaleString()}원</strong>
                 </div>
@@ -174,27 +174,6 @@ export default function PerformanceViewPage({
               </div>
 
             </div>
-
-            {/*{performance.reservationOpen && performance.reservationUrl && (
-              now < salesOpen ? (
-                <button disabled className="reservation-button">
-                  사전 예매 오픈전
-                </button>
-              ) : salesClose < now ? (
-                <button disabled className="reservation-button">
-                  <span>사전 예매 마감 <br/><small>(현장 예매만 가능합니다)</small></span>
-                </button>
-              ) : (
-                <Link
-                  href={performance.reservationUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="reservation-button"
-                >
-                  공연 예매
-                </Link>
-              )
-            )}*/}
           </div>
 
         </div>
@@ -225,6 +204,9 @@ export default function PerformanceViewPage({
                       key={artist._id}
                       className="artist-card"
                     >
+                      <div className="artist-image">
+                        <i className="artist-icon material-symbols-rounded" translate="no">artist</i>
+                      </div>
 
                       <div className="artist-info">
 
@@ -240,8 +222,6 @@ export default function PerformanceViewPage({
                         )}
 
                       </div>
-
-                      <i className="artist-icon material-symbols-rounded" translate="no">artist</i>
 
                     </article>
                   )
@@ -312,6 +292,10 @@ export default function PerformanceViewPage({
           {isEnd ? (
             <button disabled className="gnb_btn reservation_btn">
               <span>공연 종료</span>
+            </button>
+          ) : performance.siteSalesOnly ? (
+            <button disabled className="gnb_btn reservation_btn">
+              <span>현장예매만 가능합니다.</span>
             </button>
           ) : !performance.reservationOpen ? (
             <button disabled className="gnb_btn reservation_btn">

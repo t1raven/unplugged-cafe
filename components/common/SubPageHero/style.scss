@@ -18,7 +18,7 @@
 
     &-label {
         color: var(--primary-color);
-        font-size: 13px;
+        font-size: 16px;
         font-weight: 600;
         letter-spacing: 0.2em;
         text-transform: uppercase;
@@ -27,7 +27,7 @@
     &-title {
       margin: 0;
       color: var(--font-color);
-      font-size: clamp(36px, 10vw, 76px);
+      font-size: clamp(36px, 8vw, 68px);
       line-height: 1.15;
       font-weight: 500;
       letter-spacing: -0.06em;
@@ -35,7 +35,7 @@
 
     &-description {
       color: #999;
-      font-size: 17px;
+      font-size: 16px;
       line-height: 1.7;
     }
 }
@@ -45,8 +45,12 @@
     padding-top: calc(var(--header-height) + 20px);
     padding-bottom: 20px;
 
+    &-label {
+        font-size: 12px;
+    }
+
     &-description {
-        font-size: 13px;
+        font-size: 12px;
     }
   }
 }

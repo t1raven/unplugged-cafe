@@ -20,8 +20,14 @@ export async function GET(request: NextRequest) {
       name,
       "slug": slug.current,
       description,
+
       price,
-      discountPrice,
+      salePrice,
+
+      quantityDiscounts[]{
+        minQuantity,
+        unitPrice
+      },
 
       "category": category->{
         _id,

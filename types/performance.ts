@@ -23,6 +23,7 @@ export interface Performance {
   price2?: number;
   admissionType?: string;
   viewingType?: string;
+  siteSalesOnly?: boolean;
   reservationOpen?: boolean;
   reservationUrl?: string;
   artists?: Artist[];

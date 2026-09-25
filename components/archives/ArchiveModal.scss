@@ -27,7 +27,7 @@
 
     width: min(90vw, 1200px);
     max-height: 90vh;
-    padding-top: 50px;
+    padding-top: 48px;
 
     display: flex;
     flex-direction: column;
@@ -67,7 +67,7 @@
       a {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
         color: #fff;
         i {
           font-size: 1em;
@@ -78,7 +78,7 @@
     p {
       margin: 0 0 10px;
       color: rgba(255, 255, 255, 0.6);
-      font-size: 14px;
+      font-size: 1em;
       line-height: 1.6;
       white-space: pre-line;
     }
@@ -112,7 +112,7 @@
     cursor: pointer;
 
     > span {
-      font-size: 1em;;
+      font-size: 1em;
     }
   }
 
@@ -188,7 +188,7 @@
 
     &__info {
       h2 {
-        font-size: 18px;
+        font-size: 16px;
       }
     }
   }

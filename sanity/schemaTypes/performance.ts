@@ -21,30 +21,6 @@ export const performance = defineType({
     }),
 
     defineField({
-      name: 'salesOpen',
-      title: '예매 오픈',
-      type: 'datetime',
-    }),
-
-    defineField({
-      name: 'salesClose',
-      title: '예매 마감',
-      type: 'datetime',
-    }),
-
-    defineField({
-      name: 'place',
-      title: '장소',
-      type: 'reference',
-      to: [
-        {
-          type: 'place',
-        },
-      ],
-      validation: (Rule) => Rule.required(),
-    }),
-
-    defineField({
       name: 'slug',
       title: '슬러그',
       type: 'slug',
@@ -64,6 +40,46 @@ export const performance = defineType({
             .replace(/-+/g, '-')
             .slice(0, 96),
       },
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: 'siteSalesOnly',
+      title: '현장예매만 가능',
+      type: 'boolean',
+      initialValue: false,
+    }),
+
+    defineField({
+      name: 'reservationOpen',
+      title: '예매 가능',
+      type: 'boolean',
+      initialValue: false,
+    }),
+
+    defineField({
+      name: 'salesOpen',
+      title: '예매 오픈',
+      type: 'datetime',
+      hidden: ({ document }) => !!document?.siteSalesOnly,
+    }),
+
+    defineField({
+      name: 'salesClose',
+      title: '예매 마감',
+      type: 'datetime',
+      hidden: ({ document }) => !!document?.siteSalesOnly,
+    }),
+
+    defineField({
+      name: 'place',
+      title: '장소',
+      type: 'reference',
+      to: [
+        {
+          type: 'place',
+        },
+      ],
       validation: (Rule) => Rule.required(),
     }),
 
@@ -98,6 +114,7 @@ export const performance = defineType({
       title: '사전 예매 가격',
       type: 'number',
       validation: (Rule) => Rule.min(0),
+      hidden: ({ document }) => !!document?.siteSalesOnly,
     }),
 
     defineField({
@@ -157,13 +174,7 @@ export const performance = defineType({
       name: 'reservationUrl',
       title: '예매 신청 URL',
       type: 'url',
-    }),
-
-    defineField({
-      name: 'reservationOpen',
-      title: '예매 가능',
-      type: 'boolean',
-      initialValue: false,
+      hidden: ({ document }) => !!document?.siteSalesOnly,
     }),
   ],
 
@@ -172,10 +183,11 @@ export const performance = defineType({
       title: 'title',
       date: 'date',
       open: 'reservationOpen',
+      siteOnly: 'siteSalesOnly',
       media: 'poster',
     },
 
-    prepare({title, date, media, open}) {
+    prepare({title, date, media, open, siteOnly}) {
       const getDate = new Date(date);
 
       const year = getDate.getFullYear();
@@ -204,7 +216,7 @@ export const performance = defineType({
         getDate.getMinutes()
       ).padStart(2, '0');
 
-      const status = !open ? ' · 매진' : '';
+      const status = !open && !siteOnly ? ' · 매진' : '';
 
       return {
         title,

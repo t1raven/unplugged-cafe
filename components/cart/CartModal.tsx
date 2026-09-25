@@ -15,7 +15,7 @@ import CartView from './CartView';
 import OrderView from './OrderView';
 import CompleteView from './CompleteView';
 
-import './CartModal.scss';
+import './Cart.scss';
 
 type CartStep =
   | 'cart'
@@ -47,18 +47,40 @@ export default function CartModal() {
       0
     );
 
+  const quantityByGoodsId =
+    items.reduce(
+      (map, item) => {
+        map.set(
+          item.goodsId,
+          (map.get(
+            item.goodsId
+          ) ?? 0) +
+            item.quantity
+        );
+
+        return map;
+      },
+      new Map<string, number>()
+    );
+
   const discountedTotalPrice =
     items.reduce(
       (total, item) => {
+        const totalQuantity =
+          quantityByGoodsId.get(
+            item.goodsId
+          ) ?? item.quantity;
+
         const unitPrice =
           getGoodsUnitPrice(
             item,
-            item.quantity
+            totalQuantity
           );
 
         return (
           total +
-          unitPrice * item.quantity
+          unitPrice *
+            item.quantity
         );
       },
       0
@@ -156,6 +178,7 @@ export default function CartModal() {
         {step === 'cart' && (
           <CartView
             items={items}
+            quantityByGoodsId={quantityByGoodsId}
             originalTotalPrice={originalTotalPrice}
             discountedTotalPrice={discountedTotalPrice}
             totalDiscountPrice={totalDiscountPrice}

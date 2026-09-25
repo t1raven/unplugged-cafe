@@ -378,22 +378,23 @@ export default function PerformanceCalendar({
 
           <div className="calendar-controls">
 
-            <button
-              type="button"
-              onClick={handlePreviousMonth}
-              disabled={
-                currentDate.getFullYear() ===
-                  today.getFullYear() &&
-                currentDate.getMonth() ===
-                  today.getMonth()
-              }
-              aria-label="이전 달"
-            >
-              <span className="material-symbols-rounded">
-                keyboard_arrow_left
-              </span>
-            </button>
-
+            {!(currentDate.getFullYear() === today.getFullYear() && currentDate.getMonth() === today.getMonth()) && (
+              <button
+                type="button"
+                onClick={handlePreviousMonth}
+                disabled={
+                  currentDate.getFullYear() ===
+                    today.getFullYear() &&
+                  currentDate.getMonth() ===
+                    today.getMonth()
+                }
+                aria-label="이전 달"
+              >
+                <span className="material-symbols-rounded">
+                  keyboard_arrow_left
+                </span>
+              </button>
+            )}
             <button
               type="button"
               className="today-button"

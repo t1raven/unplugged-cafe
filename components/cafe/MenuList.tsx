@@ -3,15 +3,14 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 
-import Image from 'next/image';
-import { urlFor } from '@/sanity/lib/image';
-
 import CategoryNav from '@/components/common/CategoryNav'
+
+import MenuCard from './MenuCard';
 
 import type { Category } from '@/types/category'
 import type { Cafe } from '@/types/cafe'
 
-import './MenuList.scss';
+import './Menu.scss';
 
 interface Props {
   categories: Category[]
@@ -20,13 +19,20 @@ interface Props {
 
 export default function MenuList({
   categories,
-  items,
+  items: initialItems,
 }: Props) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const categoryRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null)
+  const categoryRef = useRef<HTMLElement>(null)
+
+  const animationContextRef = useRef<gsap.Context | null>(null)
+  const previousLengthRef = useRef(0)
 
   const [activeCategory, setActiveCategory] = useState(
     categories[0]?.slug ?? ''
+  )
+
+  const [items, setItems] = useState<Cafe[]>(
+    initialItems
   )
 
   const filteredItems = items.filter(
@@ -38,8 +44,30 @@ export default function MenuList({
    */
   const handleCategoryChange = useCallback(
     async (category: string) => {
+      if (category === activeCategory) return
 
-      setActiveCategory(category);
+      setActiveCategory(category)
+      const params = new URLSearchParams({
+        category,
+      })
+
+      const response = await fetch(
+        `/api/cafe?${params.toString()}`
+      )
+
+      if (!response.ok) {
+        throw new Error(
+          '데이터를 불러오지 못했습니다.'
+        )
+      }
+
+      const data = await response.json()
+
+      animationContextRef.current?.revert();
+      animationContextRef.current = null;
+      previousLengthRef.current = 0;
+
+      setItems(data.items)
 
       requestAnimationFrame(() => {
         scrollToCategory();
@@ -67,32 +95,51 @@ export default function MenuList({
     });
   };
 
+  /*
+   *  등장 애니메이션
+   */
   useLayoutEffect(() => {
-    const container = containerRef.current
+    const grid = gridRef.current
 
-    if (!container) return
+    if (!grid || items.length === 0) return
 
-    const gridItems = gsap.utils.toArray<HTMLElement>(
-      '.menu-card',
-      container
-    )
+    const previousLength = previousLengthRef.current;
 
-    if (!gridItems.length) return
+    const allItems = grid.querySelectorAll('.menu-card');
+
+    const newItems = Array.from(allItems).slice(
+      previousLength
+    );
+
+    if (!newItems.length) return;
+
+    animationContextRef.current?.revert();
 
     const ctx = gsap.context(() => {
-      gsap.from(gridItems, {
-        opacity: 0,
-        scale: 0.94,
-        y: 20,
-        duration: 0.65,
-        stagger: 0.08,
-        ease: 'power3.out',
-        clearProps: 'all',
-      })
-    }, container)
+      gsap.fromTo(
+        newItems,
+        {
+          opacity: 0,
+          y: 30,
+          scale: 0.96,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.65,
+          stagger: 0.08,
+          ease: 'power3.out',
+          clearProps: 'all',
+        }
+      );
+    }, grid)
 
-    return () => ctx.revert()
-  }, [activeCategory])
+    animationContextRef.current = ctx;
+
+    previousLengthRef.current = items.length;
+
+  }, [items])
 
   return (
     <>
@@ -109,67 +156,11 @@ export default function MenuList({
           
       <section className="sub-page-section menu-content">
         <div className="inner">
-          <div
-            className="menu-list"
-            ref={containerRef}
-          >
-            {filteredItems.length ? (
-              <div className="menu-grid">
-                {filteredItems.map((item) => (
-                  <article
-                    className="menu-card"
-                    key={item._id}
-                  >
-                    
-                    <div className="menu-card__image">
-                      {(item.newItem || item.bestItem) && (
-                        <div className="menu-card__label">
-                          {item.newItem && (
-                            <div className="menu-card__label_item new">NEW</div>
-                          )}
-                          {item.bestItem && (
-                            <div className="menu-card__label_item best">BEST</div>
-                          )}
-                        </div>
-                      )}
-                        
-                      {item.imageUrl && (
-                        <Image
-                          src={urlFor(item.imageUrl)
-                            .width(600)
-                            .url()}
-                          alt={item.name}
-                          fill
-                          priority
-                          sizes="(max-width: 768px) 50vw, 400px"
-                        />
-                      )}
-                    </div>
-                    
-                    <div className="menu-card__info">
-                      {(item.newItem || item.bestItem) && (
-                        <div className="menu-card__label">
-                          {item.newItem && (
-                            <div className="menu-card__label_item new">NEW</div>
-                          )}
-                          {item.bestItem && (
-                            <div className="menu-card__label_item best">BEST</div>
-                          )}
-                        </div>
-                      )}
-                      <div className="menu-card__title">
-                        <h2>{item.name}</h2>
-
-                        <strong>
-                          {item.price.toLocaleString()}원
-                        </strong>
-                      </div>
-
-                      {item.description && (
-                        <p>{item.description}</p>
-                      )}
-                    </div>
-                  </article>
+          <div className="menu-list">
+            {items.length ? (
+              <div className="menu-grid" ref={gridRef}>
+                {items.map((item) => (
+                  <MenuCard item={item} key={item._id} />
                 ))}
               </div>
             ) : (

@@ -38,7 +38,7 @@
   .performance-poster {
     width: 100%;
     aspect-ratio: 3 / 4;
-    border-radius: 15px;
+    border-radius: 16px;
     position: relative;
     overflow: hidden;
     background: var(--background-sec-color);
@@ -226,41 +226,55 @@
   }
 
   .artist-list {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .artist-card {
-    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 4px 24px 4px 4px;
+    //background-color: rgb(from var(--primary-color) r g b / 0.05);
     border: 1px solid var(--primary-color);
-    border-radius: 15px;
+    border-radius: 16px;
     position: relative;
+    min-width: 220px;
   }
 
   .artist-image {
+    width: 56px;
     aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--background-color);
-    color: var(--font-sec-color);;
+    background-color: rgb(from var(--primary-color) r g b / 0.15);
+    border-radius: 12px;
+    color: var(--font-sec-color);
     font-size: 11px;
     letter-spacing: 0.12em;
+  }
+
+  .artist-icon {
+    font-size: 40px;
+    color: var(--primary-color);
+    opacity: 0.55;
   }
 
   .artist-info {
     h3 {
       margin: 0;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 500;
+      line-height: 1.25;
       color: var(--font-color);
     }
 
     span {
       display: block;
       margin-top: 8px;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--secondary-color);
     }
 
@@ -268,7 +282,8 @@
       display: inline-flex;
       align-items: center;
       gap: 3px;
-      font-size: 13px;
+      font-size: 12px;
+      line-height: 1;
       color: var(--info-color);
 
       transition: 
@@ -290,20 +305,10 @@
 
     p {
       margin: 25px 0 0;
-      font-size: 13px;
+      font-size: 12px;
       line-height: 1.8;
       color: var(--font-sec-color);
     }
-  }
-
-  .artist-icon {
-    position: absolute;
-    right: 5px;
-    bottom: 10px;
-    z-index: -1;
-    font-size: 52px;
-    color: var(--primary-color);
-    opacity: 0.35;
   }
 
   // ==================================================
@@ -352,7 +357,7 @@
   .reservation-box {
     padding: 80px;
     border: 3px solid var(--primary-color);
-    border-radius: 15px;
+    border-radius: 16px;
     text-align: center;
 
     p {
@@ -386,7 +391,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .gnb_btn {
@@ -456,10 +461,10 @@
       }
 
       &:disabled {
-        color: #66635D;
+        color: #ccc;
         cursor: not-allowed;
         &:after {
-          background-color: #A9A59D; 
+          background-color: var(--disabled-color); 
         }
       }
     }
@@ -556,37 +561,17 @@
       }
     }
 
-    .artist-list {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
     .artist-card {
-      padding: 12px 15px;
-      border-radius: 10px;
+      width: 100%;
     }
 
     .artist-info {
       flex-direction: column;
       gap: 0;
-      
-      h3 {
-        font-size: 16px;
-      }
-
-      a {
-        font-size: 12px;
-      }
-
       p {
         margin-top: 15px;
         font-size: 12px;
       }
-    }
-
-    .artist-icon {
-      right: 3px;
-      bottom: 5px;
-      font-size: 46px;
     }
 
     .description-content {
@@ -598,7 +583,6 @@
     .reservation_gnb_btn {
       > nav {
         width: 90%;
-        gap: 5px;
       }
 
       .gnb_btn {

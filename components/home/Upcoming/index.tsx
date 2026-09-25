@@ -126,9 +126,6 @@ export default function Upcoming({
               breakpoints={{
                 1023: {
                   slidesPerView: 2,
-                  grid: {
-                    fill: 'row',
-                  },
                 },
               }}
               modules={[Grid, Pagination, Navigation]}

@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import InstagramInput from '../components/InstagramInput';
 
 export const artist = defineType({
   name: 'artist',
@@ -44,7 +45,14 @@ export const artist = defineType({
     defineField({
       name: 'instagram',
       title: 'Instagram',
-      type: 'url',
+      type: 'string',
+
+      components: {
+        input: InstagramInput,
+      },
+
+      description:
+        '@instagram_id 또는 Instagram 주소를 입력하세요.',
     }),
 
     defineField({

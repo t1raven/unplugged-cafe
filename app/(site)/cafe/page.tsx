@@ -27,6 +27,7 @@ const categoryQuery = `
 const listQuery = `
   *[
     _type == "menuItem"
+    && category->slug.current == $category
     && isAvailable == true
   ]
   | order(orderRank) {
@@ -50,10 +51,18 @@ const listQuery = `
 export const revalidate = 0;
 
 export default async function CafePage() {
-  const [categories, items] = await Promise.all([
-    client.fetch<Category[]>(categoryQuery),
-    client.fetch<Cafe[]>(listQuery),
-  ])
+  const categories = await client.fetch<Category[]>(categoryQuery)
+
+  const activeCategory = categories[0]?.slug ?? ''
+
+  const items = activeCategory
+      ? await client.fetch<Cafe[]>(
+          listQuery,
+          {
+            category: activeCategory,
+          }
+        )
+      : []
 
   return (
     <main id="site-body" className="menu-page">

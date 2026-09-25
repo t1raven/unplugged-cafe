@@ -37,14 +37,14 @@
 .sns-list {
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: 24px;
 	line-height: 1;
 
 	a {
 		display: inline-flex;
 		align-items: center;
 
-		font-size: 1.2em;
+		font-size: 1.3em;
 		line-height: 1;
 		color: var(--font-color);
 		white-space: nowrap;
@@ -54,7 +54,7 @@
 		}
 
 		.icon {
-			width: 35px;
+			width: 40px;
 			font-size: 1.35em;
 			color: var(--primary-color);
 		}
@@ -68,8 +68,8 @@
 
 	p {
 		font-size: 1em;
-		padding-left: 35px;
-		margin-top: 5px;
+		padding-left: 40px;
+		margin-top: 8px;
 		color: var(--font-sec-color);
 	}
 }
@@ -82,6 +82,18 @@
 
 @media screen and (max-width: 767px){
   .sns-modal-panel {
-  	padding: 40px 30px;
+  	padding: 40px 28px;
+  }
+
+  .sns-list {
+  	a {
+  		.icon {
+	  		width: 32px;
+	  	}
+  	}
+	  p {
+	  	margin-top: 4px;
+	  	padding-left: 32px;
+	  }
   }
 }

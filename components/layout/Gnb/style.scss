@@ -17,7 +17,7 @@
   > nav {
   	display: inline-flex;
     align-items: center;
-    border-radius: 999px;
+    border-radius: 10em;
     background-color: rgba(238, 238, 238, .8);
     backdrop-filter: blur(5px) brightness(1.1);
     box-shadow: 0 0 0 1px var(--border-color);
@@ -46,15 +46,15 @@
 			    align-items: center;
 			    width: 100px;
 			    height: 50px;
-			    padding: 5px 10px;
-			    border-radius: 999px;
+			    padding: 4px 8px;
+			    border-radius: 10em;
 			    color: #000;
 			    text-align: center;
 			    transition: opacity 0.35s ease-in-out;
 			    .icon {
 			    	display: inline-block;
 			    	flex: none;
-			    	font-size: 22px;
+			    	font-size: 24px;
 			    	line-height: 1;
 					  white-space: nowrap;
 					  word-wrap: normal;
@@ -67,15 +67,15 @@
 					  transition: all .35s ease-in-out;
 			    }
 			    .text {
-			    	font-size: 11px;
+			    	font-size: 12px;
 				    line-height: 1.25;
 				    white-space: nowrap;
 			    }
 			    .goods_icon {
 			    	display: inline-block;
 			    	position: relative;
-			    	width: 22px;
-			    	height: 22px;;
+			    	width: 24px;
+			    	height: 24px;
 			    }
 			    .cnt {
 		        position: absolute;
@@ -86,8 +86,8 @@
 		        align-items: center;
 		        justify-content: center;
 		        text-align: center;
-		        min-width: 15px;
-		        height: 15px;
+		        min-width: 16px;
+		        height: 16px;
 		        padding: 0 4px;
 		        border-radius: 10em;
 		        background-color: var(--secondary-color);
@@ -114,7 +114,7 @@
 	    top: 50%;
 	    left: 0;
 	    height: 50px;
-	    border-radius: 999px;
+	    border-radius: 10em;
 	    background-color: rgba(34, 34, 34, .15);
 	    z-index: 0;
 	    //transform: translateY(-50%);
