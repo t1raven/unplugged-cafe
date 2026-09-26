@@ -104,7 +104,15 @@
 
 }
 
-@media (max-width: 640px) {
+@media (max-width: 1023px) {
+  .gallery {
+    &__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+@media (max-width: 767px) {
   .gallery {
     &__grid {
       grid-template-columns: repeat(2, 1fr);

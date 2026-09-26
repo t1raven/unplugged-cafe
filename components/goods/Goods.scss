@@ -1,5 +1,5 @@
 /* --------------------------------
-   MENU LIST
+   GOODS LIST
 -------------------------------- */
 
 .goods-list {
@@ -18,7 +18,7 @@
 
 
 /* --------------------------------
-   MENU CARD
+   GOODS CARD
 -------------------------------- */
 
 .goods-card {
@@ -62,7 +62,6 @@
 .goods-card__label {
   display: none;
   gap: 4px;
-  margin-bottom: 8px;
 
   &_item {
     display: flex;
@@ -232,31 +231,33 @@
 }
 
 
-
 /* --------------------------------
-   MENU INFO
+   GOODS INFO
 -------------------------------- */
 
-.goods-card__title {
+.goods-card__info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+}
 
+.goods-card__title {
   h2 {
-    margin: 0;
-
+    font-size: 16px;
+    line-height: 1.35;
     color: var(--font-color);
-
-    font-size: 1em;
-    line-height: 1.4;
   }
+}
+
+.goods-card__desc {
+  font-size: 12px;
+  color: var(--font-sec-color);
 }
 
 .goods-card__price {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
+  flex-direction: column;
+  line-height: 1.35;
 
   del {
     font-size: 12px;
@@ -264,36 +265,30 @@
   }
 
   strong {
-    display: flex;
-    align-items: center;
-    gap: 8px;
 
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 600;
 
     color: var(--font-color);
+
+    small {
+      font-weight: 400;
+    }
   }
 
   .discount-rate {
+    font-size: 16px;
     color: var(--primary-color);
+    margin-right: 4px;
   }
 }
 
 .quantity-discounts {
+  margin-top: 4px;
   font-size: 12px;
   color: var(--primary-color);
-  margin-top: 4px;
 }
 
-
-.goods-card__description {
-  margin: 12px 0 0;
-
-  color: var(--font-sec-color);
-
-  font-size: 12px;
-  line-height: 1.6;
-}
 
 
 /* --------------------------------
@@ -330,12 +325,8 @@
 }
 
 
-
-
-
-
 /* --------------------------------
-   CART
+   CART BUTTON
 -------------------------------- */
 
 .goods_gnb_cart {
@@ -469,7 +460,7 @@
 
 
 /* --------------------------------
-   CART OPTION
+   GOODS OPTION
 -------------------------------- */
 .goods-option-modal {
   position: fixed;
@@ -480,7 +471,7 @@
   align-items: center;
   justify-content: center;
 
-  padding: 18px;
+  padding: 20px;
 }
 
 .modal-backdrop {
@@ -544,6 +535,7 @@
   }
 
   small {
+    font-size: 12px;
     color: var(--primary-color);
   }
 }
@@ -557,7 +549,7 @@
 .option-title {
   margin-bottom: 12px;
 
-  font-size: 12px;
+  font-size: 16px;
   opacity: 0.6;
 }
 
@@ -605,14 +597,10 @@
   padding-top: 20px;
 
   border-top: 1px solid var(--border-color);
-}
 
-.modal-price {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-top: 20px;
+  span {
+    font-size: 16px;
+  }
 }
 
 .modal-total {
@@ -621,6 +609,10 @@
   justify-content: space-between;
 
   margin-top: 20px;
+
+  span {
+    font-size: 16px;
+  }
 
   strong {
     font-size: 20px;
@@ -658,7 +650,7 @@
     }
   }
 
-  strong {
+  span {
     min-width: 34px;
     text-align: center;
   }
@@ -709,7 +701,6 @@
 
   .goods-grid {
     grid-template-columns: repeat(1, 1fr);
-
     gap: 0 16px;
   }
 
@@ -774,20 +765,14 @@
     }
   }
 
-  .goods-card__price {
-    strong {
-      font-size: 16px;
-    }
-  }
-
-  .goods-card__description {
-    margin-top: 5px;
+  .goods-card__desc {
     font-size: 12px;
   }
 
   .goods_gnb_cart {
     > nav {
       width: 90%;
+      gap: 4px;
     }
   }
 }

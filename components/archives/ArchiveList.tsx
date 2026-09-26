@@ -396,13 +396,6 @@ export default function ArchiveList({
 
       <div className={`category_search_nav ${searchActive ? 'active' : ''}`}>
         <div className="category_search_nav__inner">
-          <CategoryNav
-            category={categories}
-            categoryNavRef={categoryRef}
-            activeCategory={activeCategory}
-            onChange={handleCategoryChange}
-          />
-
           <div className="search-nav">
             <div className="input">
               <span className="material-symbols-rounded icon">search</span>
@@ -423,6 +416,12 @@ export default function ArchiveList({
               <span className="material-symbols-rounded">search</span>
             </button>
           </div>
+          <CategoryNav
+            category={categories}
+            categoryNavRef={categoryRef}
+            activeCategory={activeCategory}
+            onChange={handleCategoryChange}
+          />
         </div>
       </div>
 

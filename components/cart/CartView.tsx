@@ -211,19 +211,19 @@ export default function CartView({
                 <div className="cart-summary-row">
                   <span>상품금액</span>
 
-                  <strong>
+                  <span>
                     {originalTotalPrice.toLocaleString()}
                     원
-                  </strong>
+                  </span>
                 </div>
 
                 <div className="cart-summary-row discount">
                   <span>할인금액</span>
 
-                  <strong>
+                  <span>
                     -{totalDiscountPrice.toLocaleString()}
                     원
-                  </strong>
+                  </span>
                 </div>
 
                 <div className="cart-summary-row total">
@@ -231,7 +231,7 @@ export default function CartView({
 
                   <strong>
                     {discountedTotalPrice.toLocaleString()}
-                    원
+                    <small>원</small>
                   </strong>
                 </div>
               </div>
@@ -243,7 +243,7 @@ export default function CartView({
                   className="cart-order"
                   onClick={onOrder}
                 >
-                  구매하기
+                  주문하기
                 </button>
 
                 <button
@@ -251,7 +251,7 @@ export default function CartView({
                   className="cart-clear"
                   onClick={clearCart}
                 >
-                  전체 삭제
+                  비우기
                 </button>
 
               </div>

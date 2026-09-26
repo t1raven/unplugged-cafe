@@ -108,7 +108,7 @@ export default function Upcoming({
         <div className="upcoming__list">
           {performances.length > 0 ? (
             <Swiper
-              slidesPerView={1.1}
+              slidesPerView={1.05}
               grid={{
                 fill: 'column',
                 rows: 4,

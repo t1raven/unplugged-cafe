@@ -1,19 +1,19 @@
 'use client'
 
-import { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCartStore } from '@/hooks/cartStore'
 import gsap from 'gsap'
 
 import CategoryNav from '@/components/common/CategoryNav'
+import CartModal from '@/components/cart/CartModal'
 
 import GoodsCard from './GoodsCard';
-import GoodsOptionModal from './GoodsOptionModal';
-import CartButton from '@/components/cart/CartButton';
-import CartModal from '@/components/cart/CartModal';
+import GoodsOptionModal from './GoodsOptionModal'
 
 import type { Category } from '@/types/category'
 import type { Goods } from '@/types/goods'
 
-import './Goods.scss';
+import './Goods.scss'
 
 interface Props {
   categories: Category[]
@@ -153,6 +153,29 @@ export default function goodsList({
     setSelectedGoods(null);
   };
 
+  const [mounted, setMounted] =
+    useState(false);
+
+  const cartItems = useCartStore(
+    (state) => state.items
+  );
+
+  const openCart = useCartStore(
+    (state) => state.openCart
+  );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const cartCount = mounted
+    ? cartItems.reduce(
+        (total, item) =>
+          total + item.quantity,
+        0
+      )
+    : 0;
+
   return (
     <>
       <div className="category_search_nav">
@@ -190,7 +213,23 @@ export default function goodsList({
         }
       />
 
-      <CartButton />
+      <div className="goods_gnb_cart">
+        <nav>
+          <button type="button" className="gnb_btn cart_btn" onClick={openCart} aria-label="장바구니 열기">
+            <div className="cart_icon">
+              <span className="material-symbols-rounded icon">local_mall</span>
+              {cartCount > 0 && (
+                <span className="cnt">{cartCount}</span>
+              )}
+            </div>
+            <div className="text">장바구니</div>
+          </button>
+          <button type="button" className="gnb_btn tracking_btn" aria-label="주문조회 열기">
+            <div className="text">주문조회</div>
+          </button>
+        </nav>
+      </div>
+
       <CartModal />
     </>
   )

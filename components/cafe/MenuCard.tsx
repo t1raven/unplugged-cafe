@@ -53,15 +53,17 @@ export default function GoodsCard({
         )}
         <div className="menu-card__title">
           <h2>{item.name}</h2>
-
-          <strong>
-            {item.price.toLocaleString()}원
-          </strong>
         </div>
 
         {item.description && (
-          <p>{item.description}</p>
+          <div className="menu-card__desc">{item.description}</div>
         )}
+
+        <div className="menu-card__price">
+          <strong>
+            {item.price.toLocaleString()}<small>원</small>
+          </strong>
+        </div>
       </div>
     </article>
   );

@@ -310,9 +310,9 @@ export default function GoodsOptionModal({
               −
             </button>
 
-            <strong>
+            <span>
               {quantity}
-            </strong>
+            </span>
 
             <button
               type="button"
@@ -336,8 +336,7 @@ export default function GoodsOptionModal({
 
           <strong>
             {goods.quantityDiscounts?.length ? (<small>(개당 {unitPrice.toLocaleString()}원)</small>) : null}
-            {subtotal.toLocaleString()}
-            원
+            {subtotal.toLocaleString()}원
           </strong>
         </div>
 

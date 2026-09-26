@@ -514,7 +514,7 @@
   @media (max-width: 767px) {
     .performance-detail-hero {
       padding-top: calc(30px + var(--header-height));
-      padding-bottom: 70px;
+      padding-bottom: 60px;
     }
 
     .performance-detail-hero
@@ -528,7 +528,7 @@
     }
 
     .performance-meta {
-      margin-top: 40px;
+      margin-top: 28px;
     }
 
     .meta-item {
@@ -582,6 +582,7 @@
     .reservation_gnb_btn {
       > nav {
         width: 90%;
+        gap: 4px;
       }
 
       .gnb_btn {

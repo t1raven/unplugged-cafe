@@ -145,11 +145,11 @@ export default function GoodsCard({
         )}
         <div className="goods-card__title">
           <h2>{goods.name}</h2>
-
-          {/*<strong>
-            {goods.price.toLocaleString()}원
-          </strong>*/}
         </div>
+
+        {goods.description && (
+          <div className="goods-card__desc">{goods.description}</div>
+        )}
 
         <div className="goods-card__price">
           {goods.salePrice != null && goods.salePrice < goods.price && (
@@ -161,33 +161,29 @@ export default function GoodsCard({
           <strong>
             {discountRate > 0 && (
               <span className="discount-rate">
-                {discountRate}%
+                {discountRate}<small>%</small>
               </span>
             )}
-            {displayPrice.toLocaleString()}원
+            {displayPrice.toLocaleString()}<small>원</small>
           </strong>
+
+          {goods.quantityDiscounts?.length ? (
+            <div className="quantity-discounts">
+              {goods.quantityDiscounts.map(
+                (discount) => (
+                  <p
+                    key={
+                      discount.minQuantity
+                    }
+                  >
+                    {discount.minQuantity}개 이상 구매시{' '}
+                    {discount.unitPrice.toLocaleString()}원
+                  </p>
+                )
+              )}
+            </div>
+          ) : null}
         </div>
-
-        {goods.quantityDiscounts?.length ? (
-          <div className="quantity-discounts">
-            {goods.quantityDiscounts.map(
-              (discount) => (
-                <span
-                  key={
-                    discount.minQuantity
-                  }
-                >
-                  {discount.minQuantity}개 이상 구매시{' '}
-                  {discount.unitPrice.toLocaleString()}원
-                </span>
-              )
-            )}
-          </div>
-        ) : null}
-
-        {goods.description && (
-          <p className="goods-card__description">{goods.description}</p>
-        )}
       </div>
     </article>
   );
