@@ -73,7 +73,7 @@ export async function POST(request: Request) {
       status: 'cancelled',
     });
   } catch (error) {
-    console.error('[POST /api/orders/cancel]', error);
+    console.error('[POST /api/order/cancel]', error);
 
     const isConflict =
       error instanceof Error &&

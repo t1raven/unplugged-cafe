@@ -204,6 +204,7 @@ export default function CartModal() {
             onBack={() =>
               setStep('cart')
             }
+            closeCart={closeCart}
             onComplete={
               handleComplete
             }

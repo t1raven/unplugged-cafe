@@ -23,6 +23,8 @@ interface Props {
 
   totalPrice: number;
 
+  closeCart: () => void;
+
   onBack: () => void;
 
   onComplete: (
@@ -38,6 +40,7 @@ export default function OrderView({
   items,
   totalPrice,
   onBack,
+  closeCart,
   onComplete,
 }: Props) {
   const [
@@ -243,7 +246,16 @@ export default function OrderView({
 
         <h2>주문 신청</h2>
 
-        <div />
+        <button
+          type="button"
+          className="cart-close"
+          onClick={closeCart}
+          aria-label="닫기"
+        >
+          <span className="material-symbols-rounded">
+            close
+          </span>
+        </button>
       </div>
 
       <form

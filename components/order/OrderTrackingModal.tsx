@@ -120,7 +120,7 @@ export default function OrderTrackingModal({ open, onClose }: Props) {
     setError(null);
 
     try {
-      const response = await fetch('/api/orders/cancel', {
+      const response = await fetch('/api/order/cancel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

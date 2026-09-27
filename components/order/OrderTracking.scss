@@ -36,10 +36,10 @@
 .order-tracking-header {
   flex: 0 0 auto;
   display: grid;
-  grid-template-columns: 44px 1fr 44px;
+  grid-template-columns: 30px 1fr 30px;
   align-items: center;
   min-height: 60px;
-  padding: 0 14px;
+  padding: 0 20px;
   border-bottom: 1px solid var(--border-color);
 
   h2 {
@@ -54,19 +54,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 30px;
+  height: 30px;
   border: 0;
   background: transparent;
   color: var(--font-color);
-
-  span { font-size: 25px; }
 }
 
 .order-tracking-body,
 .order-detail {
   overflow-y: auto;
-  padding: 28px;
+  padding: 20px;
 }
 
 .order-tracking-form {
@@ -94,7 +92,7 @@
     border-radius: 8px;
     background: var(--background-sec-color);
     color: var(--font-color);
-    font: 16px;
+    font-size: 16px;
 
     &:focus { border-color: var(--primary-color); outline: none; }
   }
@@ -172,13 +170,14 @@
   min-height: 25px;
   padding: 0 9px;
   border-radius: 999px;
-  background: var(--secondary-color);
+  background: var(--info-color);
   color: #fff;
   font-size: 12px !important;
   font-weight: 400;
   white-space: nowrap;
 
   &.paid, &.completed { background: var(--success-color); }
+  &.inTransit { background: var(--warning-color); color: #333; }
   &.cancelled { background: var(--disabled-color); }
 }
 
@@ -261,12 +260,12 @@
   }
 }
 
-.order-cancel-button { background: var(--danger-color); }
+.order-cancel-button { background: var(--disabled-color); }
 .order-cancel-guide { margin: 0; color: var(--font-sec-color); font-size: 12px; text-align: center; }
 
 @media screen and (max-width: 640px) {
   .order-tracking-modal { align-items: flex-end; padding: 0; }
-  .order-tracking-panel { width: 100%; max-height: 92dvh; border-radius: 18px 18px 0 0; }
-  .order-tracking-body, .order-detail { padding: 20px 16px calc(20px + var(--safe-area-bottom)); }
+  .order-tracking-panel { width: 100%; max-height: 92dvh; border-radius: 18px 18px 0 0; border-bottom: 0; }
+  .order-tracking-body, .order-detail { padding: 20px 20px calc(20px + var(--safe-area-bottom)); }
   .order-detail dl > div { grid-template-columns: 60px 1fr; }
 }
