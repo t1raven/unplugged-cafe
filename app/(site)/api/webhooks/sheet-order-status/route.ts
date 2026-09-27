@@ -6,6 +6,7 @@ const STATUS_MAP: Record<string, string> = {
   신청: 'pending',
   확인: 'confirmed',
   입금완료: 'paid',
+  배송중: 'inTransit',
   수령완료: 'completed',
   취소: 'cancelled',
 };

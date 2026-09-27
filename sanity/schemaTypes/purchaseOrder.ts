@@ -304,11 +304,15 @@ export const purchaseOrder = defineType({
             value: 'confirmed',
           },
           {
-            title: '입금 완료',
+            title: '입금완료',
             value: 'paid',
           },
           {
-            title: '수령 완료',
+            title: '배송중',
+            value: 'inTransit',
+          },
+          {
+            title: '수령완료',
             value: 'completed',
           },
           {
@@ -398,6 +402,7 @@ export const purchaseOrder = defineType({
         pending: '신청',
         confirmed: '확인',
         paid: '입금완료',
+        inTransit: '배송중',
         completed: '수령완료',
         cancelled: '취소',
       };

@@ -185,6 +185,7 @@ export function getOrderStatusLabel(
       confirmed: '확인',
       paid: '입금완료',
       completed: '수령완료',
+      inTransit: '배송중',
       cancelled: '취소',
     };
 

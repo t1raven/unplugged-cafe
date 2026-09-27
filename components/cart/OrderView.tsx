@@ -323,9 +323,9 @@ export default function OrderView({
                 <>
                   {/*<div className="guide-title">배송 안내</div>*/}
                   <div className="guide-content">
+                    입금자와 주문자 이름이 동일하여야 하며,<br/>
                     입금 확인 후 배송이 시작됩니다.<br/>
                     입금 계좌: <strong>{depositAccount}</strong><br/>
-                    배송비 {deliveryFee.toLocaleString()}원이 포함됩니다.
                   </div>
                 </>
               ) : (
@@ -333,8 +333,8 @@ export default function OrderView({
                   {/*<div className="guide-title">픽업 안내</div>*/}
                   <div className="guide-content">
                     아래 주소로 픽업하러 와주세요.<br/>
-                    도로명: 서울 마포구 와우산로29길 15 2층<br/>
-                    지번: 서울 마포구 서교동 336-5 2층
+                    <strong>서울 마포구 와우산로29길 15 2층서울 마포구 서교동 336-5 2층</strong><br/>
+                    영업시간: 12:00 - 24:00
                   </div>
                 </>
               )}

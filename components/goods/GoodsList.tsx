@@ -1,11 +1,12 @@
 'use client'
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { useCartStore } from '@/hooks/cartStore'
 import gsap from 'gsap'
 
 import CategoryNav from '@/components/common/CategoryNav'
 import CartModal from '@/components/cart/CartModal'
+import OrderTrackingModal from '@/components/order/OrderTrackingModal'
 
 import GoodsCard from './GoodsCard';
 import GoodsOptionModal from './GoodsOptionModal'
@@ -20,7 +21,29 @@ interface Props {
   items: Goods[]
 }
 
-export default function goodsList({
+const subscribeToClient = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
+function scrollToCategory() {
+  const element = document.querySelector('.category_search_nav');
+
+  if (!element) return;
+
+  const elementPrev = element.previousElementSibling;
+
+  if (!elementPrev || elementPrev.scrollHeight >= window.scrollY) return;
+
+  const header = document.getElementById('site-header');
+  const top = elementPrev.scrollHeight - (header?.getBoundingClientRect().height ?? 0);
+
+  window.scrollTo({
+    top,
+    behavior: 'smooth',
+  });
+}
+
+export default function GoodsList({
   categories,
   items: initialItems,
 }: Props) {
@@ -75,25 +98,6 @@ export default function goodsList({
     },
     [activeCategory]
   )
-
-  const scrollToCategory = () => {
-    const element = document.querySelector('.category_search_nav');
-
-    if (!element) return;
-
-    const elementPrev = element.previousElementSibling;
-
-    if(elementPrev!.scrollHeight >= window.scrollY) return;
-
-    const header = document.getElementById('site-header');
-
-    const top = elementPrev!.scrollHeight - header!.getBoundingClientRect().height
-
-    window.scrollTo({
-      top,
-      behavior: 'smooth',
-    });
-  };
 
   /*
    *  등장 애니메이션
@@ -153,8 +157,13 @@ export default function goodsList({
     setSelectedGoods(null);
   };
 
-  const [mounted, setMounted] =
-    useState(false);
+  const mounted = useSyncExternalStore(
+    subscribeToClient,
+    getClientSnapshot,
+    getServerSnapshot
+  );
+
+  const [orderOpen, setOrderOpen] = useState(false);
 
   const cartItems = useCartStore(
     (state) => state.items
@@ -163,10 +172,6 @@ export default function goodsList({
   const openCart = useCartStore(
     (state) => state.openCart
   );
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const cartCount = mounted
     ? cartItems.reduce(
@@ -224,13 +229,15 @@ export default function goodsList({
             </div>
             <div className="text">장바구니</div>
           </button>
-          <button type="button" className="gnb_btn tracking_btn" aria-label="주문조회 열기">
+          <button type="button" className="gnb_btn tracking_btn" onClick={() => setOrderOpen(true)} aria-label="주문조회 열기">
             <div className="text">주문조회</div>
           </button>
         </nav>
       </div>
 
       <CartModal />
+      <OrderTrackingModal open={orderOpen} onClose={() => setOrderOpen(false)}
+      />
     </>
   )
 }

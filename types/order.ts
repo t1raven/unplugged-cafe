@@ -15,8 +15,7 @@ export interface OrderRequestItem {
 }
 
 export interface OrderRequest {
-  deliveryMethod:
-    DeliveryMethod;
+  deliveryMethod: DeliveryMethod;
 
   customer: {
     name: string;
@@ -34,4 +33,41 @@ export interface OrderRequest {
   privacyAgreed: boolean;
 
   items: OrderRequestItem[];
+}
+
+export type OrderStatus =
+  | 'pending'
+  | 'confirmed'
+  | 'paid'
+  | 'inTransit'
+  | 'completed'
+  | 'cancelled';
+
+export interface OrderTrackingItem {
+  name: string;
+  options: OrderOption[];
+  price: number;
+  quantity: number;
+  subtotal: number;
+}
+
+export interface OrderTrackingResult {
+  orderNumber: string;
+  createdAt: string;
+  deliveryMethod: DeliveryMethod;
+  customer: {
+    name: string;
+    phone: string;
+    address?: {
+      postcode?: string;
+      address?: string;
+      detailAddress?: string;
+    };
+  };
+  items: OrderTrackingItem[];
+  productPrice: number;
+  deliveryFee: number;
+  totalPrice: number;
+  memo?: string;
+  status: OrderStatus;
 }
