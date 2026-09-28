@@ -5,8 +5,10 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {structure} from './sanity/structure'
 
-import {apiVersion, dataset, projectId} from './sanity/env'
+import {dataset, projectId} from './sanity/env'
 import {schemaTypes} from './sanity/schemaTypes'
+
+import {StudioCountProvider} from './sanity/providers/StudioCountProvider'
 
 import {
   DeletePerformanceAndGalleryAction,
@@ -54,6 +56,15 @@ export default defineConfig({
       navbar: () => null, 
     },
   },*/
+
+  studio: {
+    components: {
+      layout: (props) =>
+        StudioCountProvider({
+          children: props.renderDefault(props),
+        }),
+    },
+  },
 
   document: {
 
