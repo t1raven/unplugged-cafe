@@ -119,7 +119,7 @@ export const structure: StructureResolver = async (S, context) => {
                       .defaultOrdering([
                         {
                           field: 'date',
-                          direction: 'asc',
+                          direction: 'desc',
                         },
                       ])
                   ),
@@ -143,7 +143,7 @@ export const structure: StructureResolver = async (S, context) => {
                       .defaultOrdering([
                         {
                           field: 'date',
-                          direction: 'asc',
+                          direction: 'desc',
                         },
                       ])
                   ),
@@ -553,7 +553,7 @@ export const structure: StructureResolver = async (S, context) => {
                       .defaultOrdering([
                         {
                           field: 'date',
-                          direction: 'asc',
+                          direction: 'desc',
                         },
                       ])
                   ),
@@ -577,7 +577,7 @@ export const structure: StructureResolver = async (S, context) => {
                       .defaultOrdering([
                         {
                           field: 'date',
-                          direction: 'asc',
+                          direction: 'desc',
                         },
                       ])
                   ),
