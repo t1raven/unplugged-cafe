@@ -23,6 +23,7 @@ type Counts = {
   menuItem: Record<string, number>
 
   galleryItem: Record<string, number>
+  galleryItemByYear: Record<string, Record<number, number>>
 
   goodsItem: Record<string, number>
 
@@ -47,6 +48,7 @@ const initialCounts: Counts = {
   menuItem: {},
 
   galleryItem: {},
+  galleryItemByYear: {},
 
   goodsItem: {},
 
@@ -61,23 +63,20 @@ const initialCounts: Counts = {
   },
 }
 
-const StudioCountContext =
-  createContext<Counts>(initialCounts)
+const StudioCountContext = createContext<Counts>(initialCounts)
 
-export function StudioCountProvider({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  const client = useClient({
-    apiVersion: API_VERSION,
-  }).withConfig({
-    perspective: 'drafts',
-    useCdn: false,
-  })
+export function StudioCountProvider({children}: {children: React.ReactNode}) {
+  const studioClient = useClient({apiVersion: API_VERSION})
+  const client = useMemo(
+    () =>
+      studioClient.withConfig({
+        perspective: 'drafts',
+        useCdn: false,
+      }),
+    [studioClient],
+  )
 
-  const [counts, setCounts] =
-    useState<Counts>(initialCounts)
+  const [counts, setCounts] = useState<Counts>(initialCounts)
 
   const fetchCounts = useCallback(async () => {
     const now = new Date()
@@ -85,12 +84,9 @@ export function StudioCountProvider({
     const todayStart = new Date(now)
     todayStart.setHours(0, 0, 0, 0)
 
-    const tomorrowStart =
-      new Date(todayStart)
+    const tomorrowStart = new Date(todayStart)
 
-    tomorrowStart.setDate(
-      tomorrowStart.getDate() + 1
-    )
+    tomorrowStart.setDate(tomorrowStart.getDate() + 1)
 
     const result = await client.fetch<{
       performance: Counts['performance']
@@ -109,6 +105,8 @@ export function StudioCountProvider({
         categoryId: string
         count: number
       }[]
+
+      galleryYearDates: {categoryId: string; date: string}[]
 
       orders: Counts['orders']
     }>(
@@ -161,6 +159,15 @@ export function StudioCountProvider({
               ]
             )
           },
+
+        "galleryYearDates": *[
+          _type == "galleryItem"
+          && defined(category._ref)
+          && defined(performance->date)
+        ] {
+          "categoryId": category._ref,
+          "date": performance->date
+        },
 
         "goodsItem":
           *[_type == "goodsCategory"] {
@@ -224,43 +231,32 @@ export function StudioCountProvider({
       }
       `,
       {
-        todayStart:
-          todayStart.toISOString(),
+        todayStart: todayStart.toISOString(),
 
-        tomorrowStart:
-          tomorrowStart.toISOString(),
-      }
+        tomorrowStart: tomorrowStart.toISOString(),
+      },
     )
 
-    const menuItem =
-      Object.fromEntries(
-        result.menuItem.map(
-          ({categoryId, count}) => [
-            categoryId,
-            count,
-          ]
-        )
-      )
+    const menuItem = Object.fromEntries(
+      result.menuItem.map(({categoryId, count}) => [categoryId, count]),
+    )
 
-    const galleryItem =
-      Object.fromEntries(
-        result.galleryItem.map(
-          ({categoryId, count}) => [
-            categoryId,
-            count,
-          ]
-        )
-      )
+    const galleryItem = Object.fromEntries(
+      result.galleryItem.map(({categoryId, count}) => [categoryId, count]),
+    )
 
-    const goodsItem =
-      Object.fromEntries(
-        result.goodsItem.map(
-          ({categoryId, count}) => [
-            categoryId,
-            count,
-          ]
-        )
-      )
+    const goodsItem = Object.fromEntries(
+      result.goodsItem.map(({categoryId, count}) => [categoryId, count]),
+    )
+
+    // Same UTC year boundaries as the gallery document lists.
+    const galleryItemByYear: Counts['galleryItemByYear'] = {}
+    for (const {categoryId, date} of result.galleryYearDates) {
+      const year = new Date(date).getUTCFullYear()
+      if (!Number.isFinite(year)) continue
+      const years = (galleryItemByYear[categoryId] ??= {})
+      years[year] = (years[year] ?? 0) + 1
+    }
 
     setCounts({
       performance: result.performance,
@@ -268,6 +264,7 @@ export function StudioCountProvider({
       menuItem,
 
       galleryItem,
+      galleryItemByYear,
 
       goodsItem,
 
@@ -303,7 +300,7 @@ export function StudioCountProvider({
         {
           includeResult: false,
           visibility: 'query',
-        }
+        },
       )
       .subscribe(() => {
         fetchCounts()
@@ -312,27 +309,17 @@ export function StudioCountProvider({
     return () => {
       subscription.unsubscribe()
     }
-  }, [
-    client,
-    fetchCounts,
-  ])
+  }, [client, fetchCounts])
 
-  const value = useMemo(
-    () => counts,
-    [counts]
-  )
+  const value = useMemo(() => counts, [counts])
 
   return (
-    <StudioCountContext.Provider
-      value={value}
-    >
+    <StudioCountContext.Provider value={value}>
       {children}
     </StudioCountContext.Provider>
   )
 }
 
 export function useStudioCounts() {
-  return useContext(
-    StudioCountContext
-  )
+  return useContext(StudioCountContext)
 }

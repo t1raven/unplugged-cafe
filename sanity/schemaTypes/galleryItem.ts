@@ -73,6 +73,14 @@ export const galleryItem = defineType({
       readOnly: true,
       hidden: ({ value }) => !value, 
     }),
+
+    defineField({
+      name: 'performanceDate',
+      title: '공연 일시',
+      type: 'datetime',
+      readOnly: true,
+      hidden: ({ value }) => !value, 
+    }),
   ],
 
   preview: {

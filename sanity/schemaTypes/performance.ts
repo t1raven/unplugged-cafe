@@ -25,9 +25,9 @@ export const performance = defineType({
       title: '슬러그',
       type: 'slug',
       options: {
-        source: (doc: any) => {
+        source: (doc) => {
           const dateStr = typeof doc.date === 'string' ? doc.date.split('T')[0] : ''
-          const titleStr = doc.title || ''
+          const titleStr = typeof doc.title === 'string' ? doc.title : ''
           return dateStr ? `${dateStr}-${titleStr}` : titleStr
         },
         maxLength: 96,

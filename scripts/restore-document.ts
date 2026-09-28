@@ -1,9 +1,19 @@
-import dotenv from 'dotenv'
+import {readFileSync} from 'node:fs'
 import {createClient} from '@sanity/client'
 
-dotenv.config({
-  path: '.env.local',
-})
+try {
+  const envFile = readFileSync('.env.local', 'utf8')
+
+  for (const line of envFile.split(/\r?\n/)) {
+    const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$/)
+
+    if (!match || process.env[match[1]]) continue
+
+    process.env[match[1]] = match[2].replace(/^("|')|("|')$/g, '')
+  }
+} catch {
+  // .env.local이 없어도 환경 변수로 실행할 수 있습니다.
+}
 
 const projectId = 'hjsu6mnr'
 const dataset = 'production'
@@ -84,11 +94,9 @@ async function restoreData(id: string) {
     return
   }
 
-  const {
-    _rev,
-    _updatedAt,
-    ...restoreDocument
-  } = document
+  const restoreDocument = {...document}
+  delete restoreDocument._updatedAt
+  delete restoreDocument._rev
 
   await client.createOrReplace(restoreDocument)
 

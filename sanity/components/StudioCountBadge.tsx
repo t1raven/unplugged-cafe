@@ -4,14 +4,14 @@ import {Badge} from '@sanity/ui'
 
 import {useStudioCounts} from '../providers/StudioCountProvider'
 
-type CategoryType =
-  | 'menuItem'
-  | 'galleryItem'
+type CategoryType = 
+  | 'menuItem' 
+  | 'galleryItem' 
   | 'goodsItem'
 
-type PerformanceType =
-  | 'today'
-  | 'upcoming'
+type PerformanceType = 
+  | 'today' 
+  | 'upcoming' 
   | 'past'
 
 type OrderStatus =
@@ -23,85 +23,59 @@ type OrderStatus =
   | 'completed'
   | 'cancelled'
 
-function BadgeUI({
-  count,
-}: {
-  count: number
-}) {
+function BadgeUI({count}: {count: number}) {
   return (
     <Badge
-      tone={
-        count > 0
-          ? 'primary'
-          : 'default'
-      }
-      fontSize={1}
-      padding={2}
-      radius={6}
+      tone={count ? 'primary' : 'default'}
       style={{
-        minWidth: '28px',
+        minWidth: '25px',
         width: 'auto',
+        height: '25px',
+        padding: '6px 0',
+        borderRadius: '3px',
         textAlign: 'center',
         whiteSpace: 'nowrap',
-        fontVariantNumeric:
-          'tabular-nums',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
-      {count}
+      {count ?? '…'}
     </Badge>
   )
 }
 
-export function PerformanceCountBadge({
-  type,
-}: {
-  type: PerformanceType
-}) {
-  const counts =
-    useStudioCounts()
+export function PerformanceCountBadge({type}: {type: PerformanceType}) {
+  const counts = useStudioCounts()
 
-  return (
-    <BadgeUI
-      count={
-        counts.performance[type]
-      }
-    />
-  )
+  return <BadgeUI count={counts.performance[type]} />
 }
 
 export function CategoryCountBadge({
   type,
   categoryId,
+  year,
 }: {
   type: CategoryType
   categoryId: string
+  year?: number
 }) {
-  const counts =
-    useStudioCounts()
+  const counts = useStudioCounts()
 
+  //return <BadgeUI count={counts[type][categoryId] ?? 0} />
   return (
     <BadgeUI
       count={
-        counts[type][categoryId]
-        ?? 0
+        type === 'galleryItem' && year !== undefined
+          ? (counts.galleryItemByYear[categoryId]?.[year] ?? 0)
+          : (counts[type][categoryId] ?? 0)
       }
     />
   )
 }
 
-export function OrderCountBadge({
-  status,
-}: {
-  status: OrderStatus
-}) {
-  const counts =
-    useStudioCounts()
+export function OrderCountBadge({status}: {status: OrderStatus}) {
+  const counts = useStudioCounts()
 
-  return (
-    <BadgeUI
-      count={
-        counts.orders[status]
-      }
-    />
-  )
+  return <BadgeUI count={counts.orders[status]} />
 }
