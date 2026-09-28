@@ -10,7 +10,7 @@ import type { Performance } from '@/types/performance';
 const upcomingQuery = `
   *[
     _type == "performance"
-    && date >= $now
+    && date >= $today
   ]
   | order(date asc)[0...12] {
     _id,
@@ -61,13 +61,16 @@ export const homeQuery = `
 export const revalidate = 0;
 
 export default async function Home() {
-  const now = new Date();
-  const offset = now.getTimezoneOffset() * 60000;
-  const localDate = new Date(now.getTime() - offset);
+  const today = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date());
 
   const performances: Performance[] =
     await client.fetch(upcomingQuery, {
-      now
+      today,
     });
 
   const home = await client.fetch(homeQuery);

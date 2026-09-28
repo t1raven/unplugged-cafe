@@ -24,7 +24,7 @@ const singletonTypes = new Set([
 
 export default defineConfig({
   //basePath: '/studio',
-  title: 'Unplugged Lounge CMS',
+  title: 'UNPLUGGED LOUNGE CMS',
 
   projectId,
   dataset,

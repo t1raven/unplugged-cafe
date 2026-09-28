@@ -15,6 +15,36 @@ interface Props {
 
 const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
+// ==================================================
+// Date Helpers
+// ==================================================
+
+const formatDateKey = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+};
+
+/**
+ * Sanity datetime → 브라우저 로컬 날짜
+ */
+const getPerformanceDate = (performance: Performance) => {
+  return new Date(performance.date);
+};
+
+/**
+ * 공연의 날짜 Key
+ */
+const getPerformanceDateKey = (
+  performance: Performance
+) => {
+  return formatDateKey(
+    getPerformanceDate(performance)
+  );
+};
+
 export default function PerformanceCalendar({
   performances,
 }: Props) {
@@ -24,36 +54,6 @@ export default function PerformanceCalendar({
     `${today.getFullYear()}-` +
     `${String(today.getMonth() + 1).padStart(2, '0')}-` +
     `${String(today.getDate()).padStart(2, '0')}`;
-
-  // ==================================================
-  // Date Helpers
-  // ==================================================
-
-  const formatDateKey = (date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-  };
-
-  /**
-   * Sanity datetime → 브라우저 로컬 날짜
-   */
-  const getPerformanceDate = (performance: Performance) => {
-    return new Date(performance.date);
-  };
-
-  /**
-   * 공연의 날짜 Key
-   */
-  const getPerformanceDateKey = (
-    performance: Performance
-  ) => {
-    return formatDateKey(
-      getPerformanceDate(performance)
-    );
-  };
 
   /**
    * 공연 시간 표시
@@ -130,7 +130,7 @@ export default function PerformanceCalendar({
    * - 오늘 → 현재 시간 이후 공연만 표시
    * - 미래 날짜 → 전부 표시
    */
-  const getAvailablePerformances = (
+  /* const getAvailablePerformances = (
     dateKey: string,
     dayPerformances: Performance[]
   ) => {
@@ -151,7 +151,7 @@ export default function PerformanceCalendar({
 
       return performanceDate > today;
     });
-  };
+  }; */
 
   // ==================================================
   // State
@@ -166,8 +166,7 @@ export default function PerformanceCalendar({
   );
 
   // 선택된 날짜
-  const [selectedDate, setSelectedDate] =
-    useState(todayKey);
+  const [selectedDate, setSelectedDate] = useState(todayKey);
 
   // ==================================================
   // Month
@@ -261,11 +260,12 @@ export default function PerformanceCalendar({
   // Selected Performances
   // ==================================================
 
-  const selectedPerformances =
+  const selectedPerformances = performancesByDate[selectedDate] ?? [];
+  /* const selectedPerformances =
     getAvailablePerformances(
       selectedDate,
       performancesByDate[selectedDate] ?? []
-    );
+    ); */
 
   const selectedDateInfo =
     formatSelectedDate(selectedDate);
@@ -349,8 +349,6 @@ export default function PerformanceCalendar({
     performances
       .filter((performance) => {
         if (!performance.date) return false;
-
-        const performanceDate = getPerformanceDate(performance);
 
         return getDateOnly(getPerformanceDate(performance)) > getDateOnly(today);
       })
@@ -453,13 +451,14 @@ export default function PerformanceCalendar({
               const dateKey =
                 formatDateKey(date);
 
-              const dayPerformances =
+              const dayPerformances = performancesByDate[dateKey] ?? [];
+              /* const dayPerformances =
                 getAvailablePerformances(
                   dateKey,
                   performancesByDate[
                     dateKey
                   ] ?? []
-                );
+                ); */
 
               const isToday =
                 dateKey === todayKey;

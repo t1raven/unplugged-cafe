@@ -13,7 +13,7 @@
     justify-content: space-between;
     align-items: flex-end;
 
-    margin-bottom: 70px;
+    margin-bottom: 32px;
 
     p {
       margin: 0;
@@ -59,7 +59,7 @@
   &__list {
     /*border-top: 1px solid rgba(255, 255, 255, 0.2);*/
     display: block;
-    margin: 0 -10px;
+    //margin: 0 -10px;
   }
 
   &__item {
@@ -67,17 +67,19 @@
 
     display: grid;
 
-    grid-template-columns: 100px 70px 1fr 20px;
+    grid-template-columns: 100px 64px 1fr 20px;
     gap: 20px;
 
     align-items: center;
     align-content: center;
 
-    height: 160px;
+    height: 140px;
 
-    padding: 20px 12px;
+    padding: 8px 20px 8px 8px;
 
-    border-bottom: 1px solid var(--border-color);
+    background-color: var(--background-sec-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
 
     color: var(--font-color);
     text-decoration: none;
@@ -86,12 +88,14 @@
     z-index: 1;
 
     transition:
-      padding 0.25s ease,
+      border-color 0.25s ease,
       background-color 0.25s ease;
 
     &:hover,
     &:active {
-      background-color: var(--background-sec-color);
+      //background-color: var(--background-sec-color);
+      border-color: var(--primary-color);
+      background-color: rgb(from var(--primary-color) r g b / 0.05);
       z-index: 2;
     }
   }
@@ -101,25 +105,26 @@
     height: auto;
 
     .swiper-wrapper {
-      max-height: calc(160px * 4);
+      max-height: calc(150px * 4);
     }
 
     .swiper-slide {
       width: calc(100% / 2);
-      padding: 0 10px;
     }
 
-    .swiper-slide:nth-child(4n+1){
+    /* .swiper-slide:nth-child(4n+1){
       .upcoming__item {
         border-top: 1px solid var(--border-color);
       }
-    }
+    } */
 
-    /*.swiper-slide {
-      .upcoming__item {
+    .swiper-slide {
+      margin-right: 10px;
+      margin-top: 10px;
+      /* .upcoming__item {
         border-top: 1px solid var(--border-color);
-      }
-    }*/
+      } */
+    }
 
     .swiper-pagination {
       position: static;
@@ -161,7 +166,12 @@
     position: relative;
     overflow: hidden;
 
-    background: var(--background-sec-color);
+    background: var(--background-color);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23333333cc'%3E%3Cpath d='M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0 0v-560 560Zm80-80h400q12 0 18-11t-2-21L586-459q-6-8-16-8t-16 8L450-320l-74-99q-6-8-16-8t-16 8l-80 107q-8 10-2 21t18 11Z'/%3E%3C/svg%3E");
+    
     border: 1px solid var(--border-color);
     border-radius: 12px;
 
@@ -220,7 +230,7 @@
     span {
       font-size: 13px;
       letter-spacing: 0.15em;
-      opacity: 0.5;
+      opacity: 0.65;
     }
   }
 
@@ -248,6 +258,12 @@
       font-size: 13px;
       letter-spacing: 0.12em;
 
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+      overflow: hidden;
+
       opacity: 0.5;
     }
 
@@ -274,13 +290,19 @@
     font-size: 20px;
     color: var(--font-sec-color);
 
+    transition:
+      color 0.25s ease,
+      transform 0.25s ease;
+
     > span {
-      font-size: 1em;;
+      font-size: 1em;
     }
   }
 
-  &__item:hover &__arrow {
+  &__item:hover &__arrow,
+  &__item:active &__arrow {
     color: var(--primary-color);
+    transform: translateX(5px);
   }
 
   &__empty {
@@ -300,35 +322,32 @@
     padding: 80px 0;
 
     &__header {
-      margin-bottom: 30px;
-    }
-
-    &__list {
-      margin: 0 -5px;
+      margin-bottom: 16px;
     }
 
     &__item {
       align-items: center;
 
-      grid-template-columns: 80px 1fr 15px;
+      grid-template-columns: 72px 1fr 15px;
+      gap: 0 12px;
 
-      gap: 0 16px;
+      height: 100px;
 
-      height: 120px;
+      padding: 4px 12px 4px 4px;
 
-      padding: 8px 4px;
+      border-radius: 8px;
     }
 
     &__swiper {
       overflow: visible;
 
       .swiper-wrapper {
-        max-height: calc(120px * 4);
+        max-height: calc(110px * 3);
       }
 
       .swiper-slide {
         width: 100%;
-        padding: 0 5px;
+        //padding: 0 5px;
       }
 
       .swiper-button-prev, 

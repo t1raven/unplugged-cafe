@@ -268,7 +268,7 @@
     align-items: flex-end;
     justify-content: space-between;
     padding-bottom: 24px;
-    border-bottom: 1px solid var(--border-color);
+    //border-bottom: 1px solid var(--border-color);
 
     p {
       margin: 0 0 8px;
@@ -305,33 +305,38 @@
   // ==================================================
 
   .performance-list {
-    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    //border-bottom: 1px solid var(--border-color);
   }
 
   .performance-item {
     display: grid;
-    grid-template-columns: 50px 100px 1fr 30px;
+    grid-template-columns: 50px 100px 1fr 20px;
     align-items: center;
     gap: 32px;
-    min-height: 110px;
-    padding: 12px 8px;
-    border-bottom: 1px solid var(--border-color);
-    background: transparent;
+    min-height: 120px;
+    padding: 8px 20px;
+    background-color: var(--background-sec-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     color: var(--font-color);
     text-decoration: none;
 
     transition:
-      background-color 0.25s ease,
-      padding 0.25s ease;
+      border-color 0.25s ease,
+      background-color 0.25s ease;
 
-    &:last-child {
+    /* &:last-child {
       border-bottom: 0;
-    }
+    } */
 
     &:hover,
     &:active {
-      padding-left: 20px;
-      background: var(--background-sec-color);
+      //background-color: var(--background-sec-color);
+      border-color: var(--primary-color);
+      background-color: rgb(from var(--primary-color) r g b / 0.05);
     }
   }
 
@@ -362,13 +367,18 @@
   .performance-poster {
     width: 100%;
     aspect-ratio: 4 / 5;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
 
     position: relative;
     overflow: hidden;
 
-    background: var(--background-sec-color);
+    background: var(--background-color);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23333333cc'%3E%3Cpath d='M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0 0v-560 560Zm80-80h400q12 0 18-11t-2-21L586-459q-6-8-16-8t-16 8L450-320l-74-99q-6-8-16-8t-16 8l-80 107q-8 10-2 21t18 11Z'/%3E%3C/svg%3E");
+
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
 
     img {
       display: block;
@@ -394,12 +404,19 @@
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
+      line-clamp: 1;
       overflow: hidden;
     }
 
     span {
       font-size: 12px;
       color: var(--font-sec-color);
+
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+      overflow: hidden;
     }
 
     em {
@@ -426,8 +443,8 @@
       font-size: 1em;
     }
   }
-
-  .performance-item:hover {
+  .performance-item:hover,
+  .performance-item:active {
     .performance-arrow {
       color: var(--primary-color);
       transform: translateX(5px);
@@ -442,12 +459,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 120px;
-    border-bottom: 1px solid var(--border-color);
+    min-height: 143px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
 
     p {
       margin: 0;
-      font-size: 12px;
+      font-size: 1em;
       line-height: 1.5;
       color: var(--font-sec-color);
     }
@@ -580,20 +598,17 @@
     .performance-list-count {
       font-size: 12px;
     }
-
-    // ----------------------------------------------
-    // Selected Performance
-    // ----------------------------------------------
+    
+    .performance-list {
+      gap: 8px;
+    }
 
     .performance-item {
       grid-template-columns: 32px 60px 1fr 16px;
-      gap: 16px;
-      padding: 8px 4px;
-      min-height: 90px;
-
-      &:hover {
-        padding-left: 8px;
-      }
+      gap: 12px;
+      padding: 4px 12px;
+      min-height: 85px;
+      border-radius: 8px;
     }
 
     .performance-time {
@@ -640,12 +655,8 @@
     }
 
     .no-performance {
-      min-height: 90px;
-
-      p {
-        font-size: 12px;
-        text-align: center;
-      }
+      min-height: 85px;
+      border-radius: 8px;
     }
 
     // ----------------------------------------------
@@ -653,7 +664,7 @@
     // ----------------------------------------------
 
     .upcoming-performances {
-      margin-top: 70px;
+      margin-top: 64px;
     }
 
   }

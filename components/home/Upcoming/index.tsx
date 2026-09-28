@@ -111,9 +111,9 @@ export default function Upcoming({
               slidesPerView={1.05}
               grid={{
                 fill: 'column',
-                rows: 4,
+                rows: 3,
               }}
-              spaceBetween={0}
+              spaceBetween={10}
               speed={700}
               /*autoplay={{
                 delay: 5000,
@@ -126,6 +126,10 @@ export default function Upcoming({
               breakpoints={{
                 1023: {
                   slidesPerView: 2,
+                  grid: {
+                    fill: 'column',
+                    rows: 4,
+                  },
                 },
               }}
               modules={[Grid, Pagination, Navigation]}
