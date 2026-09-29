@@ -186,7 +186,7 @@
 
   gap: 4px 8px;
 
-  font-size: 12px;
+  font-size: 13px;
 
   opacity: 0.55;
 
@@ -256,7 +256,7 @@
 
     text-align: center;
 
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 
@@ -449,12 +449,12 @@
   }
 
   small {
-    font-size: 12px;
+    font-size: 13px;
     opacity: 0.5;
   }
 
   span {
-    font-size: 12px;
+    font-size: 13px;
     opacity: 0.5;
   }
 }
@@ -791,7 +791,7 @@
 
     margin-bottom: 4px;
 
-    font-size: 12px;
+    font-size: 13px;
 
     opacity: 0.7;
 
@@ -849,7 +849,7 @@
 
     background-color: var(--border-color); 
 
-    font-size: 12px;
+    font-size: 13px;
 
     color: var(--font-sec-color);
 
@@ -959,7 +959,7 @@
 
 
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .cart-panel {
     width: 100%;
   }
