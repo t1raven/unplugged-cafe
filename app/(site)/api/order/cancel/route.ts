@@ -19,7 +19,7 @@ interface OrderDocument {
   };
 }
 
-const CANCELLABLE_STATUSES = new Set(['pending', 'confirmed']);
+const CANCELLABLE_STATUSES = new Set(['pending', 'confirmed', 'paid']);
 
 export async function POST(request: Request) {
   try {
