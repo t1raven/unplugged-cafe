@@ -25,7 +25,7 @@ type Counts = {
   menuItem: Record<string, number>
 
   galleryItem: Record<string, number>
-  galleryItemByYear: Record<string, Record<number, number>>
+  galleryItemByYear: Record<string, Partial<Record<number | 'other', number>>>
 
   goodsItem: Record<string, number>
 
@@ -111,7 +111,7 @@ export function StudioCountProvider({children}: {children: React.ReactNode}) {
         count: number
       }[]
 
-      galleryYearDates: {categoryId: string; date: string}[]
+      galleryYearDates: {categoryId: string; date: string | null}[]
 
       orders: Counts['orders']
     }>(
@@ -172,7 +172,6 @@ export function StudioCountProvider({children}: {children: React.ReactNode}) {
         "galleryYearDates": *[
           _type == "galleryItem"
           && defined(category._ref)
-          && defined(performanceDate)
         ] {
           "categoryId": category._ref,
           "date": performanceDate
@@ -261,9 +260,13 @@ export function StudioCountProvider({children}: {children: React.ReactNode}) {
     // Same UTC year boundaries as the gallery document lists.
     const galleryItemByYear: Counts['galleryItemByYear'] = {}
     for (const {categoryId, date} of result.galleryYearDates) {
+      const years = (galleryItemByYear[categoryId] ??= {})
+      if (date === null || date === '') {
+        years.other = (years.other ?? 0) + 1
+        continue
+      }
       const year = new Date(date).getUTCFullYear()
       if (!Number.isFinite(year)) continue
-      const years = (galleryItemByYear[categoryId] ??= {})
       years[year] = (years[year] ?? 0) + 1
     }
 
