@@ -3,14 +3,20 @@
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { getSiteSettings } from '@/lib/siteSettings';
 
 import './style.scss';
 
-gsap.registerPlugin(ScrollTrigger);
-const settings = await getSiteSettings();
+interface Props {
+  data: {
+    siteName?: string;
+    address?: string;
+    businessHours?: string;
+  };
+}
 
-export default function Location() {
+gsap.registerPlugin(ScrollTrigger);
+
+export default function Location({ data }: Props) {
   const rootRef = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
@@ -53,18 +59,18 @@ export default function Location() {
         </p>
 
         <h2>
-          {settings?.siteName}
+          {data?.siteName}
         </h2>
 
         <div className="location__info">
           <p>
-            {settings?.address}
+            {data?.address}
           </p>
 
           <p>
             영업시간
             <br />
-            {settings?.businessHours}
+            {data?.businessHours}
           </p>
         </div>
 

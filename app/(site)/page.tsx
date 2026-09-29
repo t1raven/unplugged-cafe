@@ -4,6 +4,7 @@ import Hero from '@/components/home/Hero';
 import Upcoming from '@/components/home/Upcoming';
 import About from '@/components/home/About';
 import Location from '@/components/home/Location';
+import { getSiteSettings } from '@/lib/siteSettings';
 
 import type { Performance } from '@/types/performance';
 
@@ -74,13 +75,14 @@ export default async function Home() {
     });
 
   const home = await client.fetch(homeQuery);
+  const siteInfo = (await getSiteSettings()) ?? {};
 
   return (
     <main id="site-body" className="home" style={{ paddingTop: 'var(--header-height)' }}>
       <Hero data={home.hero} />
       <Upcoming performances={performances} />
       <About data={home.about} />
-      <Location />
+      <Location data={siteInfo} />
     </main>
   );
 }
