@@ -51,7 +51,7 @@ export const createGalleryMenu: MenuFactory = (S, context) => {
                 )
                 .child(async () => {
                   const dates = await client.fetch<
-                    {performanceDate?: string}[]
+                    {date?: string}[]
                   >(
                     `
                     *[
@@ -59,34 +59,15 @@ export const createGalleryMenu: MenuFactory = (S, context) => {
                       && category._ref == $categoryId
                       && defined(performanceDate)
                     ] {
-                      performanceDate
+                      "date": performanceDate
                     }
                   `,
                     {categoryId: category._id},
                   )
-                  const performancDates = await client.fetch<
-                    {
-                      date?: string
-                    }[]
-                  >(
-                    `
-                    *[
-                      _type == "galleryItem"
-                      && category._ref == $categoryId
-                      && defined(performance->date)
-                    ] {
-                      "date": performance->date
-                    }
-                  `,
-                    {
-                      categoryId: category._id,
-                    },
-                  )
 
                   const years = [
                     ...new Set(
-                      performancDates
-                        .map((item) =>
+                      dates.map((item) =>
                           item.date ? new Date(item.date).getFullYear() : null,
                         )
                         .filter((year): year is number => year !== null),
@@ -107,7 +88,7 @@ export const createGalleryMenu: MenuFactory = (S, context) => {
 
                           id: `gallery-${category._id}-${year}`,
 
-                          title: `${year}`,
+                          title: `${year}년`,
 
                           icon: () =>
                             CategoryCountBadge({
@@ -116,19 +97,12 @@ export const createGalleryMenu: MenuFactory = (S, context) => {
                               year: year,
                             }),
 
-                          /* filter: `
-                          _type == "galleryItem"
-                          && category._ref == $categoryId
-                          && performanceDate >= $yearStart
-                          && performanceDate < $yearEnd
-                        `, */
-
                           filter: `
-                          _type == "galleryItem"
-                          && category._ref == $categoryId
-                          && performance->date >= $yearStart
-                          && performance->date < $yearEnd
-                        `,
+                            _type == "galleryItem"
+                            && category._ref == $categoryId
+                            && performanceDate >= $yearStart
+                            && performanceDate < $yearEnd
+                          `,
 
                           params: {
                             categoryId: category._id,

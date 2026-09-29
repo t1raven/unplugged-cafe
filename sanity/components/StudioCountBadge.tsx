@@ -4,15 +4,9 @@ import {Badge} from '@sanity/ui'
 
 import {useStudioCounts} from '../providers/StudioCountProvider'
 
-type CategoryType = 
-  | 'menuItem' 
-  | 'galleryItem' 
-  | 'goodsItem'
+type CategoryType = 'menuItem' | 'galleryItem' | 'goodsItem'
 
-type PerformanceType = 
-  | 'today' 
-  | 'upcoming' 
-  | 'past'
+type PerformanceType = 'today' | 'upcoming' | 'past'
 
 type OrderStatus =
   | 'all'
@@ -45,10 +39,24 @@ function BadgeUI({count}: {count: number}) {
   )
 }
 
-export function PerformanceCountBadge({type}: {type: PerformanceType}) {
+export function PerformanceCountBadge({
+  type,
+  year,
+}: {
+  type: PerformanceType
+  year?: number
+}) {
   const counts = useStudioCounts()
 
-  return <BadgeUI count={counts.performance[type]} />
+  return (
+    <BadgeUI
+      count={
+        type === 'past' && year !== undefined
+          ? (counts.performancePastByYear[year] ?? 0)
+          : counts.performance[type]
+      }
+    />
+  )
 }
 
 export function CategoryCountBadge({

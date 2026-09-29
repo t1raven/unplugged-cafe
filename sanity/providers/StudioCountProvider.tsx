@@ -20,6 +20,8 @@ type Counts = {
     past: number
   }
 
+  performancePastByYear: Record<number, number>
+
   menuItem: Record<string, number>
 
   galleryItem: Record<string, number>
@@ -44,6 +46,8 @@ const initialCounts: Counts = {
     upcoming: 0,
     past: 0,
   },
+
+  performancePastByYear: {},
 
   menuItem: {},
 
@@ -90,6 +94,7 @@ export function StudioCountProvider({children}: {children: React.ReactNode}) {
 
     const result = await client.fetch<{
       performance: Counts['performance']
+      performancePastDates: {date: string}[]
 
       menuItem: {
         categoryId: string
@@ -136,6 +141,10 @@ export function StudioCountProvider({children}: {children: React.ReactNode}) {
           )
         },
 
+        "performancePastDates": *[
+          _type == "performance" && date < $todayStart
+        ] {date},
+
         "menuItem":
           *[_type == "menuCategory"] {
             "categoryId": _id,
@@ -163,10 +172,10 @@ export function StudioCountProvider({children}: {children: React.ReactNode}) {
         "galleryYearDates": *[
           _type == "galleryItem"
           && defined(category._ref)
-          && defined(performance->date)
+          && defined(performanceDate)
         ] {
           "categoryId": category._ref,
-          "date": performance->date
+          "date": performanceDate
         },
 
         "goodsItem":
@@ -258,8 +267,17 @@ export function StudioCountProvider({children}: {children: React.ReactNode}) {
       years[year] = (years[year] ?? 0) + 1
     }
 
+    // Use the same local calendar year as the past-performance lists.
+    const performancePastByYear: Counts['performancePastByYear'] = {}
+    for (const {date} of result.performancePastDates) {
+      const year = new Date(date).getFullYear()
+      if (!Number.isFinite(year)) continue
+      performancePastByYear[year] = (performancePastByYear[year] ?? 0) + 1
+    }
+
     setCounts({
       performance: result.performance,
+      performancePastByYear,
 
       menuItem,
 
