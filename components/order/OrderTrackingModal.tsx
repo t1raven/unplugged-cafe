@@ -150,6 +150,7 @@ export default function OrderTrackingModal({ open, onClose }: Props) {
       );
     } finally {
       setCancelling(false);
+      window.alert('주문이 취소되었습니다.');
     }
   };
 
