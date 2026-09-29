@@ -77,8 +77,8 @@ export const createGalleryMenu: MenuFactory = (S, context) => {
                   return S.list()
                     .id(`gallery-years-${category._id}`)
                     .title(category.title)
-                    .items(
-                      years.map((year) => {
+                    .items([
+                      ...years.map((year) => {
                         const yearStart = `${year}-01-01T00:00:00.000Z`
 
                         const yearEnd = `${year + 1}-01-01T00:00:00.000Z`
@@ -114,7 +114,27 @@ export const createGalleryMenu: MenuFactory = (S, context) => {
                           context,
                         })
                       }),
-                    )
+                      orderableDocumentListDeskItem({
+                        type: 'galleryItem',
+                        id: `gallery-${category._id}-other`,
+                        title: '기타',
+                        icon: () => (
+                          <CategoryCountBadge
+                            type="galleryItem"
+                            categoryId={category._id}
+                            year="other"
+                          />
+                        ),
+                        filter: `
+                          _type == "galleryItem"
+                          && category._ref == $categoryId
+                          && (!defined(performanceDate) || performanceDate == "")
+                        `,
+                        params: {categoryId: category._id},
+                        S,
+                        context,
+                      }),
+                    ])
                 })
             }
 

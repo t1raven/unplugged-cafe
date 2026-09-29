@@ -66,7 +66,7 @@ export function CategoryCountBadge({
 }: {
   type: CategoryType
   categoryId: string
-  year?: number
+  year?: number | 'other'
 }) {
   const counts = useStudioCounts()
 
