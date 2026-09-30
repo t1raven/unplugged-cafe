@@ -14,12 +14,12 @@ import type { CartItem } from '@/hooks/cartStore';
 
 import { formatPhone } from "@/utils/formatPhone";
 
-import { getSiteSettings } from '@/lib/siteSettings';
-
-const settings = await getSiteSettings();
+import type { OrderSettings } from '@/types/siteSettings';
 
 interface Props {
   items: CartItem[];
+
+  orderSettings: OrderSettings;
 
   totalPrice: number;
 
@@ -37,6 +37,7 @@ type DeliveryMethod =
   | 'pickup';
 
 export default function OrderView({
+  orderSettings,
   items,
   totalPrice,
   onBack,
@@ -221,14 +222,14 @@ export default function OrderView({
 
   const deliveryFee =
     deliveryMethod === 'delivery'
-      ? (settings?.deliveryFee ?? 3000)
+      ? (orderSettings?.deliveryFee ?? 3000)
       : 0;
 
   const finalPrice =
     totalPrice +
     deliveryFee;
 
-  const depositAccount = settings?.depositAccount;
+  const depositAccount = orderSettings?.depositAccount;
 
   return (
     <>

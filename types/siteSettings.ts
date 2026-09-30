@@ -24,6 +24,8 @@ export interface SiteSEO {
   ogImage?: SanityImage;
 }
 
+export type OrderSettings = Pick<SiteSettings, 'deliveryFee' | 'depositAccount'>;
+
 export interface SiteSettings {
   siteName: string;
   businessName?: string;

@@ -13,10 +13,12 @@ import GoodsOptionModal from './GoodsOptionModal'
 
 import type { Category } from '@/types/category'
 import type { Goods } from '@/types/goods'
+import type { OrderSettings } from '@/types/siteSettings'
 
 import './Goods.scss'
 
 interface Props {
+  orderSettings: OrderSettings
   categories: Category[]
   items: Goods[]
 }
@@ -46,6 +48,7 @@ function scrollToCategory() {
 export default function GoodsList({
   categories,
   items: initialItems,
+  orderSettings,
 }: Props) {
 
   const gridRef = useRef<HTMLDivElement>(null)
@@ -235,7 +238,7 @@ export default function GoodsList({
         </nav>
       </div>
 
-      <CartModal />
+      <CartModal orderSettings={orderSettings} />
       <OrderTrackingModal open={orderOpen} onClose={() => setOrderOpen(false)}
       />
     </>

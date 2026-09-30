@@ -12,9 +12,15 @@ import CartView from './CartView';
 import OrderView from './OrderView';
 import CompleteView from './CompleteView';
 
+import type { OrderSettings } from '@/types/siteSettings';
+
 import './Cart.scss';
 
-export default function CartModal() {
+interface Props {
+  orderSettings: OrderSettings;
+}
+
+export default function CartModal({ orderSettings }: Props) {
   const {
     items,
     isCartOpen,
@@ -193,6 +199,7 @@ export default function CartModal() {
         {step === 'order' && (
           <OrderView
             items={items}
+            orderSettings={orderSettings}
             totalPrice={totalPrice}
             onBack={() =>
               setStep('cart')
