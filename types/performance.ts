@@ -21,6 +21,8 @@ export interface Performance {
   notice?: PortableTextBlock[];
   price1?: number;
   price2?: number;
+  price1Option?: string;
+  price2Option?: string;
   admissionType?: string;
   viewingType?: string;
   siteSalesOnly?: boolean;

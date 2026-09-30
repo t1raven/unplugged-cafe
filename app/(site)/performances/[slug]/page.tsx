@@ -27,6 +27,8 @@ const performanceQuery = `
     notice,
     price1,
     price2,
+    price1Option,
+    price2Option,
     admissionType,
     viewingType,
     siteSalesOnly,

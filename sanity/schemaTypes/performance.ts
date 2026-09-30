@@ -118,10 +118,23 @@ export const performance = defineType({
     }),
 
     defineField({
+      name: 'price1Option',
+      title: '사전 예매 가격 옵션',
+      type: 'string',
+      hidden: ({ document }) => !!document?.siteSalesOnly,
+    }),
+
+    defineField({
       name: 'price2',
       title: '현장 예매 가격',
       type: 'number',
       validation: (Rule) => Rule.min(0),
+    }),
+
+    defineField({
+      name: 'price2Option',
+      title: '현장 예매 가격 옵션',
+      type: 'string',
     }),
 
     defineField({

@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react';
 
@@ -62,6 +61,10 @@ const handleShare = async () => {
   }
 };
 
+const subscribeToIOS = () => () => {};
+const getIOSSnapshot = () => isIOS();
+const getServerIOSSnapshot = () => false;
+
 interface Props {
   performance: Performance;
 }
@@ -82,11 +85,13 @@ export default function PerformanceViewPage({
   const salesCloseDate = new Date(performance.salesClose ?? new Date());
   const isSalesClose = now >= salesCloseDate;
 
-  const [ios, setIos] = useState(false);
+  const mapUrl = performance.place?.naverMap;
 
-  useEffect(() => {
-    setIos(isIOS());
-  }, []);
+  const ios = useSyncExternalStore(
+    subscribeToIOS,
+    getIOSSnapshot,
+    getServerIOSSnapshot,
+  );
 
   return (
     <main id="site-body" className="performance-detail">
@@ -139,10 +144,14 @@ export default function PerformanceViewPage({
                 <span>공연 장소</span>
 
                 <strong>
-                  <Link href={performance.place?.naverMap!} target="_blank">
-                    {performance.place?.name}
-                    <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
-                  </Link><br/>
+                  {mapUrl ? (
+                    <Link href={mapUrl} target="_blank">
+                      {performance.place?.name}
+                      <i className="material-symbols-rounded icon" translate="no"> arrow_outward</i>
+                    </Link>
+                  ) : (
+                    performance.place?.name
+                  )}
                   <p>{performance.place?.address}</p>
                 </strong>
               </div>
@@ -150,14 +159,28 @@ export default function PerformanceViewPage({
               {performance.price1 && (
                 <div className="meta-item" style={{ gridColumn: !performance.price2 ? '1/3' : 'auto' }}>
                   <span>사전 예매</span>
-                  <strong>{performance.price1?.toLocaleString()}원</strong>
+                  <strong>
+                    {performance.price1?.toLocaleString()}원
+                    {performance.price1Option && (
+                      <small className="opt">
+                        ({performance.price1Option})
+                      </small>
+                    )}
+                  </strong>
                 </div>
               )}
 
               {performance.price2 && (
                 <div className="meta-item" style={{ gridColumn: !performance.price1 ? '1/3' : 'auto' }}>
                   <span>현장 예매</span>
-                  <strong>{performance.price2?.toLocaleString()}원</strong>
+                  <strong>
+                    {performance.price2?.toLocaleString()}원
+                    {performance.price2Option && (
+                      <small className="opt">
+                        ({performance.price2Option})
+                      </small>
+                    )}
+                  </strong>
                 </div>
               )}
 
