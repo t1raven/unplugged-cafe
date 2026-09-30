@@ -1,8 +1,7 @@
 import { client } from '@/sanity/lib/client';
 import type { SiteSettings } from '@/types/siteSettings';
 
-export async function getSiteSettings(): Promise<SiteSettings | null> {
-  const query = `
+const query = `
     *[
       _type == "siteSettings" &&
       _id == "siteSettings"
@@ -24,6 +23,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
     }
   `;
 
+export async function getSiteSettings(): Promise<SiteSettings | null> {
   const settings = client.fetch<SiteSettings | null>(
     query,
     {},

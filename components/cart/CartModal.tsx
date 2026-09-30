@@ -2,11 +2,8 @@
 
 import {
   useEffect,
-  useMemo,
   useState,
 } from 'react';
-
-import Image from 'next/image';
 
 import { useCartStore } from '@/hooks/cartStore';
 import { getGoodsUnitPrice } from '@/lib/goodsPrice';
@@ -16,11 +13,6 @@ import OrderView from './OrderView';
 import CompleteView from './CompleteView';
 
 import './Cart.scss';
-
-type CartStep =
-  | 'cart'
-  | 'order'
-  | 'complete';
 
 export default function CartModal() {
   const {
@@ -34,7 +26,7 @@ export default function CartModal() {
   } = useCartStore();
 
   const [step, setStep] =
-    useState<CartStep>('cart');
+    useState('cart');
 
   const [orderNumber, setOrderNumber] =
     useState<string | null>(null);
@@ -110,6 +102,7 @@ export default function CartModal() {
     if (!isCartOpen) return;
 
     // 모달을 새로 열면 장바구니 화면부터
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setStep('cart');
     setOrderNumber(null);
 

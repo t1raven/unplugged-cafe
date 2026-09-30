@@ -136,7 +136,7 @@ input[type="checkbox"].custom { box-sizing: border-box; padding: 0; }
 [type="checkbox"].custom:not(:checked), 
 [type="checkbox"].custom:checked { position: absolute; left: -9999px; opacity: 0; }
 [type="radio"].custom+label,
-[type="checkbox"].custom+label { position: relative; margin: 5px 0; padding-left: 45px; cursor: pointer; display: inline-block; height: 30px; line-height: 30px; font-size: 1em; vertical-align: middle; margin-left: 0; margin-right: 20px; -webkit-user-select: none; -moz-user-select: none; -khtml-user-select: none; -ms-user-select: none; white-space: nowrap; }
+[type="checkbox"].custom+label { position: relative; margin: 5px 0; padding-left: 45px; cursor: pointer; display: inline-block; height: 30px; line-height: 30px; font-size: 1em; vertical-align: middle; margin-left: 0; margin-right: 20px; -webkit-user-select: none; -moz-user-select: none; -khtml-user-select: none; -ms-user-select: none; user-select: none; white-space: nowrap; }
 [type="radio"].custom+label:last-child,
 [type="checkbox"].custom+label:last-child { margin-right: 0; }
 [type="radio"].custom+label:before,
@@ -169,7 +169,7 @@ input[type="checkbox"].custom { box-sizing: border-box; padding: 0; }
 
 
 /* Switch */
-.switch, .switch * { -webkit-user-select: none; -moz-user-select: none; -khtml-user-select: none; -ms-user-select: none; }
+.switch, .switch * { -webkit-user-select: none; -moz-user-select: none; -khtml-user-select: none; -ms-user-select: none; user-select: none; }
 .switch label { display: flex; align-items: center; cursor: pointer; }
 .switch label input[type=checkbox] { opacity: 0; width: 0; height: 0; position: absolute; }
 .switch label input[type=checkbox]:checked + .lever { background-color: var(--primary-color); }

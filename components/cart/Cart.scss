@@ -14,7 +14,7 @@
   padding: 0;
   border: 0;
 
-  background: rgba(0, 0, 0, 0.55);
+  background-color: rgba(0, 0, 0, 0.55);
 }
 
 .cart-panel {
@@ -33,6 +33,8 @@
   background-color: var(--background-color);
   backdrop-filter: blur(3px) brightness(1.1);
   box-shadow: 0 0 0 1px var(--border-color);
+
+  border-radius: 16px 0 0 16px;
   
   color: var(--font-color);
 }
@@ -962,6 +964,7 @@
 @media (max-width: 768px) {
   .cart-panel {
     width: 100%;
+    border-radius: 0;
   }
 
   .cart-header {

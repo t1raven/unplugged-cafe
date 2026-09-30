@@ -76,11 +76,24 @@ export default function GoodsOptionModal({
   useEffect(() => {
     if (!open || !goods) return;
 
-    setSelectedOptions({});
-    setQuantity(1);
+    const resetState = () => {
+      setSelectedOptions({});
+      setQuantity(1);
+    };
+
+    const frameId =
+      window.requestAnimationFrame(
+        resetState
+      );
+
+    return () => {
+      window.cancelAnimationFrame(
+        frameId
+      );
+    };
   }, [
     open,
-    goods?._id,
+    goods,
   ]);
 
   /*

@@ -661,6 +661,7 @@
 
   margin-top: 24px;
   padding: 16px;
+  height: 50px;
 
   border: 0;
   border-radius: 10em;
@@ -778,5 +779,14 @@
       width: 90%;
       gap: 4px;
     }
+  }
+
+  .goods-option-modal {
+    padding: 20px 0 0;
+    align-items: flex-end;
+  }
+  
+  .modal-panel {
+    border-radius: 16px 16px 0 0;
   }
 }
