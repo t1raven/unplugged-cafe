@@ -1,24 +1,20 @@
 'use client';
 
-import { useCallback } from 'react';
-
+import { useCallback, useRef } from 'react';
 interface AddressResult {
   postcode: string;
   address: string;
 }
-
 interface Options {
   onComplete: (
     result: AddressResult
   ) => void;
 }
-
 const SCRIPT_ID =
   'daum-postcode-script';
 
 const SCRIPT_URL =
   '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
-
 export function useDaumPostcode({
   onComplete,
 }: Options) {
@@ -88,34 +84,52 @@ export function useDaumPostcode({
       );
     }, []);
 
+  const isOpenRef = useRef(false);
+
   const openPostcode =
     useCallback(async () => {
-      await loadScript();
-
-      if (!window.daum?.Postcode) {
-        throw new Error(
-          '주소 검색 서비스를 사용할 수 없습니다.'
-        );
+      if (isOpenRef.current) {
+        return;
       }
 
-      new window.daum.Postcode({
-        oncomplete: (data) => {
-          const selectedAddress =
-            data.userSelectedType ===
-            'R'
-              ? data.roadAddress
-              : data.jibunAddress;
+      isOpenRef.current = true;
 
-          onComplete({
-            postcode:
-              data.zonecode,
+      try {
+        await loadScript();
 
-            address:
-              selectedAddress ||
-              data.address,
-          });
-        },
-      }).open();
+        if (!window.daum?.Postcode) {
+          throw new Error(
+            '주소 검색 서비스를 사용할 수 없습니다.'
+          );
+        }
+
+        new window.daum.Postcode({
+          oncomplete: (data) => {
+            isOpenRef.current = false;
+
+            const selectedAddress =
+              data.userSelectedType ===
+              'R'
+                ? data.roadAddress
+                : data.jibunAddress;
+
+            onComplete({
+              postcode:
+                data.zonecode,
+
+              address:
+                selectedAddress ||
+                data.address,
+            });
+          },
+          onclose: () => {
+            isOpenRef.current = false;
+          },
+        }).open();
+      } catch (error) {
+        isOpenRef.current = false;
+        throw error;
+      }
     }, [
       loadScript,
       onComplete,

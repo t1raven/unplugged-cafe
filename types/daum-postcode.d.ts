@@ -5,6 +5,7 @@ declare global {
     daum?: {
       Postcode: new (options: {
         oncomplete: (data: DaumPostcodeData) => void;
+        onclose?: () => void;
       }) => {
         open: () => void;
       };
