@@ -11,7 +11,7 @@ import type {
 
 import {
   getDeliveryFee,
-} from '@/lib/order';
+} from '@/lib/orders';
 
 import { normalizePhone, formatPhone } from "@/utils/formatPhone";
 
@@ -487,7 +487,7 @@ export async function POST(
     );
   } catch (error) {
     console.error(
-      '[POST /api/order]',
+      '[POST /api/orders]',
       error
     );
 

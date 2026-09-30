@@ -60,7 +60,7 @@ export async function POST(request: Request) {
       { headers: { 'Cache-Control': 'no-store' } }
     );
   } catch (error) {
-    console.error('[POST /api/order/tracking]', error);
+    console.error('[POST /api/orders/tracking]', error);
 
     return NextResponse.json(
       { message: '주문 조회 중 오류가 발생했습니다.' },

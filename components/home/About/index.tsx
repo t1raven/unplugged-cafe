@@ -134,6 +134,20 @@ export default function About({ data }: Props) {
         },
       });
 
+      gsap.from('.about__faq', {
+        opacity: 0,
+        y: 60,
+        duration: 1,
+
+        ease: 'power3.out',
+
+        scrollTrigger: {
+          trigger: '.about__faq',
+          start: 'top 80%',
+          once: true,
+        },
+      });
+
 
       /*
        * Equipment

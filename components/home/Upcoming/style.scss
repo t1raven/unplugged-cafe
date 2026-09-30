@@ -46,8 +46,10 @@
         color: var(--font-sec-color);
       }
 
-      &:hover {
-        opacity: 0.6;;
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          opacity: 0.7;
+        }
       }
 
       &:active {
@@ -91,9 +93,15 @@
       border-color 0.25s ease,
       background-color 0.25s ease;
 
-    &:hover,
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        border-color: var(--primary-color);
+        background-color: rgb(from var(--primary-color) r g b / 0.05);
+        z-index: 2;
+      }
+    }
+
     &:active {
-      //background-color: var(--background-sec-color);
       border-color: var(--primary-color);
       background-color: rgb(from var(--primary-color) r g b / 0.05);
       z-index: 2;
@@ -314,7 +322,13 @@
     }
   }
 
-  &__item:hover &__arrow,
+  @media (hover: hover) and (pointer: fine) {
+    &__item:hover &__arrow {
+      color: var(--primary-color);
+      transform: translateX(5px);
+    }
+  }
+  
   &__item:active &__arrow {
     color: var(--primary-color);
     transform: translateX(5px);

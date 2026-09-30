@@ -91,7 +91,7 @@ export default async function goodsPage() {
 
   return (
     <main id="site-body" className="goods-page">
-      <SubPageHero label="ALBUM·GOODS" title="굿즈·앨범" description="언플러그드 라운지에서 판매되는 <br/>다양한 라운지 상품과 아티스트 상품을 만나보세요." />
+      <SubPageHero label="GOODS·ALBUM" title="굿즈·앨범" description="언플러그드 라운지에서 판매되는 <br/>다양한 라운지 상품과 아티스트 상품을 만나보세요." />
       <GoodsList categories={categories} items={items} orderSettings={orderSettings} />
     </main>
   )

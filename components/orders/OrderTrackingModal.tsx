@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from 'react';
 
-import { TextField } from '@/components/common/Input/TextField';
+import { TextField } from '@/components/ui/Input/TextField';
 import { formatPhone } from '@/utils/formatPhone';
 import type { OrderTrackingResult, OrderStatus } from '@/types/order';
 
@@ -84,7 +84,7 @@ export default function OrderTrackingModal({ open, onClose }: Props) {
     setSelectedOrderNumber(null);
 
     try {
-      const response = await fetch('/api/order/tracking', {
+      const response = await fetch('/api/orders/tracking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, phone }),
@@ -121,7 +121,7 @@ export default function OrderTrackingModal({ open, onClose }: Props) {
     setError(null);
 
     try {
-      const response = await fetch('/api/order/cancel', {
+      const response = await fetch('/api/orders/cancel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

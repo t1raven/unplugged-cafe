@@ -12,7 +12,7 @@ import { useDaumPostcode } from '@/hooks/useDaumPostcode';
 
 import type { CartItem } from '@/stores/cartStore';
 
-import { TextField, TextareaField } from '@/components/common/Input/TextField';
+import { TextField, TextareaField } from '@/components/ui/Input/TextField';
 import { formatPhone } from "@/utils/formatPhone";
 
 import type { OrderSettings } from '@/types/siteSettings';
@@ -116,7 +116,7 @@ export default function Order({
 
     try {
       const response =
-        await fetch('/api/order', {
+        await fetch('/api/orders', {
           method: 'POST',
 
           headers: {

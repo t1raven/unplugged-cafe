@@ -312,7 +312,7 @@
         grid-template-columns: 60px 150px 1fr 30px;
         align-items: center;
 
-        padding: 28px 0;
+        padding: clamp(20px, 5vw, 28px) 0;
 
         border: 0;
         background: none;

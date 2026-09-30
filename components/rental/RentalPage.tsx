@@ -6,6 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import RentalEquipment from './RentalEquipment';
 
+import './style.scss';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function RentalPage() {
@@ -54,7 +56,7 @@ export default function RentalPage() {
 
         <div className="rental-ussom-application__content">
           <p>
-            <strong>어썸나이트(USSOM NIGHT)</strong>는<br className="mo-view"/> <span>'Unplugged Seogyo Special Open Mic'</span>의 약자로, <br className="pc-view"/>
+            <strong>어썸나이트(USSOM NIGHT)</strong>는<br className="mo-view"/> <span>&apos;Unplugged Seogyo Special Open Mic&apos;</span>의 약자로, <br className="pc-view"/>
             열정 가득한 신인 뮤지션들의 데뷔 무대이자 언플러그드 라운지만의 특별한 오픈마이크 공연입니다.
             <br/><br/>
             본인만의 새로운 음악을 세상에 알리고 소통하고자 하는 신인 뮤지션분들의 많은 참여와 신청 부탁드립니다.

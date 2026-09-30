@@ -59,7 +59,7 @@ export function TextField({
         </label>
         {children}
       </div>
-      <div className="helper-text">{helperText}</div>
+      {helperText && <div className="helper-text">{helperText}</div>}
     </div>
   )
 }
