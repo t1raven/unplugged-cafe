@@ -12,6 +12,7 @@ import { useDaumPostcode } from '@/hooks/useDaumPostcode';
 
 import type { CartItem } from '@/hooks/cartStore';
 
+import { TextField, TextareaField } from '@/components/common/Input/TextField';
 import { formatPhone } from "@/utils/formatPhone";
 
 import type { OrderSettings } from '@/types/siteSettings';
@@ -431,144 +432,99 @@ export default function OrderView({
               주문자 정보
             </h3>
 
-            <div className="order-field">
-              <label htmlFor="order-name">
-                이름
-                <em>*</em>
-              </label>
+            <TextField
+              className="order-field"
+              id="order-name"
+              type="text"
+              label="이름"
+              value={name}
+              onChange={(event) => setName(event.target.value)} 
+              autoComplete="name"
+              required={true}
+            />
 
-              <input
-                id="order-name"
-                type="text"
-                value={name}
-                onChange={(event) =>
-                  setName(
+            <TextField
+              className="order-field"
+              id="order-phone"
+              type="text"
+              label="연락처"
+              value={phone}
+              onChange={(event) =>
+                setPhone(
+                  formatPhone(
                     event.target.value
                   )
-                }
-                required
-              />
-            </div>
-
-            <div className="order-field">
-              <label htmlFor="order-phone">
-                연락처
-                <em>*</em>
-              </label>
-
-              <input
-                id="order-phone"
-                type="tel"
-                inputMode="numeric"
-                maxLength={13}
-                value={phone}
-                onChange={(event) =>
-                  setPhone(
-                    formatPhone(
-                      event.target.value
-                    )
-                  )
-                }
-                required
-              />
-            </div>
+                )
+              }
+              required={true}
+            />
 
             {deliveryMethod === 'delivery' && (
               <>
-                <div className="order-field">
-                  <label htmlFor="order-postcode">
-                    우편번호
-                    <em>*</em>
-                  </label>
-
-                  <div className="postcode-field">
-                    <input
-                      id="order-postcode"
-                      type="text"
-                      value={postcode}
-                      onClick={
-                        handleAddressSearch
-                      }
-                      readOnly
-                      required
-                    />
-
-                    <button
-                      type="button"
-                      onClick={
-                        handleAddressSearch
-                      }
-                    >
-                      주소 검색
-                    </button>
-                  </div>
-                </div>
-
-                <div className="order-field">
-                  <label htmlFor="order-address">
-                    주소
-                    <em>*</em>
-                  </label>
-
-                  <input
-                    id="order-address"
-                    type="text"
-                    value={address}
-                    readOnly
-                    required
+                <TextField
+                  className="order-field"
+                  id="order-postcode"
+                  type="text"
+                  label="우편번호"
+                  value={postcode}
+                  onClick={
+                    handleAddressSearch
+                  }
+                  readOnly={true}
+                  required={true}
+                >
+                  <button
+                    type="button"
                     onClick={
                       handleAddressSearch
                     }
-                  />
-                </div>
+                  >
+                    주소 검색
+                  </button>
+                </TextField>
 
-                <div className="order-field">
-                  <label htmlFor="order-detail-address">
-                    상세주소
-                    <em>*</em>
-                  </label>
+                <TextField
+                  className="order-field"
+                  id="order-address"
+                  type="text"
+                  label="주소"
+                  value={address}
+                  onClick={
+                    handleAddressSearch
+                  }
+                  readOnly={true}
+                  required={true}
+                />
 
-                  <input
-                    ref={
-                      detailAddressRef
-                    }
-                    id="order-detail-address"
-                    type="text"
-                    value={
-                      detailAddress
-                    }
-                    onChange={(event) =>
-                      setDetailAddress(
-                        event.target.value
-                      )
-                    }
-                    required
-                  />
-                </div>
+                <TextField
+                  className="order-field"
+                  id="order-detail-address"
+                  type="text"
+                  label="상세주소"
+                  value={detailAddress}
+                  onChange={(event) =>
+                    setDetailAddress(
+                      event.target.value
+                    )
+                  }
+                  required={true}
+                  ref={detailAddressRef}
+                />
               </>
             )}
 
-          </section>
-
-          {/* 문의사항 */}
-          <section className="order-section">
-
-            <h3>
-              요청사항
-            </h3>
-
-            <div className="order-field">
-              <textarea
-                id="order-memo"
-                value={memo}
-                onChange={(event) =>
-                  setMemo(
-                    event.target.value
-                  )
-                }
-                rows={3}
-              />
-            </div>
+            <TextareaField 
+              className="order-field"
+              id="order-memo"
+              label="요청사항"
+              value={memo}
+              onChange={(event) =>
+                setMemo(
+                  event.target.value
+                )
+              }
+              rows={5}
+            />
 
           </section>
 

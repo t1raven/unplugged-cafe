@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from 'react';
 
-import InputField from '@/components/common/Input';
+import { TextField } from '@/components/common/Input/TextField';
 import { formatPhone } from '@/utils/formatPhone';
 import type { OrderTrackingResult, OrderStatus } from '@/types/order';
 
@@ -188,7 +188,7 @@ export default function OrderTrackingModal({ open, onClose }: Props) {
             <form className="order-tracking-form" onSubmit={handleSearch}>
               <p>주문 시 입력한 이름과 연락처를 입력해주세요.</p>
 
-              <InputField
+              <TextField
                 id="order-tracking-name"
                 type="text"
                 label="이름"
@@ -197,7 +197,7 @@ export default function OrderTrackingModal({ open, onClose }: Props) {
                 autoComplete="name"
                 required={true}
               />
-              <InputField
+              <TextField
                 id="order-tracking-phone"
                 type="tel"
                 inputMode="numeric"
@@ -208,15 +208,6 @@ export default function OrderTrackingModal({ open, onClose }: Props) {
                 maxLength={13}
                 required={true}
               />
-
-              {/* <label>
-                <span>이름</span>
-                <input value={name} onChange={(event) => setName(event.target.value)} autoComplete="name" required />
-              </label>
-              <label>
-                <span>연락처</span>
-                <input type="tel" inputMode="numeric" value={phone} onChange={(event) => setPhone(formatPhone(event.target.value))} autoComplete="tel" maxLength={13} required />
-              </label> */}
 
               <button className="order-tracking-submit" type="submit" disabled={loading}>
                 {loading ? '조회 중...' : '조회하기'}
