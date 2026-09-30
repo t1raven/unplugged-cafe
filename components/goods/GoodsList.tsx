@@ -6,7 +6,7 @@ import gsap from 'gsap'
 
 import CategoryNav from '@/components/common/CategoryNav'
 import CartModal from '@/components/cart/Modal'
-import OrderTrackingModal from '@/components/order/OrderTrackingModal'
+import OrderTrackingModal from '@/components/orders/OrderTrackingModal'
 
 import GoodsCard from './GoodsCard';
 import GoodsOptionModal from './GoodsOptionModal'
