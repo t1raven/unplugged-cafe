@@ -10,7 +10,7 @@ import Image from 'next/image';
 
 import { useDaumPostcode } from '@/hooks/useDaumPostcode';
 
-import type { CartItem } from '@/hooks/cartStore';
+import type { CartItem } from '@/stores/cartStore';
 
 import { TextField, TextareaField } from '@/components/common/Input/TextField';
 import { formatPhone } from "@/utils/formatPhone";

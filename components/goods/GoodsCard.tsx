@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 
-import { useCartStore } from '@/hooks/cartStore';
+import { useCartStore } from '@/stores/cartStore';
 import { getDiscountRate } from '@/lib/goodsPrice';
 
 import type { Goods } from '@/types/goods';

@@ -5,7 +5,7 @@ import {
   useState,
 } from 'react';
 
-import { useCartStore } from '@/hooks/cartStore';
+import { useCartStore } from '@/stores/cartStore';
 import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 
 import Cart from './Cart';

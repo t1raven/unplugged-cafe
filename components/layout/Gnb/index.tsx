@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname, useParams, useRouter } from "next/navigation";
 import { getDeviceType, DeviceType } from "@/utils/device";
-import { useCartStore } from '@/hooks/cartStore';
+import { useCartStore } from '@/stores/cartStore';
 import Link from 'next/link';
 import gsap from 'gsap';
 

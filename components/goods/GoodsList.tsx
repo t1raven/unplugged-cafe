@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react'
-import { useCartStore } from '@/hooks/cartStore'
+import { useCartStore } from '@/stores/cartStore'
 import gsap from 'gsap'
 
 import CategoryNav from '@/components/common/CategoryNav'

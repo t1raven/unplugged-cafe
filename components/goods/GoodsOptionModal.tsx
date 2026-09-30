@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { useCartStore, type CartOption } from '@/hooks/cartStore';
+import { useCartStore, type CartOption } from '@/stores/cartStore';
 import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 import type { Goods } from '@/types/goods';
 
