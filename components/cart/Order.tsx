@@ -37,7 +37,7 @@ type DeliveryMethod =
   | 'delivery'
   | 'pickup';
 
-export default function OrderView({
+export default function Order({
   orderSettings,
   items,
   totalPrice,

@@ -5,7 +5,7 @@ import { useCartStore } from '@/hooks/cartStore'
 import gsap from 'gsap'
 
 import CategoryNav from '@/components/common/CategoryNav'
-import CartModal from '@/components/cart/CartModal'
+import CartModal from '@/components/cart/Modal'
 import OrderTrackingModal from '@/components/order/OrderTrackingModal'
 
 import GoodsCard from './GoodsCard';

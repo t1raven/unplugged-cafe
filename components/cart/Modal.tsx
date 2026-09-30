@@ -8,19 +8,19 @@ import {
 import { useCartStore } from '@/hooks/cartStore';
 import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 
-import CartView from './CartView';
-import OrderView from './OrderView';
-import CompleteView from './CompleteView';
+import Cart from './Cart';
+import Order from './Order';
+import Complete from './Complete';
 
 import type { OrderSettings } from '@/types/siteSettings';
 
-import './Cart.scss';
+import './style.scss';
 
 interface Props {
   orderSettings: OrderSettings;
 }
 
-export default function CartModal({ orderSettings }: Props) {
+export default function Modal({ orderSettings }: Props) {
   const {
     items,
     isCartOpen,
@@ -175,7 +175,7 @@ export default function CartModal({ orderSettings }: Props) {
       <div className="cart-panel">
 
         {step === 'cart' && (
-          <CartView
+          <Cart
             items={items}
             quantityByGoodsId={quantityByGoodsId}
             originalTotalPrice={originalTotalPrice}
@@ -197,7 +197,7 @@ export default function CartModal({ orderSettings }: Props) {
         )}
 
         {step === 'order' && (
-          <OrderView
+          <Order
             items={items}
             orderSettings={orderSettings}
             totalPrice={totalPrice}
@@ -212,7 +212,7 @@ export default function CartModal({ orderSettings }: Props) {
         )}
 
         {step === 'complete' && (
-          <CompleteView
+          <Complete
             orderNumber={
               orderNumber
             }

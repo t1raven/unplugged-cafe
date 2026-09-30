@@ -33,7 +33,7 @@ interface Props {
   onOrder: () => void;
 }
 
-export default function CartView({
+export default function Cart({
   items,
   quantityByGoodsId,
   originalTotalPrice,
@@ -246,13 +246,13 @@ export default function CartView({
                   주문하기
                 </button>
 
-                <button
+                {/* <button
                   type="button"
                   className="cart-clear"
                   onClick={clearCart}
                 >
                   비우기
-                </button>
+                </button> */}
 
               </div>
 

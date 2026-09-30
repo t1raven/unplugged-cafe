@@ -6,7 +6,7 @@ interface Props {
   onClose: () => void;
 }
 
-export default function CompleteView({
+export default function Complete({
   orderNumber,
   onClose,
 }: Props) {
