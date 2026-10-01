@@ -11,12 +11,12 @@ export const siteSettings = defineType({
       title: '기본 정보',
     },
     {
-      name: 'order',
+      name: 'orderDelivery',
       title: '주문 / 배송',
     },
     {
       name: 'seo',
-      title: 'SEO',
+      title: 'SEO 설정',
     },
   ],
 
@@ -26,41 +26,46 @@ export const siteSettings = defineType({
     // ==================================================
 
     defineField({
-      name: 'siteName',
-      title: '사이트명',
-      type: 'string',
+      name: 'general',
+      title: '기본 정보',
+      type: 'object',
       group: 'general',
-      validation: (Rule) => Rule.required(),
-    }),
 
-    defineField({
-      name: 'businessName',
-      title: '상호명',
-      type: 'string',
-      group: 'general',
-    }),
+      fields: [
+        defineField({
+          name: 'siteName',
+          title: '사이트명',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        }),
 
-    defineField({
-      name: 'address',
-      title: '주소',
-      type: 'string',
-      group: 'general',
-      validation: (Rule) => Rule.required(),
-    }),
+        defineField({
+          name: 'businessName',
+          title: '상호명',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        }),
 
-    defineField({
-      name: 'phone',
-      title: '전화번호',
-      type: 'string',
-      group: 'general',
-    }),
+        defineField({
+          name: 'address',
+          title: '주소',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        }),
 
-    defineField({
-      name: 'businessHours',
-      title: '영업시간',
-      type: 'string',
-      group: 'general',
-      validation: (Rule) => Rule.required(),
+        defineField({
+          name: 'phone',
+          title: '전화번호',
+          type: 'string',
+        }),
+
+        defineField({
+          name: 'businessHours',
+          title: '영업시간',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        }),
+      ]
     }),
 
     // ==================================================
@@ -68,22 +73,41 @@ export const siteSettings = defineType({
     // ==================================================
 
     defineField({
-      name: 'deliveryFee',
-      title: '배송비',
-      type: 'number',
-      group: 'order',
-      initialValue: 3000,
-      validation: (Rule) =>
-        Rule.required()
-          .min(0)
-          .integer(),
-    }),
+      name: 'orderDelivery',
+      title: '주문 / 배송',
+      type: 'object',
+      group: 'orderDelivery',
 
-    defineField({
-      name: 'depositAccount',
-      title: '입금계좌',
-      type: 'string',
-      group: 'order',
+      fields: [
+        defineField({
+          name: 'deliveryFee',
+          title: '배송비',
+          type: 'number',
+          initialValue: 3000,
+          validation: (Rule) =>
+            Rule.required()
+              .min(0)
+              .integer(),
+        }),
+
+        defineField({
+          name: 'depositAccount',
+          title: '입금계좌',
+          type: 'string',
+        }),
+
+        defineField({
+          name: 'pickupAddress',
+          title: '픽업주소',
+          type: 'string',
+        }),
+
+        defineField({
+          name: 'pickupHours',
+          title: '픽업가능시간',
+          type: 'string',
+        }),
+      ]
     }),
 
     // ==================================================

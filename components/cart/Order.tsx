@@ -15,12 +15,12 @@ import type { CartItem } from '@/stores/cartStore';
 import { TextField, TextareaField } from '@/components/ui/Input/TextField';
 import { formatPhone } from "@/utils/formatPhone";
 
-import type { OrderSettings } from '@/types/siteSettings';
+import type { OrderDelivery } from '@/types/siteSettings';
 
 interface Props {
   items: CartItem[];
 
-  orderSettings: OrderSettings;
+  orderDeliverySettings: OrderDelivery;
 
   totalPrice: number;
 
@@ -38,7 +38,7 @@ type DeliveryMethod =
   | 'pickup';
 
 export default function Order({
-  orderSettings,
+  orderDeliverySettings,
   items,
   totalPrice,
   onBack,
@@ -223,14 +223,20 @@ export default function Order({
 
   const deliveryFee =
     deliveryMethod === 'delivery'
-      ? (orderSettings?.deliveryFee ?? 3000)
+      ? (orderDeliverySettings?.deliveryFee ?? 3000)
       : 0;
 
   const finalPrice =
     totalPrice +
     deliveryFee;
 
-  const depositAccount = orderSettings?.depositAccount;
+  const depositAccount = orderDeliverySettings?.depositAccount;
+
+  const pickupAddress = orderDeliverySettings?.pickupAddress;
+
+  const pickupHours = orderDeliverySettings?.pickupHours;
+
+
 
   return (
     <>
@@ -347,8 +353,8 @@ export default function Order({
                   {/*<div className="guide-title">픽업 안내</div>*/}
                   <div className="guide-content">
                     아래 주소로 픽업하러 와주세요.<br/>
-                    <strong>서울 마포구 와우산로29길 15 2층서울 마포구 서교동 336-5 2층</strong><br/>
-                    영업시간: 12:00 - 24:00
+                    <strong>{pickupAddress}</strong><br/>
+                    픽업가능시간: {pickupHours}
                   </div>
                 </>
               )}
