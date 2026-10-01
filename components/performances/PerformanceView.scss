@@ -127,8 +127,10 @@
           opacity 0.25s ease,
           transform 0.35s ease;
 
-        &:hover {
-          opacity: 0.7;
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            opacity: 0.7;
+          }
         }
 
         &:active {
@@ -297,8 +299,10 @@
         font-size: 1em;
       }
 
-      &:hover {
-        opacity: 0.7;
+      @media (hover: hover) and (pointer: fine) {
+          &:hover {
+          opacity: 0.7;
+        }
       }
 
       &:active {
@@ -459,8 +463,10 @@
         transform: scale(1.06);
       }
 
-      &:not(:disabled):hover:before {
-        opacity: 1;
+      @media (hover: hover) and (pointer: fine) {
+          &:not(:disabled):hover:before {
+          opacity: 1;
+        }
       }
 
       &:disabled {
@@ -477,25 +483,6 @@
 
       &:after {
         background-color: var(--primary-color);
-      }
-    }
-  }
-
-
-  // ==================================================
-  // Back
-  // ==================================================
-
-  .performance-back {
-    padding: 50px 0 160px;
-
-    a {
-      color: var(--font-sec-color);
-      font-size: 16px;
-      text-decoration: none;
-
-      &:hover {
-        color: var(--secondary-color);
       }
     }
   }
@@ -595,10 +582,11 @@
         gap: 4px;
       }
 
-      .gnb_btn {
-
-        &:not(:disabled):hover {
-          transform: translateY(0);
+      @media (hover: hover) and (pointer: fine) {
+        .gnb_btn {
+          &:not(:disabled):hover {
+            transform: translateY(0);
+          }
         }
       }
 

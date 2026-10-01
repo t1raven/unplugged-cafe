@@ -15,7 +15,7 @@ import type { Category } from '@/types/category'
 import type { Goods } from '@/types/goods'
 import type { OrderSettings } from '@/types/siteSettings'
 
-import './Goods.scss'
+import './style.scss'
 
 interface Props {
   orderSettings: OrderSettings
