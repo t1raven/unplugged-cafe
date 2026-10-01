@@ -12,6 +12,7 @@ export type MenuKey =
   | 'goodsCategory'
   | 'goods'
   | 'orders'
+  | 'externalGoodsOrders'
   | 'settings'
   | 'studioUsers'
 
@@ -41,6 +42,7 @@ export const roleConfig: Record<StudioRole, RoleConfig> = {
       'goodsCategory',
       'goods',
       'orders',
+      'externalGoodsOrders',
       'divider',
       'settings',
       'studioUsers',
@@ -64,7 +66,7 @@ export const roleConfig: Record<StudioRole, RoleConfig> = {
   goodsManager: {
     id: 'goods-root',
     title: '굿즈 관리',
-    menus: ['goodsCategory', 'goods', 'orders'],
+    menus: ['goodsCategory', 'goods', 'orders', 'externalGoodsOrders'],
   },
   none: {id: 'no-access', title: '관리', menus: []},
 }

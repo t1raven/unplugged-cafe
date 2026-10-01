@@ -2,7 +2,9 @@ import type {MenuFactory} from '../types'
 import {API_VERSION} from '../types'
 import type {StructureResolver} from 'sanity/structure'
 import {BillIcon} from '@sanity/icons/Bill'
+import {LaunchIcon} from '@sanity/icons/Launch'
 import {OrderCountBadge} from '../../components/StudioCountBadge'
+import {ExternalGoodsOrders} from '../../components/ExternalGoodsOrders'
 export const createOrdersMenu: MenuFactory = (S) => {
   return S.listItem()
     .id('purchase-management') // 고유 ID 추가
@@ -27,6 +29,19 @@ export const createOrdersMenu: MenuFactory = (S) => {
 
           createOrderList(S, 'cancelled-orders', '취소', 'cancelled'),
         ]),
+    )
+}
+
+export const createExternalGoodsOrdersMenu: MenuFactory = (S) => {
+  return S.listItem()
+    .id('goods-orders-sheet')
+    .title('굿즈 주문내역 (Google Sheet)')
+    .icon(LaunchIcon)
+    .child(
+      S.component()
+        .id('goods-orders-sheet')
+        .title('굿즈 주문내역 (Google Sheet)')
+        .component(ExternalGoodsOrders),
     )
 }
 function createOrderList(
