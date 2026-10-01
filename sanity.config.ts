@@ -13,7 +13,7 @@ import {StudioCountProvider} from './sanity/providers/StudioCountProvider'
 import {
   DeletePerformanceAndGalleryAction,
   PublishPerformanceAndSyncGalleryAction,
-} from './sanity/actions/performanceGallerySync'
+} from './sanity/actions/performancePosterSync'
 
 import {koKRLocale} from '@sanity/locale-ko-kr'
 

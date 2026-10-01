@@ -29,6 +29,10 @@ type PerformanceDocument = SanityDocument & {
     }
     [key: string]: unknown
   }
+  artists?: Array<{
+    _type?: 'reference'
+    _ref?: string
+  }>
 }
 
 /**
@@ -57,6 +61,15 @@ function galleryDescription(date: string, artistNames: string[]) {
   ].join('\n')
 }
 
+function normalizeArtistRefs(
+  artists?: PerformanceDocument['artists'],
+) {
+  return (artists ?? [])
+    .map((artist) => artist?._ref)
+    .filter((ref): ref is string => Boolean(ref))
+    .sort()
+}
+
 /**
  * publish 완료 후 실제 published document가
  * draft와 동일한 revision의 내용을 가지게 될 때까지 기다린다.
@@ -70,6 +83,8 @@ async function waitForPublishedPerformance(
   id: string,
   draft: PerformanceDocument,
 ) {
+  const draftArtistRefs = normalizeArtistRefs(draft.artists)
+
   for (let attempt = 0; attempt < PUBLISH_CHECK_ATTEMPTS; attempt += 1) {
     const document = await client.getDocument<PerformanceDocument>(id)
 
@@ -77,7 +92,9 @@ async function waitForPublishedPerformance(
       document &&
       document.title === draft.title &&
       document.date === draft.date &&
-      document.poster?.asset?._ref === draft.poster?.asset?._ref
+      document.poster?.asset?._ref === draft.poster?.asset?._ref &&
+      JSON.stringify(normalizeArtistRefs(document.artists)) ===
+        JSON.stringify(draftArtistRefs)
     ) {
       return document
     }
