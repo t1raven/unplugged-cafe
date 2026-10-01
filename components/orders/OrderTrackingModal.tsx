@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from 'react';
 
-import { TextField } from '@/components/ui/Input/TextField';
+import { TextField } from '@/components/ui/Inputs/TextField';
 import { formatPhone } from '@/utils/formatPhone';
 import type { OrderTrackingResult, OrderStatus } from '@/types/order';
 

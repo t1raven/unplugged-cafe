@@ -35,9 +35,26 @@ export default function MenuList({
     initialItems
   )
 
-  const filteredItems = items.filter(
-    (item) => item.category?.slug === activeCategory
-  )
+  function scrollToCategory() {
+    const element = document.querySelector('.category_search_nav');
+
+    if (!element) return;
+
+    const elementPrev = element.previousElementSibling;
+
+    if (elementPrev && elementPrev.scrollHeight >= window.scrollY) return;
+
+    const header = document.getElementById('site-header');
+
+    if (!elementPrev || !header) return;
+
+    const top = elementPrev.scrollHeight - header.getBoundingClientRect().height;
+
+    window.scrollTo({
+      top,
+      behavior: 'smooth',
+    });
+  }
 
   /*
    * 카테고리 변경
@@ -75,25 +92,6 @@ export default function MenuList({
     },
     [activeCategory]
   )
-
-  const scrollToCategory = () => {
-    const element = document.querySelector('.category_search_nav');
-
-    if (!element) return;
-
-    const elementPrev = element.previousElementSibling;
-
-    if(elementPrev!.scrollHeight >= window.scrollY) return;
-
-    const header = document.getElementById('site-header');
-
-    const top = elementPrev!.scrollHeight - header!.getBoundingClientRect().height
-
-    window.scrollTo({
-      top,
-      behavior: 'smooth',
-    });
-  };
 
   /*
    *  등장 애니메이션

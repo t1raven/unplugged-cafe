@@ -3,10 +3,14 @@
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 
+import Image from 'next/image';
+import { urlFor } from '@/sanity/lib/image';
+
 import './style.scss';
 
 interface Props {
   data: {
+    bgImage?: string;
     label?: string;
     title?: string;
     location?: string;
@@ -69,7 +73,11 @@ export default function Hero({ data }: Props) {
 
   return (
     <section ref={rootRef} className="hero">
-      <div className="hero__image" />
+      {data.bgImage && (
+        <div className="hero__image">
+          <Image src={urlFor(data.bgImage).url()} alt="Hero BG Image" fill priority />
+        </div>
+      )}
 
       <div className="hero__overlay" />
 
