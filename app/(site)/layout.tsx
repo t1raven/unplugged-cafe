@@ -15,7 +15,7 @@ import { urlFor } from '@/sanity/lib/image';
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
 
-  const siteName = settings?.siteName ?? 'UNPLUGGED LOUNGE';
+  const siteName = settings?.general?.siteName ?? 'UNPLUGGED LOUNGE';
 
   const title = settings?.seo?.title ?? siteName;
 
@@ -85,19 +85,22 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Gnb from '@/components/layout/Gnb';
 
-export default function SiteLayout({
+export default async function SiteLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const siteInfo = await getSiteSettings();
+
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body suppressHydrationWarning>
+      <body className={notoSansKR.variable} suppressHydrationWarning>
         <ThemeProvider>
           <Header/>
           {children}
           <Gnb/>
-          <Footer/>
+          <Footer data={siteInfo?.general ?? {}} />
         </ThemeProvider>
       </body>
     </html>
