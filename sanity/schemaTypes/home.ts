@@ -14,6 +14,15 @@ export const home = defineType({
 
       fields: [
         defineField({
+          name: 'bgImage',
+          title: '배경 이미지',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+        }),
+
+        defineField({
           name: "label",
           title: "라벨",
           type: "string",

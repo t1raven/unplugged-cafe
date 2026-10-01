@@ -6,13 +6,20 @@ const query = `
       _type == "siteSettings" &&
       _id == "siteSettings"
     ][0] {
-      siteName,
-      businessName,
-      address,
-      phone,
-      businessHours,
-      deliveryFee,
-      depositAccount,
+      general {
+        siteName,
+        businessName,
+        address,
+        phone,
+        businessHours
+      },
+
+      orderDelivery {
+        deliveryFee,
+        depositAccount,
+        pickupAddress,
+        pickupHours
+      },
 
       seo {
         title,

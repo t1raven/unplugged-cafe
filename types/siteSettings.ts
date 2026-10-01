@@ -1,38 +1,29 @@
-export interface SanityImage {
-  asset: {
-    _ref: string;
-    _type: 'reference';
-  };
-  hotspot?: {
-    x: number;
-    y: number;
-    height: number;
-    width: number;
-  };
-  crop?: {
-    top: number;
-    bottom: number;
-    left: number;
-    right: number;
-  };
+import type { SanityImage } from './images';
+
+export interface General {
+  siteName: string;
+  businessName: string;
+  phone?: string;
+  address: string;
+  businessHours: string;
 }
 
-export interface SiteSEO {
+export interface OrderDelivery {
+  deliveryFee: number;
+  depositAccount?: string;
+  pickupAddress?: string;
+  pickupHours?: string;
+}
+
+export interface SEO {
   title?: string;
   description?: string;
   keywords?: string[];
   ogImage?: SanityImage;
 }
 
-export type OrderSettings = Pick<SiteSettings, 'deliveryFee' | 'depositAccount'>;
-
 export interface SiteSettings {
-  siteName: string;
-  businessName?: string;
-  phone?: string;
-  address: string;
-  businessHours: string;
-  deliveryFee: number;
-  depositAccount: string;
-  seo?: SiteSEO;
+  general?: General;
+  orderDelivery?: OrderDelivery;
+  seo?: SEO;
 }

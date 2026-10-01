@@ -12,15 +12,15 @@ import Cart from './Cart';
 import Order from './Order';
 import Complete from './Complete';
 
-import type { OrderSettings } from '@/types/siteSettings';
+import type { OrderDelivery } from '@/types/siteSettings';
 
 import './style.scss';
 
 interface Props {
-  orderSettings: OrderSettings;
+  orderDeliverySettings: OrderDelivery;
 }
 
-export default function Modal({ orderSettings }: Props) {
+export default function Modal({ orderDeliverySettings }: Props) {
   const {
     items,
     isCartOpen,
@@ -199,7 +199,7 @@ export default function Modal({ orderSettings }: Props) {
         {step === 'order' && (
           <Order
             items={items}
-            orderSettings={orderSettings}
+            orderDeliverySettings={orderDeliverySettings}
             totalPrice={totalPrice}
             onBack={() =>
               setStep('cart')

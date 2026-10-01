@@ -73,9 +73,11 @@ export default async function goodsPage() {
     getSiteSettings(),
   ])
 
-  const orderSettings = {
-    deliveryFee: settings?.deliveryFee ?? 3000,
-    depositAccount: settings?.depositAccount ?? '',
+  const orderDeliverySettings = {
+    deliveryFee: settings?.orderDelivery?.deliveryFee ?? 3000,
+    depositAccount: settings?.orderDelivery?.depositAccount ?? '',
+    pickupAddress: settings?.orderDelivery?.pickupAddress ?? '',
+    pickupHours: settings?.orderDelivery?.pickupHours ?? '',
   }
 
   const activeCategory = categories[0]?.slug ?? ''
@@ -92,7 +94,7 @@ export default async function goodsPage() {
   return (
     <main id="site-body" className="goods-page">
       <SubPageHero label="GOODS·ALBUM" title="굿즈·앨범" description="언플러그드 라운지에서 판매되는 <br/>다양한 라운지 상품과 아티스트 상품을 만나보세요." />
-      <GoodsList categories={categories} items={items} orderSettings={orderSettings} />
+      <GoodsList categories={categories} items={items} orderDeliverySettings={orderDeliverySettings} />
     </main>
   )
 }

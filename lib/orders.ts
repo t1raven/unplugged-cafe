@@ -7,6 +7,6 @@ export function getDeliveryFee(
   method: DeliveryMethod
 ) {
   return method === 'delivery'
-    ? settings?.deliveryFee ?? 3000
+    ? settings?.orderDelivery?.deliveryFee ?? 3000
     : 0;
 }

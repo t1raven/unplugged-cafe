@@ -73,16 +73,15 @@ export default async function Home() {
     await client.fetch(upcomingQuery, {
       today,
     });
-
   const home = await client.fetch(homeQuery);
-  const siteInfo = (await getSiteSettings()) ?? {};
+  const siteInfo = await getSiteSettings();
 
   return (
     <main id="site-body" className="home" style={{ paddingTop: 'var(--header-height)' }}>
       <Hero data={home.hero} />
       <Upcoming performances={performances} />
       <About data={home.about} />
-      <Location data={siteInfo} />
+      <Location data={siteInfo?.general ?? {}} />
     </main>
   );
 }
