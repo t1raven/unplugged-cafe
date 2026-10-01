@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {PerformanceTimeInput, SalesTimeInput} from '../components/SelectTimeInput'
 
 export const performance = defineType({
   name: 'performance',
@@ -17,6 +18,9 @@ export const performance = defineType({
       name: 'date',
       title: '공연 일시',
       type: 'datetime',
+      components: {
+        input: PerformanceTimeInput,
+      },
       validation: (Rule) => Rule.required(),
     }),
 
@@ -61,6 +65,9 @@ export const performance = defineType({
       name: 'salesOpen',
       title: '예매 오픈',
       type: 'datetime',
+      components: {
+        input: SalesTimeInput,
+      },
       hidden: ({ document }) => !!document?.siteSalesOnly,
     }),
 
@@ -68,6 +75,9 @@ export const performance = defineType({
       name: 'salesClose',
       title: '예매 마감',
       type: 'datetime',
+      components: {
+        input: SalesTimeInput,
+      },
       hidden: ({ document }) => !!document?.siteSalesOnly,
     }),
 
