@@ -3,7 +3,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import type { General } from '@/types/siteSettings';
 
 import './style.scss';
 

@@ -51,7 +51,7 @@ export default function Upcoming({
       });
 
       const items = gsap.utils.toArray<HTMLElement>(
-        '.swiper-slide'
+        '.upcoming__list'
       );
 
       if (!items.length) return;
@@ -97,11 +97,9 @@ export default function Upcoming({
       <div className="upcoming__inner">
 
         <div className="upcoming__header">
-          <p>UPCOMING <br className="mo-view" />PERFORMANCE</p>
-
-          <Link href="/performances">
-            전체보기
-            <span className="material-symbols-rounded icon">arrow_forward_ios</span>
+          <Link className="title" href="/performances">
+              UPCOMING <br className="mo-view" />PERFORMANCE
+              <span className="material-symbols-rounded icon">arrow_forward_ios</span>
           </Link>
         </div>
 

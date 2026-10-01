@@ -9,41 +9,27 @@
   }
 
   &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-
     margin-bottom: 32px;
 
-    p {
-      margin: 0;
+    .title {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 13px;
 
       font-size: clamp(20px, 4vw, 24px);
-      color: var(--primary-color);
       font-weight: 500;
+      line-height: 1.35;
+      color: var(--primary-color);
       letter-spacing: 0.2em;
-    }
-
-    a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-
-      color: var(--font-color);
-
-      font-size: 13px;
-      letter-spacing: 0.15em;
 
       text-decoration: none;
-
       transition: 
         opacity 0.35s ease,
         transform 0.35s ease;
 
       & .icon {
         font-size: 1em;
-        color: var(--font-sec-color);
+        line-height: 1.2;
       }
 
       @media (hover: hover) and (pointer: fine) {

@@ -31,6 +31,7 @@ const upcomingQuery = `
 export const homeQuery = `
   *[_type == "home" && _id == "home"][0]{
     hero{
+      bgImage,
       label,
       title,
       location,

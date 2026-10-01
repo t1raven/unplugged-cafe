@@ -233,7 +233,8 @@ export default function GoodsList({
             <div className="text">장바구니</div>
           </button>
           <button type="button" className="gnb_btn tracking_btn" onClick={() => setOrderOpen(true)} aria-label="주문조회 열기">
-            <div className="text">주문조회</div>
+              <span className="material-symbols-rounded icon">receipt_long</span>
+              <span className="text">주문조회</span>
           </button>
         </nav>
       </div>

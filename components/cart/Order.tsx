@@ -12,7 +12,7 @@ import { useDaumPostcode } from '@/hooks/useDaumPostcode';
 
 import type { CartItem } from '@/stores/cartStore';
 
-import { TextField, TextareaField } from '@/components/ui/Input/TextField';
+import { TextField, TextareaField } from '@/components/ui/Inputs/TextField';
 import { formatPhone } from "@/utils/formatPhone";
 
 import type { OrderDelivery } from '@/types/siteSettings';
