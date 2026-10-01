@@ -10,7 +10,7 @@ import {
 import {createCafeCategoryMenu, createCafeMenu} from './menus/cafe'
 import {createGalleryCategoryMenu, createGalleryMenu} from './menus/gallery'
 import {createGoodsCategoryMenu, createGoodsMenu} from './menus/goods'
-import {createOrdersMenu} from './menus/orders'
+import {createOrdersMenu, createExternalGoodsOrdersMenu} from './menus/orders'
 import {
   createHomeMenu,
   createSettingsMenu,
@@ -29,6 +29,7 @@ const menuFactories: Record<MenuKey, MenuFactory> = {
   goodsCategory: createGoodsCategoryMenu,
   goods: createGoodsMenu,
   orders: createOrdersMenu,
+  externalGoodsOrders: createExternalGoodsOrdersMenu,
   settings: createSettingsMenu,
   studioUsers: createStudioUsersMenu,
 }
