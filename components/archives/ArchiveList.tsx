@@ -98,6 +98,8 @@ export default function ArchiveList({
     activeCategory,
     loading,
     hasMore,
+    items.length,
+    search,
   ])
 
   /*
@@ -127,6 +129,27 @@ export default function ArchiveList({
     loadMore,
     hasMore,
   ])
+
+  const scrollToCategory = () => {
+    const element = document.querySelector('.category_search_nav')
+
+    if (!element) return
+
+    const elementPrev = element.previousElementSibling
+
+    if (elementPrev?.scrollHeight && elementPrev.scrollHeight >= window.scrollY) return
+
+    const header = document.getElementById('site-header')
+
+    if (!header || !elementPrev) return
+
+    const top = elementPrev.scrollHeight - header.getBoundingClientRect().height
+
+    window.scrollTo({
+      top,
+      behavior: 'smooth',
+    })
+  }
 
   /*
    * 카테고리 변경
@@ -167,8 +190,8 @@ export default function ArchiveList({
         setHasMore(data.hasMore)
 
         requestAnimationFrame(() => {
-          scrollToCategory();
-        });
+          scrollToCategory()
+        })
       } catch (error) {
         console.error(error)
         setItems([])
@@ -177,27 +200,8 @@ export default function ArchiveList({
         setLoading(false)
       }
     },
-    [activeCategory]
+    [activeCategory, search]
   )
-
-  const scrollToCategory = () => {
-    const element = document.querySelector('.category_search_nav');
-
-    if (!element) return;
-
-    const elementPrev = element.previousElementSibling;
-
-    if(elementPrev!.scrollHeight >= window.scrollY) return;
-
-    const header = document.getElementById('site-header');
-
-    const top = elementPrev!.scrollHeight - header!.getBoundingClientRect().height
-
-    window.scrollTo({
-      top,
-      behavior: 'smooth',
-    });
-  };
 
   /*
    *  등장 애니메이션
