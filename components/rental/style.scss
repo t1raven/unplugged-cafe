@@ -147,6 +147,10 @@
         }
       }
     }
+    &__buttons {
+      margin-top: 40px;
+      text-align: center;
+    }
   }
 
   &-notice {
@@ -521,6 +525,10 @@
           }
         }
       }
+
+      &__buttons > a {
+        width: 100%;
+      }
     }
 
     &-ussom-application {
@@ -528,6 +536,10 @@
         > p {
           font-size: 16px;
         }
+      }
+      
+      &__buttons > a {
+        width: 100%;
       }
     }
 

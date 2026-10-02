@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Button } from '@/components/ui/Inputs/Button';
 
 import RentalEquipment from './RentalEquipment';
 
@@ -63,17 +64,15 @@ export default function RentalPage() {
           </p>
         </div>
 
-        <div className="rental-summary__buttons" style={{ textAlign: 'left' }}>
-          <a
+        <div className="rental-ussom-application__buttons" style={{ textAlign: 'left' }}>
+          <Button
             href="http://docs.google.com/forms/d/e/1FAIpQLSfnNPNbnuCbFNlQUhYIzNCof2dH3RTOURIkbWh2D59GdTKBLA/closedform"
             target="_blank"
-            rel="noopener noreferrer"
-            className="rental-button apply-button"
             style={{ minWidth: 300 }}
+            endIcon={'arrow_outward'}
           >
             어썸나이트 신청하기
-            <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
-          </a>
+          </Button>
         </div>
       </section>
 
@@ -109,10 +108,14 @@ export default function RentalPage() {
         </div>
 
         <div className="rental-summary__buttons">
-          <a href="#rental-application" className="rental-button apply-button" style={{ minWidth: 300 }}>
+          <Button
+            href="#rental-application"
+            target="_self"
+            style={{ minWidth: 300 }}
+            endIcon={'arrow_forward'}
+          >
             대관 신청 바로가기
-            <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
-          </a>
+          </Button>
         </div>
       </section>
 
@@ -273,30 +276,25 @@ export default function RentalPage() {
           </p>
 
           <div className="rental-application__buttons">
-            <a
+            <Button
               href="https://docs.google.com/spreadsheets/d/1VqfBWdTR0RCg99oG9AUxaqTr1CL5Qo-GrjouthYtHsY/edit?gid=0#gid=0"
               target="_blank"
-              rel="noopener noreferrer"
-              className="rental-button"
+              endIcon={'arrow_outward'}
             >
               대관 신청 전 상세 안내 확인
-              <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
-            </a>
+            </Button>
 
-            <a href="tel:010-9035-6289" className="rental-button">
+            <Button href="tel:010-9035-6289" color="secondary" startIcon={'phone'}>
               전화 문의
-              <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
-            </a>
+            </Button>
 
-            <a
+            <Button
               href="https://docs.google.com/forms/d/e/1FAIpQLSdWVBYKnyheSAefJHerrcdjftW9KodEqzz2IjfTQCm0ysvlgA/viewform"
               target="_blank"
-              rel="noopener noreferrer"
-              className="rental-button apply-button"
+              endIcon={'arrow_outward'}
             >
               대관 신청하기 (구글폼)
-              <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
-            </a>
+            </Button>
           </div>
 
           <div className="rental-contact">

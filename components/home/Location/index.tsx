@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Button } from '@/components/ui/Inputs/Button';
 
 import './style.scss';
 
@@ -74,14 +75,14 @@ export default function Location({ data }: Props) {
           </p>
         </div>
 
-        <a
+        <Button
           href="https://naver.me/GHvqo2Pe"
           target="_blank"
-          rel="noreferrer"
+          color="secondary"
+          endIcon="arrow_outward"
         >
           GET DIRECTIONS
-          <i className="material-symbols-rounded icon" translate="no">arrow_outward</i>
-        </a>
+        </Button>
       </div>
     </section>
   );
