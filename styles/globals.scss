@@ -27,14 +27,14 @@
 
   --primary-color: #EE7102;
   --secondary-color: #4EAEE3;
-  --success-color: #4cd964;
-  --danger-color: #ff3b30;
-  --warning-color: #ffcd3f;
-  --info-color: #089fff;
-  --light-color: #fff;
+  --success-color: #4CD964;
+  --error-color: #FF3D30;
+  --warning-color: #FFCD3F;
+  --info-color: #089FFF;
+  --light-color: #FFF;
   --dark-color: #333;
-  --gray-color: #f3f6f9;
-  --disabled-color: #66635d;
+  --gray-color: #F3F6F9;
+  --disabled-color: #66635D;
 
   --font-color: #191919;
   --font-sec-color: #66635D;
@@ -62,7 +62,8 @@ select::-ms-expand { display: none; }*/
 
 *, *:before, *:after { -webkit-box-sizing: inherit; box-sizing: inherit; box-sizing: border-box; }
 a { color: initial; text-decoration: none; }
-html { min-height: 100%; background-color: var(--background-color); }
+html { min-height: 100%; background-color: var(--background-color); scroll-behavior: smooth; }
+html,
 body { font-family: var(--font-family); color: var(--font-color); font-size: var(--font-size); line-height: 1.6; font-weight: 400; letter-spacing: 0; font-weight: normal; min-width: 320px; min-height: 100dvh; padding-bottom: var(--safe-area-bottom); background-color: var(--background-color); word-break: keep-all; word-wrap: break-word; }
 button { padding: 0; cursor: pointer; }
 img { max-width: 100%; vertical-align: top; }
@@ -92,7 +93,7 @@ select:focus { outline-width: 1px; outline-style: dashed; outline-color: #999; }
 .btn_primary {border:1px solid var(--primary-color); background-color: var(--primary-color); color: #fff;}
 .btn_secondary {border:1px solid var(--secondary-color); background-color: var(--secondary-color); color: #fff;}
 .btn_success {border:1px solid var(--success-color); background-color: var(--success-color); color: #fff;}
-.btn_danger {border:1px solid var(--danger-color); background-color: var(--danger-color); color: #fff;}
+.btn_error {border:1px solid var(--error-color); background-color: var(--error-color); color: #fff;}
 .btn_warning {border:1px solid var(--warning-color); background-color: var(--warning-color); color: #fff;}
 .btn_info {border:1px solid var(--info-color); background-color: var(--info-color); color: #fff;}
 .btn_info2 {border:1px solid var(--info2-color); background-color: var(--info2-color); color: #fff;}
@@ -103,7 +104,7 @@ select:focus { outline-width: 1px; outline-style: dashed; outline-color: #999; }
 .btn_outline_primary {border:1px solid var(--primary-color); color: var(--primary-color); background-color: transparent;}
 .btn_outline_secondary {border:1px solid var(--secondary-color); color: var(--secondary-color); background-color: transparent;}
 .btn_outline_success {border:1px solid var(--success-color); color: var(--success-color); background-color: transparent;}
-.btn_outline_danger {border:1px solid var(--danger-color); color: var(--danger-color); background-color: transparent;}
+.btn_outline_error {border:1px solid var(--error-color); color: var(--error-color); background-color: transparent;}
 .btn_outline_warning {border:1px solid var(--warning-color); color: var(--warning-color); background-color: transparent;}
 .btn_outline_info {border:1px solid var(--info-color); color: var(--info-color); background-color: transparent;}
 .btn_outline_info2 {border:1px solid var(--info2-color); color: var(--info2-color); background-color: transparent;}
@@ -248,7 +249,7 @@ select.ipt option[value=""][disabled] { display: none; }
 select.ipt:invalid { color: #afafaf;  }
 textarea.ipt { resize: none; padding: 15px; min-height: 100px; height: auto; }
 .ipt_group .em { font-size: 11px; color: #666; padding: 10px 5px; }
-.ipt_group .danger { color: var(--danger-color); }
+.ipt_group .error { color: var(--error-color); }
 .ipt_group .text { width: auto; }
 .ipt_group .ipt_label { width: auto; height: 50px; flex: none; display: flex; align-items: center; white-space: nowrap; }
 .ipt_group * + .ipt_label { margin-left: 30px; }

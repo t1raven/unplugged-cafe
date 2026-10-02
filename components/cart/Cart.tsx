@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import type { CartItem } from '@/stores/cartStore';
 import { getGoodsUnitPrice } from '@/lib/goodsPrice';
+import { Button } from '@/components/ui/Inputs/Button';
 
 interface Props {
   items: CartItem[];
@@ -238,13 +239,12 @@ export default function Cart({
 
               <div className="cart-actions">
 
-                <button
-                  type="button"
+                <Button
                   className="cart-order"
                   onClick={onOrder}
                 >
                   주문하기
-                </button>
+                </Button>
 
                 {/* <button
                   type="button"

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useCartStore, type CartOption } from '@/stores/cartStore';
 import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 import type { Goods } from '@/types/goods';
+import { Button } from '@/components/ui/Inputs/Button';
 
 interface Props {
   goods: Goods | null;
@@ -353,8 +354,7 @@ export default function GoodsOptionModal({
           </strong>
         </div>
 
-        <button
-          type="button"
+        <Button
           className="modal-submit"
           disabled={
             !isOptionComplete
@@ -364,7 +364,7 @@ export default function GoodsOptionModal({
           }
         >
           장바구니 담기
-        </button>
+        </Button>
       </div>
     </div>
   );
