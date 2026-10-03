@@ -299,7 +299,7 @@ export default function Gnb() {
           </li>
           <li className={pathname.startsWith('/archives') ? "active" : ""}>
             <Link href="/archives" title="아카이브">
-              <span className="icon material-symbols-rounded" translate="no">photo</span>
+              <span className="icon material-symbols-rounded" translate="no">inventory_2</span>
               <span className="text">아카이브</span>
             </Link>
           </li>
