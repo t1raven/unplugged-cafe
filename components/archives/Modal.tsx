@@ -5,10 +5,9 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import Link from 'next/link';
 
-import type { Category } from '@/types/category';
 import type { Archive } from '@/types/archive';
 
-import './ArchiveModal.scss';
+import './Modal.scss';
 
 interface Props {
   items: Archive[];
@@ -16,6 +15,41 @@ interface Props {
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
+}
+
+function ArchiveImage({ item }: { item: Archive }) {
+  const imageRef = useRef<HTMLImageElement>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!imageLoaded || !imageRef.current) return;
+
+    const animation = gsap.fromTo(
+      imageRef.current,
+      { opacity: 0, scale: 0.98 },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.4,
+        ease: 'power2.out',
+        clearProps: 'transform',
+      }
+    );
+
+    return () => { animation.kill(); };
+  }, [imageLoaded]);
+
+  return (
+    <Image
+      ref={imageRef}
+      src={item.imageUrl}
+      alt={item.title}
+      fill
+      sizes="(max-width: 768px) 100vw, 50vw"
+      onLoad={() => setImageLoaded(true)}
+      style={{ opacity: imageLoaded ? 1 : 0 }}
+    />
+  );
 }
 
 export default function ArchiveModal({
@@ -26,15 +60,7 @@ export default function ArchiveModal({
   onNext,
 }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
-
-  const [imageLoaded, setImageLoaded] = useState(false);
-
   const item = items[currentIndex];
-
-  useEffect(() => {
-    setImageLoaded(false);
-  }, [currentIndex]);
 
   /*
    * Modal 등장 애니메이션
@@ -104,25 +130,6 @@ export default function ArchiveModal({
   /*
    * 이미지 변경
    */
-  useEffect(() => {
-    if (!imageLoaded || !imageRef.current) return;
-
-    gsap.fromTo(
-      imageRef.current,
-      {
-        opacity: 0,
-        scale: 0.98,
-      },
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 0.4,
-        ease: 'power2.out',
-        clearProps: 'transform',
-      }
-    );
-  }, [imageLoaded]);
-
   /*
    * ESC
    */
@@ -219,18 +226,7 @@ export default function ArchiveModal({
         </button>
 
         <div className="gallery-modal__image">
-          <Image
-            key={item.imageUrl}
-            ref={imageRef}
-            src={item.imageUrl}
-            alt={item.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            onLoad={() => setImageLoaded(true)}
-            style={{
-              opacity: imageLoaded ? 1 : 0,
-            }}
-          />
+          <ArchiveImage key={`${currentIndex}:${item.imageUrl}`} item={item} />
         </div>
 
         <div className="gallery-modal__info">

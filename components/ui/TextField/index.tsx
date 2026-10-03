@@ -1,11 +1,10 @@
 import './style.scss';
-import { ChangeEvent, InputHTMLAttributes, Ref, ReactNode } from 'react';
 
 interface TextProps {
   id: string;
   className?: string;
   type: string;
-  inputMode?: InputHTMLAttributes<HTMLInputElement>['inputMode'];
+  inputMode?: React.InputHTMLAttributes<HTMLInputElement>['inputMode'];
   label: string;
   value?: string;
   readOnly?: boolean;
@@ -13,10 +12,10 @@ interface TextProps {
   helperText?: string;
   autoComplete?: string;
   maxLength?: number;
-  ref?: Ref<HTMLInputElement>;
-  children?: ReactNode;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClick?: () => void;
+  ref?: React.Ref<HTMLInputElement>;
+  children?: React.ReactNode;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
 }
 
 export function TextField({ 
@@ -74,10 +73,10 @@ interface TextareaProps {
   helperText?: string;
   maxLength?: number;
   rows?: number;
-  ref?: Ref<HTMLTextAreaElement>;
-  children?: ReactNode;
-  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-  onClick?: () => void;
+  ref?: React.Ref<HTMLTextAreaElement>;
+  children?: React.ReactNode;
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLTextAreaElement, MouseEvent>) => void;
 }
 
 export function TextareaField({ 

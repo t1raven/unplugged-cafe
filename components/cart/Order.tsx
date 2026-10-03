@@ -10,9 +10,10 @@ import Image from 'next/image';
 
 import { useDaumPostcode } from '@/hooks/useDaumPostcode';
 
-import type { CartItem } from '@/stores/cartStore';
+import type { CartItem } from '@/types/cart';
 
-import { TextField, TextareaField } from '@/components/ui/Inputs/TextField';
+import { TextField, TextareaField } from '@/components/ui/TextField';
+import { Button } from '@/components/ui/Button';
 import { formatPhone } from "@/utils/formatPhone";
 
 import type { OrderDelivery } from '@/types/siteSettings';
@@ -161,8 +162,7 @@ export default function Order({
           }),
         });
 
-      const data =
-        await response.json();
+      const data = await response.json();
 
       if (!response.ok) {
         throw new Error(
@@ -631,20 +631,19 @@ export default function Order({
             </p>
           )}
 
-          <button
+          <Button
             type="submit"
             className="order-submit"
+            opacity={0.8}
             disabled={
               loading ||
               !privacyAgreed
             }
           >
-            <span>
-              {loading
-                ? '신청 중...'
-                : '주문 신청하기'}
-            </span>
-          </button>
+            {loading
+              ? '신청 중...'
+              : '주문 신청하기'}
+          </Button>
 
         </div>
 

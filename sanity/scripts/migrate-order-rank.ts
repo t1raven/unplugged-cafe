@@ -1,6 +1,6 @@
 // scripts/migrate-order-rank.ts
 
-import {client} from '../sanity/lib/client'
+import {client} from '../lib/client'
 import {LexoRank} from 'lexorank'
 
 const writeClient = client.withConfig({

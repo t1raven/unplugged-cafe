@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@/components/ui/Button';
+
 interface Props {
   orderNumber: string | null;
 
@@ -40,12 +42,9 @@ export default function Complete({
         안내드리겠습니다.
       </p>
 
-      <button
-        type="button"
-        onClick={onClose}
-      >
+      <Button onClick={onClose} >
         확인
-      </button>
+      </Button>
 
     </div>
   );

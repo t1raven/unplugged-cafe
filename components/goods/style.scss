@@ -331,133 +331,34 @@
    CART BUTTON
 -------------------------------- */
 
-.goods_gnb_cart {
-  position: sticky;
-  bottom: 0;
-  z-index: 110;
-  height: 0;
-
-  > nav {
-    position: absolute;
-    left: 50%;
-    bottom: 20px;
-
-    width: 100%;
-
-    transform: translateX(-50%);
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+.site-fnb {
+  .cart_icon {
+    position: relative;
+    .cnt {
+      position: absolute;
+      top: -2px;
+      left: 100%;
+      transform: translateX(-60%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 10em;
+      background-color: var(--secondary-color);
+      font-size: 10px;
+      line-height: 1;
+    }
   }
 
-  .gnb_btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-width: 60px;
-    height: 60px;
-    padding: 0 16px;
-    border-radius: 10em;
-    color: #fff;
-    font-size: 16px;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    background: transparent;
-    border: 0;
-    backdrop-filter: blur(3px) brightness(1.1);
-    box-shadow: 0 0 0 1px var(--border-color);
+  .cart_btn {
+    width: 100%;
+  }
 
-    transition:
-      background-color 0.25s ease,
-      transform 0.25s ease;
-
-    > * {
-      z-index: 2;
-    }
-
-    .icon {
-      font-size: 28px;
-      width: 28px;
-      height: 28px;
-      font-variation-settings: "FILL" 1;
-    }
-
-    .cart_icon {
-      position: relative;
-      .cnt {
-        position: absolute;
-        top: -2px;
-        left: 100%;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        min-width: 16px;
-        height: 16px;
-        padding: 0 4px;
-        border-radius: 10em;
-        background-color: var(--secondary-color);
-        font-size: 10px;
-        line-height: 1;
-      }
-    }
-
-    &:after {
-      content: ''; 
-      position: absolute; 
-      left: 0; 
-      top: 0; 
-      z-index: 1;
-      width: 100%; 
-      height: 100%;
-      border-radius: 10em;
-      background-color: var(--primary-color);
-      opacity: 0.8;
-    }
-
-    &:before { 
-      content: ''; 
-      position: absolute; 
-      left: 0; 
-      top: 0; 
-      z-index: 3;
-      width: 100%; 
-      height: 100%; 
-      background-color: rgba(255,255,255,0.2); 
-      opacity: 0;
-      -webkit-transition: .25s ease; 
-      transition: .25s ease;
-    }
-
-    &:active {
-      transform: scale(1.06);
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-      &:hover:before {
-        opacity: 1;
-      }
-    }
-
-    &.cart_btn {
-      width: 100%;
-      max-width: 300px;
-      &:after {
-        background-color: var(--primary-color);
-      }
-    }
-
-    &.tracking_btn {
-      flex: none;
-      &:after {
-        background-color: var(--secondary-color);
-      }
-    }
+  .tracking_btn {
+    flex: none;
   }
 }
 
@@ -663,24 +564,7 @@
 
 .modal-submit {
   width: 100%;
-
   margin-top: 24px;
-  padding: 16px;
-  height: 50px;
-
-  border: 0;
-  border-radius: 10em;
-
-  background: var(--primary-color);
-  color: #fff;
-
-  cursor: pointer;
-
-  &:disabled {
-    opacity: 0.4;
-    
-    cursor: default;
-  }
 }
 
 
@@ -690,7 +574,7 @@
    TABLET
 -------------------------------- */
 
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
 
   .goods-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -703,7 +587,7 @@
    MOBILE
 -------------------------------- */
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
 
   .goods-list {
     padding-bottom: 120px;
@@ -779,13 +663,12 @@
     font-size: 13px;
   }
 
-  .goods_gnb_cart {
-    > nav {
-      width: 90%;
-      gap: 4px;
-    }
-
+  .site-fnb {
     .tracking_btn {
+      .icon {
+        margin-left: -4px;
+        margin-right: -4px;
+      }
       .text {
         display: none;
       }

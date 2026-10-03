@@ -99,7 +99,15 @@
 	}
 
 	.btn-back { 
-		display: none;
+		button {
+			width: 28px;
+			height: 28px;
+
+			.icon {
+				font-size: 28px;
+			}
+		}
+		
 	}
 }
 
@@ -127,7 +135,7 @@ html.scrollUp #site-header {
 		}
 
 		.btn-back { 
-			display: block;
+			display: flex;
 		}
 	}
 }

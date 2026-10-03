@@ -2,11 +2,12 @@
 
 import { FormEvent, useEffect, useRef, useState } from 'react';
 
-import { TextField } from '@/components/ui/Inputs/TextField';
+import { TextField } from '@/components/ui/TextField';
+import { Button } from '@/components/ui/Button';
 import { formatPhone } from '@/utils/formatPhone';
 import type { OrderTrackingResult, OrderStatus } from '@/types/order';
 
-import './OrderTracking.scss';
+import './Tracking.scss';
 
 interface Props {
   open: boolean;
@@ -209,9 +210,9 @@ export default function OrderTrackingModal({ open, onClose }: Props) {
                 required={true}
               />
 
-              <button className="order-tracking-submit" type="submit" disabled={loading}>
+              <Button className="order-tracking-submit" type="submit" disabled={loading}>
                 {loading ? '조회 중...' : '조회하기'}
-              </button>
+              </Button>
             </form>
 
             {error && <p className="order-tracking-error" role="alert">{error}</p>}
@@ -297,7 +298,7 @@ function OrderDetail({ order, cancelling, error, onCancel }: { order: OrderTrack
       </section>
 
       {error && <p className="order-tracking-error" role="alert">{error}</p>}
-      {canCancel && <button type="button" className="order-cancel-button" onClick={onCancel} disabled={cancelling}>{cancelling ? '취소 처리 중...' : '주문 취소'}</button>}
+      {canCancel && <Button className="order-cancel-button" color="error" onClick={onCancel} disabled={cancelling}>{cancelling ? '취소 처리 중...' : '주문 취소'}</Button>}
       {!canCancel && order.status !== 'cancelled' && <p className="order-cancel-guide">배송중 후에는 주문을 취소할 수 없습니다.</p>}
     </div>
   );

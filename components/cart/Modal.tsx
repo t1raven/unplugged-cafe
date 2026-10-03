@@ -5,7 +5,7 @@ import {
   useState,
 } from 'react';
 
-import { useCartStore } from '@/stores/cartStore';
+import { useCart } from '@/components/providers/CartProvider';
 import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 
 import Cart from './Cart';
@@ -29,7 +29,7 @@ export default function Modal({ orderDeliverySettings }: Props) {
     increaseQuantity,
     decreaseQuantity,
     clearCart,
-  } = useCartStore();
+  } = useCart();
 
   const [step, setStep] =
     useState('cart');
@@ -182,40 +182,28 @@ export default function Modal({ orderDeliverySettings }: Props) {
             discountedTotalPrice={discountedTotalPrice}
             totalDiscountPrice={totalDiscountPrice}
             removeItem={removeItem}
-            increaseQuantity={
-              increaseQuantity
-            }
-            decreaseQuantity={
-              decreaseQuantity
-            }
+            increaseQuantity={increaseQuantity}
+            decreaseQuantity={decreaseQuantity}
             clearCart={clearCart}
             closeCart={closeCart}
-            onOrder={() =>
-              setStep('order')
-            }
+            onOrder={() => setStep('order')}
           />
         )}
 
         {step === 'order' && (
           <Order
             items={items}
-            orderDeliverySettings={orderDeliverySettings}
             totalPrice={totalPrice}
-            onBack={() =>
-              setStep('cart')
-            }
+            orderDeliverySettings={orderDeliverySettings}
+            onBack={() => setStep('cart')}
             closeCart={closeCart}
-            onComplete={
-              handleComplete
-            }
+            onComplete={handleComplete}
           />
         )}
 
         {step === 'complete' && (
           <Complete
-            orderNumber={
-              orderNumber
-            }
+            orderNumber={orderNumber}
             onClose={closeCart}
           />
         )}

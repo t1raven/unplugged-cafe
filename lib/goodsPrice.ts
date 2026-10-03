@@ -6,11 +6,7 @@ interface QuantityDiscount {
 interface PriceInput {
   price: number;
   salePrice?: number | null;
-
-  quantityDiscounts?: {
-    minQuantity: number;
-    unitPrice: number;
-  }[] | null;
+  quantityDiscounts?: QuantityDiscount[] | null;
 }
 
 export function getGoodsUnitPrice(

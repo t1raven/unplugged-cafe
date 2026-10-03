@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { useCartStore, type CartOption } from '@/stores/cartStore';
+import { useCart } from '@/components/providers/CartProvider';
 import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 import type { Goods } from '@/types/goods';
+import type { CartOption } from '@/types/cart';
+import { Button } from '@/components/ui/Button';
 
 interface Props {
   goods: Goods | null;
@@ -18,7 +20,7 @@ export default function GoodsOptionModal({
   open,
   onClose,
 }: Props) {
-  const addItem = useCartStore(
+  const addItem = useCart(
     (state) => state.addItem
   );
 
@@ -353,8 +355,7 @@ export default function GoodsOptionModal({
           </strong>
         </div>
 
-        <button
-          type="button"
+        <Button
           className="modal-submit"
           disabled={
             !isOptionComplete
@@ -364,7 +365,7 @@ export default function GoodsOptionModal({
           }
         >
           장바구니 담기
-        </button>
+        </Button>
       </div>
     </div>
   );

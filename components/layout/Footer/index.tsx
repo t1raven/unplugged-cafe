@@ -1,5 +1,4 @@
 import './style.scss'
-import type { General } from '@/types/siteSettings';
 
 interface Props {
   data: {
