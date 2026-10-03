@@ -7,11 +7,11 @@ export function getDeviceType(): DeviceType {
 
   const width = window.innerWidth;
 
-  if (width < 768) {
+  if (width <= 768) {
     return "mobile";
   }
 
-  if (width < 1024) {
+  if (width <= 1024) {
     return "tablet";
   }
 

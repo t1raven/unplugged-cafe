@@ -382,107 +382,15 @@
     }
   }
 
-  .reservation_gnb_btn {
-    position: sticky;
-    bottom: 0;
-    z-index: 110;
-    height: 0;
-
-    > nav {
-      position: absolute;
-      left: 50%;
-      bottom: 20px;
-
-      transform: translateX(-50%);
-
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .gnb_btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-width: 60px;
-      width: 60px;
-      height: 60px;
-      border-radius: 999px;
-      color: #fff;
-      font-size: 16px;
-      text-decoration: none;
-      position: relative;
-      overflow: hidden;
-      background: transparent;
-      border: 0;
-      backdrop-filter: blur(3px) brightness(1.1);
-      box-shadow: 0 0 0 1px var(--border-color);
-
-      transition:
-        background-color 0.25s ease,
-        transform 0.25s ease;
-
-      > * {
-        z-index: 2;
-      }
-
-      .icon {
-        font-size: 28px;
-      }
-
-      &:after {
-        content: ''; 
-        position: absolute; 
-        left: 0; 
-        top: 0; 
-        z-index: 1;
-        width: 100%; 
-        height: 100%;
-        border-radius: 999px;
-        background-color: var(--secondary-color);
-        opacity: 0.8;
-      }
-
-      &:before { 
-        content: ''; 
-        position: absolute; 
-        left: 0; 
-        top: 0; 
-        z-index: 3;
-        width: 100%; 
-        height: 100%; 
-        background-color: rgba(255,255,255,0.2); 
-        opacity: 0;
-        -webkit-transition: .25s ease; 
-        transition: .25s ease;
-      }
-
-      &:not(:disabled):active {
-        transform: scale(1.06);
-      }
-
-      @media (hover: hover) and (pointer: fine) {
-          &:not(:disabled):hover:before {
-          opacity: 1;
-        }
-      }
-
-      &:disabled {
-        color: #ccc;
-        cursor: not-allowed;
-        &:after {
-          background-color: var(--disabled-color); 
-        }
-      }
-    }
+  .site-fnb {
 
     .reservation_btn {
-      width: 400px;
+      width: 100%;
+    }
 
-      &:after {
-        background-color: var(--primary-color);
+    .share_btn {
+      .icon {
+        margin: 0 -4px;
       }
     }
   }
@@ -491,7 +399,7 @@
   // Tablet
   // ==================================================
 
-  @media (max-width: 1023px) {
+  @media (max-width: 1024px) {
     .performance-detail-hero
       .performance-detail-inner {
       gap: 60px;
@@ -502,7 +410,7 @@
   // Mobile
   // ==================================================
 
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     .performance-detail-hero {
       padding-top: calc(30px + var(--header-height));
       padding-bottom: 60px;
@@ -547,7 +455,7 @@
     }
 
     .performance-description {
-      padding-bottom: 80px;;
+      padding-bottom: 80px;
     }
 
     .section-heading {
@@ -573,27 +481,6 @@
 
     .description-content {
       line-height: 1.8;
-    }
-
-
-    .reservation_gnb_btn {
-      > nav {
-        width: 90%;
-        gap: 4px;
-      }
-
-      @media (hover: hover) and (pointer: fine) {
-        .gnb_btn {
-          &:not(:disabled):hover {
-            transform: translateY(0);
-          }
-        }
-      }
-
-      .reservation_btn {
-        width: 100%;
-      }
-
     }
 
     .reservation-box {

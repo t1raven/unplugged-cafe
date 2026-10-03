@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { usePathname, useParams, useRouter } from "next/navigation";
-import { getDeviceType, DeviceType } from "@/utils/device";
+import { useEffect, useRef, useCallback } from 'react';
+import { usePathname } from "next/navigation";
+import { getDeviceType } from "@/utils/device";
 import { useCartStore } from '@/stores/cartStore';
 import Link from 'next/link';
 import gsap from 'gsap';
@@ -11,132 +11,256 @@ import './style.scss'
 
 export default function Gnb() {
 
-  const params = useParams();
-  const router = useRouter();
   const pathname = usePathname();
 
   const gnbRef = useRef<HTMLElement>(null);
   const moveBgRef = useRef<HTMLDivElement>(null);
-  const lastWidth = useRef(0);
+  const isCollapsedRef = useRef(false);
+  const menuTimelineRef = useRef<gsap.core.Timeline | null>(null);
 
-  const [device, setDevice] = useState<DeviceType>("desktop");
-  const [hide, setHide] = useState(false);
+  const cartItems = useCartStore((state) => state.items);
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  const moveBackground = (animate = true) => {
+  const moveBackground = useCallback((animate = true) => {
     if (!gnbRef.current || !moveBgRef.current) return;
 
-    const activeMenu = gnbRef.current.querySelector(
-      'li.active'
-    ) as HTMLElement | null;
+    const activeMenu = gnbRef.current.querySelector('li.active') as HTMLElement | null;
 
     if (!activeMenu) return;
 
-    const html = document.documentElement;
-    let scale = html.classList.contains('scrollDown') ? 0.9 : 1;
-    if(device === "desktop") scale = 1;
-
     const navRect = gnbRef.current.getBoundingClientRect();
     const menuRect = activeMenu.getBoundingClientRect();
+    const scale = navRect.width / gnbRef.current.offsetWidth || 1;
+
+    /* const navRect = gnbRef.current.getBoundingClientRect();
+    const menuRect = activeMenu.getBoundingClientRect();
+    let scale = document.documentElement.classList.contains('scrollDown') ? 0.9 : 1;
+    if(getDeviceType() === "desktop") scale = 1; */
 
     const x = (menuRect.left - navRect.left) / scale;
     const width = menuRect.width / scale;
 
     if (!animate) {
-      gsap.set(moveBgRef.current, { 
-        scale: 0,
+      gsap.set(moveBgRef.current, {
         x,
         y: '-50%',
-        width, 
-      }); 
-    } 
+        scale: 0,
+        width,
+      });
+    }
 
-    gsap.to(moveBgRef.current, { 
+    gsap.to(moveBgRef.current, {
       x,
       y: '-50%',
       scale: 1,
-      width, 
-      duration: 0.35, 
-      ease: 'power3.out', 
-    }); 
+      width,
+      duration: 0.35,
+      ease: 'power3.out',
+      overwrite: 'auto',
+    });
+  },[]);
 
-  };
+  const collapseGNB = useCallback((animate = true) => {
+    if (!gnbRef.current || !moveBgRef.current || isCollapsedRef.current) return;
 
-  useEffect(() => { 
-    requestAnimationFrame(() => { 
-      moveBackground(false);
+    isCollapsedRef.current = true;
+    menuTimelineRef.current?.kill();
 
-      lastWidth.current = window.innerWidth;
+    const menuLl = gnbRef.current.querySelectorAll<HTMLLIElement>('li > a');
+    const menuBtn = gnbRef.current.querySelector<HTMLLIElement>('.menu-btn');
+    const menuFnb = document.querySelector<HTMLLIElement>('.site-fnb');
 
-      const handleResize = () => {
-        setDevice(getDeviceType());
+    if (!animate) {
+      gsap.set(menuLl, {
+        scale: 0,
+        opacity: 0,
+        visibility: 'hidden',
+      });
+      gsap.set(moveBgRef.current, {
+        opacity: 0,
+        visibility: 'hidden',
+      });
+      gsap.set(menuBtn, {
+        opacity: 1,
+        visibility: 'visible',
+      });
+      gsap.set(gnbRef.current, {
+        width: 60,
+      });
+      return;
+    }
 
-        if (window.innerWidth === lastWidth.current) {
-          return;
-        }
+    const tl = gsap.timeline();
+    menuTimelineRef.current = tl;
 
-        lastWidth.current = window.innerWidth;
+    tl.to(menuLl, {
+      scale: 0,
+      opacity: 0,
+      duration: 0.5,
+      visibility: 'hidden',
+      ease: 'power3.out',
+    }, '+=0.5')
+    tl.to(moveBgRef.current, {
+      opacity: 0,
+      visibility: 'hidden',
+      duration: 0.25,
+      ease: 'power3.out',
+    }, '-=0.5')
+    tl.to(gnbRef.current, {
+      width: 60,
+      duration: 0.5,
+      ease: 'power3.out',
+    }, '-=0.5')
+    tl.to(menuBtn, {
+      opacity: 1,
+      visibility: 'visible',
+      duration: 0.5,
+      ease: 'power3.out',
+    }, '-=0.5')
+    tl.to(menuFnb, {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'power3.out',
+    }, '-=0.25')
+  },[]);
 
+  const expandGNB = useCallback(() => {
+    if (!gnbRef.current || !moveBgRef.current || !isCollapsedRef.current) return;
+
+    isCollapsedRef.current = false;
+    menuTimelineRef.current?.kill();
+
+    const menuLl = gnbRef.current.querySelectorAll<HTMLLIElement>('li > a');
+    const menuBtn = gnbRef.current.querySelector<HTMLLIElement>('.menu-btn');
+    const menuFnb = document.querySelector<HTMLLIElement>('.site-fnb')
+    const menuFnbopacity = getDeviceType() == 'desktop' ? 1 : 0;
+
+    const tl = gsap.timeline();
+    menuTimelineRef.current = tl;
+
+    tl.to(menuBtn, {
+      opacity: 0,
+      visibility: 'hidden',
+      duration: 0.5,
+      ease: 'power3.in',
+    })
+    tl.to(gnbRef.current, {
+      width: `100%`,
+      duration: 0.5,
+      ease: 'power3.in',
+    }, '-=0.5')
+    tl.to(menuFnb, {
+      opacity: menuFnbopacity,
+      duration: 0.5,
+      ease: 'power3.in',
+    }, '-=0.5')
+    menuLl.forEach((item) => {
+      tl.to(item, {
+        scale: 1,
+        opacity: 1,
+        visibility: 'visible',
+        duration: 0.5,
+        ease: 'power3.in',
+      }, '-=0.45')
+    })
+    tl.to(moveBgRef.current, {
+      opacity: 1,
+      visibility: 'visible',
+      duration: 0.25,
+      ease: 'power3.in',
+    })
+  },[]);
+
+  const syncMenu = useCallback((animate = true) => {
+    if (getDeviceType() !== 'desktop' && document.querySelector('.site-fnb')) {
+      collapseGNB(animate);
+    } else {
+      expandGNB();
+    }
+  }, [collapseGNB, expandGNB]);
+
+  useEffect(() => {
+    const background = moveBgRef.current;
+    let lastWidth = window.innerWidth;
+    const handleResize = () => {
+      const width = window.innerWidth;
+      // Safari 주소창 변화처럼 높이만 바뀌는 resize는 무시한다.
+      if (width === lastWidth) return;
+      lastWidth = width;
+      
+
+      const frameId = requestAnimationFrame(() => {
         moveBackground(false);
-      };
-
-      window.addEventListener('resize', handleResize);
+         syncMenu(false);
+      });
+      const timeoutId = setTimeout(() => moveBackground(false), 750);
 
       return () => {
-        window.removeEventListener('resize', handleResize);
+        cancelAnimationFrame(frameId);
+        clearTimeout(timeoutId);
       };
-    }); 
+    };
 
-    if (!gnbRef.current) return;
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDiff = currentScrollY - lastScrollY;
 
-    const observer = new ResizeObserver(() => {
-      moveBackground(false);
-    });
+      if (Math.abs(scrollDiff) >= 30) {
+        syncMenu();
+        lastScrollY = currentScrollY;
+      }
+    };
 
-    observer.observe(gnbRef.current);
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (gnbRef.current && !gnbRef.current.contains(event.target as Node)) {
+        syncMenu();
+      }
+    };
+
+    moveBackground(false);
+    syncMenu(false);
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    document.addEventListener('pointerdown', handleOutsideClick);
 
     return () => {
-      observer.disconnect();
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('pointerdown', handleOutsideClick);
+      menuTimelineRef.current?.kill();
+      gsap.killTweensOf(background);
+      isCollapsedRef.current = false;
     };
-  }, []);
+  }, [moveBackground, syncMenu]);
 
   useEffect(() => {
-    setDevice(getDeviceType());
-    requestAnimationFrame(() => {
-      moveBackground(true);
-      setTimeout(() => {
-        moveBackground(true); 
-      }, 400);
+    const frameId = requestAnimationFrame(() => {
+      syncMenu();
     });
-  }, [pathname]);
 
-  const [mounted, setMounted] =
-    useState(false);
-
-  const items = useCartStore(
-    (state) => state.items
-  );
+    return () => cancelAnimationFrame(frameId);
+  }, [syncMenu, pathname]);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
 
-  const count = mounted
-    ? items.reduce(
-        (total, item) =>
-          total + item.quantity,
-        0
-      )
-    : 0;
+    const frameId = requestAnimationFrame(() => {
+      moveBackground(true);
 
-  /*useEffect(() => {
-    const handleResize = () => { moveBackground(false); };
-    window.addEventListener('resize', handleResize);
-    return () => { window.removeEventListener('resize', handleResize); };
-  }, []);*/
+    });
+    const timeoutId = setTimeout(() => moveBackground(true), 400);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      clearTimeout(timeoutId);
+    };
+  }, [moveBackground, pathname]);
 
   return (
-    <div id="site-gnb" className={device !== "desktop" && (!!params.slug || pathname.startsWith('/goods')) ? 'hide' : ''}>
-      <nav ref={gnbRef}>
+    <div id="site-gnb">
+      <nav ref={gnbRef} aria-label="주 메뉴">
+        <button type="button" className="menu-btn" aria-label="메뉴 펼치기" onClick={() => expandGNB()}><span className="icon material-symbols-rounded" translate="no" aria-hidden="true">grid_view</span></button>
         <ul>
           <li className={pathname === '/' ? "active" : ""}>
             <Link href="/" title="홈">
@@ -166,8 +290,8 @@ export default function Gnb() {
             <Link href="/goods" title="굿즈·앨범">
               <span className="goods_icon">
                 <span className="icon material-symbols-rounded" translate="no">local_mall</span>
-                {count > 0 && (
-                  <span className="cnt">{count}</span>
+                {cartCount > 0 && (
+                  <span className="cnt">{cartCount}</span>
                 )}
               </span>
               <span className="text">굿즈·앨범</span>

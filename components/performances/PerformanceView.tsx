@@ -12,6 +12,9 @@ import { formatDateTime } from "@/utils/formatDateTime";
 
 import type { Performance } from '@/types/performance';
 
+import Fnb from '@/components/layout/Fnb'
+import { Button } from '@/components/ui/Inputs/Button'
+
 import './PerformanceView.scss';
 
 
@@ -53,12 +56,17 @@ const handleShare = async () => {
   }
 
   // fallback: URL 복사
-  try {
-    await navigator.clipboard.writeText(url);
-    alert('URL이 복사되었습니다.');
-  } catch (error) {
-    console.error('URL 복사 실패:', error);
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(url);
+      alert('URL이 복사되었습니다.');
+      return;
+    } catch (error) {
+      console.error('URL 복사 실패:', error);
+    }
   }
+
+  window.prompt('URL을 복사하세요.', url);
 };
 
 const subscribeToIOS = () => () => {};
@@ -310,91 +318,49 @@ export default function PerformanceViewPage({
         </section>
       )}
 
-      <div className="reservation_gnb_btn">
-        <nav>
-          {isEnd ? (
-            <button disabled className="gnb_btn reservation_btn">
-              <span>공연 종료</span>
-            </button>
-          ) : performance.siteSalesOnly ? (
-            <button disabled className="gnb_btn reservation_btn">
-              <span>현장예매만 가능합니다.</span>
-            </button>
-          ) : !performance.reservationOpen ? (
-            <button disabled className="gnb_btn reservation_btn">
-              <span>매진되었습니다.</span>
-            </button>
-          ) : isSalesOpen ? (
-            <button disabled className="gnb_btn reservation_btn">
-              <span>
-                사전 예매 오픈전
-                {performance.salesOpen && <><br /><small>(오픈: {formatDateTime(performance.salesOpen)})</small></>}
-              </span>
-            </button>
-          ) : isSalesClose ? (
-            <button disabled className="gnb_btn reservation_btn">
-              <span>
-                사전 예매 마감 
-                <br/><small>(현장 예매만 가능합니다)</small>
-              </span>
-            </button>
-          ) : (
-            <Link
-              href={performance.reservationUrl ?? ""}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="gnb_btn reservation_btn"
-            >
-              <span className="icon material-symbols-rounded" translate="no" style={{fontVariationSettings: `"FILL" 1`}}>confirmation_number</span>
-              <span>예매하기</span>
-            </Link>
-          )}
-          <button type="button" onClick={handleShare} className="gnb_btn">
-            <span className="material-symbols-rounded icon" aria-label="공유하기">{ios ? "ios_share" : "share"}</span>
-          </button>
-        </nav>
-      </div>
-
-      {/* ==================================================
-          Reservation
-      ================================================== */}
-
-      {/*{performance.reservationOpen && performance.reservationUrl && (
-        <section
-          id="reservation"
-          className="performance-reservation"
-        >
-          <div className="performance-detail-inner">
-
-            <div className="reservation-box">
-
-              <p>RESERVATION</p>
-
-              <h2>공연을 예약해주세요.</h2>
-
-              {now < salesOpen ? (
-                <button disabled className="reservation-button">
-                  사전 예매 오픈전
-                </button>
-              ) : salesClose < now ? (
-                <button disabled className="reservation-button">
-                  <span>사전 예매 마감 <br/><small>(현장 예매만 가능합니다)</small></span>
-                </button>
-              ) : (
-                <Link
-                  href={performance.reservationUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="reservation-button"
-                >
-                  예매하기
-                </Link>
-              )}
-            </div>
-
-          </div>
-        </section>
-      )}*/}
+      <Fnb className="site-fnb">
+        {isEnd ? (
+          <Button opacity={0.8} shadow disabled className="reservation_btn">
+            <span>공연 종료</span>
+          </Button>
+        ) : performance.siteSalesOnly ? (
+          <Button opacity={0.8} shadow disabled className="reservation_btn">
+            <span>현장예매만 가능합니다.</span>
+          </Button>
+        ) : !performance.reservationOpen ? (
+          <Button opacity={0.8} shadow disabled className="reservation_btn">
+            <span>매진되었습니다.</span>
+          </Button>
+        ) : isSalesOpen ? (
+          <Button opacity={0.8} shadow disabled className="reservation_btn">
+            <span>
+              사전 예매 오픈전
+              {performance.salesOpen && <><br /><small>(오픈: {formatDateTime(performance.salesOpen)})</small></>}
+            </span>
+          </Button>
+        ) : isSalesClose ? (
+          <Button opacity={0.8} shadow disabled className="reservation_btn">
+            <span>
+              사전 예매 마감 
+              <br/><small>(현장 예매만 가능합니다)</small>
+            </span>
+          </Button>
+        ) : (
+          <Button
+            href={performance.reservationUrl ?? ""}
+            target="_blank"
+            className="reservation_btn"
+            opacity={0.8}
+            shadow
+          >
+            <span className="icon material-symbols-rounded" translate="no">confirmation_number</span>
+            <span>예매하기</span>
+          </Button>
+        )}
+        <Button type="button" className="share_btn" color="secondary" opacity={0.8} shadow onClick={handleShare}>
+          <span className="material-symbols-rounded icon" aria-label="공유하기">{ios ? "ios_share" : "share"}</span>
+        </Button>
+      </Fnb>
     </main>
   );
 }

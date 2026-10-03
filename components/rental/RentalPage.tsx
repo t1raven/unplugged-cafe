@@ -284,7 +284,7 @@ export default function RentalPage() {
               대관 신청 전 상세 안내 확인
             </Button>
 
-            <Button href="tel:010-9035-6289" color="secondary" startIcon={'phone'}>
+            <Button href="tel:010-9035-6289" color="secondary" endIcon={'phone_enabled'}>
               전화 문의
             </Button>
 
