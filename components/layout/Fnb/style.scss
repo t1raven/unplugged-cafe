@@ -1,0 +1,59 @@
+#site-fnb {
+  position: sticky;
+  left: 0;
+  bottom: 0;
+  z-index: 110;
+  width: clamp(320px, 90vw, 520px);
+	height: 0;
+	margin: 0 auto;
+
+  animation: site-fnb-show 0.5s ease 0.75s backwards;
+  @keyframes site-fnb-show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  nav {
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+}
+
+/* --------------------------------
+   TABLET
+-------------------------------- */
+
+@media (max-width: 1024px) {
+
+  #site-fnb {
+    nav {
+      padding-left: calc(60px + 8px);
+    }
+  }
+
+}
+
+/* --------------------------------
+   MOBILE
+-------------------------------- */
+
+@media (max-width: 768px) {
+
+  #site-fnb {
+    nav {
+      padding-left: calc(60px + 4px);
+      gap: 4px;
+    }
+  }
+
+}

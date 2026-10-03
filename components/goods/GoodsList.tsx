@@ -4,6 +4,8 @@ import { useCallback, useLayoutEffect, useRef, useState, useSyncExternalStore } 
 import { useCartStore } from '@/stores/cartStore'
 import gsap from 'gsap'
 
+import Fnb from '@/components/layout/Fnb'
+import { Button } from '@/components/ui/Inputs/Button'
 import CategoryNav from '@/components/common/CategoryNav'
 import CartModal from '@/components/cart/Modal'
 import OrderTrackingModal from '@/components/orders/OrderTrackingModal'
@@ -221,23 +223,21 @@ export default function GoodsList({
         }
       />
 
-      <div className="goods_gnb_cart">
-        <nav>
-          <button type="button" className="gnb_btn cart_btn" onClick={openCart} aria-label="장바구니 열기">
-            <div className="cart_icon">
-              <span className="material-symbols-rounded icon">local_mall</span>
-              {cartCount > 0 && (
-                <span className="cnt">{cartCount}</span>
-              )}
-            </div>
-            <div className="text">장바구니</div>
-          </button>
-          <button type="button" className="gnb_btn tracking_btn" onClick={() => setOrderOpen(true)} aria-label="주문조회 열기">
-              <span className="material-symbols-rounded icon">receipt_long</span>
-              <span className="text">주문조회</span>
-          </button>
-        </nav>
-      </div>
+      <Fnb className="site-fnb">
+        <Button className="cart_btn" opacity={0.8} shadow onClick={openCart}>
+          <div className="cart_icon">
+            <span className="material-symbols-rounded icon">local_mall</span>
+            {cartCount > 0 && (
+              <span className="cnt">{cartCount}</span>
+            )}
+          </div>
+          <div className="text">장바구니</div>
+        </Button>
+        <Button className="tracking_btn" color="secondary" opacity={0.8} shadow onClick={() => setOrderOpen(true)}>
+          <span className="material-symbols-rounded icon">quick_reference_all</span>
+          <span className="text">주문조회</span>
+        </Button>
+      </Fnb>
 
       <CartModal orderDeliverySettings={orderDeliverySettings} />
       <OrderTrackingModal open={orderOpen} onClose={() => setOrderOpen(false)}

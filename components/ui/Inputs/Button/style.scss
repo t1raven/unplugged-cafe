@@ -3,12 +3,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 8px;
     font-weight: 500;
     color: #fff;
     background: transparent;
     border: none;
     border-radius: 10rem;
+    backdrop-filter: saturate(120%) blur(8px);
     text-decoration: none;
     position: relative;
     overflow: hidden;
@@ -108,24 +109,46 @@
   }
 
   &-size-small {
+    min-width: 50px;
     height: 50px;
     padding: 0.25rem 1.25rem;
-    font-size: 0.875rem;
+    font-size: clamp(12px,0.875rem,14px);
   }
 
   &-size-medium {
+    min-width: 60px;
     height: 60px;
-    padding: 0.5rem 2rem;
-    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
+    font-size: clamp(14px,1rem,16px);
   }
 
   &-size-large {
+    min-width: 70px;
     height: 70px;
     padding: 0.75rem 2.5rem;
     font-size: 1.125rem;
+    font-size: clamp(16px,1.125rem,18px);
   }
 
   &-icon {
-    font-size: 1.25em !important;
+    font-size: 20px !important;
+
+    &.start-icon {
+      margin-left: -4px;
+    }
+    &.end-icon {
+      margin-right: -4px;
+    }
+    &.middle-icon {
+      margin-left: -4px;
+      margin-right: -4px;
+    }
+    &.fill-icon {
+      font-variation-settings: "FILL" 1;
+    }
+  }
+
+  &-shadow {
+    box-shadow: 0 6px 32px 0 rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(238, 238, 238, 0.1);
   }
 }

@@ -12,9 +12,12 @@ interface Props {
   color?: 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info' | 'disabled';
   style?: React.CSSProperties;
   opacity?: number;
+  shadow?: boolean;
   children?: React.ReactNode;
   startIcon?: React.ReactNode;
+  middleIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
+  label?: string;
   disabled?: boolean;
   ref?: React.Ref<HTMLButtonElement>;
   onChange?: (event: React.ChangeEvent<HTMLButtonElement>) => void;
@@ -32,26 +35,41 @@ export function Button({
   size = 'medium',
   style,
   opacity,
+  shadow = false,
   children,
   startIcon,
+  middleIcon,
   endIcon,
+  label,
   disabled,
   ref,
   onChange, 
   onClick 
 }: Props) {
-  const classes = `button-root button-${variant} button-size-${size} button-color-${color} ${className ?? ''}`.trim();
+  const classes = [
+    'button-root',
+    `button-${variant}`,
+    `button-size-${size}`,
+    `button-color-${color}`,
+    shadow && 'button-shadow',
+    className?.trim(),
+  ].filter(Boolean).join(' ');
 
   const content = (
     <>
       {startIcon && (
-        <i className="material-symbols-rounded button-icon" translate="no">
+        <i className="material-symbols-rounded button-icon start-icon" translate="no">
+          {startIcon}
+        </i>
+      )}
+      {middleIcon && (
+        <i className="material-symbols-rounded button-icon middle-icon" translate="no">
           {startIcon}
         </i>
       )}
       {children}
       {endIcon && (
-        <i className="material-symbols-rounded button-icon" translate="no">
+        <i className="material-symbols-rounded button-icon end-icon" translate="no">
           {endIcon}
         </i>
       )}
@@ -72,6 +90,7 @@ export function Button({
         target={target}
         rel={target ? 'noopener noreferrer' : undefined}
         style={customStyles}
+        aria-label={label}
         aria-disabled={disabled}
       >
         {content}
@@ -86,6 +105,7 @@ export function Button({
         href={href}
         className={classes}
         style={customStyles}
+        aria-label={label}
         aria-disabled={disabled}
       >
         {content}
@@ -102,6 +122,7 @@ export function Button({
       ref={ref} 
       onChange={onChange} 
       onClick={onClick} 
+      aria-label={label}
       disabled={disabled}
     >
       {content}
