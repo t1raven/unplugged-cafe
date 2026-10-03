@@ -9,7 +9,7 @@ interface Props {
   item: Cafe;
 }
 
-export default function GoodsCard({
+export default function MenuCard({
   item,
 }: Props) {
 

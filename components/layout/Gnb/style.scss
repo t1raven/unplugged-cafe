@@ -185,7 +185,7 @@ html.scrollUp #site-gnb {
 		top: auto;
 		left: 0;
 	  bottom: 0;
-	  transform: translateX(0) !important;
+	  transform: translateX(0);
 	  transition: none;
 		width: clamp(320px, 90vw, 520px);
 	  height: 0;
@@ -195,9 +195,11 @@ html.scrollUp #site-gnb {
 		@keyframes site-gnb-show {
 			from {
 				opacity: 0;
+				transform: translateY(var(--header-height));
 			}
 			to {
 				opacity: 1;
+				transform: translateY(0);
 			}
 		}
 

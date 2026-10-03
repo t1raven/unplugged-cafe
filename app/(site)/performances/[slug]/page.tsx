@@ -6,7 +6,7 @@ import { urlFor } from '@/sanity/lib/image';
 import { formatDateTime } from "@/utils/formatDateTime";
 import type { Performance } from '@/types/performance';
 
-import PerformanceView from '@/components/performances/PerformanceView';
+import PerformanceView from '@/components/performances/View';
 
 const performanceQuery = `
   *[

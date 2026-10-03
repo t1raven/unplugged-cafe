@@ -4,7 +4,7 @@ import { client } from '@/sanity/lib/client';
 import { getSiteSettings } from '@/lib/siteSettings';
 
 import SubPageHero from '@/components/common/SubPageHero';
-import GoodsList from '@/components/goods/GoodsList';
+import GoodsList from '@/components/goods/List';
 
 import type { Category } from '@/types/category'
 import type { Goods  } from '@/types/goods'

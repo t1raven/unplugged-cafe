@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 import { usePathname } from "next/navigation";
-import { getDeviceType } from "@/utils/device";
-import { useCartStore } from '@/stores/cartStore';
+import { useDevice } from '@/components/providers/DeviceProvider';
+import { useCart } from '@/components/providers/CartProvider';
 import Link from 'next/link';
 import gsap from 'gsap';
 
@@ -18,8 +18,8 @@ export default function Gnb() {
   const isCollapsedRef = useRef(false);
   const menuTimelineRef = useRef<gsap.core.Timeline | null>(null);
 
-  const cartItems = useCartStore((state) => state.items);
-  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const { isDesktop, isReady } = useDevice();
+  const { cartCount } = useCart();
 
   const moveBackground = useCallback((animate = true) => {
     if (!gnbRef.current || !moveBgRef.current) return;
@@ -68,7 +68,7 @@ export default function Gnb() {
 
     const menuLl = gnbRef.current.querySelectorAll<HTMLLIElement>('li > a');
     const menuBtn = gnbRef.current.querySelector<HTMLLIElement>('.menu-btn');
-    const menuFnb = document.querySelector<HTMLLIElement>('.site-fnb');
+    const Fnb = document.querySelector<HTMLLIElement>('#site-fnb');
 
     if (!animate) {
       gsap.set(menuLl, {
@@ -92,6 +92,10 @@ export default function Gnb() {
 
     const tl = gsap.timeline();
     menuTimelineRef.current = tl;
+
+    gsap.set(Fnb, {
+      animation: 'none',
+    });
 
     tl.to(menuLl, {
       scale: 0,
@@ -117,8 +121,12 @@ export default function Gnb() {
       duration: 0.5,
       ease: 'power3.out',
     }, '-=0.5')
-    tl.to(menuFnb, {
+    tl.fromTo(Fnb, {
+      opacity: 0,
+      visibility: 'hidden',
+    }, {
       opacity: 1,
+      visibility: 'visible',
       duration: 0.5,
       ease: 'power3.out',
     }, '-=0.25')
@@ -126,14 +134,13 @@ export default function Gnb() {
 
   const expandGNB = useCallback(() => {
     if (!gnbRef.current || !moveBgRef.current || !isCollapsedRef.current) return;
-
     isCollapsedRef.current = false;
     menuTimelineRef.current?.kill();
 
     const menuLl = gnbRef.current.querySelectorAll<HTMLLIElement>('li > a');
     const menuBtn = gnbRef.current.querySelector<HTMLLIElement>('.menu-btn');
-    const menuFnb = document.querySelector<HTMLLIElement>('.site-fnb')
-    const menuFnbopacity = getDeviceType() == 'desktop' ? 1 : 0;
+    const Fnb = document.querySelector<HTMLLIElement>('#site-fnb')
+    const menuFnbopacity = (isReady && isDesktop) ? 1 : 0;
 
     const tl = gsap.timeline();
     menuTimelineRef.current = tl;
@@ -149,7 +156,7 @@ export default function Gnb() {
       duration: 0.5,
       ease: 'power3.in',
     }, '-=0.5')
-    tl.to(menuFnb, {
+    tl.to(Fnb, {
       opacity: menuFnbopacity,
       duration: 0.5,
       ease: 'power3.in',
@@ -169,15 +176,16 @@ export default function Gnb() {
       duration: 0.25,
       ease: 'power3.in',
     })
-  },[]);
+  },[isReady, isDesktop]);
 
   const syncMenu = useCallback((animate = true) => {
-    if (getDeviceType() !== 'desktop' && document.querySelector('.site-fnb')) {
+    if (!isReady) return false;
+    if (!isDesktop && document.querySelector('#site-fnb')) {
       collapseGNB(animate);
     } else {
       expandGNB();
     }
-  }, [collapseGNB, expandGNB]);
+  }, [collapseGNB, expandGNB, isReady, isDesktop]);
 
   useEffect(() => {
     const background = moveBgRef.current;
@@ -191,7 +199,7 @@ export default function Gnb() {
 
       const frameId = requestAnimationFrame(() => {
         moveBackground(false);
-         syncMenu(false);
+        syncMenu(false);
       });
       const timeoutId = setTimeout(() => moveBackground(false), 750);
 
@@ -231,7 +239,6 @@ export default function Gnb() {
       document.removeEventListener('pointerdown', handleOutsideClick);
       menuTimelineRef.current?.kill();
       gsap.killTweensOf(background);
-      isCollapsedRef.current = false;
     };
   }, [moveBackground, syncMenu]);
 

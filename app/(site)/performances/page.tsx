@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { client } from '@/sanity/lib/client'
 
 import SubPageHero from '@/components/common/SubPageHero';
-import PerformanceList from '@/components/performances/PerformanceList';
+import PerformanceList from '@/components/performances/List';
 
 export const metadata: Metadata = {
   title: "공연 예매",

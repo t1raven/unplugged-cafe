@@ -9,10 +9,6 @@ import type {
   OrderRequestItem,
 } from '@/types/order';
 
-import {
-  getDeliveryFee,
-} from '@/lib/orders';
-
 import { normalizePhone, formatPhone } from "@/utils/formatPhone";
 
 interface GoodsDocument {
@@ -273,10 +269,20 @@ export async function POST(
         0
       );
 
-    const deliveryFee =
-      getDeliveryFee(
-        body.deliveryMethod
+    let deliveryFee = 0;
+    //서버에서 가져오기
+    if (body.deliveryMethod === 'delivery') {
+      const configuredFee = await writeClient.fetch<number | null>(
+        `*[
+          _type == "siteSettings" &&
+          _id == "siteSettings"
+        ][0].orderDelivery.deliveryFee`,
+        {},
+        { cache: 'no-store' }
       );
+
+      deliveryFee = configuredFee ?? 3000;
+    }
 
     const totalPrice = productPrice + deliveryFee;
 
@@ -372,12 +378,6 @@ export async function POST(
               : '';
 
           return `${item.name}${optionText} × ${item.quantity}`;
-          /*return [
-            `${item.name}${optionText}`,
-            `${item.quantity}개`,
-            `개당 ${item.price.toLocaleString()}원`,
-            `${item.subtotal.toLocaleString()}원`,
-          ].join(' / ');*/
         })
         .join(' / ');
 
@@ -416,21 +416,6 @@ export async function POST(
         body.deliveryMethod === 'delivery'
           ? addressText ?? ''
           : '',
-
-        /*body.deliveryMethod === 'delivery'
-          ? body.customer.address
-              ?.postcode ?? ''
-          : '',
-
-        body.deliveryMethod === 'delivery'
-          ? body.customer.address
-              ?.address ?? ''
-          : '',
-
-        body.deliveryMethod === 'delivery'
-          ? body.customer.address
-              ?.detailAddress ?? ''
-          : '',*/
 
         itemText,
 

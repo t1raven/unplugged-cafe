@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { useSyncExternalStore } from 'react';
+import { useDevice } from '@/components/providers/DeviceProvider';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -21,6 +21,8 @@ export default function Header() {
 
   const [activeSnsModal, setActiveSnsModal] = useState<boolean>(false);
   const handleSnsModal = () => setActiveSnsModal((prev) => !prev);
+
+  const { isDesktop, isReady } = useDevice();
 
   useEffect(() => {
     const html = document.documentElement;
@@ -72,8 +74,9 @@ export default function Header() {
   }, []);
 
   const getBackBtnSnapshot = () =>
-    typeof document !== 'undefined' &&
-    Boolean(document.querySelector('.site-fnb'));
+    typeof document !== 'undefined' 
+    && (isReady && !isDesktop)
+    && Boolean(document.querySelector('#site-fnb'));
 
   const subscribeToBackBtn = (onChange: () => void) => {
     if (typeof document === 'undefined' || !document.body) {
@@ -107,12 +110,6 @@ export default function Header() {
   );
 
   if (!mounted) return null;
-
-  /* useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null; */
 
   return (
     <>

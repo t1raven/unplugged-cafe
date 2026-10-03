@@ -2,12 +2,12 @@
 
 import { FormEvent, useEffect, useRef, useState } from 'react';
 
-import { TextField } from '@/components/ui/Inputs/TextField';
+import { TextField } from '@/components/ui/TextField';
+import { Button } from '@/components/ui/Button';
 import { formatPhone } from '@/utils/formatPhone';
-import { Button } from '@/components/ui/Inputs/Button';
 import type { OrderTrackingResult, OrderStatus } from '@/types/order';
 
-import './OrderTracking.scss';
+import './Tracking.scss';
 
 interface Props {
   open: boolean;

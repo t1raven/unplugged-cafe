@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Button } from '@/components/ui/Inputs/Button';
+import { Button } from '@/components/ui/Button';
 
 import './style.scss';
 

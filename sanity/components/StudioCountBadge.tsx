@@ -2,7 +2,7 @@
 
 import {Badge} from '@sanity/ui'
 
-import {useStudioCounts} from '../providers/StudioCountProvider'
+import {useStudioCounts} from './providers/StudioCountProvider'
 
 type CategoryType = 'menuItem' | 'galleryItem' | 'goodsItem'
 

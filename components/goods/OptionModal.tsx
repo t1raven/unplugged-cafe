@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { useCartStore, type CartOption } from '@/stores/cartStore';
+import { useCart } from '@/components/providers/CartProvider';
 import { getGoodsUnitPrice } from '@/lib/goodsPrice';
 import type { Goods } from '@/types/goods';
-import { Button } from '@/components/ui/Inputs/Button';
+import type { CartOption } from '@/types/cart';
+import { Button } from '@/components/ui/Button';
 
 interface Props {
   goods: Goods | null;
@@ -19,7 +20,7 @@ export default function GoodsOptionModal({
   open,
   onClose,
 }: Props) {
-  const addItem = useCartStore(
+  const addItem = useCart(
     (state) => state.addItem
   );
 

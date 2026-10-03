@@ -11,9 +11,11 @@
   @keyframes site-fnb-show {
     from {
       opacity: 0;
+      transform: translateY(60);
     }
     to {
       opacity: 1;
+      transform: translateY(0);
     }
   }
 
@@ -50,6 +52,7 @@
 @media (max-width: 768px) {
 
   #site-fnb {
+    //animation: none;
     nav {
       padding-left: calc(60px + 4px);
       gap: 4px;

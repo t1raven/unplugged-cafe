@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 import type { Performance } from '@/types/performance';
 
-import './PerformanceList.scss';
+import './List.scss';
 
 interface Props {
   performances: Performance[];
