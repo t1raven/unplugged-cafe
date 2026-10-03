@@ -68,7 +68,6 @@ export default function Gnb() {
 
     const menuLl = gnbRef.current.querySelectorAll<HTMLLIElement>('li > a');
     const menuBtn = gnbRef.current.querySelector<HTMLLIElement>('.menu-btn');
-    const Gnb = document.querySelector<HTMLLIElement>('#site-gnb');
     const Fnb = document.querySelector<HTMLLIElement>('#site-fnb');
 
     if (!animate) {
@@ -88,30 +87,15 @@ export default function Gnb() {
       gsap.set(gnbRef.current, {
         width: 60,
       });
-      gsap.fromTo(Gnb, {
-        y: 60,
-      }, {
-        y: 0,
-        opacity: 1,
-        delay: 0.5,
-        duration: 0.5,
-        ease: 'power3.out',
-      })
-      gsap.fromTo(Fnb, {
-        y: 60,
-        opacity: 0,
-      }, {
-        y: 0,
-        opacity: 1,
-        delay: 0.5,
-        duration: 0.5,
-        ease: 'power3.out',
-      })
       return;
     }
 
     const tl = gsap.timeline();
     menuTimelineRef.current = tl;
+
+    gsap.set(Fnb, {
+      animation: 'none',
+    });
 
     tl.to(menuLl, {
       scale: 0,
@@ -137,8 +121,12 @@ export default function Gnb() {
       duration: 0.5,
       ease: 'power3.out',
     }, '-=0.5')
-    tl.to(Fnb, {
+    tl.fromTo(Fnb, {
+      opacity: 0,
+      visibility: 'hidden',
+    }, {
       opacity: 1,
+      visibility: 'visible',
       duration: 0.5,
       ease: 'power3.out',
     }, '-=0.25')
@@ -146,7 +134,6 @@ export default function Gnb() {
 
   const expandGNB = useCallback(() => {
     if (!gnbRef.current || !moveBgRef.current || !isCollapsedRef.current) return;
-
     isCollapsedRef.current = false;
     menuTimelineRef.current?.kill();
 
