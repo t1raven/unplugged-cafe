@@ -5,12 +5,12 @@ import gsap from 'gsap'
 
 import CategoryNav from '@/components/common/CategoryNav'
 
-import MenuCard from './MenuCard';
+import MenuCard from './Card';
 
 import type { Category } from '@/types/category'
 import type { Cafe } from '@/types/cafe'
 
-import './Menu.scss';
+import './style.scss';
 
 interface Props {
   categories: Category[]

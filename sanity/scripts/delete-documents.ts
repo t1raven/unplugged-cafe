@@ -1,4 +1,4 @@
-import {client} from '../sanity/lib/client'
+import {client} from '../lib/client'
 
 const writeClient = client.withConfig({
   useCdn: false,

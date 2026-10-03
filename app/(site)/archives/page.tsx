@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { client } from '@/sanity/lib/client';
 
 import SubPageHero from '@/components/common/SubPageHero';
-import ArchiveList from '@/components/archives/ArchiveList';
+import ArchiveList from '@/components/archives/List';
 
 import type { Category } from '@/types/category'
 import type { Archive } from '@/types/archive'

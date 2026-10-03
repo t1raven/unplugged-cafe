@@ -8,7 +8,7 @@ import {structure} from './sanity/structure'
 import {dataset, projectId} from './sanity/env'
 import {schemaTypes} from './sanity/schemaTypes'
 
-import {StudioCountProvider} from './sanity/providers/StudioCountProvider'
+import {StudioCountProvider} from './sanity/components/providers/StudioCountProvider'
 
 import {
   DeletePerformanceAndGalleryAction,

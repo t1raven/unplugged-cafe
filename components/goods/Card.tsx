@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 
-import { useCartStore } from '@/stores/cartStore';
+import { useCart } from '@/components/providers/CartProvider';
 import { getDiscountRate } from '@/lib/goodsPrice';
 
 import type { Goods } from '@/types/goods';
@@ -23,7 +23,7 @@ export default function GoodsCard({
   onOpenOptionModal,
 }: Props) {
 
-  const addItem = useCartStore((state) => state.addItem);
+  const addItem = useCart((state) => state.addItem);
 
   const [added, setAdded] = useState(false);
 

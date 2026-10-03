@@ -16,13 +16,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
 
   const siteName = settings?.general?.siteName ?? 'UNPLUGGED LOUNGE';
-
   const title = settings?.seo?.title ?? siteName;
-
   const description = settings?.seo?.description ?? '';
-
   const keywords = settings?.seo?.keywords ?? [];
-
   const ogImage = settings?.seo?.ogImage
     ? urlFor(settings.seo.ogImage)
         .width(400)
@@ -78,9 +74,7 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-import ThemeProvider from '@/components/common/ThemeProvider';
-
-//Layout
+import Providers from '@/components/providers';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Gnb from '@/components/layout/Gnb';
@@ -96,12 +90,12 @@ export default async function SiteLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={notoSansKR.variable} suppressHydrationWarning>
-        <ThemeProvider>
+        <Providers>
           <Header/>
           {children}
           <Gnb/>
           <Footer data={siteInfo?.general ?? {}} />
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

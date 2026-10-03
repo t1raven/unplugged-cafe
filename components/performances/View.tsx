@@ -1,21 +1,20 @@
 'use client';
 
-import { useSyncExternalStore } from "react";
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { urlFor } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react';
 
-import { isIOS } from "@/utils/device";
+import { useDevice } from '@/components/providers/DeviceProvider';
 import { formatDateTime } from "@/utils/formatDateTime";
 
 import type { Performance } from '@/types/performance';
 
 import Fnb from '@/components/layout/Fnb'
-import { Button } from '@/components/ui/Inputs/Button'
+import { Button } from '@/components/ui/Button'
 
-import './PerformanceView.scss';
+import './View.scss';
 
 
 const admissionTypeNames: Record<string, string> = {
@@ -69,10 +68,6 @@ const handleShare = async () => {
   window.prompt('URL을 복사하세요.', url);
 };
 
-const subscribeToIOS = () => () => {};
-const getIOSSnapshot = () => isIOS();
-const getServerIOSSnapshot = () => false;
-
 interface Props {
   performance: Performance;
 }
@@ -95,11 +90,8 @@ export default function PerformanceViewPage({
 
   const mapUrl = performance.place?.naverMap;
 
-  const ios = useSyncExternalStore(
-    subscribeToIOS,
-    getIOSSnapshot,
-    getServerIOSSnapshot,
-  );
+  const { isIOS, isReady } = useDevice();
+  const ios = isIOS && isReady ? true : false;
 
   return (
     <main id="site-body" className="performance-detail">

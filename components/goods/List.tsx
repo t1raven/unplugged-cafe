@@ -1,17 +1,17 @@
 'use client'
 
-import { useCallback, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react'
-import { useCartStore } from '@/stores/cartStore'
+import { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { useCart } from '@/components/providers/CartProvider';
 import gsap from 'gsap'
 
 import Fnb from '@/components/layout/Fnb'
-import { Button } from '@/components/ui/Inputs/Button'
+import { Button } from '@/components/ui/Button'
 import CategoryNav from '@/components/common/CategoryNav'
 import CartModal from '@/components/cart/Modal'
-import OrderTrackingModal from '@/components/orders/OrderTrackingModal'
+import OrderTrackingModal from '@/components/orders/TrackingModal'
 
-import GoodsCard from './GoodsCard';
-import GoodsOptionModal from './GoodsOptionModal'
+import GoodsCard from './Card';
+import GoodsOptionModal from './OptionModal'
 
 import type { Category } from '@/types/category'
 import type { Goods } from '@/types/goods'
@@ -24,10 +24,6 @@ interface Props {
   categories: Category[]
   items: Goods[]
 }
-
-const subscribeToClient = () => () => {};
-const getClientSnapshot = () => true;
-const getServerSnapshot = () => false;
 
 function scrollToCategory() {
   const element = document.querySelector('.category_search_nav');
@@ -162,29 +158,13 @@ export default function GoodsList({
     setSelectedGoods(null);
   };
 
-  const mounted = useSyncExternalStore(
-    subscribeToClient,
-    getClientSnapshot,
-    getServerSnapshot
-  );
-
   const [orderOpen, setOrderOpen] = useState(false);
 
-  const cartItems = useCartStore(
-    (state) => state.items
-  );
+  const { cartCount } = useCart();
 
-  const openCart = useCartStore(
+  const openCart = useCart(
     (state) => state.openCart
   );
-
-  const cartCount = mounted
-    ? cartItems.reduce(
-        (total, item) =>
-          total + item.quantity,
-        0
-      )
-    : 0;
 
   return (
     <>
@@ -204,7 +184,7 @@ export default function GoodsList({
           {items.length ? (
             <div className="goods-grid" ref={gridRef}>
               {items.map((item) => (
-                <GoodsCard goods={item} onOpenOptionModal={handleOpenOptionModal} key={item._id} />
+                <GoodsCard key={item._id} goods={item} onOpenOptionModal={handleOpenOptionModal} />
               ))}
             </div>
           ) : (
@@ -240,8 +220,7 @@ export default function GoodsList({
       </Fnb>
 
       <CartModal orderDeliverySettings={orderDeliverySettings} />
-      <OrderTrackingModal open={orderOpen} onClose={() => setOrderOpen(false)}
-      />
+      <OrderTrackingModal open={orderOpen} onClose={() => setOrderOpen(false)} />
     </>
   )
 }

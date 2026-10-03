@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import SubPageHero from '@/components/common/SubPageHero';
-import RentalPage from '@/components/rental/RentalPage';
+import RentalPage from '@/components/rental/Page';
 
 export const metadata: Metadata = {
   title: "공연·대관신청",

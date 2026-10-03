@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/Inputs/Button';
+import { Button } from '@/components/ui/Button';
 
 interface Props {
   orderNumber: string | null;

@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 
-import type { CartItem } from '@/stores/cartStore';
+import type { CartItem } from '@/types/cart';
 import { getGoodsUnitPrice } from '@/lib/goodsPrice';
-import { Button } from '@/components/ui/Inputs/Button';
+import { Button } from '@/components/ui/Button';
 
 interface Props {
   items: CartItem[];

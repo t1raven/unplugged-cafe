@@ -185,21 +185,24 @@ html.scrollUp #site-gnb {
 		top: auto;
 		left: 0;
 	  bottom: 0;
-	  transform: translateX(0) !important;
+	  transform: translateX(0);
 	  transition: none;
 		width: clamp(320px, 90vw, 520px);
 	  height: 0;
 		margin: 0 auto;
+		opacity: 0;
 
-		animation: site-gnb-show 0.5s ease 0.75s backwards;
+		/* animation: site-gnb-show 0.5s ease 0.75s backwards;
 		@keyframes site-gnb-show {
 			from {
 				opacity: 0;
+				transform: translateY(var(--header-height));
 			}
 			to {
 				opacity: 1;
+				transform: translateY(0);
 			}
-		}
+		} */
 
 		> nav {
 			position: absolute;

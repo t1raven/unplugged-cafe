@@ -7,12 +7,12 @@ import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 
 import CategoryNav from '@/components/common/CategoryNav'
-import ArchiveModal from './ArchiveModal';
+import ArchiveModal from './Modal';
 
 import type { Category } from '@/types/category';
 import type { Archive } from '@/types/archive';
 
-import './ArchiveList.scss';
+import './List.scss';
 
 const PAGE_SIZE = 12;
 
